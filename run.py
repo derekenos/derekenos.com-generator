@@ -18,10 +18,12 @@ if __name__ == '__main__':
             mod_name.rsplit('.', 1)[0]
             for mod_name in os.listdir(PAGES_DIR)
             if mod_name.endswith('.py')
-        ]
+        ],
+        'current_page': None,
     }
 
     for page_name in context['page_names']:
+        context['current_page'] = page_name
         with _open(f'{page_name}.html') as fh:
             mod = __import__(f'{PAGES_DIR}.{page_name}', fromlist=page_name)
             # Include the global head elements.
