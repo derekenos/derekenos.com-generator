@@ -3,18 +3,30 @@ import os
 
 from lib.htmlephant import Document
 
+import includes.head
+import includes.body
+
 PAGES_DIR = 'pages'
 SITE_DIR = 'site'
 
 _open = lambda path: open(os.path.join(SITE_DIR, path), 'w', encoding='utf-8')
 
 if __name__ == '__main__':
-    for mod_name in os.listdir(PAGES_DIR):
-        if not mod_name.endswith('.py') or mod_name == '__init__.py':
-            continue
-        page_name = mod_name.rsplit('.', 1)[0]
+    # Build the global context dict.
+    context = {
+        'page_names': [
+            mod_name.rsplit('.', 1)[0]
+            for mod_name in os.listdir(PAGES_DIR)
+            if mod_name.endswith('.py')
+        ]
+    }
+
+    for page_name in context['page_names']:
         with _open(f'{page_name}.html') as fh:
             mod = __import__(f'{PAGES_DIR}.{page_name}', fromlist=page_name)
-            doc = Document(mod.BODY_ELS, mod.HEAD_ELS)
+            # Include the global head elements.
+            head_els = includes.head.Head(context) + mod.Head(context)
+            body_els = includes.body.Body(context) + mod.Body(context)
+            doc = Document(body_els, head_els)
             for c in doc:
                 fh.write(c)

@@ -2,12 +2,14 @@
 from lib.htmlephant import (
     Paragraph,
     Style,
+    Title,
 )
 
-HEAD_ELS = (
+Head = lambda context: (
+    Title('Projects'),
     Style('body { font-size: 2rem; }'),
 )
 
-BODY_ELS = (
+Body = lambda context: (
     Paragraph('testing'),
 )
