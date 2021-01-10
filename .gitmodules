@@ -1,0 +1,3 @@
+[submodule "lib/htmlephant"]
+	path = lib/htmlephant
+	url = https://github.com/derekenos/htmlephant
