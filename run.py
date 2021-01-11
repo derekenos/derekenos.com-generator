@@ -52,6 +52,19 @@ class Context:
 # Run Function
 ###############################################################################
 
+def write_page(context, filename, mod_head, mod_body):
+    # Open the HTML output file.
+    with context.open(filename) as fh:
+        # Combine global includes with the module Head and Body to create
+        # the final element tuples.
+        head_els = chain(includes.head.Head(context), mod_head(context))
+        body_els = chain(includes.body.Body(context), mod_body(context))
+        # Create the Document object.
+        doc = Document(body_els, head_els)
+        # Write the document to the file.
+        for c in doc:
+            fh.write(c)
+
 def run(context):
     # Copy static files to output, creating dirs as necessary.
     shutil.copytree(
@@ -64,22 +77,22 @@ def run(context):
     for page_name in context.page_names:
         # Update the context object with the name of the current page.
         context.current_page = page_name
-        # Open the HTML output file.
-        with context.open(f'{page_name}.html') as fh:
-            # Import the page module.
-            mod = __import__(
-                f'{context.PAGES_DIR}.{page_name}',
-                fromlist=page_name
-            )
-            # Combine global includes with the module Head and Body to create
-            # the final element tuples.
-            head_els = chain(includes.head.Head(context), mod.Head(context))
-            body_els = chain(includes.body.Body(context), mod.Body(context))
-            # Create the Document object.
-            doc = Document(body_els, head_els)
-            # Write the document to the file.
-            for c in doc:
-                fh.write(c)
+        # Import the page module.
+        m = __import__(
+            f'{context.PAGES_DIR}.{page_name}',
+            fromlist=page_name
+        )
+        # Check for page generator.
+        if (not hasattr(m, 'CONTEXT_ITEMS_GETTER')
+            or not hasattr(m, 'FILENAME_GENERATOR')):
+            # Write a single page.
+            filename = f'{page_name}.html'
+            write_page(context, filename, m.Head, m.Body)
+        else:
+            # Use the page generator to write 1 or more pages.
+            for item in m.CONTEXT_ITEMS_GETTER(context):
+                filename = m.FILENAME_GENERATOR(item)
+                write_page(context, filename, m.Head(item), m.Body(item))
 
 ###############################################################################
 # CLI
