@@ -10,3 +10,7 @@ class Picture(HTMLElement):
 class Source(HTMLElement):
     TAG_NAME = 'picture'
     REQUIRED_ATTRS = ('srcset',)
+
+class Link(HTMLElement):
+    TAG_NAME='link'
+    REQUIRED_ATTRS = ('href', 'rel')

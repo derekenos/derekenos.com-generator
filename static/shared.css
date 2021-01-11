@@ -1,9 +1,4 @@
 
-from lib.htmlephant import Style
-
-Head = lambda context: (
-    Style(
-"""
 * {
   font-family: sans-serif;
 }
@@ -166,6 +161,3 @@ body > h1 {
   0% { opacity: 0 }
   100% { opacity: 0.85 }
 }
-"""
-    ),
-)

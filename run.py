@@ -1,4 +1,5 @@
 
+import argparse
 import os
 import shutil
 
@@ -15,9 +16,10 @@ SITE_STATIC_DIR = f'{SITE_DIR}/{STATIC_DIR}'
 _open = lambda path: open(os.path.join(SITE_DIR, path), 'w', encoding='utf-8')
 
 class Context:
-    def __init__(self, pages_dir, static_dir):
+    def __init__(self, pages_dir, static_dir, development=False):
         self.pages_dir = pages_dir
         self.static_dir = static_dir
+        self.development = development
         self.current_page = None
         self.page_names = [
             mod_name.rsplit('.', 1)[0]
@@ -31,9 +33,9 @@ class Context:
             raise AssertionError(f'Path is not a regular file: {path}')
         return path
 
-if __name__ == '__main__':
+def run(development):
     # Build the global context dict.
-    context = Context(PAGES_DIR, STATIC_DIR)
+    context = Context(PAGES_DIR, STATIC_DIR, development)
 
     # Copy static files to output, creating dirs as necessary.
     shutil.copytree(STATIC_DIR, SITE_STATIC_DIR, dirs_exist_ok=True)
@@ -48,3 +50,9 @@ if __name__ == '__main__':
             doc = Document(body_els, head_els)
             for c in doc:
                 fh.write(c)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--development', action='store_true')
+    args = parser.parse_args()
+    run(args.development)

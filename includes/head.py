@@ -1,9 +1,7 @@
 
-from . import (
-    google_analytics,
-    style,
-)
+from lib.htmlephant_extensions import Link
+from . import google_analytics
 
 Head = lambda context: () \
-    + google_analytics.Head(context) \
-    + style.Head(context)
+    + (() if context.development else google_analytics.Head(context)) \
+    + (Link(rel='stylesheet', href=context._static('shared.css')),)
