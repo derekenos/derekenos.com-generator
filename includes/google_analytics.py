@@ -5,7 +5,7 @@ ID = 'UA-19335494-1'
 
 Head = lambda context: (
     Script(
-        async='',
+        _async='',
         src=f'https://www.googletagmanager.com/gtag/js?id={ID}'
     ),
     Script(

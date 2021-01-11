@@ -16,13 +16,11 @@ PAGE_NAME_LABEL_PAIRS = (
 )
 
 def _Li(context, name, label):
-    if name == context['current_page']:
+    if name == context.current_page:
         return Li(label, _class='current')
     return Li(children=(Anchor(label, href=f'/{name}'),))
 
-Head = lambda context: ()
-
-Body = lambda context: (
+NavBar = lambda context: (
     Nav(
         children=(
             Ol(

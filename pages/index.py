@@ -1,15 +1,28 @@
 
 from lib.htmlephant import (
+    Div,
     Paragraph,
     Style,
     Title,
 )
 
+from macros.project import Project
+
 Head = lambda context: (
     Title('Projects'),
-    Style('body { font-size: 2rem; }'),
 )
 
 Body = lambda context: (
-    Paragraph('testing'),
+    Div(
+        _class='item',
+        children=Project(
+            context,
+            name='Cardboard Boxcade',
+            desc='Custom physical controls for browser-based HTML/Javascript '\
+            'applications.',
+            tags=('esp32', 'micropython', 'iot', 'videogame'),
+            img_base_fn='cardboard_boxcade_thumb',
+            img_alt='photo of a cardboard box with a screen and switches'
+        )
+    ),
 )
