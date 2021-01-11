@@ -12,8 +12,8 @@ def Picture(context, base_fn, alt):
     return (
         _Picture(
             children=(
-                Source(srcset=context._static(f'{base_fn}.webp')),
-                Img(src=context._static(f'{base_fn}.png'), alt=alt)
+                Source(srcset=context.static(f'{base_fn}.webp')),
+                Img(src=context.static(f'{base_fn}.png'), alt=alt)
             )
         ),
     )
