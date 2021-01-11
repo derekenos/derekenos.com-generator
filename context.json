@@ -1,0 +1,150 @@
+{
+  "google_analytics_id": "UA-19335494-1",
+  "projects": [
+
+    {
+      "name": "Cardboard Boxcade",
+      "description": "Custom physical controls for browser-based HTML/Javascript applications.",
+      "tags": ["esp32", "micropython", "iot", "videogame"],
+      "thumb_img_base_fn": "cardboard_boxcade_thumb",
+      "thumb_img_alt": "photo of a cardboard box with a screen and switches"
+    },
+
+    {
+      "name": "Trtl",
+      "description": "A wheeled drawing robot inspired by the Logo Turtle.",
+      "tags": ["cnc", "art", "esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "trtl_thumb",
+      "thumb_img_alt": "photo of the T.r.t.l. drawing robot"
+    },
+
+    {
+      "name": "Weezel",
+      "description": "A drawing robot accessory for the Ikea MÅLA easel.",
+      "tags": ["cnc", "art", "esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "weezel_thumb",
+      "thumb_img_alt": "photo of the Weezel drawing robot"
+    },
+
+    {
+      "name": "Modular Arcade Cabinet",
+      "description": "A work in progress...",
+      "tags": [],
+      "thumb_img_base_fn": "arcade_cabinet_thumb",
+      "thumb_img_alt": "lasercut arcade cabinet scale model photo"
+    },
+
+    {
+      "name": "Gritty Viddy",
+      "description": "Real-timeish, GPU-backed video effects using vanilla Javascript.",
+      "tags": ["javascript", "gpu", "video", "effects", "realtime"],
+      "thumb_img_base_fn": "gritty-viddy",
+      "thumb_img_alt": "gritty viddy video effects app screenshot"
+    },
+
+    {
+      "name": "Important Message",
+      "description": "Testing the waters of the Cloudflare Apps platform.",
+      "tags": ["javascript", "webcomponents", "webapp"],
+      "thumb_img_base_fn": "important-message",
+      "thumb_img_alt": "Important Message app banner image"
+    },
+
+    {
+      "name": "Sketchy",
+      "description": "Internet-connected Motorized Etch-A-Sketch",
+      "tags": ["esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "sketchy_video_poster",
+      "thumb_img_alt": "photo of motorized Etch-A-Sketch"
+    },
+
+    {
+      "name": "Babygate",
+      "description": "A vanilla JS / HTML5 demo game for the iome platform.",
+      "tags": ["html5", "javascript", "webaudio", "videogame"],
+      "thumb_img_base_fn": "babygate_thumb",
+      "thumb_img_alt": "screenshot of Babygate video game"
+    },
+
+    {
+      "name": "iome",
+      "description": "A platform for developing physical interfaces with a web application frontend using modern, off-the-shelf technologies.",
+      "tags": ["esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "game_console_20191008_thumb",
+      "thumb_img_alt": "lasercut iome dev kit photo"
+    },
+
+    {
+      "name": "Laser-cut Keypad",
+      "description": "A Internet-connected Keypad w/ Backlit, Lasercut Living Hinge Buttons.",
+      "tags": ["esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "lasercut_keypad_thumb",
+      "thumb_img_alt": "photo of laser-cut wooden keypad"
+    },
+
+    {
+      "name": "Physical Platformer Game Prototype",
+      "description": "",
+      "tags": ["esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "platformer_thumb",
+      "thumb_img_alt": "photo of motorized x/y axis made from laser-cut wood"
+    },
+
+    {
+      "name": "Delta Robot",
+      "description": "A gratuitously lasercut delta robot.",
+      "tags": ["esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "delta_video_thumb",
+      "thumb_img_alt": "photo of delta robot made from laser-cut wood"
+    },
+
+    {
+      "name": "Composer",
+      "description": "A simple sound toy using the Web Audio API.",
+      "tags": ["javascript", "webaudio", "audio"],
+      "thumb_img_base_fn": "composer",
+      "thumb_img_alt": "sound composer web app screenshot"
+    },
+
+    {
+      "name": "Ion Model",
+      "description": "A computationally inefficient exploration of the complex behaviors that arise from the interaction of simple rules.",
+      "tags": ["javascript", "emergentbehavior"],
+      "thumb_img_base_fn": "ionModelScreenThumb",
+      "thumb_img_alt": "ion model application screenshot"
+    },
+
+    {
+      "name": "deMIDulator",
+      "description": "A lo-fi, MIDI-controlled synthesizer and sampler.",
+      "tags": ["picmicrocontroller", "assembly", "midi", "synthesizer", "sampler", "rockband"],
+      "thumb_img_base_fn": "demidulator_thumb",
+      "thumb_img_alt": "photo of the deMIDulator 8-bit synth"
+    },
+
+    {
+      "name": "Beginner's Box",
+      "description": "Force-sensitive tone generators.",
+      "tags": ["microcontroller", "sound"],
+      "thumb_img_base_fn": "beginners_box_thumb",
+      "thumb_img_alt": "photo of laser-cut force-sensitive tone generator boxes"
+    },
+
+    {
+      "name": "Video Feedback Instrument",
+      "description": "NTSC video generation w/ light pen feedback",
+      "tags": ["microcontroller", "videoart"],
+      "thumb_img_base_fn": "video_feedback_thumb",
+      "thumb_img_alt": "video screenshot of video feedback instrument"
+    },
+
+    {
+      "name": "Physical Interface Prototype",
+      "description": "An input device that reads the insertion depth of a movable column.",
+      "tags": ["microcontroller", "hci"],
+      "thumb_img_base_fn": "physical_interface_thumb",
+      "thumb_img_alt": "photo of laser-cut physical interface prototype"
+    }
+
+  ]
+}

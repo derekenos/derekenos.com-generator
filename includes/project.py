@@ -10,14 +10,15 @@ from macros import picture
 
 Head = NotDefined
 
-Body = lambda context, name, desc, tags, img_base_fn, img_alt: (
-    H1(name),
-    H2(desc),
-    H3(' '.join(f'#{tag}' for tag in tags)),
-    *picture.Body(
-        context,
-        srcsets=(context.static(f'{img_base_fn}.webp'),),
-        src=context.static(f'{img_base_fn}.png'),
-        alt=img_alt
+def Body(context, name, description, tags, thumb_img_base_fn, thumb_img_alt):
+    return (
+        H1(name),
+        H2(description),
+        H3(' '.join(f'#{tag}' for tag in tags)),
+        *picture.Body(
+            context,
+            srcsets=(context.static(f'{thumb_img_base_fn}.webp'),),
+            src=context.static(f'{thumb_img_base_fn}.png'),
+            alt=thumb_img_alt
+        )
     )
-)
