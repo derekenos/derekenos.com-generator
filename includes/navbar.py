@@ -1,4 +1,5 @@
 
+from lib import NotDefined
 from lib.htmlephant_extensions import Nav
 from lib.htmlephant import (
     Anchor,
@@ -18,7 +19,9 @@ def _Li(context, name, label):
         name = ''
     return Li(children=(Anchor(label, href=f'/{name}'),))
 
-NavBar = lambda context: (
+Head = NotDefined
+
+Body = lambda context: (
     Nav(
         children=(
             Ol(

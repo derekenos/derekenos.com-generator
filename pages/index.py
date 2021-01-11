@@ -4,7 +4,7 @@ from lib.htmlephant import (
     Title,
 )
 
-from macros.project import Project
+from includes import project
 
 Head = lambda context: (
     Title('Projects'),
@@ -13,7 +13,7 @@ Head = lambda context: (
 Body = lambda context: (
     Div(
         _class='item',
-        children=Project(
+        children=project.Body(
             context,
             name='Cardboard Boxcade',
             desc='Custom physical controls for browser-based HTML/Javascript '\

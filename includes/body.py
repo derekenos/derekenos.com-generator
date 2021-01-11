@@ -1,4 +1,4 @@
 
-from macros.navbar import NavBar
+from . import navbar
 
-Body = lambda context: NavBar(context)
+Body = lambda context: navbar.Body(context)
