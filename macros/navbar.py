@@ -14,6 +14,8 @@ PAGE_NAME_LABEL_PAIRS = (
 def _Li(context, name, label):
     if name == context.current_page:
         return Li(label, _class='current')
+    if name == 'index':
+        name = ''
     return Li(children=(Anchor(label, href=f'/{name}'),))
 
 NavBar = lambda context: (

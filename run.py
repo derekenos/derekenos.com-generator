@@ -3,39 +3,13 @@ import argparse
 import json
 import os
 import shutil
-from http import server
+from itertools import chain
 
 from lib.htmlephant import Document
+from lib.server import serve
 
 import includes.head
 import includes.body
-
-###############################################################################
-# Simple Webserver
-###############################################################################
-
-def serve(path, host='localhost', port=5000):
-    # Subclass SimpleHTTPRequestHandler to make it act more like a webserver.
-    class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
-        def do_GET(self, *args, **kwargs):
-            print(os.listdir('.'))
-            if self.path == f'/':
-                # Resolve / request path to index.html
-                self.path += '/index.html'
-            elif (not os.path.exists(f'{self.directory}{self.path}')
-                  and not self.path.endswith('html')):
-                # No file exists at path and path doesn't end with .html, so
-                # add .html
-                self.path = f'{self.path}.html'
-            return super().do_GET()
-
-    print(f'Serving on: http://{host}:{port}')
-    server.HTTPServer(
-        (host, port),
-        lambda *args, **kwargs: HTTPRequestHandler(
-            *args, **kwargs, directory=path
-        )
-    ).serve_forever()
 
 ###############################################################################
 # Context Class
@@ -97,10 +71,10 @@ def run(context):
                 f'{context.PAGES_DIR}.{page_name}',
                 fromlist=page_name
             )
-            # Concatenate global includes with the module Head and Body to
-            # create the final element tuples.
-            head_els = includes.head.Head(context) + mod.Head(context)
-            body_els = includes.body.Body(context) + mod.Body(context)
+            # Combine global includes with the module Head and Body to create
+            # the final element tuples.
+            head_els = chain(includes.head.Head(context), mod.Head(context))
+            body_els = chain(includes.body.Body(context), mod.Body(context))
             # Create the Document object.
             doc = Document(body_els, head_els)
             # Write the document to the file.
