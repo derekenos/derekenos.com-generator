@@ -74,6 +74,10 @@ class Context:
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
         return open(path, 'w', encoding='utf-8')
 
+###############################################################################
+# Run Function
+###############################################################################
+
 def run(context):
     # Copy static files to output, creating dirs as necessary.
     shutil.copytree(
@@ -102,6 +106,10 @@ def run(context):
             # Write the document to the file.
             for c in doc:
                 fh.write(c)
+
+###############################################################################
+# CLI
+###############################################################################
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
