@@ -1,17 +1,14 @@
 
-from lib.htmlephant import (
-    HTMLElement,
-    Img,
+from lib.htmlephant import Img
+from lib.htmlephant_extensions import (
+    Picture as _Picture,
+    Source,
 )
 
-class _Picture(HTMLElement):
-    TAG_NAME = 'picture'
-
-class Source(HTMLElement):
-    TAG_NAME = 'picture'
-    REQUIRED_ATTRS = ('srcset',)
-
 def Picture(context, base_fn, alt):
+    # base_fn is image filename without any extension. Both .webp and .png
+    # variants of the file are expected to be present and will be used to set
+    # source.srcset and img.src respectively.
     return (
         _Picture(
             children=(

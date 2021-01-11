@@ -1,14 +1,10 @@
 
+from lib.htmlephant_extensions import Nav
 from lib.htmlephant import (
-    HTMLElement,
     Anchor,
-    Ol,
     Li,
+    Ol,
 )
-
-# TODO - MOVE this into htmlephant
-class Nav(HTMLElement):
-    TAG_NAME = 'nav'
 
 PAGE_NAME_LABEL_PAIRS = (
     ('index', 'projects'),
