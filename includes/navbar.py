@@ -7,9 +7,11 @@ from lib.htmlephant import (
     Ol,
 )
 
+# TODO - don't do this here
 PAGE_NAME_LABEL_PAIRS = (
     ('index', 'projects'),
     ('ambitions', 'ambitions'),
+    ('contact', 'contact'),
 )
 
 def _Li(context, name, label):
