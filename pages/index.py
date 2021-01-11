@@ -1,8 +1,6 @@
 
 from lib.htmlephant import (
     Div,
-    Paragraph,
-    Style,
     Title,
 )
 
