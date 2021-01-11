@@ -16,8 +16,8 @@ Body = lambda context, name, desc, tags, img_base_fn, img_alt: (
     H3(' '.join(f'#{tag}' for tag in tags)),
     *picture.Body(
         context,
-        srcsets=(f'{img_base_fn}.webp',),
-        src=f'{img_base_fn}.png',
+        srcsets=(context.static(f'{img_base_fn}.webp'),),
+        src=context.static(f'{img_base_fn}.png'),
         alt=img_alt
     )
 )
