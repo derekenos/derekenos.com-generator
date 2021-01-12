@@ -29,6 +29,9 @@ class Context:
             for mod_name in os.listdir(self.PAGES_DIR)
             if mod_name.endswith('.py')
         ]
+        # Initialize runtime attributes.
+        self.current_page = None
+        self.generator_item = None
         # Add any custom attributes.
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -52,13 +55,13 @@ class Context:
 # Run Function
 ###############################################################################
 
-def write_page(context, filename, mod_head, mod_body):
+def write_page(context, filename, page_mod):
     # Open the HTML output file.
     with context.open(filename) as fh:
         # Combine global includes with the module Head and Body to create
         # the final element tuples.
-        head_els = chain(includes.head.Head(context), mod_head(context))
-        body_els = chain(includes.body.Body(context), mod_body(context))
+        head_els = chain(includes.head.Head(context), page_mod.Head(context))
+        body_els = chain(includes.body.Body(context), page_mod.Body(context))
         # Create the Document object.
         doc = Document(body_els, head_els)
         # Write the document to the file.
@@ -78,21 +81,25 @@ def run(context):
         # Update the context object with the name of the current page.
         context.current_page = page_name
         # Import the page module.
-        m = __import__(
+        page_mod = __import__(
             f'{context.PAGES_DIR}.{page_name}',
             fromlist=page_name
         )
         # Check for page generator.
-        if (not hasattr(m, 'CONTEXT_ITEMS_GETTER')
-            or not hasattr(m, 'FILENAME_GENERATOR')):
+        if (not hasattr(page_mod, 'CONTEXT_ITEMS_GETTER')
+            or not hasattr(page_mod, 'FILENAME_GENERATOR')):
             # Write a single page.
+            # Clear any previous generator item.
+            context.generator_item = None
             filename = f'{page_name}.html'
-            write_page(context, filename, m.Head, m.Body)
+            write_page(context, filename, page_mod)
         else:
             # Use the page generator to write 1 or more pages.
-            for item in m.CONTEXT_ITEMS_GETTER(context):
-                filename = m.FILENAME_GENERATOR(item)
-                write_page(context, filename, m.Head(item), m.Body(item))
+            for item in page_mod.CONTEXT_ITEMS_GETTER(context):
+                # Update the context object with the current item.
+                context.generator_item = item
+                filename = page_mod.FILENAME_GENERATOR(item)
+                write_page(context, filename, page_mod)
 
 ###############################################################################
 # CLI
@@ -103,7 +110,7 @@ if __name__ == '__main__':
     parser.add_argument('--development', action='store_true')
     parser.add_argument('--context-file', type=argparse.FileType('rb'))
     parser.add_argument('--serve', action='store_true')
-    parser.add_argument('--host', default='localhost')
+    parser.add_argument('--host', default='0.0.0.0')
     parser.add_argument('--port', type=int, default=5000)
     args = parser.parse_args()
 

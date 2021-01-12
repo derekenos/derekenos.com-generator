@@ -1,10 +1,16 @@
 
-from lib import NotDefined
+from lib import (
+    NotDefined,
+    stubify,
+)
+
 from lib.htmlephant_extensions import Nav
 from lib.htmlephant import (
     Anchor,
+    Div,
     Li,
     Ol,
+    Span,
 )
 
 # TODO - don't do this here
@@ -23,15 +29,49 @@ def _Li(context, name, label):
 
 Head = NotDefined
 
-Body = lambda context: (
-    Nav(
-        children=(
+def Body(context):
+    nav = Nav(
+        children=[
             Ol(
                 children=[
                     _Li(context, name, label)
                     for name, label in PAGE_NAME_LABEL_PAIRS
                 ]
-            ),
-        )
-    ),
-)
+            )
+        ]
+    )
+
+    # Determine whether this is a specific project page.
+    project = getattr(context, 'generator_item')
+
+    # Return basic nav if this is not a project page.
+    if project is None:
+        return (nav,)
+
+    # Maybe add the projects sub-navigation element.
+    outer = Div(id='project-nav-outer')
+    inner = Div(id='project-nav-inner')
+    outer.children.append(inner)
+    for i, project in enumerate(sorted(
+            context.projects,
+            key=lambda x: x['name'] == project['name'],
+            reverse=True
+        )):
+        if i == 0:
+            inner.children.append(
+                Span(
+                    project['name'],
+                    _class='project-nav-link current'
+                )
+            )
+        else:
+            inner.children.append(
+                Anchor(
+                    project['name'],
+                    _class='project-nav-link',
+                    href=f'project-{stubify(project["name"])}.html'
+                )
+            )
+    nav.children.append(outer)
+
+    return (nav,)
