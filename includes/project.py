@@ -1,8 +1,5 @@
 
-from lib import (
-    NotDefined,
-    stubify,
-)
+from lib import NotDefined
 from lib.htmlephant import (
     Anchor,
     H1,
