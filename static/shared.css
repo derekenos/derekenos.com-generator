@@ -155,6 +155,13 @@ body > h1 {
   padding: 0;
 }
 
+// Project Page
+
+#collateral-creations,
+#related-projects {
+  list-style: none;
+}
+
 @media screen and (min-width: 1024px) {
   nav {
     display: block;
@@ -192,6 +199,8 @@ body > h1 {
     max-width: 400px;
   }
 }
+
+// Patreon Button
 
 .patreon-widget {
   position: fixed !important;
