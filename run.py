@@ -116,6 +116,7 @@ if __name__ == '__main__':
 
     # Generate the site files.
     run(context)
+    print(f'Wrote new files to: {context.SITE_DIR}/')
 
     # Maybe start the webserver.
     if args.serve:

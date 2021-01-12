@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Build the project and start the server as a background process.
+python3.9 run.py --context-file=context.json --development --serve &
+# Get the background process's PID.
+server_pid=$!
+
+# Register a CTRL-C interrupt handler.
+trap ctrl_c INT
+
+# On CTRL-C, terminate the background server process and exit.
+function ctrl_c() {
+    kill -SIGKILL $server_pid
+    exit 0
+}
+
+# Rebuild on any changes outside of the site/ dir.
+while true; do
+    inotifywait -e modify --recursive --quiet --quiet --exclude site/ *;
+    python3.9 run.py --context-file=context.json --development;
+done
