@@ -3,8 +3,8 @@
 import asyncio
 import os
 
-from .femtoweb.filesystem_endpoints import _fs_GET
-from .femtoweb.server import (
+from .femtoweb.femtoweb.filesystem_endpoints import _fs_GET
+from .femtoweb.femtoweb.server import (
     _200,
     GET,
     POST,
