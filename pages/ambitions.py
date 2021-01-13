@@ -3,10 +3,12 @@ from itertools import chain
 
 from lib.htmlephant_extensions import Em
 from lib.htmlephant import (
+    Anchor,
     Div,
     H1,
     H3,
     Paragraph,
+    Script,
     Title,
 )
 
@@ -193,13 +195,19 @@ SMALL_BITES = (
 
 Head = lambda context: (
     Title('Derek Enos | Ambitions'),
+    Script(
+        _async='',
+        src='https://c6.patreon.com/becomePatronButton.bundle.js'
+    )
 )
 
 Body = lambda context: (
     Div(
         _class='content',
         children=(
-            Paragraph('These are things that I have considered making or doing.'),
+            Paragraph(
+                'These are things that I have considered making or doing.'
+            ),
             *section.Body(
                 context,
                 'Initiatives',
@@ -251,4 +259,11 @@ Body = lambda context: (
 
         )
     ),
+
+    Anchor(
+        'Support Me',
+        href='https://www.patreon.com/bePatron?u=124133',
+        _data_patreon_widget_type='become-patron-button'
+    )
+
 )

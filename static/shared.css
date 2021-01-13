@@ -49,7 +49,6 @@ nav > ol > li {
 nav > ol > li.current {
   border-bottom: none;
   padding: 1rem 0;
-
 }
 
 nav > ol > li > a {
@@ -215,7 +214,7 @@ nav > ol > li > a:hover {
   }
 }
 
-// Patreon Button
+/* Patreon Button */
 
 .patreon-widget {
   position: fixed !important;
