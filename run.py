@@ -10,6 +10,7 @@ from lib.server import serve
 
 import includes.head
 import includes.body
+import includes.footer
 
 ###############################################################################
 # Context Class
@@ -61,7 +62,11 @@ def write_page(context, filename, page_mod):
         # Combine global includes with the module Head and Body to create
         # the final element tuples.
         head_els = chain(includes.head.Head(context), page_mod.Head(context))
-        body_els = chain(includes.body.Body(context), page_mod.Body(context))
+        body_els = chain(
+            includes.body.Body(context),
+            page_mod.Body(context),
+            includes.footer.Body(context),
+        )
         # Create the Document object.
         doc = Document(body_els, head_els)
         # Write the document to the file.

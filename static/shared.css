@@ -165,11 +165,12 @@ nav > ol > li > a:hover {
   opacity: 0.8;
 }
 
-// Project Page
-
-#collateral-creations,
-#related-projects {
-  list-style: none;
+.footer {
+  font-size: .8rem;
+  padding: 1rem;
+  margin-top: 5rem;
+  border-top: solid 1px #888;
+  text-align: center;
 }
 
 @media screen and (min-width: 1024px) {
@@ -218,7 +219,7 @@ nav > ol > li > a:hover {
 
 .patreon-widget {
   position: fixed !important;
-  bottom: 0.5rem;
+  bottom: 2rem;
   right: 0.5rem;
   opacity: 0.85;
   animation: fade-in 1s ease-in;
