@@ -9,29 +9,29 @@ from .femtoweb.femtoweb.server import (
     GET,
     POST,
     route,
-    as_event_source,
+    event_source,
     serve as _serve,
 )
 
 def serve(site_dir, host, port):
-    event_senders = []
+    event_emitters = []
 
     # Define an event stream endpoint.
     @route('/_events', methods=(GET,))
-    @as_event_source
-    async def events(request, sender):
-        event_senders.append(sender)
+    @event_source
+    async def events(request, emitter):
+        event_emitters.append(emitter)
 
     # Define a _reload endpoint.
     @route('/_reload', methods=(POST,))
     async def reload(request):
-        nonlocal event_senders
-        # Grab the current list of event_senders.
-        _event_senders = event_senders[:]
-        # Clear the nonlocal event_senders list.
-        event_senders[:] = []
-        for sender in _event_senders:
-            await sender('reload')
+        nonlocal event_emitters
+        # Grab the current list of event_emitters.
+        _event_emitters = event_emitters[:]
+        # Clear the nonlocal event_emitters list.
+        event_emitters[:] = []
+        for emitter in _event_emitters:
+            await emitter('reload')
         return _200()
 
     # Define a catch-all GET handler for delivering files.
