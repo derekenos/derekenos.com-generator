@@ -1,6 +1,7 @@
 
 from lib import NotDefined
 from lib.htmlephant import (
+    Div,
     H1,
     H2,
 )
@@ -8,6 +9,8 @@ from lib.htmlephant import (
 Head = NotDefined
 
 def Body(context, title, subtitle=None, children=()):
+    wrapper = Div(_class='section', children=[H1(title)])
     if subtitle:
-        return H1(title), H2(subtitle), *children
-    return H1(title), *children
+        wrapper.children.append(H2(subtitle))
+    wrapper.children.extend(children)
+    return (wrapper,)

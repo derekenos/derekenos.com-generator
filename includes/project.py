@@ -62,7 +62,7 @@ def Body(context,
             section.Body(
                 context,
                 'Collateral Creations',
-                'New things that I created specifically for this project:',
+                '',
                 links_list.Body(context, collateral_creation_name_href_pairs)
             )
         )

@@ -11,10 +11,15 @@ Head = lambda context: (
     Title('Derek Enos | Projects'),
 )
 
-Body = lambda context: collection.Body(
-    context,
-    [
-        project_card.Body(context, **prj)
-        for prj in context.projects
-    ]
+Body = lambda context: (
+    Div(
+        _class='content',
+        children=collection.Body(
+            context,
+            [
+                project_card.Body(context, **prj)
+                for prj in context.projects
+            ]
+        )
+    ),
 )
