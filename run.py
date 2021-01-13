@@ -38,7 +38,7 @@ class Context:
             setattr(self, k, v)
 
     def static(self, filename):
-        """Format filename as a static asset path, assert that he file exists,
+        """Format filename as a static asset path, assert that the file exists,
         and return the path.
         """
         path = f'{self.STATIC_DIR}/{filename}'
