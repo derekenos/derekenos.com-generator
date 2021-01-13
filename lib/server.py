@@ -31,7 +31,15 @@ def serve(site_dir, host, port):
         # Clear the nonlocal event_emitters list.
         event_emitters[:] = []
         for emitter in _event_emitters:
-            await emitter('reload')
+            await emitter(['reload'])
+        return _200()
+
+    # Define a _error endpoint.
+    @route('/_error', methods=(POST,))
+    async def error(request):
+        # Clear the nonlocal event_emitters list.
+        for emitter in event_emitters:
+            await emitter(['error', request.body.decode('utf-8')])
         return _200()
 
     # Define a catch-all GET handler for delivering files.

@@ -8,13 +8,16 @@ Head = lambda context: (
 document.addEventListener("DOMContentLoaded", () => {
   const eventSource = new EventSource("/_events");
   eventSource.onmessage = event => {
-    const command = JSON.parse(event.data)
+    const [command, payload] = JSON.parse(event.data)
     switch(command) {
       case "reload":
         window.location.reload()
       break
+      case "error":
+        alert(payload)
+      break
       default:
-        console.error(`Unknown command: ${command}`)
+        console.error(`Unknown command "${command}" with payload: ${payload}`)
       break
     }
   }

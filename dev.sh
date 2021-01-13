@@ -51,6 +51,10 @@ function ctrl_c() {
 # Rebuild on any changes outside of the site/ dir.
 while true; do
     inotifywait -e modify --recursive --quiet --quiet --exclude site/ *;
-    $pycmd run.py --context-file=context.json --development;
-    curl --silent -XPOST http://$host:$port/_reload
+    $pycmd run.py --context-file=context.json --development 2>&1 | tee .run.stderr
+    if [ ${PIPESTATUS[0]} -eq 0 ]; then
+        curl --silent -XPOST http://$host:$port/_reload
+    else
+        curl --silent http://$host:$port/_error --data-binary "@.run.stderr"
+    fi
 done
