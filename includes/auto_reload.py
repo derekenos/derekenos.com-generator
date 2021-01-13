@@ -9,10 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const eventSource = new EventSource("/_events");
   eventSource.onmessage = event => {
     const command = JSON.parse(event.data)
-
-    // DEBUG
-    console.debug(`got command: ${command}`)
-
     switch(command) {
       case "reload":
         window.location.reload()
