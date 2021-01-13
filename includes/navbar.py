@@ -1,6 +1,7 @@
 
 from lib import (
     NotDefined,
+    assert_ctx,
     stubify,
 )
 
@@ -13,13 +14,6 @@ from lib.htmlephant import (
     Span,
 )
 
-# TODO - don't do this here
-PAGE_NAME_LABEL_PAIRS = (
-    ('index', 'projects'),
-    ('ambitions', 'ambitions'),
-    ('contact', 'contact'),
-)
-
 def _Li(context, name, label):
     if name == context.current_page:
         return Li(label, _class='current')
@@ -30,12 +24,13 @@ def _Li(context, name, label):
 Head = NotDefined
 
 def Body(context):
+    assert_ctx(context, 'navbar_page_name_label_pairs')
     nav = Nav(
         children=[
             Ol(
                 children=[
                     _Li(context, name, label)
-                    for name, label in PAGE_NAME_LABEL_PAIRS
+                    for name, label in context.navbar_page_name_label_pairs
                 ]
             )
         ]

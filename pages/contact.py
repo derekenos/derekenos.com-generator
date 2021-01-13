@@ -1,6 +1,49 @@
 
 from lib import NotDefined
+from lib.htmlephant_extensions import Em
+from lib.htmlephant import (
+    Anchor,
+    Br,
+    H1,
+    Div,
+    Li,
+    Paragraph,
+    Ul,
+)
+
+from includes import section
+from includes import links_list
 
 Head = NotDefined
 
-Body = NotDefined
+Body = lambda context: (
+    *section.Body(
+        context,
+        'Email',
+        children=(
+            Anchor(
+                'derek@derekenos.com',
+                href="mailto:derek@derekenos.com"
+            ),
+            Br(),
+            Br(),
+            Em(
+                "If I don't respond, please try again or through another channel; AWS SES has got some issues."
+            )
+        )
+    ),
+    *section.Body(
+        context,
+        'Other channels',
+        children=links_list.Body(
+            context,
+            (
+                ('Github', "https://github.com/derekenos"),
+                ('Instagram', "https://www.instagram.com/derekjenos/"),
+                ('YouTube', "https://www.youtube.com/derekenos"),
+                ('LinkedIn', "https://www.linkedin.com/in/derekenos"),
+                ('Patreon', "https://www.patreon.com/derekenos"),
+            )
+        )
+    )
+)

@@ -14,3 +14,6 @@ class Source(HTMLElement):
 class Link(HTMLElement):
     TAG_NAME='link'
     REQUIRED_ATTRS = ('href', 'rel')
+
+class Em(HTMLElement):
+    TAG_NAME = 'em'

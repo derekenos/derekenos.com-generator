@@ -1,5 +1,12 @@
 {
   "google_analytics_id": "UA-19335494-1",
+
+  "navbar_page_name_label_pairs": [
+    ["index", "projects"],
+    ["ambitions", "ambitions"],
+    ["contact", "contact"]
+  ],
+
   "projects": [
 
     {
@@ -9,8 +16,13 @@
       "thumb_img_base_fn": "cardboard_boxcade_thumb",
       "thumb_img_alt": "photo of a cardboard box with a screen and switches",
       "description": "This project explores ...",
-      "collateral_creations": ["Prototyping Platform"],
-      "related_projects": ["iome"]
+      "collateral_creation_name_href_pairs": [
+        ["Prototyping Platform", "#"]
+      ],
+      "related_project_name_href_pairs": [
+        ["iome", "#"]
+      ],
+      "github_url": "https://github.com/derekenos"
     },
 
     {
@@ -150,4 +162,5 @@
     }
 
   ]
+
 }

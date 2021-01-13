@@ -141,18 +141,16 @@ body > h1 {
   border: solid 1px #222;
 }
 
+body > ol {
+  list-style: none;
+}
+
 .item {
   padding: 1rem;
 }
 
 .item.wide {
   max-width: none;
-}
-
-.contact ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 // Project Page
