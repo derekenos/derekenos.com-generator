@@ -3,11 +3,14 @@ from lib.htmlephant_extensions import Em
 from lib.htmlephant import (
     H3,
     Paragraph,
+    Title,
 )
 
 from includes import section
 
-Head = lambda context: ()
+Head = lambda context: (
+    Title('Derek Enos | Ambitions'),
+)
 
 Body = lambda context: (
     Paragraph('These are things that I have considered making or doing.'),

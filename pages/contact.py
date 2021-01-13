@@ -1,5 +1,4 @@
 
-from lib import NotDefined
 from lib.htmlephant_extensions import Em
 from lib.htmlephant import (
     Anchor,
@@ -8,13 +7,16 @@ from lib.htmlephant import (
     Div,
     Li,
     Paragraph,
+    Title,
     Ul,
 )
 
 from includes import section
 from includes import links_list
 
-Head = NotDefined
+Head = lambda context: (
+    Title('Derek Enos | Contact'),
+)
 
 Body = lambda context: (
     *section.Body(

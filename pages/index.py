@@ -5,17 +5,16 @@ from lib.htmlephant import (
 )
 
 from includes import project_card
+from includes import collection
 
 Head = lambda context: (
-    Title('Projects'),
+    Title('Derek Enos | Projects'),
 )
 
-Body = lambda context: (
-    Div(
-        _class="content",
-        children=[
-            Div(_class='item', children=project_card.Body(context, **prj))
-            for prj in context.projects
-        ]
-    ),
+Body = lambda context: collection.Body(
+    context,
+    [
+        project_card.Body(context, **prj)
+        for prj in context.projects
+    ]
 )

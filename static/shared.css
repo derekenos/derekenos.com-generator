@@ -129,7 +129,7 @@ video {
   max-width: 100%;
 }
 
-.content {
+.collection {
   display: flex;
   flex-flow: column;
   padding: 0 0 2rem 0;
@@ -187,7 +187,7 @@ body > ol {
     scrollbar-width: auto;
   }
 
-  .content {
+  .collection {
     flex-flow: row wrap;
     justify-content: space-between;
     padding: 0 3rem 2rem 3rem;
