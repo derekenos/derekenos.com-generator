@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Check for missing dependencies.
-missing_deps=false
-
 # Check for python3.9
 pycmd=''
 pycmds="python python3 python3.9"
