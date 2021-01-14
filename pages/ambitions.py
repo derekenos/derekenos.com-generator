@@ -90,8 +90,7 @@ SMALL_BITES = (
 
     (
         'IRL RC Car AR Game System',
-        """<p>
-          Players drive RC cars on a road surface game field rendered using laser projectors. Cameras detect car position to register collisions and goal achievement. Lots of room for fun personalization of vehicles using digital fabrication. An exciting, physical, IRL, AR game experience! Good for culdesacs. Just typing this gets me super-excited about it again; I probably shouldn't publish it. $$$"""
+        """Players drive RC cars on a road surface game field rendered using laser projectors. Cameras detect car position to register collisions and goal achievement. Lots of room for fun personalization of vehicles using digital fabrication. An exciting, physical, IRL, AR game experience! Good for culdesacs. Just typing this gets me super-excited about it again; I probably shouldn't publish it. $$$"""
     ),
 
     (
