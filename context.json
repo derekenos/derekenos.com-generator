@@ -18,14 +18,10 @@
       "tags": ["esp32", "micropython", "iot", "videogame"],
       "thumb_img_base_fn": "cardboard_boxcade_thumb",
       "thumb_img_alt": "photo of a cardboard box with a screen and switches",
-      "description": "This project explores ...",
-      "collateral_creation_name_href_pairs": [
-        ["Prototyping Platform", "#"]
-      ],
-      "related_project_name_href_pairs": [
-        ["iome", "#"]
-      ],
-      "github_url": "https://github.com/derekenos"
+      "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
+      "related_projects": [
+        "iome"
+      ]
     },
 
     {
@@ -59,15 +55,18 @@
       "name": "Gritty Viddy",
       "slug": "/project-gritty-viddy",
       "short_description": "Real-timeish, GPU-backed video effects using vanilla Javascript.",
+      "description": "<a href=\"https://s3.amazonaws.com/derekenos.com/projects/gritty-viddy/index.html\">Try it here!</a>",
       "tags": ["javascript", "gpu", "video", "effects", "realtime"],
       "thumb_img_base_fn": "gritty-viddy",
-      "thumb_img_alt": "gritty viddy video effects app screenshot"
+      "thumb_img_alt": "gritty viddy video effects app screenshot",
+      "github_url": "https://github.com/derekenos/gritty-viddy"
     },
 
     {
       "name": "Important Message",
       "slug": "/project-important-message",
       "short_description": "Testing the waters of the Cloudflare Apps platform.",
+      "description": "<a href=\"https://www.cloudflare.com/apps/important-message\">https://www.cloudflare.com/apps/important-message</a>",
       "tags": ["javascript", "webcomponents", "webapp"],
       "thumb_img_base_fn": "important-message",
       "thumb_img_alt": "Important Message app banner image"
@@ -79,7 +78,8 @@
       "short_description": "Internet-connected Motorized Etch-A-Sketch",
       "tags": ["esp32", "micropython", "iot"],
       "thumb_img_base_fn": "sketchy_video_poster",
-      "thumb_img_alt": "photo of motorized Etch-A-Sketch"
+      "thumb_img_alt": "photo of motorized Etch-A-Sketch",
+      "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy"
     },
 
     {
@@ -124,7 +124,8 @@
       "short_description": "A gratuitously lasercut delta robot.",
       "tags": ["esp32", "micropython", "iot"],
       "thumb_img_base_fn": "delta_video_thumb",
-      "thumb_img_alt": "photo of delta robot made from laser-cut wood"
+      "thumb_img_alt": "photo of delta robot made from laser-cut wood",
+      "github_url": "https://github.com/derekenos/delta_robot"
     },
 
     {
@@ -149,6 +150,7 @@
       "name": "deMIDulator",
       "slug": "/project-demidulator",
       "short_description": "A lo-fi, MIDI-controlled synthesizer and sampler.",
+      "description": "More info at <a href=\"http://badhandshake.com/demidulator/\">badhandshake.com</a>",
       "tags": ["picmicrocontroller", "assembly", "midi", "synthesizer", "sampler", "rockband"],
       "thumb_img_base_fn": "demidulator_thumb",
       "thumb_img_alt": "photo of the deMIDulator 8-bit synth"

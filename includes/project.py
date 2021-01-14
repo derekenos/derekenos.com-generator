@@ -1,5 +1,6 @@
 
 from lib import NotDefined
+from lib.htmlephant_extensions import UnescapedParagraph
 from lib.htmlephant import (
     Anchor,
     H1,
@@ -24,8 +25,8 @@ def Body(context,
          thumb_img_base_fn,
          thumb_img_alt,
          description=None,
-         collateral_creation_name_href_pairs=None,
-         related_project_name_href_pairs=None,
+         collateral_creations=None,
+         related_projects=None,
          github_url=None,
     ):
     els = [
@@ -47,7 +48,7 @@ def Body(context,
             section.Body(
                 context,
                 'Description',
-                children=(Paragraph(description),)
+                children=(UnescapedParagraph(description),)
             )
         )
     # Add Github Link.
@@ -58,23 +59,39 @@ def Body(context,
             ))
         )
     # Add collateral creations.
-    if collateral_creation_name_href_pairs:
+    if collateral_creations:
         els.extend(
             section.Body(
                 context,
                 'Collateral Creations',
                 '',
-                links_list.Body(context, collateral_creation_name_href_pairs)
+                links_list.Body(
+                    context,
+                    [
+                        (project['name'], project['slug'])
+                         for project in context.projects
+                         if project['name'] in collateral_creations
+
+                    ]
+                )
             )
         )
     # Add related projects.
-    if related_project_name_href_pairs:
+    if related_projects:
         els.extend(
             section.Body(
                 context,
                 'Related Projects',
                 '',
-                links_list.Body(context, related_project_name_href_pairs)
+                links_list.Body(
+                    context,
+                    [
+                        (project['name'], project['slug'])
+                         for project in context.projects
+                         if project['name'] in related_projects
+
+                    ]
+                )
             )
         )
     return els

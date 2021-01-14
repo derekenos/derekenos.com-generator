@@ -1,7 +1,9 @@
 
 from .htmlephant import (
     HTMLElement,
+    H1,
     Meta,
+    Paragraph,
 )
 
 class Nav(HTMLElement):
@@ -25,6 +27,12 @@ class Em(HTMLElement):
 
 class Section(HTMLElement):
     TAG_NAME = 'section'
+
+class UnescapedH1(H1):
+    ESCAPE_TEXT = False
+
+class UnescapedParagraph(Paragraph):
+    ESCAPE_TEXT = False
 
 StdMeta = lambda k, v: Meta(name=k, content=v)
 OGMeta = lambda k, v: Meta(property=f'og:{k}', content=v)

@@ -1,7 +1,6 @@
 
 from itertools import chain
 
-from lib.htmlephant_extensions import Em
 from lib.htmlephant import (
     Anchor,
     Div,
@@ -11,15 +10,15 @@ from lib.htmlephant import (
     Script,
     Title,
 )
+from lib.htmlephant_extensions import (
+    Em,
+    UnescapedH1,
+    UnescapedParagraph,
+)
 
 from includes import section
 from includes import collection
 
-class UnescapedH1(H1):
-    ESCAPE_TEXT = False
-
-class UnescapedParagraph(Paragraph):
-    ESCAPE_TEXT = False
 
 INITIATIVES = (
     (
