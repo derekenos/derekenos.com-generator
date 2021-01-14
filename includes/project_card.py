@@ -8,6 +8,7 @@ from lib.htmlephant import (
     H1,
     H2,
     H3,
+    NOEL,
 )
 
 from macros import picture
@@ -18,8 +19,8 @@ def Body(context, name, short_description, tags, thumb_img_base_fn,
          thumb_img_alt, **kwargs):
     return (
         H1(children=(Anchor(name, href=f'project-{stubify(name)}.html'),)),
-        H2(short_description),
-        H3(' '.join(f'#{tag}' for tag in tags)),
+        H2(short_description) if short_description else NOEL,
+        H3(' '.join(f'#{tag}' for tag in tags)) if tags else NOEL,
         Anchor(
             href=f'project-{stubify(name)}.html',
             children=picture.Body(
