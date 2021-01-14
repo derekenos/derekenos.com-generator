@@ -18,7 +18,7 @@
       "tags": ["esp32", "micropython", "iot"],
       "thumb_img_base_fn": "weather_station_thumb",
       "thumb_img_alt": "photo of a cardboard box with a screen and switches",
-      "description": "This project uses laser-cut, server-powered gauges to display the current local weather forecast.<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/n43fajMjPJhvcqR47\">here</a>."
+      "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/n43fajMjPJhvcqR47\">here</a>."
     },
 
     {
