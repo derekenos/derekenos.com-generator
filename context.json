@@ -12,6 +12,16 @@
   "projects": [
 
     {
+      "name": "Weather Station",
+      "slug": "/project-weather-station",
+      "short_description": "An IOT weather forecast display appliance.",
+      "tags": ["esp32", "micropython", "iot"],
+      "thumb_img_base_fn": "weather_station_thumb",
+      "thumb_img_alt": "photo of a cardboard box with a screen and switches",
+      "description": "This project uses laser-cut, server-powered gauges to display the current local weather forecast.<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/n43fajMjPJhvcqR47\">here</a>."
+    },
+
+    {
       "name": "Cardboard Boxcade",
       "slug": "/project-cardboard-boxcade",
       "short_description": "Custom physical controls for browser-based HTML/Javascript applications.",
