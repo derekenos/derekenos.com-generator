@@ -8,10 +8,12 @@ class Picture(HTMLElement):
     TAG_NAME = 'picture'
 
 class Source(HTMLElement):
+    IS_VOID = True
     TAG_NAME = 'source'
     REQUIRED_ATTRS = ('srcset',)
 
 class Link(HTMLElement):
+    IS_VOID = True
     TAG_NAME='link'
     REQUIRED_ATTRS = ('href', 'rel')
 
