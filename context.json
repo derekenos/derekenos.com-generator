@@ -28,7 +28,7 @@
       "tags": ["esp32", "micropython", "iot", "videogame"],
       "thumb_img_base_fn": "cardboard_boxcade_thumb",
       "thumb_img_alt": "photo of a cardboard box with a screen and switches",
-      "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
+      "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/rdZx6bYMPJ1KLtBg9\">here</a>.",
       "related_projects": [
         "iome"
       ]
@@ -47,6 +47,7 @@
       "name": "Weezel",
       "slug": "/project-weezel",
       "short_description": "A drawing robot accessory for the Ikea MÅLA easel.",
+      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/4Nu9vLZbMouLfBRD7\">here</a>.",
       "tags": ["cnc", "art", "esp32", "micropython", "iot"],
       "thumb_img_base_fn": "weezel_thumb",
       "thumb_img_alt": "photo of the Weezel drawing robot"
@@ -56,6 +57,7 @@
       "name": "Modular Arcade Cabinet",
       "slug": "/project-modular-arcade-cabinet",
       "short_description": "A work in progress...",
+      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/KerbLsQsoxEZwaqK7\">here</a>.",
       "tags": [],
       "thumb_img_base_fn": "arcade_cabinet_thumb",
       "thumb_img_alt": "lasercut arcade cabinet scale model photo"
@@ -86,6 +88,7 @@
       "name": "Sketchy",
       "slug": "/project-sketchy",
       "short_description": "Internet-connected Motorized Etch-A-Sketch",
+      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/4UtGs1rNt6jChj3T8\">here</a>.",
       "tags": ["esp32", "micropython", "iot"],
       "thumb_img_base_fn": "sketchy_video_poster",
       "thumb_img_alt": "photo of motorized Etch-A-Sketch",
@@ -114,6 +117,7 @@
       "name": "Laser-cut Keypad",
       "slug": "/project-laser-cut-keypad",
       "short_description": "A Internet-connected Keypad w/ Backlit, Lasercut Living Hinge Buttons.",
+      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/tzytTZA3BoazBSDr7\">here</a>.",
       "tags": ["esp32", "micropython", "iot"],
       "thumb_img_base_fn": "lasercut_keypad_thumb",
       "thumb_img_alt": "photo of laser-cut wooden keypad"
