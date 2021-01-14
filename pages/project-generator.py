@@ -28,10 +28,9 @@ def get_meta_tags(context):
     if author:
         tags.append(StdMeta('author', author))
     # Description.
-    description = f'{project["name"]} - {project["short_description"]}'
     tags.extend((
-        StdMeta('description', description),
-        OGMeta('description', description),
+        StdMeta('description', project['short_description']),
+        OGMeta('description', project['short_description'])
     ))
     # Image
     tags.append(
