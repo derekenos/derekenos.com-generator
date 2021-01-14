@@ -1,8 +1,6 @@
 
 import re
 
-STUBIFY_REGEX = re.compile(r'[^\w]')
-
 def assert_ctx(context, k):
     if not hasattr(context, k):
         raise AssertionError(f'context has no attribute "{k}"')
@@ -12,6 +10,3 @@ def assert_ctx(context, k):
 
 # Define am empty include/macro Head/Body placeholder function.
 NotDefined = lambda context: ()
-
-# Replace non-alpha chars with a hyphen and lowercase.
-stubify = lambda s: STUBIFY_REGEX.sub('-', s).lower()

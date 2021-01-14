@@ -2,7 +2,6 @@
 from lib import (
     NotDefined,
     assert_ctx,
-    stubify,
 )
 
 from lib.htmlephant_extensions import Nav
@@ -64,7 +63,7 @@ def Body(context):
                 Anchor(
                     project['name'],
                     _class='project-nav-link',
-                    href=f'project-{stubify(project["name"])}.html'
+                    href=project['slug']
                 )
             )
     nav.children.append(outer)

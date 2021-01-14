@@ -46,6 +46,16 @@ class Context:
             raise AssertionError(f'Path is not a regular file: {path}')
         return path
 
+    def url(self, path):
+        """Return path as an absolute URL.
+        """
+        return f'{self.base_url if self.production else ""}/{path.lstrip("/")}'
+
+    def static_url(self, filename):
+        """Return an absolute URL for a static asset filename.
+        """
+        return self.url(self.static(filename))
+
     def open(self, path):
         """Return a writable UTF-8 file handle for a self.SITE_DIR sub-path.
         """

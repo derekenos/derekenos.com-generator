@@ -1,5 +1,8 @@
 
-from .htmlephant import HTMLElement
+from .htmlephant import (
+    HTMLElement,
+    Meta,
+)
 
 class Nav(HTMLElement):
     TAG_NAME = 'nav'
@@ -22,3 +25,6 @@ class Em(HTMLElement):
 
 class Section(HTMLElement):
     TAG_NAME = 'section'
+
+StdMeta = lambda k, v: Meta(name=k, content=v)
+OGMeta = lambda k, v: Meta(property=f'og:{k}', content=v)

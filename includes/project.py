@@ -18,6 +18,7 @@ Head = NotDefined
 
 def Body(context,
          name,
+         slug,
          short_description,
          tags,
          thumb_img_base_fn,
