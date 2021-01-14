@@ -102,15 +102,15 @@ nav > ol > li > a:hover {
   padding: 1rem;
 }
 
-.content > .section {
+.content > section {
   padding: 0 0 2rem 0;
 }
 
-.section > * {
+.content > section > * {
   padding: 0 1rem;
 }
 
-.section > h1 {
+.content > section > h1 {
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.4rem;
@@ -119,18 +119,18 @@ nav > ol > li > a:hover {
   border: solid 1px #222;
 }
 
-.section > h2 {
+.content > section > h2 {
   font-size: 1.1rem;
   font-weight: normal;
   padding: 1rem;
 }
 
-.section > h3 {
+.content > section > h3 {
   font-size: 1.3rem;
   font-weight: normal;
 }
 
-.section > ol {
+.content > section > ol {
   list-style: none;
 }
 

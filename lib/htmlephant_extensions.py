@@ -19,3 +19,6 @@ class Link(HTMLElement):
 
 class Em(HTMLElement):
     TAG_NAME = 'em'
+
+class Section(HTMLElement):
+    TAG_NAME = 'section'

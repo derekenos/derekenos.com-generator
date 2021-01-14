@@ -1,7 +1,7 @@
 
 from lib import NotDefined
+from lib.htmlephant_extensions import Section
 from lib.htmlephant import (
-    Div,
     H1,
     H2,
 )
@@ -9,8 +9,8 @@ from lib.htmlephant import (
 Head = NotDefined
 
 def Body(context, title, subtitle=None, children=()):
-    wrapper = Div(_class='section', children=[H1(title)])
+    section = Section(children=[H1(title)])
     if subtitle:
-        wrapper.children.append(H2(subtitle))
-    wrapper.children.extend(children)
-    return (wrapper,)
+        section.children.append(H2(subtitle))
+    section.children.extend(children)
+    return (section,)
