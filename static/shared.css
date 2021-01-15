@@ -75,7 +75,8 @@ nav > ol > li > a:hover {
   font-size: 0;
 }
 
-.project-nav-link {
+#project-nav-inner > span,
+#project-nav-inner > a {
   display: inline-block;
   white-space: norwap;
   padding: 1.4rem;
@@ -86,16 +87,13 @@ nav > ol > li > a:hover {
   border-radius: 8px;
 }
 
-.project-nav-link:hover {
-  text-decoration: underline;
-}
-
-.project-nav-link.current {
+#project-nav-inner > span {
   background-color: transparent;
+  cursor: default;
 }
 
-.project-nav-link.current:hover {
-  text-decoration: none;
+#project-nav-inner > a:hover {
+  text-decoration: underline;
 }
 
 .content > * {

@@ -53,16 +53,12 @@ def Body(context):
         )):
         if i == 0:
             inner.children.append(
-                Span(
-                    project['name'],
-                    _class='project-nav-link current'
-                )
+                Span(project['name'])
             )
         else:
             inner.children.append(
                 Anchor(
                     project['name'],
-                    _class='project-nav-link',
                     href=project['slug']
                 )
             )
