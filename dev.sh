@@ -48,9 +48,22 @@ function ctrl_c() {
     exit 0
 }
 
+function exit_if_server_down() {
+    if ! ps -q $server_pid >/dev/null; then
+        echo "server not running"
+        exit 1
+    fi
+}
+
+# Sleep and assert that server is up.
+sleep 0.5
+exit_if_server_down
+
 # Rebuild on any changes outside of the site/ dir.
 while true; do
     inotifywait -e modify --recursive --quiet --quiet --exclude site/ *;
+    # Exit if server crashed.
+    exit_if_server_down
     $pycmd run.py --context-file=context.json --development 2>&1 | tee .run.stderr
     if [ ${PIPESTATUS[0]} -eq 0 ]; then
         curl --silent -XPOST http://$host:$port/_reload
