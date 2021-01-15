@@ -22,23 +22,26 @@ def Body(context,
          slug,
          short_description,
          tags,
-         thumb_img_base_fn,
-         thumb_img_alt,
+         thumb_base_filename_alt_pairs,
+         show_card=True,
          description=None,
-         collateral_creations=None,
-         related_projects=None,
+         collateral_creations=(),
+         related_projects=(),
          github_url=None,
+         additional_img_base_fns=(),
     ):
+    thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
     els = [
         *section.Body(
             context,
             name,
             short_description,
-            picture.Body(
+            children=picture.Body(
                 context,
-                srcsets=(context.static(f'{thumb_img_base_fn}.webp'),),
-                src=context.static(f'{thumb_img_base_fn}.png'),
-                alt=thumb_img_alt
+                srcsets=(context.static(f'{thumb_base_filename}.webp'),),
+                src=context.static(f'{thumb_base_filename}.png'),
+                alt=thumb_alt
+
             )
         )
     ]
@@ -54,7 +57,7 @@ def Body(context,
     # Add Github Link.
     if github_url:
         els.extend(
-            section.Body(context, 'Design Files', children=(
+            section.Body(context, 'Source Files', children=(
                 Anchor('Github', href=github_url),
             ))
         )
