@@ -8,7 +8,7 @@ from includes import project_card
 from includes import collection
 
 Head = lambda context: (
-    Title('Derek Enos | Projects'),
+    Title(f'{context.name} | Projects'),
 )
 
 Body = lambda context: (

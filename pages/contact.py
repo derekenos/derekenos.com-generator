@@ -15,7 +15,7 @@ from includes import section
 from includes import links_list
 
 Head = lambda context: (
-    Title('Derek Enos | Contact'),
+    Title(f'{context.name} | Contact'),
 )
 
 Body = lambda context: (
@@ -27,18 +27,9 @@ Body = lambda context: (
                 'Email',
                 children=(
                     Anchor(
-                        'derek@derekenos.com',
-                        href="mailto:derek@derekenos.com"
+                        context.email,
+                        href=f'mailto:{context.email}'
                     ),
-                    Br(),
-                Br(),
-                    Div(
-                        children=(
-                            Em(
-                                "If I don't respond, please try again or through another channel; AWS SES has got some issues."
-                            ),
-                        )
-                    )
                 )
             ),
             *section.Body(
@@ -46,13 +37,7 @@ Body = lambda context: (
                 'Other channels',
                 children=links_list.Body(
                     context,
-                    (
-                        ('Github', "https://github.com/derekenos"),
-                        ('Instagram', "https://www.instagram.com/derekjenos/"),
-                        ('YouTube', "https://www.youtube.com/derekenos"),
-                        ('LinkedIn', "https://www.linkedin.com/in/derekenos"),
-                        ('Patreon', "https://www.patreon.com/derekenos"),
-                    )
+                    context.social_name_url_pairs
                 )
             )
         )

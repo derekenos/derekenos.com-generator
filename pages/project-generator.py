@@ -24,9 +24,7 @@ def get_meta_tags(context):
     project = context.generator_item
     tags = []
     # Author.
-    author = getattr(context, 'author')
-    if author:
-        tags.append(StdMeta('author', author))
+    tags.append(StdMeta('author', context.name))
     # Description.
     tags.extend((
         StdMeta('description', project['short_description']),
@@ -54,7 +52,7 @@ def get_meta_tags(context):
 
 def Head(context):
     return (
-        Title(f'Derek Enos | {context.generator_item["name"]}'),
+        Title(f'{context.name} | {context.generator_item["name"]}'),
         *get_meta_tags(context)
     )
 

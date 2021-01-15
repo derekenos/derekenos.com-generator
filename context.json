@@ -1,287 +1,72 @@
 {
-  "author": "Derek Enos",
-  "base_url": "https://derekenos.com",
-  "google_analytics_id": "UA-19335494-1",
+  "name": "<your-name>",
+  "email": "<your-email-address>",
+  "social_name_url_pairs": [
+    ["Github", "https://github.com/<you>"],
+    ["Instagram", "https://www.instagram.com/<you>"],
+    ["YouTube", "https://www.youtube.com/<you>"],
+    ["LinkedIn", "https://www.linkedin.com/in/<you>"],
+    ["Patreon", "https://www.patreon.com/<you>"]
+  ],
+  "base_url": "<your-production-root-address>",
+  "google_analytics_id": "<your-google-analytics-id>",
 
   "navbar_page_name_label_pairs": [
     ["index", "projects"],
-    ["ambitions", "ambitions"],
     ["contact", "contact"]
   ],
 
   "projects": [
-
     {
-      "name": "Weather Station",
-      "slug": "/project-weather-station",
-      "short_description": "An IOT weather forecast display appliance.",
-      "tags": ["esp32", "micropython", "iot"],
+      "name": "Project 1",
+      "slug": "/project-1",
+      "short_description": "The first project.",
+      "description": "A description of the first project.",
+      "tags": ["fun", "life-affirming"],
       "thumb_base_filename_alt_pairs": [
-        ["weather_station_thumb", "photo of a laser-cut wood weather station"]
+        ["project_1_thumb", "placeholder project image"]
       ],
-      "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/n43fajMjPJhvcqR47\">here</a>.",
+      "related_projects": [
+        "Project 2"
+      ],
       "collateral_creations": [
-        "Indicator Gauge",
-        "Streaming JSON Parser",
-        "time.strptime()",
-        "UTF-8 Decoder"
+        "Project 4"
       ]
     },
 
     {
-      "name": "Indicator Gauge",
-      "slug": "/project-indicator-gauge",
-      "short_description": "A laser-cut, servo-powered indicator guage.",
-      "tags": ["esp32", "micropython", "iot"],
+      "name": "Project 2",
+      "slug": "/project-2",
+      "short_description": "The second project.",
+      "description": "A description of the second project.",
+      "tags": ["challenging", "gratifying"],
       "thumb_base_filename_alt_pairs": [
-        ["laser_cut_servo_powered_gauge_4", "photo of laser-cut, servo-powered gauge"]
+        ["project_2_thumb", "placeholder project image"]
       ],
-      "show_card": false,
-      "description": "More photos and videos <a href=\"https://photos.app.goo.gl/w86c6Ep67xc9LZcf7\">here</a>.",
       "related_projects": [
-        "Weather Station"
+        "Project 1"
       ]
     },
 
     {
-      "name": "Streaming JSON Parser",
-      "slug": "/project-streaming-json-parser",
-      "short_description": "A Python streaming JSON parser for memory-constrained environments.",
-      "tags": ["micropython", "parser"],
+      "name": "Project 3",
+      "slug": "/project-3",
+      "short_description": "The third project.",
+      "description": "A description of the third project.",
+      "tags": ["difficult", "glad-its-done"],
       "thumb_base_filename_alt_pairs": [
-        ["json_parser_thumb", "screenshot of json-parser library source code"]
-      ],
-      "show_card": false,
-      "description": "",
-      "related_projects": [
-        "Weather Station"
-      ],
-      "github_url": "https://github.com/derekenos/json-parser"
-    },
-
-    {
-      "name": "time.strptime()",
-      "slug": "/project-strptime",
-      "short_description": "An implementation of Python time.strptime() for use with Micropython.",
-      "tags": ["python", "micropython", "parser"],
-      "thumb_base_filename_alt_pairs": [
-        ["strptime_thumb", "screenshot of time.strptime() library source code"]
-      ],
-      "show_card": false,
-      "description": "",
-      "related_projects": [
-        "Weather Station"
-      ],
-      "github_url": "https://github.com/derekenos/micropython-time"
-    },
-
-    {
-      "name": "UTF-8 Decoder",
-      "slug": "/project-utf8-decoder",
-      "short_description": "A toy incremental UTF-8 decoder.",
-      "tags": ["python", "decoder"],
-      "thumb_base_filename_alt_pairs": [
-        ["utf8_decoder_thumb", "screenshot of UTF-8 decoder library source code"]
-      ],
-      "show_card": false,
-      "description": "",
-      "related_projects": [
-        "Weather Station"
-      ],
-      "github_url": "https://github.com/derekenos/utf8_decoder"
-    },
-
-    {
-      "name": "Cardboard Boxcade",
-      "slug": "/project-cardboard-boxcade",
-      "short_description": "Custom physical controls for browser-based HTML/Javascript applications.",
-      "tags": ["esp32", "micropython", "iot", "videogame"],
-      "thumb_base_filename_alt_pairs": [
-        ["cardboard_boxcade_thumb", "photo of a cardboard box with a screen and switches"]
-      ],
-      "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/rdZx6bYMPJ1KLtBg9\">here</a>.",
-      "related_projects": [
-        "iome"
+        ["project_3_thumb", "placeholder project image"]
       ]
     },
 
     {
-      "name": "Trtl",
-      "slug": "/project-trtl",
-      "short_description": "A wheeled drawing robot inspired by the Logo Turtle.",
-      "tags": ["cnc", "art", "esp32", "micropython", "iot"],
+      "name": "Project 4",
+      "slug": "/project-4",
+      "short_description": "The last project.",
+      "description": "A description of the final project.",
+      "tags": ["done", "never-again"],
       "thumb_base_filename_alt_pairs": [
-        ["trtl_thumb", "photo of the T.r.t.l. drawing robot"]
-      ]
-    },
-
-    {
-      "name": "Weezel",
-      "slug": "/project-weezel",
-      "short_description": "A drawing robot accessory for the Ikea MÅLA easel.",
-      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/4Nu9vLZbMouLfBRD7\">here</a>.",
-      "tags": ["cnc", "art", "esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["weezel_thumb", "photo of the Weezel drawing robot"]
-      ]
-    },
-
-    {
-      "name": "Modular Arcade Cabinet",
-      "slug": "/project-modular-arcade-cabinet",
-      "short_description": "A work in progress...",
-      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/KerbLsQsoxEZwaqK7\">here</a>.",
-      "tags": [],
-      "thumb_base_filename_alt_pairs": [
-        ["arcade_cabinet_thumb", "lasercut arcade cabinet scale model photo"]
-      ]
-    },
-
-    {
-      "name": "Gritty Viddy",
-      "slug": "/project-gritty-viddy",
-      "short_description": "Real-timeish, GPU-backed video effects using vanilla Javascript.",
-      "description": "<a href=\"https://s3.amazonaws.com/derekenos.com/projects/gritty-viddy/index.html\">Try it here!</a>",
-      "tags": ["javascript", "gpu", "video", "effects", "realtime"],
-      "thumb_base_filename_alt_pairs": [
-        ["gritty-viddy", "gritty viddy video effects app screenshot"]
-      ],
-      "github_url": "https://github.com/derekenos/gritty-viddy"
-    },
-
-    {
-      "name": "Important Message",
-      "slug": "/project-important-message",
-      "short_description": "Testing the waters of the Cloudflare Apps platform.",
-      "description": "<a href=\"https://www.cloudflare.com/apps/important-message\">https://www.cloudflare.com/apps/important-message</a>",
-      "tags": ["javascript", "webcomponents", "webapp"],
-      "thumb_base_filename_alt_pairs": [
-        ["important-message", "Important Message app banner image"]
-      ]
-    },
-
-    {
-      "name": "Sketchy",
-      "slug": "/project-sketchy",
-      "short_description": "Internet-connected Motorized Etch-A-Sketch",
-      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/4UtGs1rNt6jChj3T8\">here</a>.",
-      "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["sketchy_video_poster", "photo of motorized Etch-A-Sketch"]
-      ],
-      "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy"
-    },
-
-    {
-      "name": "Babygate",
-      "slug": "/project-babygate",
-      "short_description": "A vanilla JS / HTML5 demo game for the iome platform.",
-      "tags": ["html5", "javascript", "webaudio", "videogame"],
-      "thumb_base_filename_alt_pairs": [
-        ["babygate_thumb", "screenshot of Babygate video game"]
-      ]
-    },
-
-    {
-      "name": "iome",
-      "slug": "/project-iome",
-      "short_description": "A platform for developing physical interfaces with a web application frontend using modern, off-the-shelf technologies.",
-      "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["game_console_20191008_thumb", "lasercut iome dev kit photo"]
-      ]
-    },
-
-    {
-      "name": "Laser-cut Keypad",
-      "slug": "/project-laser-cut-keypad",
-      "short_description": "A Internet-connected Keypad w/ Backlit, Lasercut Living Hinge Buttons.",
-      "description": "<br><br>More photos and videos <a href=\"https://photos.app.goo.gl/tzytTZA3BoazBSDr7\">here</a>.",
-      "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["lasercut_keypad_thumb", "photo of laser-cut wooden keypad"]
-      ]
-    },
-
-    {
-      "name": "Physical Platformer Game Prototype",
-      "slug": "/project-physical-platformer-game-prototype",
-      "short_description": "",
-      "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["platformer_thumb", "photo of motorized x/y axis made from laser-cut wood"]
-      ]
-    },
-
-    {
-      "name": "Delta Robot",
-      "slug": "/project-delta-robot",
-      "short_description": "A gratuitously lasercut delta robot.",
-      "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["delta_video_thumb", "photo of delta robot made from laser-cut wood"]
-      ],
-      "github_url": "https://github.com/derekenos/delta_robot"
-    },
-
-    {
-      "name": "Composer",
-      "slug": "/project-composer",
-      "short_description": "A simple sound toy using the Web Audio API.",
-      "tags": ["javascript", "webaudio", "audio"],
-      "thumb_base_filename_alt_pairs": [
-        ["composer", "sound composer web app screenshot"]
-      ]
-    },
-
-    {
-      "name": "Ion Model",
-      "slug": "/project-ion-model",
-      "short_description": "A computationally inefficient exploration of the complex behaviors that arise from the interaction of simple rules.",
-      "tags": ["javascript", "emergentbehavior"],
-      "thumb_base_filename_alt_pairs": [
-        ["ionModelScreenThumb", "ion model application screenshot"]
-      ]
-    },
-
-    {
-      "name": "deMIDulator",
-      "slug": "/project-demidulator",
-      "short_description": "A lo-fi, MIDI-controlled synthesizer and sampler.",
-      "description": "More info at <a href=\"http://badhandshake.com/demidulator/\">badhandshake.com</a>",
-      "tags": ["picmicrocontroller", "assembly", "midi", "synthesizer", "sampler", "rockband"],
-      "thumb_base_filename_alt_pairs": [
-        ["demidulator_thumb", "photo of the deMIDulator 8-bit synth"]
-      ]
-    },
-
-    {
-      "name": "Beginner's Box",
-      "slug": "/project-beginner-s-box",
-      "short_description": "Force-sensitive tone generators.",
-      "tags": ["microcontroller", "sound"],
-      "thumb_base_filename_alt_pairs": [
-        ["beginners_box_thumb", "photo of laser-cut force-sensitive tone generator boxes"]
-      ]
-    },
-
-    {
-      "name": "Video Feedback Instrument",
-      "slug": "/project-video-feedback-instrument",
-      "short_description": "NTSC video generation w/ light pen feedback",
-      "tags": ["microcontroller", "videoart"],
-      "thumb_base_filename_alt_pairs": [
-        ["video_feedback_thumb", "video screenshot of video feedback instrument"]
-      ]
-    },
-
-    {
-      "name": "Physical Interface Prototype",
-      "slug": "/project-physical-interface-prototype",
-      "short_description": "An input device that reads the insertion depth of a movable column.",
-      "tags": ["microcontroller", "hci"],
-      "thumb_base_filename_alt_pairs": [
-        ["physical_interface_thumb", "photo of laser-cut physical interface prototype"]
+        ["project_4_thumb", "placeholder project image"]
       ]
     }
 
