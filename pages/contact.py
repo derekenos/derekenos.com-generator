@@ -21,7 +21,7 @@ DESCRIPTION = 'How to contact me'
 Head = lambda context: (
     StdMeta('description', DESCRIPTION),
     OGMeta('description', DESCRIPTION),
-    Title('Derek Enos | Contact'),
+    Title(f'{context.name} | Contact'),
 )
 
 Body = lambda context: (
@@ -34,8 +34,8 @@ Body = lambda context: (
                 'Email',
                 children=(
                     Anchor(
-                        'derek@derekenos.com',
-                        href="mailto:derek@derekenos.com"
+                        context.email,
+                        href=f'mailto:{context.email}'
                     ),
                     Br(),
                     Br(),
@@ -53,13 +53,7 @@ Body = lambda context: (
                 'Other channels',
                 children=links_list.Body(
                     context,
-                    (
-                        ('Github', "https://github.com/derekenos"),
-                        ('Instagram', "https://www.instagram.com/derekjenos/"),
-                        ('YouTube', "https://www.youtube.com/derekenos"),
-                        ('LinkedIn', "https://www.linkedin.com/in/derekenos"),
-                        ('Patreon', "https://www.patreon.com/derekenos"),
-                    )
+                    context.social_name_url_pairs
                 )
             )
         )

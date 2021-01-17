@@ -1,6 +1,16 @@
 {
-  "author": "Derek Enos",
   "base_url": "https://derekenos.com",
+
+  "name": "Derek Enos",
+  "email": "derek@derekenos.com",
+  "social_name_url_pairs": [
+    ["Github", "https://github.com/derekenos"],
+    ["Instagram", "https://www.instagram.com/derekjenos/"],
+    ["YouTube", "https://www.youtube.com/derekenos"],
+    ["LinkedIn", "https://www.linkedin.com/in/derekenos"],
+    ["Patreon", "https://www.patreon.com/derekenos"]
+  ],
+
   "google_analytics_id": "UA-19335494-1",
 
   "navbar_page_name_label_pairs": [

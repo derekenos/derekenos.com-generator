@@ -1,6 +1,4 @@
 
-from itertools import chain
-
 from lib.htmlephant_extensions import (
     OGMeta,
     StdMeta,
@@ -19,7 +17,7 @@ DESCRIPTION = 'Home page displaying selected projects'
 Head = lambda context: (
     StdMeta('description', DESCRIPTION),
     OGMeta('description', DESCRIPTION),
-    Title('Derek Enos | Projects'),
+    Title(f'{context.name} | Projects'),
 )
 
 Body = lambda context: (

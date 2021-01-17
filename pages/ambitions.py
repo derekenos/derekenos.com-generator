@@ -197,7 +197,7 @@ DESCRIPTION = 'Some things that I have considered making or doing'
 Head = lambda context: (
     StdMeta('description', DESCRIPTION),
     OGMeta('description', DESCRIPTION),
-    Title('Derek Enos | Ambitions'),
+    Title(f'{context.name} | Ambitions'),
     Script(
         _async='',
         src='https://c6.patreon.com/becomePatronButton.bundle.js'
