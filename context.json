@@ -1,4 +1,6 @@
 {
+  "base_url": "<your-production-root-address>",
+
   "name": "<your-name>",
   "email": "<your-email-address>",
   "social_name_url_pairs": [
@@ -8,7 +10,7 @@
     ["LinkedIn", "https://www.linkedin.com/in/<you>"],
     ["Patreon", "https://www.patreon.com/<you>"]
   ],
-  "base_url": "<your-production-root-address>",
+
   "google_analytics_id": "<your-google-analytics-id>",
 
   "navbar_page_name_label_pairs": [

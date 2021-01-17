@@ -10,6 +10,7 @@ Head = NotDefined
 
 Body = lambda context, name_href_pairs: (
     Ol(
+        _class='links',
         children=[
             Li(
                 children=(

@@ -2,6 +2,7 @@
 from lib.htmlephant import (
     NOEL,
     Div,
+    H1,
     Meta,
     Title,
 )
@@ -58,7 +59,10 @@ def Head(context):
 
 Body = lambda context: (
     Div(
-        _class='content',
-        children=_project.Body(context, **context.generator_item)
+        _class='content project',
+        children=(
+            H1(f'{context.generator_item["name"]} Project Details'),
+            *_project.Body(context, **context.generator_item)
+        )
     ),
 )
