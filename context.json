@@ -36,7 +36,7 @@
       "thumb_base_filename_alt_pairs": [
         ["laser_cut_servo_powered_gauge_4", "photo of laser-cut, servo-powered gauge"]
       ],
-      "show_card": false,
+      "hide_card": true,
       "description": "More photos and videos <a href=\"https://photos.app.goo.gl/w86c6Ep67xc9LZcf7\">here</a>.",
       "related_projects": [
         "Weather Station"
@@ -51,7 +51,7 @@
       "thumb_base_filename_alt_pairs": [
         ["json_parser_thumb", "screenshot of json-parser library source code"]
       ],
-      "show_card": false,
+      "hide_card": true,
       "description": "",
       "related_projects": [
         "Weather Station"
@@ -67,7 +67,7 @@
       "thumb_base_filename_alt_pairs": [
         ["strptime_thumb", "screenshot of time.strptime() library source code"]
       ],
-      "show_card": false,
+      "hide_card": true,
       "description": "",
       "related_projects": [
         "Weather Station"
@@ -83,7 +83,7 @@
       "thumb_base_filename_alt_pairs": [
         ["utf8_decoder_thumb", "screenshot of UTF-8 decoder library source code"]
       ],
-      "show_card": false,
+      "hide_card": true,
       "description": "",
       "related_projects": [
         "Weather Station"

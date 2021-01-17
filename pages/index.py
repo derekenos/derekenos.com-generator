@@ -19,6 +19,7 @@ Body = lambda context: (
             [
                 project_card.Body(context, **prj)
                 for prj in context.projects
+                if not prj.get('hide_card', False)
             ]
         )
     ),

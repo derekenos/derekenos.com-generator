@@ -23,12 +23,12 @@ def Body(context,
          short_description,
          tags,
          thumb_base_filename_alt_pairs,
-         show_card=True,
          description=None,
          collateral_creations=(),
          related_projects=(),
          github_url=None,
          additional_img_base_fns=(),
+         **kwargs
     ):
     thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
     els = [
