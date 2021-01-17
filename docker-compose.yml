@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+  app:
+    build: .
+    image: derekenos-com-generator
+    volumes:
+      - ./:/src
+    ports:
+      - "5000"
+    stdin_open: true
+    tty: true
