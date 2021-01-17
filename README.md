@@ -3,6 +3,7 @@ This is a custom static website generator that I built specifically for https://
 
 ## Features
 - Not a lot of features
+- No third-party libraries
 - Reasonable accessibility
 - Search engines don't hate it
 - [OpenGraph](https://ogp.me/) tags are included in [project pages](https://github.com/derekenos/derekenos.com-generator/blob/generic/pages/project-generator.py#L19-L52) to enable rich embeds, e.g.:
@@ -14,7 +15,13 @@ This is a custom static website generator that I built specifically for https://
 
 ## Additional `dev.sh` Dependencies
 - `bash`
-- `inotifywait` 
+- `inotifywait`
+
+## Included Dependencies
+
+This project includes a couple of my other repos as submodules:
+- [htmlephant](https://github.com/derekenos/htmlephant) - Lazy HTML Generator
+- [femtoweb](https://github.com/derekenos/femtoweb) - Async HTTP & Web Application Server
 
 ## To build your own, personalized derekenos.com clone
 
