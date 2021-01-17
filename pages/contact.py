@@ -1,5 +1,4 @@
 
-from lib.htmlephant_extensions import Em
 from lib.htmlephant import (
     Anchor,
     Br,
@@ -8,11 +7,20 @@ from lib.htmlephant import (
     H1,
     Title,
 )
+from lib.htmlephant_extensions import (
+    Em,
+    OGMeta,
+    StdMeta,
+)
 
 from includes import section
 from includes import links_list
 
+DESCRIPTION = 'How to contact me'
+
 Head = lambda context: (
+    StdMeta('description', DESCRIPTION),
+    OGMeta('description', DESCRIPTION),
     Title('Derek Enos | Contact'),
 )
 
@@ -20,7 +28,7 @@ Body = lambda context: (
     Div(
         _class='content contact',
         children=(
-            H1('Contact me'),
+            H1(DESCRIPTION),
             *section.Body(
                 context,
                 'Email',

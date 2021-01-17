@@ -1,6 +1,10 @@
 
 from itertools import chain
 
+from lib.htmlephant_extensions import (
+    OGMeta,
+    StdMeta,
+)
 from lib.htmlephant import (
     Div,
     H1,
@@ -10,7 +14,11 @@ from lib.htmlephant import (
 from includes import project_card
 from includes import collection
 
+DESCRIPTION = 'Home page displaying selected projects'
+
 Head = lambda context: (
+    StdMeta('description', DESCRIPTION),
+    OGMeta('description', DESCRIPTION),
     Title('Derek Enos | Projects'),
 )
 
@@ -18,7 +26,7 @@ Body = lambda context: (
     Div(
         _class='content projects',
         children=(
-            H1('Selected projects'),
+            H1(DESCRIPTION),
             *collection.Body(
                 context,
                 [

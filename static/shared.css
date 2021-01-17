@@ -198,6 +198,12 @@ section .item > h4 {
   margin-left: 1rem;
 }
 
+/* Mobile fix: tap targets are not sized appropriately */
+ol.links > li > a {
+  display: inline-block;
+  padding: 1rem 0;
+}
+
 @media screen and (min-width: 1024px) {
   nav {
     display: block;
@@ -237,6 +243,11 @@ section .item > h4 {
 
   .item {
     max-width: 400px;
+  }
+
+  ol.links > li > a {
+    display: inline-block;
+    padding: .2rem 0;
   }
 
   .patreon-widget {

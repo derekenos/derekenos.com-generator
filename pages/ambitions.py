@@ -11,6 +11,8 @@ from lib.htmlephant import (
     Title,
 )
 from lib.htmlephant_extensions import (
+    OGMeta,
+    StdMeta,
     UnescapedH4,
     UnescapedParagraph,
 )
@@ -190,7 +192,11 @@ SMALL_BITES = (
     ),
 )
 
+DESCRIPTION = 'Some things that I have considered making or doing'
+
 Head = lambda context: (
+    StdMeta('description', DESCRIPTION),
+    OGMeta('description', DESCRIPTION),
     Title('Derek Enos | Ambitions'),
     Script(
         _async='',
@@ -202,7 +208,7 @@ Body = lambda context: (
     Div(
         _class='content ambitions',
         children=(
-            H1('Some things that I have considered making or doing'),
+            H1(DESCRIPTION),
             *section.Body(
                 context,
                 'Initiatives',
