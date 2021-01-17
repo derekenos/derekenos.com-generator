@@ -1,6 +1,14 @@
 # derekenos.com-generator
 This is a custom static website generator that I built specifically for https://derekenos.com
 
+## Features
+- Not a lot of features
+- Reasonable accessibility
+- Search engines don't hate it
+- [OpenGraph](https://ogp.me/) tags are included in [project pages](https://github.com/derekenos/derekenos.com-generator/blob/generic/pages/project-generator.py#L19-L52) to enable rich embeds, e.g.:
+![Screenshot from 2021-01-17 16-16-28](https://user-images.githubusercontent.com/585182/104856230-6c213900-58df-11eb-8476-927c2f9d9ad3.png)
+
+
 ## Dependencies
 - `Python 3.9`
 
