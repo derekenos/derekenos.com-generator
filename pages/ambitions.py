@@ -145,9 +145,9 @@ SMALL_BITES = (
 
     (
         'Developer the Game',
-        """<h2>Chat Client</h2>
+        """<em>Chat Client</em><br><br>
           A 2D scroller where your character walks down the street (which represents the timeline) and goes past other characters (i.e. coworkers) with stuff to say, or a group of people if a thread. "Go to Most Recent" zooms you down the street, e.g. a cape pops out and you fly Superman style, you hop on a car, bike, etc.
-          <h2>Issues Client</h2>
+          <br><br><em>Issues Client</em><br><br>
           A game like Leisure Suit Larry where you interact with characters who are the authors of issues. Your character has some idle loop (e.g. typing at a computer) and gets interrupted (e.g. people call on the phone, walk in through the door, etc.) when people create new, or comment on, related issues."""
     ),
 
