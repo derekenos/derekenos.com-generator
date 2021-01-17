@@ -142,4 +142,5 @@ if __name__ == '__main__':
 
     # Maybe start the webserver.
     if args.serve:
+        print(f'Serving at: http://{args.host}:{args.port}')
         serve(context.SITE_DIR, args.host, args.port)
