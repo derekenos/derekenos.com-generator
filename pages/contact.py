@@ -3,12 +3,10 @@ from lib.htmlephant_extensions import Em
 from lib.htmlephant import (
     Anchor,
     Br,
+    Div,
+    Div,
     H1,
-    Div,
-    Li,
-    Div,
     Title,
-    Ul,
 )
 
 from includes import section
@@ -20,8 +18,9 @@ Head = lambda context: (
 
 Body = lambda context: (
     Div(
-        _class='content',
+        _class='content contact',
         children=(
+            H1('Contact me'),
             *section.Body(
                 context,
                 'Email',
@@ -31,7 +30,7 @@ Body = lambda context: (
                         href="mailto:derek@derekenos.com"
                     ),
                     Br(),
-                Br(),
+                    Br(),
                     Div(
                         children=(
                             Em(

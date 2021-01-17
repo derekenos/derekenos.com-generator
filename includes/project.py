@@ -1,15 +1,7 @@
 
 from lib import NotDefined
 from lib.htmlephant_extensions import UnescapedParagraph
-from lib.htmlephant import (
-    Anchor,
-    H1,
-    H2,
-    H3,
-    Li,
-    Ol,
-    Paragraph,
-)
+from lib.htmlephant import Anchor
 
 from macros import picture
 from includes import section

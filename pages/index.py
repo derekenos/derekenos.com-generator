@@ -1,6 +1,9 @@
 
+from itertools import chain
+
 from lib.htmlephant import (
     Div,
+    H1,
     Title,
 )
 
@@ -13,14 +16,17 @@ Head = lambda context: (
 
 Body = lambda context: (
     Div(
-        _class='content',
-        children=collection.Body(
-            context,
-            [
-                project_card.Body(context, **prj)
-                for prj in context.projects
-                if not prj.get('hide_card', False)
-            ]
+        _class='content projects',
+        children=(
+            H1('Selected projects'),
+            *collection.Body(
+                context,
+                [
+                    project_card.Body(context, **prj)
+                    for prj in context.projects
+                    if not prj.get('hide_card', False)
+                ]
+            )
         )
     ),
 )

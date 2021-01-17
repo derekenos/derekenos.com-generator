@@ -5,14 +5,13 @@ from lib.htmlephant import (
     Anchor,
     Div,
     H1,
-    H3,
+    H4,
     Paragraph,
     Script,
     Title,
 )
 from lib.htmlephant_extensions import (
-    Em,
-    UnescapedH1,
+    UnescapedH4,
     UnescapedParagraph,
 )
 
@@ -201,17 +200,15 @@ Head = lambda context: (
 
 Body = lambda context: (
     Div(
-        _class='content',
+        _class='content ambitions',
         children=(
-            Paragraph(
-                'These are things that I have considered making or doing.'
-            ),
+            H1('Some things that I have considered making or doing'),
             *section.Body(
                 context,
                 'Initiatives',
                 'broad efforts',
                 children=chain(*[
-                    [H3(name), Paragraph(text)]
+                    [H4(name), Paragraph(text)]
                     for name, text in INITIATIVES
                 ])
             ),
@@ -219,11 +216,11 @@ Body = lambda context: (
             *section.Body(
                 context,
                 "Variations on Others' Product Themes",
-                'playful reimaginings of existing consumer products',
+                'Playful reimaginings of existing consumer products',
                 children=collection.Body(
                     context,
                     [
-                        [H1(name), UnescapedParagraph(text)]
+                        [H4(name), UnescapedParagraph(text)]
                         for name, text in VARIATIONS
                     ]
                 )
@@ -232,11 +229,11 @@ Body = lambda context: (
             *section.Body(
                 context,
                 "Realized by Others",
-                'things that occurred to me that others actually created',
+                'Things that occurred to me that others actually created',
                 children=collection.Body(
                     context,
                     [
-                        [UnescapedH1(name), UnescapedParagraph(text)]
+                        [UnescapedH4(name), UnescapedParagraph(text)]
                         for name, text in REALIZED_BY_OTHERS
                     ]
                 )
@@ -245,11 +242,11 @@ Body = lambda context: (
             *section.Body(
                 context,
                 "Small Bites",
-                'selections from my notes',
+                'Selections from my notes',
                 children=collection.Body(
                     context,
                     [
-                        [H1(name), UnescapedParagraph(text)]
+                        [H4(name), UnescapedParagraph(text)]
                         for name, text in SMALL_BITES
                     ]
                 )

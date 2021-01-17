@@ -1,7 +1,7 @@
 
 from .htmlephant import (
     HTMLElement,
-    H1,
+    H2,
     Meta,
     Paragraph,
 )
@@ -28,7 +28,7 @@ class Em(HTMLElement):
 class Section(HTMLElement):
     TAG_NAME = 'section'
 
-class UnescapedH1(H1):
+class UnescapedH4(H2):
     ESCAPE_TEXT = False
 
 class UnescapedParagraph(Paragraph):

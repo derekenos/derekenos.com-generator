@@ -108,7 +108,22 @@ nav > ol > li > a:hover {
   padding: 0 1rem;
 }
 
-.content > section > h1 {
+.content > h1 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  line-height: 1.4rem;
+}
+
+.content.projects > h1,
+.content.project > h1,
+.content.contact > h1 {
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.content > section > h2 {
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.4rem;
@@ -117,13 +132,13 @@ nav > ol > li > a:hover {
   border: solid 1px #222;
 }
 
-.content > section > h2 {
+.content > section > h3 {
   font-size: 1.1rem;
   font-weight: normal;
   padding: 1rem;
 }
 
-.content > section > h3 {
+.content > section > h4 {
   font-size: 1.3rem;
   font-weight: normal;
 }
@@ -142,25 +157,33 @@ nav > ol > li > a:hover {
   padding: 1rem;
 }
 
-.item > h1 {
+.item > h2 {
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.4rem;
 }
 
-.item > h2 {
+.item > h3 {
   font-size: 1rem;
   font-weight: normal;
   margin-bottom: .4rem;
 }
 
-.item > h3 {
+.item > h4 {
   font-size: 1rem;
   font-weight: normal;
   line-height: .8rem;
   font-style: italic;
   margin-top: 0;
   opacity: 0.8;
+}
+
+section .item > h4 {
+  font-size: 1.3rem;
+  font-style: normal;
+  line-height: 1.5rem;
+  margin: 0;
+  padding: .5rem 0;
 }
 
 .footer {
