@@ -58,6 +58,8 @@ def Head(context):
 Body = lambda context: (
     Div(
         _class='content project',
+        itemscope='',
+        itemtype='https://schema.org/CreativeWork',
         children=(
             H1(f'{context.generator_item["name"]} Project Details'),
             *_project.Body(context, **context.generator_item)

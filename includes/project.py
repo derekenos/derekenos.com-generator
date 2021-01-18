@@ -1,7 +1,15 @@
 
 from lib import NotDefined
 from lib.htmlephant_extensions import UnescapedParagraph
-from lib.htmlephant import Anchor
+from lib.htmlephant import (
+    Anchor,
+    H2,
+    H3,
+    Li,
+    Section,
+    Span,
+    Ol,
+)
 
 from macros import picture
 from includes import section
@@ -23,19 +31,19 @@ def Body(context,
          **kwargs
     ):
     thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
+    # Inline includes.section to specify itemprops.
     els = [
-        *section.Body(
-            context,
-            name,
-            short_description,
-            children=picture.Body(
+        Section(children=(
+            H2(name, itemprop='name'),
+            H3(short_description, itemprop='abstract'),
+            *picture.Body(
                 context,
+                itemprop='image',
                 srcsets=(context.static(f'{thumb_base_filename}.webp'),),
                 src=context.static(f'{thumb_base_filename}.png'),
                 alt=thumb_alt
-
             )
-        )
+        ))
     ]
     # Add description.
     if description:
@@ -43,15 +51,27 @@ def Body(context,
             section.Body(
                 context,
                 'Description',
-                children=(UnescapedParagraph(description),)
+                children=(
+                    UnescapedParagraph(
+                        description,
+                        itemprop='description'
+                    ),
+                )
             )
         )
     # Add Github Link.
     if github_url:
         els.extend(
-            section.Body(context, 'Source Files', children=(
-                Anchor('Github', href=github_url),
-            ))
+            section.Body(
+                context,
+                'Source Files',
+                children=(
+                    Anchor(
+                        'Github',
+                        href=github_url
+                    ),
+                )
+            )
         )
     # Add collateral creations.
     if collateral_creations:
@@ -59,15 +79,32 @@ def Body(context,
             section.Body(
                 context,
                 'Collateral Creations',
-                '',
-                links_list.Body(
-                    context,
-                    [
-                        (project['name'], project['slug'])
-                         for project in context.projects
-                         if project['name'] in collateral_creations
-
-                    ]
+                children=(
+                    # Inline includes.links_list to specify itemprops.
+                    Ol(
+                        _class='links',
+                        children=[
+                            Li(
+                                itemprop='hasPart',
+                                itemscope='',
+                                itemtype='https://schema.org/CreativeWork',
+                                children=(
+                                    Anchor(
+                                        itemprop='url',
+                                        href=project['slug'],
+                                        children=(
+                                            Span(
+                                                project['name'],
+                                                itemprop='name'
+                                            ),
+                                        )
+                                    ),
+                                )
+                            )
+                            for project in context.projects
+                            if project['name'] in collateral_creations
+                        ]
+                    ),
                 )
             )
         )

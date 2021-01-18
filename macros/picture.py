@@ -10,7 +10,11 @@ from lib.htmlephant import (
 
 Head = NotDefined
 
-def Body(context, srcsets, src, alt):
-    el = Picture(children=[Source(srcset=srcset) for srcset in srcsets])
-    el.children.append(Img(src=src, alt=alt))
+def Body(context, srcsets, src, alt, **img_attrs):
+    el = Picture(
+        children=[
+            Source(srcset=srcset) for srcset in srcsets
+        ]
+    )
+    el.children.append(Img(src=src, alt=alt, **img_attrs))
     return (el,)
