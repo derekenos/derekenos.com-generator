@@ -91,7 +91,9 @@ def run(context):
         dirs_exist_ok=True
     )
 
-    # Iterate through the pages, writing each to the site dir.
+    # Iterate through the pages, writing each to the site dir and collecting
+    # the filenames for later sitemap creation.
+    filenames = []
     for page_name in context.page_names:
         # Update the context object with the name of the current page.
         context.current_page = page_name
@@ -108,6 +110,7 @@ def run(context):
             context.generator_item = None
             filename = f'{page_name}.html'
             write_page(context, filename, page_mod)
+            filenames.append(filename)
         else:
             # Use the page generator to write 1 or more pages.
             for item in page_mod.CONTEXT_ITEMS_GETTER(context):
@@ -115,6 +118,21 @@ def run(context):
                 context.generator_item = item
                 filename = page_mod.FILENAME_GENERATOR(item)
                 write_page(context, filename, page_mod)
+                filenames.append(filename)
+
+    # Write sitemap.txt
+    with context.open('sitemap.txt') as fh:
+        for filename in filenames:
+            fh.write(f'{context.base_url}/{filename}\n')
+
+    # Write robots.txt
+    with context.open('robots.txt') as fh:
+        fh.write(
+f"""User-agent: *
+Allow: /
+Sitemap: {context.base_url}/sitemap.txt
+""")
+
 
 ###############################################################################
 # CLI
