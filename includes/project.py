@@ -25,7 +25,7 @@ def Body(context,
          thumb_base_filename_alt_pairs,
          description=None,
          collateral_creations=(),
-         related_projects=(),
+         dependent_projects=(),
          github_url=None,
          additional_img_base_fns=(),
          **kwargs
@@ -108,21 +108,38 @@ def Body(context,
                 )
             )
         )
-    # Add related projects.
-    if related_projects:
+    # Add dependent projects.
+    if dependent_projects:
         els.extend(
             section.Body(
                 context,
-                'Related Projects',
-                '',
-                links_list.Body(
-                    context,
-                    [
-                        (project['name'], project['slug'])
-                         for project in context.projects
-                         if project['name'] in related_projects
-
-                    ]
+                'Dependent Projects',
+                children=(
+                    # Inline includes.links_list to specify itemprops.
+                    Ol(
+                        _class='links',
+                        children=[
+                            Li(
+                                itemprop='isPartOf',
+                                itemscope='',
+                                itemtype='https://schema.org/CreativeWork',
+                                children=(
+                                    Anchor(
+                                        itemprop='url',
+                                        href=project['slug'],
+                                        children=(
+                                            Span(
+                                                project['name'],
+                                                itemprop='name'
+                                            ),
+                                        )
+                                    ),
+                                )
+                            )
+                            for project in context.projects
+                            if project['name'] in dependent_projects
+                        ]
+                    ),
                 )
             )
         )
