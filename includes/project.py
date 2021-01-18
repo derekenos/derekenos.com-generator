@@ -5,10 +5,7 @@ from lib.htmlephant import (
     Anchor,
     H2,
     H3,
-    Li,
     Section,
-    Span,
-    Ol,
 )
 
 from macros import picture
@@ -73,73 +70,41 @@ def Body(context,
                 )
             )
         )
+
     # Add collateral creations.
     if collateral_creations:
         els.extend(
             section.Body(
                 context,
                 'Collateral Creations',
-                children=(
-                    # Inline includes.links_list to specify itemprops.
-                    Ol(
-                        _class='links',
-                        children=[
-                            Li(
-                                itemprop='hasPart',
-                                itemscope='',
-                                itemtype='https://schema.org/CreativeWork',
-                                children=(
-                                    Anchor(
-                                        itemprop='url',
-                                        href=project['slug'],
-                                        children=(
-                                            Span(
-                                                project['name'],
-                                                itemprop='name'
-                                            ),
-                                        )
-                                    ),
-                                )
-                            )
-                            for project in context.projects
-                            if project['name'] in collateral_creations
-                        ]
-                    ),
+                children=links_list.Body(
+                    context,
+                    itemprop='hasPart',
+                    itemtype='https://schema.org/CreativeWork',
+                    name_url_pairs=[
+                        (project['name'], project['slug'])
+                        for project in context.projects
+                        if project['name'] in collateral_creations
+                    ]
                 )
             )
         )
+
     # Add dependent projects.
     if dependent_projects:
         els.extend(
             section.Body(
                 context,
                 'Dependent Projects',
-                children=(
-                    # Inline includes.links_list to specify itemprops.
-                    Ol(
-                        _class='links',
-                        children=[
-                            Li(
-                                itemprop='isPartOf',
-                                itemscope='',
-                                itemtype='https://schema.org/CreativeWork',
-                                children=(
-                                    Anchor(
-                                        itemprop='url',
-                                        href=project['slug'],
-                                        children=(
-                                            Span(
-                                                project['name'],
-                                                itemprop='name'
-                                            ),
-                                        )
-                                    ),
-                                )
-                            )
-                            for project in context.projects
-                            if project['name'] in dependent_projects
-                        ]
-                    ),
+                children=links_list.Body(
+                    context,
+                    itemprop='isPartOf',
+                    itemtype='https://schema.org/CreativeWork',
+                    name_url_pairs=[
+                        (project['name'], project['slug'])
+                        for project in context.projects
+                        if project['name'] in dependent_projects
+                    ]
                 )
             )
         )

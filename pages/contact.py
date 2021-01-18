@@ -6,13 +6,15 @@ from lib.htmlephant import (
     Div,
     Em,
     H1,
+    Li,
     OGMeta,
+    Ol,
+    Span,
     StdMeta,
     Title,
 )
 
 from includes import section
-from includes import links_list
 
 DESCRIPTION = 'How to contact me'
 
@@ -25,6 +27,8 @@ Head = lambda context: (
 Body = lambda context: (
     Div(
         _class='content contact',
+        itemscope='',
+        itemtype='https://schema.org/ContactPoint',
         children=(
             H1(DESCRIPTION),
             *section.Body(
@@ -32,8 +36,13 @@ Body = lambda context: (
                 'Email',
                 children=(
                     Anchor(
-                        context.email,
-                        href=f'mailto:{context.email}'
+                        href=f'mailto:{context.email}',
+                        children=(
+                            Span(
+                                context.email,
+                                itemprop='email'
+                            ),
+                        ),
                     ),
                     Br(),
                     Br(),
@@ -49,9 +58,18 @@ Body = lambda context: (
             *section.Body(
                 context,
                 'Other channels',
-                children=links_list.Body(
-                    context,
-                    context.social_name_url_pairs
+                children=(
+                    Ol(
+                        _class='links',
+                        children=[
+                            Li(
+                                children=(
+                                    Anchor(name, itemprop='sameAs', href=url),
+                                )
+                            )
+                            for name, url in context.social_name_url_pairs
+                        ]
+                    ),
                 )
             )
         )

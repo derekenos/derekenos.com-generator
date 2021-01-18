@@ -12,14 +12,9 @@ from lib.htmlephant import (
     StdMeta,
     Title,
 )
-from lib.htmlephant_extensions import (
-    UnescapedH4,
-    UnescapedParagraph,
-)
 
 from includes import section
-from includes import collection
-
+from includes import intangibles_collection
 
 INITIATIVES = (
     (
@@ -223,25 +218,16 @@ Body = lambda context: (
                 context,
                 "Variations on Others' Product Themes",
                 'Playful reimaginings of existing consumer products',
-                children=collection.Body(
-                    context,
-                    [
-                        [H4(name), UnescapedParagraph(text)]
-                        for name, text in VARIATIONS
-                    ]
-                )
+                children=intangibles_collection.Body(context, VARIATIONS)
             ),
 
             *section.Body(
                 context,
                 "Realized by Others",
                 'Things that occurred to me that others actually created',
-                children=collection.Body(
+                children=intangibles_collection.Body(
                     context,
-                    [
-                        [UnescapedH4(name), UnescapedParagraph(text)]
-                        for name, text in REALIZED_BY_OTHERS
-                    ]
+                    REALIZED_BY_OTHERS
                 )
             ),
 
@@ -249,13 +235,7 @@ Body = lambda context: (
                 context,
                 "Small Bites",
                 'Selections from my notes',
-                children=collection.Body(
-                    context,
-                    [
-                        [H4(name), UnescapedParagraph(text)]
-                        for name, text in SMALL_BITES
-                    ]
-                )
+                children=intangibles_collection.Body(context, SMALL_BITES)
             )
 
         )

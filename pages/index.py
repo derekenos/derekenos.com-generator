@@ -25,7 +25,8 @@ Body = lambda context: (
             H1(DESCRIPTION),
             *collection.Body(
                 context,
-                [
+                itemtype='https://schema.org/CreativeWork',
+                items=[
                     project_card.Body(context, **prj)
                     for prj in context.projects
                     if not prj.get('hide_card', False)

@@ -4,20 +4,30 @@ from lib.htmlephant import (
     Anchor,
     Li,
     Ol,
+    Span,
 )
 
 Head = NotDefined
 
-Body = lambda context, name_href_pairs: (
+Body = lambda context, itemprop, itemtype, name_url_pairs: (
     Ol(
         _class='links',
         children=[
             Li(
+                itemprop=itemprop,
+                itemscope='',
+                itemtype=itemtype,
                 children=(
-                    Anchor(name, href=href),
+                    Anchor(
+                        itemprop='url',
+                        href=url,
+                        children=(
+                            Span(name, itemprop='name'),
+                        )
+                    ),
                 )
             )
-            for name, href in name_href_pairs
+            for name, url in name_url_pairs
         ]
     ),
 )

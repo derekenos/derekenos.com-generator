@@ -4,11 +4,16 @@ from lib.htmlephant import Div
 
 Head = NotDefined
 
-Body = lambda context, items: (
+Body = lambda context, itemtype, items: (
     Div(
         _class="collection",
         children=[
-            Div(_class='item', children=item)
+            Div(
+                itemscope='',
+                itemtype=itemtype,
+                _class='item',
+                children=item
+            )
             for item in items
         ]
     ),
