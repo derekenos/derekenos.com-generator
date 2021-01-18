@@ -25,24 +25,23 @@ This project includes a couple of my other repos as submodules:
 
 ## To build your own, personalized derekenos.com clone
 
-### Get ready
-
-1. Clone the [generic](https://github.com/derekenos/derekenos.com-generator/tree/generic) branch
-
+### 1. Clone the repo
+Clone the [generic](https://github.com/derekenos/derekenos.com-generator/tree/generic) branch:
 ```
-    git clone --recurse-submodules -b generic https://github.com/derekenos/derekenos.com-generator
+git clone --recurse-submodules -b generic https://github.com/derekenos/derekenos.com-generator
 ```
 
-2. Edit [context.json](https://github.com/derekenos/derekenos.com-generator/blob/generic/context.json) and [static/shared.css](https://github.com/derekenos/derekenos.com-generator/blob/generic/static/shared.css) to your liking
+### 2. Configure
+Edit [context.json](https://github.com/derekenos/derekenos.com-generator/blob/generic/context.json) and [static/shared.css](https://github.com/derekenos/derekenos.com-generator/blob/generic/static/shared.css) to your liking.
 
-3. Add project (or whatever) thumbnail images to `static/`
+### 3. Add static assets
+Add project thumbnail images to `static/`.
 
-    For each `context.projects` item, the following corresponding files must exist in `static/`:
-      - `{project.thumb_base_filename}.webp`
-      - `{project.thumb_base_filename}.png`
+For each `context.projects` item, the following corresponding files are expected to exist in `static/`:
+- `{project.thumb_base_filename}.webp`
+- `{project.thumb_base_filename}.png`
 
-### Build the site
-
+### 4. Build
 Execute [run.py](https://github.com/derekenos/derekenos.com-generator/blob/generic/run.py) to build the site.
 
 #### Usage
@@ -60,7 +59,7 @@ optional arguments:
 
 ```
 
-The generated output files are written to the `site/` directory.
+The generated output files will be written to the `site/` directory.
 
 #### Execute a development build and launch the server
 
