@@ -1,5 +1,6 @@
 
 from lib import NotDefined
+from lib import microdata as md
 from lib.htmlephant_extensions import UnescapedParagraph
 from lib.htmlephant import (
     Anchor,
@@ -31,11 +32,11 @@ def Body(context,
     # Inline includes.section to specify itemprops.
     els = [
         Section(children=(
-            H2(name, itemprop='name'),
-            H3(short_description, itemprop='abstract'),
+            H2(name, itemprop=md.NAME),
+            H3(short_description, itemprop=md.ABSTRACT),
             *picture.Body(
                 context,
-                itemprop='image',
+                itemprop=md.IMAGE,
                 srcsets=(context.static(f'{thumb_base_filename}.webp'),),
                 src=context.static(f'{thumb_base_filename}.png'),
                 alt=thumb_alt
@@ -51,7 +52,7 @@ def Body(context,
                 children=(
                     UnescapedParagraph(
                         description,
-                        itemprop='description'
+                        itemprop=md.DESCRIPTION
                     ),
                 )
             )
@@ -79,8 +80,8 @@ def Body(context,
                 'Collateral Creations',
                 children=links_list.Body(
                     context,
-                    itemprop='hasPart',
-                    itemtype='https://schema.org/CreativeWork',
+                    itemprop=md.HAS_PART,
+                    itemtype=md.CREATIVE_WORK,
                     name_url_pairs=[
                         (project['name'], project['slug'])
                         for project in context.projects
@@ -98,8 +99,8 @@ def Body(context,
                 'Dependent Projects',
                 children=links_list.Body(
                     context,
-                    itemprop='isPartOf',
-                    itemtype='https://schema.org/CreativeWork',
+                    itemprop=md.IS_PART_OF,
+                    itemtype=md.CREATIVE_WORK,
                     name_url_pairs=[
                         (project['name'], project['slug'])
                         for project in context.projects

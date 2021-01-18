@@ -1,4 +1,5 @@
 
+from lib import microdata as md
 from lib.htmlephant import (
     Anchor,
     Br,
@@ -28,7 +29,7 @@ Body = lambda context: (
     Div(
         _class='content contact',
         itemscope='',
-        itemtype='https://schema.org/ContactPoint',
+        itemtype=md.CONTACT_POINT,
         children=(
             H1(DESCRIPTION),
             *section.Body(
@@ -40,7 +41,7 @@ Body = lambda context: (
                         children=(
                             Span(
                                 context.email,
-                                itemprop='email'
+                                itemprop=md.EMAIL,
                             ),
                         ),
                     ),
@@ -64,7 +65,11 @@ Body = lambda context: (
                         children=[
                             Li(
                                 children=(
-                                    Anchor(name, itemprop='sameAs', href=url),
+                                    Anchor(
+                                        name,
+                                        itemprop=md.SAME_AS,
+                                        href=url
+                                    ),
                                 )
                             )
                             for name, url in context.social_name_url_pairs

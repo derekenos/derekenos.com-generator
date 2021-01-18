@@ -1,5 +1,6 @@
 
 from lib import NotDefined
+from lib import microdata as md
 from lib.htmlephant_extensions import (
     UnescapedH4,
     UnescapedParagraph,
@@ -11,11 +12,11 @@ Head = NotDefined
 
 Body = lambda context, items: collection.Body(
     context,
-    itemtype='https://schema.org/Intangible',
+    itemtype=md.INTANGIBLE,
     items=[
         [
-            UnescapedH4(name, itemprop='name'),
-            UnescapedParagraph(text, itemprop='description')
+            UnescapedH4(name, itemprop=md.NAME),
+            UnescapedParagraph(text, itemprop=md.DESCRIPTION)
         ]
         for name, text in items
     ]

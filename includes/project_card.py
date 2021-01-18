@@ -1,4 +1,5 @@
 
+from lib import microdata as md
 from lib import NotDefined
 from lib.htmlephant import (
     Anchor,
@@ -18,22 +19,22 @@ def Body(context, name, slug, short_description, tags,
     thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
     return (
         H2(
-            itemprop='name',
+            itemprop=md.NAME,
             children=(Anchor(name, href=slug),)
         ),
         H3(
             short_description,
-            itemprop='abstract'
+            itemprop=md.ABSTRACT
         ) if short_description else NOEL,
         H4(
             ' '.join(f'#{tag}' for tag in tags)
         ) if tags else NOEL,
         Anchor(
-            itemprop='url',
+            itemprop=md.URL,
             href=slug,
             children=picture.Body(
                 context,
-                itemprop='image',
+                itemprop=md.IMAGE,
                 srcsets=(
                     context.static(f'{thumb_base_filename}.webp'),
                 ),

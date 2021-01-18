@@ -1,5 +1,6 @@
 
 from lib import NotDefined
+from lib import microdata as md
 from lib.htmlephant import (
     Anchor,
     Li,
@@ -19,10 +20,10 @@ Body = lambda context, itemprop, itemtype, name_url_pairs: (
                 itemtype=itemtype,
                 children=(
                     Anchor(
-                        itemprop='url',
+                        itemprop=md.URL,
                         href=url,
                         children=(
-                            Span(name, itemprop='name'),
+                            Span(name, itemprop=md.NAME),
                         )
                     ),
                 )

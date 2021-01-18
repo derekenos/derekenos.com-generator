@@ -1,4 +1,5 @@
 
+from lib import microdata as md
 from lib.htmlephant import (
     Div,
     H1,
@@ -25,7 +26,7 @@ Body = lambda context: (
             H1(DESCRIPTION),
             *collection.Body(
                 context,
-                itemtype='https://schema.org/CreativeWork',
+                itemtype=md.CREATIVE_WORK,
                 items=[
                     project_card.Body(context, **prj)
                     for prj in context.projects
