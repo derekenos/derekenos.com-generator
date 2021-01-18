@@ -4,13 +4,11 @@ from lib.htmlephant import (
     Br,
     Div,
     Div,
-    H1,
-    Title,
-)
-from lib.htmlephant_extensions import (
     Em,
+    H1,
     OGMeta,
     StdMeta,
+    Title,
 )
 
 from includes import section

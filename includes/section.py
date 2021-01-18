@@ -1,9 +1,9 @@
 
 from lib import NotDefined
-from lib.htmlephant_extensions import Section
 from lib.htmlephant import (
     H2,
     H3,
+    Section,
 )
 
 Head = NotDefined

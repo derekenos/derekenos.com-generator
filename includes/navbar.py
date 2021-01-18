@@ -4,11 +4,11 @@ from lib import (
     assert_ctx,
 )
 
-from lib.htmlephant_extensions import Nav
 from lib.htmlephant import (
     Anchor,
     Div,
     Li,
+    Nav,
     Ol,
     Span,
 )

@@ -1,7 +1,7 @@
 
 from itertools import chain
 
-from lib.htmlephant_extensions import (
+from lib.htmlephant import (
     Link,
     StdMeta,
 )

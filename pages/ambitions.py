@@ -6,13 +6,13 @@ from lib.htmlephant import (
     Div,
     H1,
     H4,
+    OGMeta,
     Paragraph,
     Script,
+    StdMeta,
     Title,
 )
 from lib.htmlephant_extensions import (
-    OGMeta,
-    StdMeta,
     UnescapedH4,
     UnescapedParagraph,
 )

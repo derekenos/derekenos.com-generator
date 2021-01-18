@@ -2,8 +2,8 @@
 """
 
 from lib import NotDefined
-from lib.htmlephant import Img
-from lib.htmlephant_extensions import (
+from lib.htmlephant import (
+    Img,
     Picture,
     Source,
 )

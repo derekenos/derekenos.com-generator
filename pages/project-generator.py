@@ -4,11 +4,9 @@ from lib.htmlephant import (
     Div,
     H1,
     Meta,
-    Title,
-)
-from lib.htmlephant_extensions import (
-    StdMeta,
     OGMeta,
+    StdMeta,
+    Title,
 )
 
 from includes import project as _project

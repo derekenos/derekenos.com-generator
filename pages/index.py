@@ -1,11 +1,9 @@
 
-from lib.htmlephant_extensions import (
-    OGMeta,
-    StdMeta,
-)
 from lib.htmlephant import (
     Div,
     H1,
+    OGMeta,
+    StdMeta,
     Title,
 )
 
