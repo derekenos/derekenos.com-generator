@@ -25,7 +25,7 @@ def Body(context, name, slug, short_description, tags,
         ),
         H3(
             short_description,
-            itemprop=md.ABSTRACT
+            itemprop=md.DESCRIPTION
         ) if short_description else NOEL,
         H4(
             ' '.join(f'#{tag}' for tag in tags)
