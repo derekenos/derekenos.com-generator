@@ -6,7 +6,7 @@ This is a custom static website generator that I built specifically for https://
 - No third-party libraries
 - Reasonable accessibility
 - Search engines don't hate it
-- [Microdata](https://schema.org/docs/gs.html) markup to provide structured data for search engines ([example](https://search.google.com/structured-data/testing-tool/u/0/#url=https%3A%2F%2Fderekenos.com%2Fproject-weather-station))
+- [Microdata](https://schema.org/docs/gs.html) markup provides structured data for search engines ([example](https://search.google.com/structured-data/testing-tool/u/0/#url=https%3A%2F%2Fderekenos.com%2Fproject-weather-station))
 - [OpenGraph](https://ogp.me/) tags to enable rich embeds, e.g.:
 
   ![Screenshot from 2021-01-17 16-16-28](https://user-images.githubusercontent.com/585182/104856230-6c213900-58df-11eb-8476-927c2f9d9ad3.png)
