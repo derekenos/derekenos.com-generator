@@ -10,8 +10,13 @@ from . import google_analytics
 from . import live_dev
 
 Head = lambda context: chain(
-    (StdMeta('generator', 'https://github.com/derekenos/derekenos.com-generator'),),
+    (
+        StdMeta(
+            'generator',
+            'https://github.com/derekenos/derekenos.com-generator'
+        ),
+        Link(rel='stylesheet', href=context.static('shared.css'))
+    ),
     live_dev.Head(context) if not context.production else (),
-    google_analytics.Head(context) if context.production else (),
-    (Link(rel='stylesheet', href=context.static('shared.css')),)
+    google_analytics.Head(context) if context.production else ()
 )

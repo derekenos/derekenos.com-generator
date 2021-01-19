@@ -1,6 +1,7 @@
 
 from lib import microdata as md
 from lib import NotDefined
+from lib.htmlephant_extensions import MDMeta
 from lib.htmlephant import (
     Anchor,
     Div,
@@ -29,12 +30,12 @@ def Body(context, name, slug, short_description, tags,
         H4(
             ' '.join(f'#{tag}' for tag in tags)
         ) if tags else NOEL,
+        MDMeta(md.IMAGE, context.static(f'{thumb_base_filename}.png')),
         Anchor(
             itemprop=md.URL,
             href=slug,
             children=picture.Body(
                 context,
-                itemprop=md.IMAGE,
                 srcsets=(
                     context.static(f'{thumb_base_filename}.webp'),
                 ),

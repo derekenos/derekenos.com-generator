@@ -1,7 +1,10 @@
 
 from lib import NotDefined
 from lib import microdata as md
-from lib.htmlephant_extensions import UnescapedParagraph
+from lib.htmlephant_extensions import (
+    MDMeta,
+    UnescapedParagraph,
+)
 from lib.htmlephant import (
     Anchor,
     H2,
@@ -34,9 +37,9 @@ def Body(context,
         Section(children=(
             H2(name, itemprop=md.NAME),
             H3(short_description, itemprop=md.ABSTRACT),
+            MDMeta(md.IMAGE, context.static(f'{thumb_base_filename}.png')),
             *picture.Body(
                 context,
-                itemprop=md.IMAGE,
                 srcsets=(context.static(f'{thumb_base_filename}.webp'),),
                 src=context.static(f'{thumb_base_filename}.png'),
                 alt=thumb_alt

@@ -1,20 +1,27 @@
 
 from itertools import chain
 
+from lib import slugify
+from lib.htmlephant_extensions import MDMeta
 from lib.htmlephant import (
+    NOEL,
     Anchor,
     Div,
     H1,
+    H2,
+    H3,
     H4,
     OGMeta,
     Paragraph,
     Script,
+    Section,
+    Span,
     StdMeta,
     Title,
 )
 
 from includes import section
-from includes import intangibles_collection
+from includes import article_collection
 
 INITIATIVES = (
     (
@@ -196,7 +203,7 @@ Head = lambda context: (
     Script(
         _async='',
         src='https://c6.patreon.com/becomePatronButton.bundle.js'
-    )
+    ) if context.production else NOEL
 )
 
 Body = lambda context: (
@@ -204,38 +211,50 @@ Body = lambda context: (
         _class='content ambitions',
         children=(
             H1(DESCRIPTION),
+
             *section.Body(
                 context,
                 'Initiatives',
-                'broad efforts',
-                children=chain(*[
-                    [H4(name), Paragraph(text)]
-                    for name, text in INITIATIVES
-                ])
-            ),
-
-            *section.Body(
-                context,
-                "Variations on Others' Product Themes",
-                'Playful reimaginings of existing consumer products',
-                children=intangibles_collection.Body(context, VARIATIONS)
-            ),
-
-            *section.Body(
-                context,
-                "Realized by Others",
-                'Things that occurred to me that others actually created',
-                children=intangibles_collection.Body(
+                name:='Ideas for more ambitious efforts',
+                children=article_collection.Body(
                     context,
-                    REALIZED_BY_OTHERS
+                    name=name,
+                    items=INITIATIVES,
+                    wide=True,
                 )
             ),
 
             *section.Body(
                 context,
-                "Small Bites",
-                'Selections from my notes',
-                children=intangibles_collection.Body(context, SMALL_BITES)
+                "Variations on Others' Product Themes",
+                name:='Playful reimaginings of existing consumer products',
+                children=article_collection.Body(
+                    context,
+                    name=name,
+                    items=VARIATIONS
+                )
+            ),
+
+            *section.Body(
+                context,
+                'Realized by Others',
+                name:='Things that occurred to me that others actually created',
+                children=article_collection.Body(
+                    context,
+                    name=name,
+                    items=REALIZED_BY_OTHERS
+                )
+            ),
+
+            *section.Body(
+                context,
+                'Small Bites',
+                name:='Selections from my notes',
+                children=article_collection.Body(
+                    context,
+                    name=name,
+                    items=SMALL_BITES
+                )
             )
 
         )

@@ -1,6 +1,11 @@
 
 import re
 
+SLUGIFY_REGEX = re.compile(r'[^\w]')
+
+# Replace non-alpha chars with a hyphen and lowercase.
+slugify = lambda s: SLUGIFY_REGEX.sub('-', s).lower()
+
 def assert_ctx(context, k):
     if not hasattr(context, k):
         raise AssertionError(f'context has no attribute "{k}"')

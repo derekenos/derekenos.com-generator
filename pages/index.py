@@ -26,7 +26,7 @@ Body = lambda context: (
             H1(DESCRIPTION),
             *collection.Body(
                 context,
-                itemtype=md.CREATIVE_WORK,
+                name='Selected Projects',
                 items=[
                     project_card.Body(context, **prj)
                     for prj in context.projects
