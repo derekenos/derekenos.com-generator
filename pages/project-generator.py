@@ -1,16 +1,14 @@
 
 from lib import microdata as md
 from lib.htmlephant import (
-    NOEL,
     Div,
     H1,
-    Meta,
     OGMeta,
     StdMeta,
     Title,
 )
 
-from includes import project as _project
+import includes.project
 
 CONTEXT_ITEMS_GETTER = lambda context: context.projects
 FILENAME_GENERATOR = lambda project: f'{project["slug"]}.html'
@@ -63,7 +61,7 @@ Body = lambda context: (
         itemtype=md.CREATIVE_WORK,
         children=(
             H1(f'{context.generator_item["name"]} Project Details'),
-            *_project.Body(context, **context.generator_item)
+            *includes.project.Body(context, **context.generator_item)
         )
     ),
 )

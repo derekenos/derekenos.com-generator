@@ -1,5 +1,4 @@
 
-from lib import microdata as md
 from lib.htmlephant import (
     Div,
     H1,

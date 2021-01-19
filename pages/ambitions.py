@@ -1,21 +1,11 @@
 
-from itertools import chain
-
-from lib import slugify
-from lib.htmlephant_extensions import MDMeta
 from lib.htmlephant import (
     NOEL,
     Anchor,
     Div,
     H1,
-    H2,
-    H3,
-    H4,
     OGMeta,
-    Paragraph,
     Script,
-    Section,
-    Span,
     StdMeta,
     Title,
 )
