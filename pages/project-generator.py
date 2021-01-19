@@ -1,4 +1,5 @@
 
+from lib import microdata as md
 from lib.htmlephant import (
     NOEL,
     Div,
@@ -58,6 +59,8 @@ def Head(context):
 Body = lambda context: (
     Div(
         _class='content project',
+        itemscope='',
+        itemtype=md.CREATIVE_WORK,
         children=(
             H1(f'{context.generator_item["name"]} Project Details'),
             *_project.Body(context, **context.generator_item)
