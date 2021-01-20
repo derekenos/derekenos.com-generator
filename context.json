@@ -252,7 +252,7 @@
       "name": "Composer",
       "slug": "/project-composer",
       "short_description": "A simple sound toy using the Web Audio API.",
-      "live_url": "/static/projects/composer/index.html",
+      "live_url": "/static/projects/composer/",
       "tags": ["javascript", "webaudio", "audio"],
       "thumb_base_filename_alt_pairs": [
         ["composer", "sound composer web app screenshot"]
@@ -264,7 +264,7 @@
       "slug": "/project-ion-model",
       "short_description": "A computationally inefficient exploration of the complex behaviors that arise from the interaction of simple rules.",
       "tags": ["javascript", "emergentbehavior"],
-      "live_url": "/static/projects/sim/index.html",
+      "live_url": "/static/projects/sim/",
       "thumb_base_filename_alt_pairs": [
         ["ionModelScreenThumb", "ion model application screenshot"]
       ]
