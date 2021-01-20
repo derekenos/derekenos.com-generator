@@ -41,6 +41,14 @@
       "media_name_url_pairs": [
         ["Google Photos Album", "https://photos.app.goo.gl/n43fajMjPJhvcqR47"]
       ],
+      "videos": [
+        {
+          "filename": "weather_station.mp4",
+          "thumb_filename": "weather_station_mp4_thumb.png",
+          "name": "Weather Station Introduction",
+          "description": "The weather station powering up, spinning the busy indicator, and displaying the forecast."
+        }
+      ],
       "collateral_creations": [
         "Indicator Gauge",
         "Streaming JSON Parser",

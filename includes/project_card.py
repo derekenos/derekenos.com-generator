@@ -1,13 +1,13 @@
 
 from lib import microdata as md
 from lib import NotDefined
-from lib.htmlephant_extensions import MDMeta
 from lib.htmlephant import (
     Anchor,
     Div,
     H2,
     H3,
     H4,
+    MDMeta,
     NOEL,
 )
 

@@ -1,12 +1,12 @@
 
 from lib import microdata as md
-from lib.htmlephant_extensions import MDMeta
 from lib.htmlephant import (
     Anchor,
     Br,
     Div,
     Em,
     H1,
+    MDMeta,
     OGMeta,
     Span,
     StdMeta,

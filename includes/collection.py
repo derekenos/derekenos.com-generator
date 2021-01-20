@@ -1,8 +1,10 @@
 
 from lib import NotDefined
 from lib import microdata as md
-from lib.htmlephant import Div
-from lib.htmlephant_extensions import MDMeta
+from lib.htmlephant import (
+    Div,
+    MDMeta,
+)
 
 Head = NotDefined
 

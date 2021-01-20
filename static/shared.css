@@ -9,10 +9,9 @@ body {
   margin: 0;
 }
 
-iframe,
 img,
 video {
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 8px;
 }
 
@@ -205,6 +204,11 @@ ol.links > li > a {
 }
 
 @media screen and (min-width: 1024px) {
+  img,
+  video {
+    max-width: 800px;
+  }
+
   nav {
     display: block;
     border-bottom: solid #888 1px;

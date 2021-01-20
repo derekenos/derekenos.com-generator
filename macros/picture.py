@@ -5,7 +5,7 @@ from lib import NotDefined
 from lib.htmlephant import (
     Img,
     Picture,
-    Source,
+    PictureSource,
 )
 
 Head = NotDefined
@@ -13,7 +13,7 @@ Head = NotDefined
 def Body(context, srcsets, src, alt):
     el = Picture(
         children=[
-            Source(srcset=srcset) for srcset in srcsets
+            PictureSource(srcset=srcset) for srcset in srcsets
         ]
     )
     el.children.append(Img(src=src, alt=alt))

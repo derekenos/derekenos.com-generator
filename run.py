@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 from itertools import chain
+from datetime import datetime
 from glob import glob
 
 from lib import copy_if_newer
@@ -41,6 +42,11 @@ class Context:
         # Add any custom attributes.
         for k, v in kwargs.items():
             setattr(self, k, v)
+
+    def static_last_modified_iso8601(self, filename):
+        return datetime.fromtimestamp(
+            os.stat(os.path.join(self.STATIC_DIR, filename)).st_mtime
+        ).isoformat()
 
     def static(self, filename):
         """Format filename as a static asset path, assert that the file exists,
