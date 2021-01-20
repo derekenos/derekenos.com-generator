@@ -190,7 +190,7 @@ Sitemap: {context.base_url}/sitemap.txt
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--development', action='store_true')
-    parser.add_argument('--context-file', type=argparse.FileType('rb'))
+    parser.add_argument('--context-file', default='context.json')
     parser.add_argument('--serve', action='store_true')
     parser.add_argument('--host', default='0.0.0.0')
     parser.add_argument('--port', type=int, default=5000)
@@ -199,9 +199,11 @@ if __name__ == '__main__':
 
     # Set the default Context kwargs.
     ctx_kwargs = { 'production': not args.development }
-    if args.context_file:
-        # Update Context kwargs with custom context file.
-        ctx_kwargs.update(json.load(args.context_file))
+
+    # Attempt to read the context file.
+    if not os.path.exists(args.context_file):
+        parser.error(f'Context file not found: {args.context_file}')
+    ctx_kwargs.update(json.load(open(args.context_file, 'rb')))
     context = Context(**ctx_kwargs)
 
     # Generate the site files.
