@@ -1,0 +1,53 @@
+
+body {font-family:arial;font-size:10pt;background:#ffffff;color:#000000;}
+input {text-align:center;}
+
+.nodeLabel {
+  width:auto;
+  height:auto;
+  position:absolute;
+  left:0px;top:0px;
+  font-size:smaller;
+  color:#ff8888;
+  padding-left:8px;
+}
+
+#mainCanvas {
+  position:absolute;
+  left:10px;top:10px;
+  cursor:crosshair;
+  border:1px dashed #888888;
+}
+
+#buttonContainer {
+  position:absolute;
+  width:80px;
+  left:814px; top:10px;
+  border:solid #000000 1px;
+  display: none;
+}
+
+#infoContainer {
+  position:absolute;
+  width:160px;
+  left:896px; top:10px;
+  padding-left:6px;padding-top:6px;
+  border:solid #000000 1px;border-left:none;
+  font-size:smaller;
+  display: none;
+}
+
+.button {
+  width:auto;
+  padding:4px;
+  padding-left:10px;padding-right:10px;
+  text-align:center;
+  cursor:pointer;
+}
+
+@media screen and (min-width: 1024px) {
+  #buttonContainer,
+  #infoContainer {
+    display: block;
+  }
+}

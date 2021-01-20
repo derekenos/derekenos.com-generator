@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+
+    <title>ion model simulator</title>
+
+		<link rel="stylesheet" type="text/css" href="css/ionModel_global.css" />
+		<script type="text/javascript" src="scripts/ionModel_main.js"></script>
+		<script type="text/javascript" src="scripts/ionModel_node.js"></script>
+		<script type="text/javascript" src="scripts/ionModel_draw.js"></script>
+		<script type="text/javascript" src="scripts/ionModel_calc.js"></script>
+		<script type="text/javascript" src="scripts/ionModel_handlers.js"></script>
+
+	</head>
+
+  <body onload="init()" onkeydown="globalKeyPressHandler(event)">
+
+    <canvas id="mainCanvas" width="800" height="600" onMouseDown="canvasMouseDownHandler(event)" onMouseMove="canvasMouseMoveHandler(event)" onClick="canvasClickHandler(event)"></canvas>
+
+    <div id="buttonContainer">
+      <div id="goPause" class="button" style="border-bottom:solid #000000 1px;" onClick="buttonHandler(this)">pause</div>
+      <div id="reset" class="button" style="border-bottom:solid #000000 1px;" onClick="buttonHandler(this)">reset</div>
+      <div style="padding-top:10px;">
+        <div style="padding-top:0px;font-weight:bold;">&nbsp;anim delay</div>
+        <input type="textbox" id="animSpeed" name="animSpeed" size="4" value="0" />
+        <div style="padding-top:5px;font-weight:bold;">&nbsp;zoom</div>
+        <input type="textbox" id="zoomVal" name="zoomVal" size="3" value="0" /><br />
+        <div style="padding-top:5px;font-weight:bold;">&nbsp;world size</div>
+        <input type="radio" id="worldSizeWindow" name="worldSize" value="worldSizeWindow" checked="checked" />window<br />
+        <input type="radio" id="worldSizeInfinite" name="worldSize" value="worldSizeInfinite" />infinite<br />
+        <div style="padding-top:5px;font-weight:bold;">&nbsp;show</div>
+        <input type="checkbox" id="showAxis" name="showAxis" value="false" onClick="buttonHandler(this)" />axis<br />
+        <input type="checkbox" id="showLabels" name="showLabels" value="false" onClick="buttonHandler(this)" />labels<br />
+        <input type="checkbox" id="showVectors" name="showVectors" value="true" checked="checked" onClick="buttonHandler(this)" />vectors<br />
+        <input type="checkbox" id="showInfo" name="showInfo" value="false" onClick="buttonHandler(this)" />info<br />
+        <input type="checkbox" id="showLineToCenter" name="showLineToCenter" value="false" onClick="buttonHandler(this)" />centerLine<br />
+        <div style="padding-top:5px;font-weight:bold;">&nbsp;click adds</div>
+        <div style="border-bottom:dashed #444444 1px;">
+          <input type="radio" id="addBlue" name="addColor" value="addBlue" checked="checked" />blue<br />
+          <input type="radio" id="addPink" name="addColor" value="addPink" />pink<br />
+        </div>
+        <div style="border-bottom:dashed #444444 1px;">
+          <input type="radio" id="addAnchored" name="addMobility" value="addAnchored" />anchored<br />
+          <input type="radio" id="addFree" name="addMobility" value="addFree" checked="checked" />free<br />
+        </div>
+        <div style="border-bottom:dashed #444444 1px;">
+          <input type="radio" id="addStatic" name="addChargeType" value="addStatic" checked="checked" />static<br />
+          <input type="radio" id="addPulsar" name="addChargeType" value="addPulsar" />pulsar<br />
+        </div>
+        <div style="border-bottom:dashed #444444 1px;">
+          <input type="radio" id="addNormal" name="addMassType" value="addNormal" checked="checked" />puls_stat<br />
+          <input type="radio" id="addFatty" name="addMassType" value="addFatty" />puls_sizr<br />
+        </div>
+      </div>
+      <div>
+        <div style="padding-top:2px;font-weight:bold;">&nbsp;blue charge</div>
+        <input type="textbox" id="defaultPosCharge" value="text" size="5" />
+        <div style="padding-top:2px;font-weight:bold;">&nbsp;blue mass</div>
+        <input type="textbox" id="defaultPosMass" value="text" size="5" />
+        <div style="padding-top:2px;font-weight:bold;">&nbsp;pink charge</div>
+        <input type="textbox" id="defaultNegCharge" value="text" size="5" />
+        <div style="padding-top:2px;font-weight:bold;">&nbsp;pink mass</div>
+        <input type="textbox" id="defaultNegMass" value="text" size="5" />
+      </div>
+    </div>
+    <div id="infoContainer">
+      <span style="font-weight:bold">Help:</span>
+      <br /><br />
+      - <span style="font-weight:bold">Use</span> options to set new ion type, click in free space to add it
+      <br /><br />
+      - <span style="font-weight:bold">Click</span> an ion to drag it around
+      <br /><br />
+      - <span style="font-weight:bold">Click</span> an ion then press the letter:
+      <br /><br />
+      '<span style="font-weight:bold">d</span>' to delete it<br />
+      '<span style="font-weight:bold">a</span>' to toggle free/anchor<br />
+      '<span style="font-weight:bold">p</span>' to toggle pulsar</br />
+      '<span style="font-weight:bold">f</span>' to toggle puls_stat/sizr</br />
+      <br />
+
+      - <span style="font-weight:bold">When</span> not holding an ion, press the letter:
+      <br /><br />
+      '<span style="font-weight:bold">x</span>' to toggle new blue/pink</br />
+      '<span style="font-weight:bold">a</span>' to toggle new free/anchor<br />
+      '<span style="font-weight:bold">p</span>' to toggle new static/pulsar<br />
+      '<span style="font-weight:bold">f</span>' to toggle new puls_stat/sizr<br />
+      <br />
+    </div>
+
+
+
+  </body>
+
+</html>

@@ -24,12 +24,13 @@ def Body(context,
          short_description,
          tags,
          thumb_base_filename_alt_pairs,
-         description=None,
+         additional_img_base_fns=(),
          collateral_creations=(),
          dependent_projects=(),
+         description=None,
          github_url=None,
-         additional_img_base_fns=(),
-         **kwargs
+         hide_card=False,
+         live_url=None,
     ):
     thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
     # Inline includes.section to specify itemprops.
@@ -60,6 +61,22 @@ def Body(context,
                 )
             )
         )
+
+    # Add Live Link.
+    if live_url:
+        els.extend(
+            section.Body(
+                context,
+                'Try It Out',
+                children=(
+                    Anchor(
+                        'Launch this application',
+                        href=live_url
+                    ),
+                )
+            )
+        )
+
     # Add Github Link.
     if github_url:
         els.extend(
@@ -112,4 +129,5 @@ def Body(context,
                 )
             )
         )
+
     return els
