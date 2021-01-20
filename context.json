@@ -1,6 +1,16 @@
 {
   "base_url": "https://derekenos.com",
 
+  "large_object_store": {
+    "type": "S3",
+    "options": {
+      "profile": "digitalocean",
+      "endpoint": "https://nyc3.digitaloceanspaces.com",
+      "bucket": "derekenos.com",
+      "prefix": ""
+    }
+  },
+
   "name": "Derek Enos",
   "email": "derek@derekenos.com",
   "social_name_url_pairs": [

@@ -2,9 +2,10 @@
 import argparse
 import json
 import os
-import shutil
 from itertools import chain
+from glob import glob
 
+from lib import copy_if_newer
 from lib.htmlephant import Document
 from lib.server import serve
 
@@ -21,6 +22,8 @@ class Context:
     STATIC_DIR = 'static'
     SITE_DIR = 'site'
     SITE_STATIC_DIR = 'site/static'
+    STATIC_LARGE_OBJECT_THRESHOLD_MB = 1
+    SITE_LARGE_STATIC_DIR = f'{SITE_STATIC_DIR}/large'
 
     def __init__(self, production=False, **kwargs):
         self.production = production
@@ -45,6 +48,10 @@ class Context:
         if not os.path.isfile(path):
             raise AssertionError(f'Path is not a regular file: {path}')
         return path
+
+    def is_large_static(self, filename):
+        return os.stat(self.static(filename)).st_size / 1024 / 1024 \
+            >= self.STATIC_LARGE_OBJECT_THRESHOLD_MB
 
     def url(self, path):
         """Return path as an absolute URL.
@@ -83,13 +90,43 @@ def write_page(context, filename, page_mod):
         for c in doc:
             fh.write(c)
 
+def copy_static(context):
+    """Copy files from the local static directory to the site
+    static directory, diverting large objects as appropriate, and
+    copying only if the destination file doesn't exist or is out-of-date.
+    """
+    # Ensure that the destination directories exist.
+    os.makedirs(context.SITE_STATIC_DIR, exist_ok=True)
+    os.makedirs(context.SITE_LARGE_STATIC_DIR, exist_ok=True)
+
+    # Iterate through files in the static directory.
+    static_dir = context.STATIC_DIR
+    static_dir_len = len(static_dir)
+    for fs_path in glob(f'{static_dir}/*'):
+        # Ignore directory-type paths.
+        if os.path.isdir(fs_path):
+            continue
+        # Get the static-dir-relative path.
+        filename = fs_path[static_dir_len + 1:]
+        # Check whether the file exceeds the large object threshold.
+        if context.is_large_static(filename):
+            # This is a large file - create a symlink in the destination directory
+            # instead of actually copying it.
+            dest = os.path.join(context.SITE_LARGE_STATIC_DIR, filename)
+            if not os.path.lexists(dest):
+                # Use the absolute file system path as the symlink src instead of
+                # trying to figure out how many parent dirs to references.
+                os.symlink(
+                    os.path.join(os.path.dirname(__file__), fs_path),
+                    dest
+                )
+        else:
+            dest = os.path.join(context.SITE_STATIC_DIR, filename)
+            copy_if_newer(fs_path, dest)
+
 def run(context):
     # Copy static files to output, creating dirs as necessary.
-    shutil.copytree(
-        src=context.STATIC_DIR,
-        dst=context.SITE_STATIC_DIR,
-        dirs_exist_ok=True
-    )
+    copy_static(context)
 
     # Iterate through the pages, writing each to the site dir and collecting
     # the filenames for later sitemap creation.
@@ -145,6 +182,7 @@ if __name__ == '__main__':
     parser.add_argument('--serve', action='store_true')
     parser.add_argument('--host', default='0.0.0.0')
     parser.add_argument('--port', type=int, default=5000)
+    parser.add_argument('--sync-large-static', action='store_true')
     args = parser.parse_args()
 
     # Set the default Context kwargs.
@@ -157,6 +195,11 @@ if __name__ == '__main__':
     # Generate the site files.
     run(context)
     print(f'Wrote new files to: {context.SITE_DIR}/')
+
+    # Maybe sync large static files to a remote store.
+    if args.sync_large_static:
+        from lib.large_static_store import sync
+        sync(context.large_object_store, context.SITE_LARGE_STATIC_DIR)
 
     # Maybe start the webserver.
     if args.serve:
