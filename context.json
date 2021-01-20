@@ -29,7 +29,10 @@
       "thumb_base_filename_alt_pairs": [
         ["weather_station_thumb", "photo of a laser-cut wood weather station"]
       ],
-      "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.<br><br><a href=\"https://photos.app.goo.gl/n43fajMjPJhvcqR47\">More photos and videos</a>",
+      "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.",
+      "media_name_url_pairs": [
+        ["Google Photos Album", "https://photos.app.goo.gl/n43fajMjPJhvcqR47"]
+      ],
       "collateral_creations": [
         "Indicator Gauge",
         "Streaming JSON Parser",
@@ -47,7 +50,10 @@
         ["laser_cut_servo_powered_gauge_4", "photo of laser-cut, servo-powered gauge"]
       ],
       "hide_card": true,
-      "description": "<a href=\"https://photos.app.goo.gl/w86c6Ep67xc9LZcf7\">More photos and videos</a>.",
+      "description": "I designed this gauge as part of the Weather Station project.",
+      "media_name_url_pairs": [
+        ["Google Photos Album", "https://photos.app.goo.gl/w86c6Ep67xc9LZcf7"]
+      ],
       "dependent_projects": [
         "Weather Station"
       ]
@@ -109,7 +115,10 @@
       "thumb_base_filename_alt_pairs": [
         ["cardboard_boxcade_thumb", "photo of a cardboard box with a screen and switches"]
       ],
-      "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.<br><br><a href=\"https://photos.app.goo.gl/rdZx6bYMPJ1KLtBg9\">More photos and videos</a>."
+      "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
+      "media_name_url_pairs": [
+        ["Google Photos Album", "https://photos.app.goo.gl/rdZx6bYMPJ1KLtBg9"]
+      ]
     },
 
     {
@@ -126,7 +135,9 @@
       "name": "Weezel",
       "slug": "/project-weezel",
       "short_description": "A drawing robot accessory for the Ikea MÅLA easel.",
-      "description": "<br><br><a href=\"https://photos.app.goo.gl/4Nu9vLZbMouLfBRD7\">More photos and videos</a>.",
+      "media_name_url_pairs": [
+        ["Google Photos Album", "https://photos.app.goo.gl/4Nu9vLZbMouLfBRD7"]
+      ],
       "tags": ["cnc", "art", "esp32", "micropython", "iot"],
       "thumb_base_filename_alt_pairs": [
         ["weezel_thumb", "photo of the Weezel drawing robot"]
@@ -137,7 +148,9 @@
       "name": "Modular Arcade Cabinet",
       "slug": "/project-modular-arcade-cabinet",
       "short_description": "A work in progress...",
-      "description": "<br><br><a href=\"https://photos.app.goo.gl/KerbLsQsoxEZwaqK7\">More photos and videos</a>.",
+      "media_name_url_pairs": [
+        ["Google Photos Album", "https://photos.app.goo.gl/KerbLsQsoxEZwaqK7"]
+      ],
       "tags": ["cnc", "laser-cut", "wood"],
       "thumb_base_filename_alt_pairs": [
         ["arcade_cabinet_thumb", "lasercut arcade cabinet scale model photo"]
@@ -171,7 +184,9 @@
       "name": "Sketchy",
       "slug": "/project-sketchy",
       "short_description": "Internet-connected Motorized Etch-A-Sketch",
-      "description": "<br><br><a href=\"https://photos.app.goo.gl/4UtGs1rNt6jChj3T8\">More photos and videos</a>.",
+      "media_name_url_pairs": [
+        ["Google Photos Album", "https://photos.app.goo.gl/4UtGs1rNt6jChj3T8"]
+      ],
       "tags": ["esp32", "micropython", "iot"],
       "thumb_base_filename_alt_pairs": [
         ["sketchy_video_poster", "photo of motorized Etch-A-Sketch"]
@@ -203,7 +218,9 @@
       "name": "Laser-cut Keypad",
       "slug": "/project-laser-cut-keypad",
       "short_description": "A Internet-connected Keypad w/ Backlit, Lasercut Living Hinge Buttons.",
-      "description": "<br><br><a href=\"https://photos.app.goo.gl/tzytTZA3BoazBSDr7\">More photos and videos</a>.",
+      "media_name_url_pairs": [
+        ["Google Photos Album", "https://photos.app.goo.gl/tzytTZA3BoazBSDr7"]
+      ],
       "tags": ["esp32", "micropython", "iot"],
       "thumb_base_filename_alt_pairs": [
         ["lasercut_keypad_thumb", "photo of laser-cut wooden keypad"]

@@ -31,6 +31,7 @@ def Body(context,
          github_url=None,
          hide_card=False,
          live_url=None,
+         media_name_url_pairs=(),
     ):
     thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
     # Inline includes.section to specify itemprops.
@@ -73,6 +74,21 @@ def Body(context,
                         'Launch this application',
                         href=live_url
                     ),
+                )
+            )
+        )
+
+    # Add media links.
+    if media_name_url_pairs:
+        els.extend(
+            section.Body(
+                context,
+                'Additional Media',
+                children=links_list.Body(
+                    context,
+                    itemprop=md.ASSOCIATED_MEDIA,
+                    itemtype=md.MEDIA_OBJECT,
+                    name_url_pairs=media_name_url_pairs
                 )
             )
         )
