@@ -21,9 +21,11 @@ class Context:
     PAGES_DIR = 'pages'
     STATIC_DIR = 'static'
     SITE_DIR = 'site'
-    SITE_STATIC_DIR = 'site/static'
-    STATIC_LARGE_OBJECT_THRESHOLD_MB = 1
-    SITE_LARGE_STATIC_DIR = f'{SITE_STATIC_DIR}/large'
+    SITE_RELATIVE_STATIC_DIR = 'static'
+    SITE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_STATIC_DIR}'
+    STATIC_LARGE_FILE_THRESHOLD_MB = 1
+    SITE_RELATIVE_LARGE_STATIC_DIR = f'static/large'
+    SITE_LARGE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_LARGE_STATIC_DIR}'
 
     def __init__(self, production=False, **kwargs):
         self.production = production
@@ -47,11 +49,21 @@ class Context:
         path = f'{self.STATIC_DIR}/{filename}'
         if not os.path.isfile(path):
             raise AssertionError(f'Path is not a regular file: {path}')
+
+        if not self.is_large_static(filename):
+            path = f'{self.SITE_RELATIVE_STATIC_DIR}/{filename}'
+        else:
+            if self.production:
+                return f'{self.large_static_store["endpoint"]}/{filename}'
+            path = os.path.join(self.SITE_RELATIVE_LARGE_STATIC_DIR, filename)
         return path
 
     def is_large_static(self, filename):
-        return os.stat(self.static(filename)).st_size / 1024 / 1024 \
-            >= self.STATIC_LARGE_OBJECT_THRESHOLD_MB
+        path = f'{self.STATIC_DIR}/{filename}'
+        if not os.path.isfile(path):
+            raise AssertionError(f'Path is not a regular file: {path}')
+        return os.stat(path).st_size / 1024 / 1024 \
+            >= self.STATIC_LARGE_FILE_THRESHOLD_MB
 
     def url(self, path):
         """Return path as an absolute URL.
@@ -199,7 +211,7 @@ if __name__ == '__main__':
     # Maybe sync large static files to a remote store.
     if args.sync_large_static:
         from lib.large_static_store import sync
-        sync(context.large_object_store, context.SITE_LARGE_STATIC_DIR)
+        sync(context.large_static_store, context.SITE_LARGE_STATIC_DIR)
 
     # Maybe start the webserver.
     if args.serve:

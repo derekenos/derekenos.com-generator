@@ -22,12 +22,11 @@ class S3(Store):
         """Use subprocess.call in conjunction with aws-cli to sync the
         local large objects directory to the remote.
         """
-        s3_url = f's3://{self.bucket}/{self.prefix.lstrip("/")}'
-        print(f'Syncing large objects from {fs_path} to: {s3_url}')
-        call(['aws', 's3', f'--endpoint={self.endpoint}',
-              f'--profile={self.profile}', 'sync',
+        print(f'Syncing large objects from {fs_path} to: {self.s3_url}')
+        call(['aws', 's3', f'--endpoint={self.aws_endpoint}',
+              f'--profile={self.aws_profile}', 'sync',
               '--follow-symlinks', '--acl=public-read',
-              fs_path, s3_url
+              fs_path, self.s3_url
         ])
 
 def sync(config, fs_path):
@@ -37,5 +36,5 @@ def sync(config, fs_path):
     if not os.path.isdir(fs_path):
         raise AssertionError(f'fs_path ({fs_path}) is not a directory')
     if config['type'] == 'S3':
-        return S3(config['options']).sync(fs_path)
+        return S3(config).sync(fs_path)
     raise NotImplementedError(f'type: {config["type"]}')

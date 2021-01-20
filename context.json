@@ -1,14 +1,12 @@
 {
   "base_url": "https://derekenos.com",
 
-  "large_object_store": {
+  "large_static_store": {
     "type": "S3",
-    "options": {
-      "profile": "digitalocean",
-      "endpoint": "https://nyc3.digitaloceanspaces.com",
-      "bucket": "derekenos.com",
-      "prefix": ""
-    }
+    "aws_profile": "digitalocean",
+    "aws_endpoint": "https://nyc3.digitaloceanspaces.com",
+    "s3_url": "s3://derekenos.com/",
+    "endpoint": "https://derekenos.com.nyc3.cdn.digitaloceanspaces.com"
   },
 
   "name": "Derek Enos",
