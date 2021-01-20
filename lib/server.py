@@ -53,7 +53,7 @@ def serve(site_dir, host, port):
             req_path = 'index.html'
         elif os.path.isdir(fs_path):
             if not req_path.endswith('/'):
-                # If req_path references as directory but no trailing slash
+                # If req_path references a directory but no trailing slash
                 # was specified, redirect to the same path with trailing slash.
                 return _303(location=f'/{req_path}/')
             if os.path.exists(os.path.join(fs_path, 'index.html')):
