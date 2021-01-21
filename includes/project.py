@@ -13,9 +13,9 @@ from lib.htmlephant import (
     Section,
 )
 
-from macros import picture
 from includes import (
     links_list,
+    picture,
     section,
     video,
 )
@@ -27,8 +27,7 @@ def Body(context,
          slug,
          short_description,
          tags,
-         thumb_base_filename_alt_pairs,
-         additional_img_base_fns=None,
+         images,
          collateral_creations=None,
          dependent_projects=None,
          description=None,
@@ -38,18 +37,21 @@ def Body(context,
          media_name_url_pairs=None,
          videos=None,
     ):
-    thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
+    image = images[0]
+    image_base_filename = image['base_filename']
     # Inline includes.section to specify itemprops.
     els = [
         Section(children=(
             H2(name, itemprop=md.NAME),
             H3(short_description, itemprop=md.ABSTRACT),
-            MDMeta(md.IMAGE, context.static(f'{thumb_base_filename}.png')),
             *picture.Body(
                 context,
-                srcsets=(context.static(f'{thumb_base_filename}.webp'),),
-                src=context.static(f'{thumb_base_filename}.png'),
-                alt=thumb_alt
+                itemprop=md.SUBJECT_OF,
+                srcsets=(context.static(fn:=f'{image_base_filename}.webp'),),
+                src=context.static(f'{image_base_filename}.png'),
+                name=image['name'],
+                description=image['description'],
+                upload_date=context.static_last_modified_iso8601(fn)
             )
         ))
     ]

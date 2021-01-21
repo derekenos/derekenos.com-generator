@@ -3,6 +3,7 @@
 
 CONTACT_POINT = 'https://schema.org/ContactPoint'
 CREATIVE_WORK = 'https://schema.org/CreativeWork'
+IMAGE_OBJECT = 'https://schema.org/ImageObject'
 INTANGIBLE = 'https://schema.org/Intangible'
 ITEM_LIST = 'https://schema.org/ItemList'
 LIST_ITEM = 'https://schema.org/ListItem'

@@ -11,13 +11,14 @@ from lib.htmlephant import (
     NOEL,
 )
 
-from macros import picture
+from includes import picture
 
 Head = NotDefined
 
 def Body(context, name, slug, short_description, tags,
-         thumb_base_filename_alt_pairs, **kwargs):
-    thumb_base_filename, thumb_alt = thumb_base_filename_alt_pairs[0]
+         images, **kwargs):
+    image = images[0]
+    image_base_filename = image['base_filename']
     return (
         H2(
             itemprop=md.NAME,
@@ -30,17 +31,19 @@ def Body(context, name, slug, short_description, tags,
         H4(
             ' '.join(f'#{tag}' for tag in tags)
         ) if tags else NOEL,
-        MDMeta(md.IMAGE, context.static(f'{thumb_base_filename}.png')),
         Anchor(
             itemprop=md.URL,
             href=slug,
             children=picture.Body(
                 context,
+                itemprop=md.SUBJECT_OF,
                 srcsets=(
-                    context.static(f'{thumb_base_filename}.webp'),
+                    context.static(fn:=f'{image_base_filename}.webp'),
                 ),
-                src=context.static(f'{thumb_base_filename}.png'),
-                alt=thumb_alt
+                src=context.static(f'{image_base_filename}.png'),
+                name=image['name'],
+                description=image['description'],
+                upload_date=context.static_last_modified_iso8601(fn)
             )
         )
     )
