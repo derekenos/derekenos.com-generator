@@ -5,8 +5,8 @@
     "type": "S3",
     "aws_profile": "digitalocean",
     "aws_endpoint": "https://nyc3.digitaloceanspaces.com",
-    "s3_url": "s3://derekenos.com/",
-    "endpoint": "https://derekenos.com.nyc3.cdn.digitaloceanspaces.com"
+    "s3_url": "s3://derekenos-com/",
+    "endpoint": "https://derekenos-com.nyc3.cdn.digitaloceanspaces.com"
   },
 
   "name": "Derek Enos",

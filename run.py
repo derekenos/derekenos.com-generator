@@ -6,7 +6,10 @@ from itertools import chain
 from datetime import datetime
 from glob import glob
 
-from lib import copy_if_newer
+from lib import (
+    copy_if_newer,
+    large_static_store,
+)
 from lib.htmlephant import Document
 from lib.server import serve
 
@@ -43,6 +46,13 @@ class Context:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
+        # Maybe instantiate a large static store as the attribute 'lss'.
+        if self.large_static_store is not None:
+            assert not hasattr(self, 'lss')
+            setattr(
+                self, 'lss', large_static_store.get(self.large_static_store)
+            )
+
     def static_last_modified_iso8601(self, filename):
         return datetime.fromtimestamp(
             os.stat(os.path.join(self.STATIC_DIR, filename)).st_mtime
@@ -52,16 +62,29 @@ class Context:
         """Format filename as a static asset path, assert that the file exists,
         and return the path.
         """
-        path = f'{self.STATIC_DIR}/{filename}'
-        if not os.path.isfile(path):
-            raise AssertionError(f'Path is not a regular file: {path}')
-
-        if not self.is_large_static(filename):
+        fs_path = f'{self.STATIC_DIR}/{filename}'
+        # Check that file exists either locally or in the lss.
+        if not os.path.isfile(fs_path):
+            # If the file exist in the lss, return that URL.
+            if not hasattr(self, 'lss') or not self.lss.exists(filename):
+                raise AssertionError(f'Path is not a regular file: {fs_path}')
+            # File exists in lss.
+            path = f'{self.large_static_store["endpoint"]}/{filename}'
+        elif not self.is_large_static(filename):
+            # It's a small, local file.
             path = f'{self.SITE_RELATIVE_STATIC_DIR}/{filename}'
         else:
+            # It's a large file.
             if self.production:
-                return f'{self.large_static_store["endpoint"]}/{filename}'
-            path = os.path.join(self.SITE_RELATIVE_LARGE_STATIC_DIR, filename)
+                path = f'{self.large_static_store["endpoint"]}/{filename}'
+            else:
+                # Warn if the file exists both locally and in the lss manifest.
+                if hasattr(self, 'lss') and self.lss.exists(filename):
+                    print(f'Large, local file "{filename}" exists in the LSS.')
+                path = os.path.join(
+                    self.SITE_RELATIVE_LARGE_STATIC_DIR,
+                    filename
+                )
         return path
 
     def is_large_static(self, filename):
@@ -216,10 +239,13 @@ if __name__ == '__main__':
     run(context)
     print(f'Wrote new files to: {context.SITE_DIR}/')
 
+    # Save store.exists_response_headers_cache
+    if hasattr(context, 'lss'):
+        context.lss.save_manifest()
+
     # Maybe sync large static files to a remote store.
     if args.sync_large_static:
-        from lib.large_static_store import sync
-        sync(context.large_static_store, context.SITE_LARGE_STATIC_DIR)
+        context.lss.sync(context.SITE_LARGE_STATIC_DIR)
 
     # Maybe start the webserver.
     if args.serve:
