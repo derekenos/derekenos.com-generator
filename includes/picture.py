@@ -38,7 +38,6 @@ Body = lambda context, srcsets, src, name, description, upload_date, \
                 for srcset in srcsets
             ],
             Img(src=src, alt=description)
-        ),
-        controls=''
+        )
     ),
 )
