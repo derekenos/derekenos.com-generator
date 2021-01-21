@@ -13,8 +13,10 @@ from lib.htmlephant import (
 
 Head = NotDefined
 
-Body = lambda context, src, poster, name, description, upload_date, type=None: (
+Body = lambda context, src, poster, name, description, upload_date, itemprop=None, \
+    type=None: (
     Video(
+        itemprop=itemprop,
         itemscope='',
         itemtype=md.VIDEO_OBJECT,
         children=(

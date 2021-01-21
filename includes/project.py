@@ -1,4 +1,6 @@
 
+from itertools import chain
+
 from lib import NotDefined
 from lib import microdata as md
 from lib.htmlephant_extensions import UnescapedParagraph
@@ -140,25 +142,20 @@ def Body(context,
             section.Body(
                 context,
                 'Videos',
-                children=(
-                    Div(
-                        itemprop=md.ASSOCIATED_MEDIA,
-                        itemtype=md.MEDIA_OBJECT,
-                        children=[
-                            video.Body(
-                                context,
-                                src=context.static(vid['filename']),
-                                poster=context.static(vid['thumb_filename']),
-                                name=vid['name'],
-                                description=vid['description'],
-                                upload_date=context.static_last_modified_iso8601(
-                                    vid['filename']
-                                )
-                            )
-                            for vid in videos
-                        ]
-                    ),
-                )
+                children=chain((
+                    video.Body(
+                        context,
+                        itemprop=md.SUBJECT_OF,
+                        src=context.static(vid['filename']),
+                        poster=context.static(vid['thumb_filename']),
+                        name=vid['name'],
+                        description=vid['description'],
+                        upload_date=context.static_last_modified_iso8601(
+                            vid['filename']
+                        )
+                    )
+                    for vid in videos
+                )),
             )
         )
 
