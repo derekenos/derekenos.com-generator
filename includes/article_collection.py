@@ -4,8 +4,9 @@ from lib import (
     NotDefined,
     slugify,
 )
+
+from lib.htmlephant import MDMeta
 from lib.htmlephant_extensions import (
-    MDMeta,
     UnescapedH4,
     UnescapedParagraph,
 )

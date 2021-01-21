@@ -9,10 +9,9 @@ body {
   margin: 0;
 }
 
-iframe,
 img,
 video {
-  max-width: 90%;
+  max-width: calc(100% - 2rem);
   border-radius: 8px;
 }
 
@@ -205,6 +204,10 @@ ol.links > li > a {
 }
 
 @media screen and (min-width: 1024px) {
+  video {
+    max-width: calc(1024px - 2rem);
+  }
+
   nav {
     display: block;
     border-bottom: solid #888 1px;

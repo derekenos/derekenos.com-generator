@@ -32,9 +32,7 @@ def get_meta_tags(context):
     tags.append(
         OGMeta(
             'image',
-            context.static_url(
-                f'{project["thumb_base_filename_alt_pairs"][0][0]}.png'
-            )
+            context.static_url(f'{project["images"][0]["base_filename"]}.png')
         )
     )
     # Keywords

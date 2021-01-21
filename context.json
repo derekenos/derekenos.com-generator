@@ -1,6 +1,14 @@
 {
   "base_url": "https://derekenos.com",
 
+  "large_static_store": {
+    "type": "S3",
+    "aws_profile": "digitalocean",
+    "aws_endpoint": "https://nyc3.digitaloceanspaces.com",
+    "s3_url": "s3://derekenos-com/",
+    "endpoint": "https://derekenos-com.nyc3.cdn.digitaloceanspaces.com"
+  },
+
   "name": "Derek Enos",
   "email": "derek@derekenos.com",
   "social_name_url_pairs": [
@@ -26,12 +34,24 @@
       "slug": "/project-weather-station",
       "short_description": "An IOT weather forecast display appliance.",
       "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["weather_station_thumb", "photo of a laser-cut wood weather station"]
+      "images": [
+        {
+          "base_filename": "weather_station_thumb",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        }
       ],
       "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.",
       "media_name_url_pairs": [
         ["Google Photos Album", "https://photos.app.goo.gl/n43fajMjPJhvcqR47"]
+      ],
+      "videos": [
+        {
+          "filename": "weather_station.mp4",
+          "thumb_filename": "weather_station_mp4_thumb.png",
+          "name": "Weather Station Introduction",
+          "description": "The weather station powering up, spinning the busy indicator, and displaying the forecast."
+        }
       ],
       "collateral_creations": [
         "Indicator Gauge",
@@ -46,8 +66,12 @@
       "slug": "/project-indicator-gauge",
       "short_description": "A laser-cut, servo-powered indicator guage.",
       "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["laser_cut_servo_powered_gauge_4", "photo of laser-cut, servo-powered gauge"]
+      "images": [
+        {
+          "base_filename": "laser_cut_servo_powered_gauge_4",
+          "name": "Indicator Gauge",
+          "description": "photo of laser-cut, servo-powered gauge"
+        }
       ],
       "hide_card": true,
       "description": "I designed this gauge as part of the Weather Station project.",
@@ -64,8 +88,12 @@
       "slug": "/project-streaming-json-parser",
       "short_description": "A Python streaming JSON parser for memory-constrained environments.",
       "tags": ["micropython", "parser"],
-      "thumb_base_filename_alt_pairs": [
-        ["json_parser_thumb", "screenshot of json-parser library source code"]
+      "images": [
+        {
+          "base_filename": "json_parser_thumb",
+          "name": "JSON Parser",
+          "description": "screenshot of json-parser library source code"
+        }
       ],
       "hide_card": true,
       "description": "",
@@ -80,8 +108,12 @@
       "slug": "/project-strptime",
       "short_description": "An implementation of Python time.strptime() for use with Micropython.",
       "tags": ["python", "micropython", "parser"],
-      "thumb_base_filename_alt_pairs": [
-        ["strptime_thumb", "screenshot of time.strptime() library source code"]
+      "images": [
+        {
+          "base_filename": "strptime_thumb",
+          "name": "time.strptime()",
+          "description": "screenshot of time.strptime() library source code"
+        }
       ],
       "hide_card": true,
       "description": "",
@@ -96,8 +128,12 @@
       "slug": "/project-utf8-decoder",
       "short_description": "A toy incremental UTF-8 decoder.",
       "tags": ["python", "decoder"],
-      "thumb_base_filename_alt_pairs": [
-        ["utf8_decoder_thumb", "screenshot of UTF-8 decoder library source code"]
+      "images": [
+        {
+          "base_filename": "utf8_decoder_thumb",
+          "name": "UTF-8 Decoder",
+          "description": "screenshot of UTF-8 decoder library source code"
+        }
       ],
       "hide_card": true,
       "description": "",
@@ -112,8 +148,12 @@
       "slug": "/project-cardboard-boxcade",
       "short_description": "Custom physical controls for browser-based HTML/Javascript applications.",
       "tags": ["esp32", "micropython", "iot", "videogame"],
-      "thumb_base_filename_alt_pairs": [
-        ["cardboard_boxcade_thumb", "photo of a cardboard box with a screen and switches"]
+      "images": [
+        {
+          "base_filename": "cardboard_boxcade_thumb",
+          "name": "Cardboard Boxcade",
+          "description": "photo of a cardboard box with a screen and switches"
+        }
       ],
       "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
       "media_name_url_pairs": [
@@ -126,8 +166,12 @@
       "slug": "/project-trtl",
       "short_description": "A wheeled drawing robot inspired by the Logo Turtle.",
       "tags": ["cnc", "art", "esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["trtl_thumb", "photo of the T.r.t.l. drawing robot"]
+      "images": [
+        {
+          "base_filename": "trtl_thumb",
+          "name": "Trtl Drawing Robot",
+          "description": "photo of the T.r.t.l. drawing robot"
+        }
       ]
     },
 
@@ -139,8 +183,12 @@
         ["Google Photos Album", "https://photos.app.goo.gl/4Nu9vLZbMouLfBRD7"]
       ],
       "tags": ["cnc", "art", "esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["weezel_thumb", "photo of the Weezel drawing robot"]
+      "images": [
+        {
+          "base_filename": "weezel_thumb",
+          "name": "Weezel Drawing Robot",
+          "description": "photo of the Weezel drawing robot"
+        }
       ]
     },
 
@@ -152,8 +200,12 @@
         ["Google Photos Album", "https://photos.app.goo.gl/KerbLsQsoxEZwaqK7"]
       ],
       "tags": ["cnc", "laser-cut", "wood"],
-      "thumb_base_filename_alt_pairs": [
-        ["arcade_cabinet_thumb", "lasercut arcade cabinet scale model photo"]
+      "images": [
+        {
+          "base_filename": "arcade_cabinet_thumb",
+          "name": "Modular Arcade Cabinet",
+          "description": "lasercut arcade cabinet scale model photo"
+        }
       ]
     },
 
@@ -163,8 +215,12 @@
       "short_description": "Real-timeish, GPU-backed video effects using vanilla Javascript.",
       "live_url": "https://s3.amazonaws.com/derekenos.com/projects/gritty-viddy/index.html",
       "tags": ["javascript", "gpu", "video", "effects", "realtime"],
-      "thumb_base_filename_alt_pairs": [
-        ["gritty-viddy", "gritty viddy video effects app screenshot"]
+      "images": [
+        {
+          "base_filename": "gritty-viddy",
+          "name": "Gritty Viddy Browser-based Video Effects",
+          "description": "gritty viddy video effects app screenshot"
+        }
       ],
       "github_url": "https://github.com/derekenos/gritty-viddy"
     },
@@ -175,8 +231,12 @@
       "short_description": "Testing the waters of the Cloudflare Apps platform.",
       "description": "<a href=\"https://www.cloudflare.com/apps/important-message\">https://www.cloudflare.com/apps/important-message</a>",
       "tags": ["javascript", "webcomponents", "webapp"],
-      "thumb_base_filename_alt_pairs": [
-        ["important-message", "Important Message app banner image"]
+      "images": [
+        {
+          "base_filename": "important-message",
+          "name": "Important Message Cloudflare App",
+          "description": "Important Message app banner image"
+        }
       ]
     },
 
@@ -188,8 +248,12 @@
         ["Google Photos Album", "https://photos.app.goo.gl/4UtGs1rNt6jChj3T8"]
       ],
       "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["sketchy_video_poster", "photo of motorized Etch-A-Sketch"]
+      "images": [
+        {
+          "base_filename": "sketchy_video_poster",
+          "name": "Sketchy, A Robotic Etch-A-Sketch",
+          "description": "photo of motorized Etch-A-Sketch"
+        }
       ],
       "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy"
     },
@@ -199,8 +263,12 @@
       "slug": "/project-babygate",
       "short_description": "A vanilla JS / HTML5 demo game for the iome platform.",
       "tags": ["html5", "javascript", "webaudio", "videogame"],
-      "thumb_base_filename_alt_pairs": [
-        ["babygate_thumb", "screenshot of Babygate video game"]
+      "images": [
+        {
+          "base_filename": "babygate_thumb",
+          "name": "Babygate Video Game",
+          "description": "screenshot of Babygate video game"
+        }
       ]
     },
 
@@ -209,8 +277,12 @@
       "slug": "/project-iome",
       "short_description": "A platform for developing physical interfaces with a web application frontend using modern, off-the-shelf technologies.",
       "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["game_console_20191008_thumb", "lasercut iome dev kit photo"]
+      "images": [
+        {
+          "base_filename": "game_console_20191008_thumb",
+          "name": "iome, A platform for physical web application development",
+          "description": "lasercut iome dev kit photo"
+        }
       ]
     },
 
@@ -222,8 +294,12 @@
         ["Google Photos Album", "https://photos.app.goo.gl/tzytTZA3BoazBSDr7"]
       ],
       "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["lasercut_keypad_thumb", "photo of laser-cut wooden keypad"]
+      "images": [
+        {
+          "base_filename": "lasercut_keypad_thumb",
+          "name": "Laser-cut Keypad",
+          "description": "photo of laser-cut wooden keypad"
+        }
       ]
     },
 
@@ -232,8 +308,12 @@
       "slug": "/project-physical-platformer-game-prototype",
       "short_description": "Prototype of a physical platformer game mechanism.",
       "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["platformer_thumb", "photo of motorized x/y axis made from laser-cut wood"]
+      "images": [
+        {
+          "base_filename": "platformer_thumb",
+          "name": "Physical Platformer Game Prototype",
+          "description": "photo of motorized x/y axis made from laser-cut wood"
+        }
       ]
     },
 
@@ -242,8 +322,12 @@
       "slug": "/project-delta-robot",
       "short_description": "A gratuitously lasercut delta robot.",
       "tags": ["esp32", "micropython", "iot"],
-      "thumb_base_filename_alt_pairs": [
-        ["delta_video_thumb", "photo of delta robot made from laser-cut wood"]
+      "images": [
+        {
+          "base_filename": "delta_video_thumb",
+          "name": "Laser-cut Delta Robot",
+          "description": "photo of delta robot made from laser-cut wood"
+        }
       ],
       "github_url": "https://github.com/derekenos/delta_robot"
     },
@@ -254,8 +338,12 @@
       "short_description": "A simple sound toy using the Web Audio API.",
       "live_url": "/static/projects/composer/",
       "tags": ["javascript", "webaudio", "audio"],
-      "thumb_base_filename_alt_pairs": [
-        ["composer", "sound composer web app screenshot"]
+      "images": [
+        {
+          "base_filename": "composer",
+          "name": "Composer, A Web-based Audio Composition Toy",
+          "description": "sound composer web app screenshot"
+        }
       ]
     },
 
@@ -265,8 +353,12 @@
       "short_description": "A computationally inefficient exploration of the complex behaviors that arise from the interaction of simple rules.",
       "tags": ["javascript", "emergentbehavior"],
       "live_url": "/static/projects/sim/",
-      "thumb_base_filename_alt_pairs": [
-        ["ionModelScreenThumb", "ion model application screenshot"]
+      "images": [
+        {
+          "base_filename": "ionModelScreenThumb",
+          "name": "Web-based Ion Model Simulator",
+          "description": "ion model application screenshot"
+        }
       ]
     },
 
@@ -276,8 +368,12 @@
       "short_description": "A lo-fi, MIDI-controlled synthesizer and sampler.",
       "description": "More info at <a href=\"http://badhandshake.com/demidulator/\">badhandshake.com</a>",
       "tags": ["picmicrocontroller", "assembly", "midi", "synthesizer", "sampler", "rockband"],
-      "thumb_base_filename_alt_pairs": [
-        ["demidulator_thumb", "photo of the deMIDulator 8-bit synth"]
+      "images": [
+        {
+          "base_filename": "demidulator_thumb",
+          "name": "deMIDulator 8-bit MIDI sampler / synth",
+          "description": "photo of the deMIDulator 8-bit synth"
+        }
       ]
     },
 
@@ -286,8 +382,12 @@
       "slug": "/project-beginner-s-box",
       "short_description": "Force-sensitive tone generators.",
       "tags": ["microcontroller", "sound"],
-      "thumb_base_filename_alt_pairs": [
-        ["beginners_box_thumb", "photo of laser-cut force-sensitive tone generator boxes"]
+      "images": [
+        {
+          "base_filename": "beginners_box_thumb",
+          "name": "Beginner's Box",
+          "description": "photo of laser-cut force-sensitive tone generator boxes"
+        }
       ]
     },
 
@@ -296,8 +396,12 @@
       "slug": "/project-video-feedback-instrument",
       "short_description": "NTSC video generation w/ light pen feedback",
       "tags": ["microcontroller", "videoart"],
-      "thumb_base_filename_alt_pairs": [
-        ["video_feedback_thumb", "video screenshot of video feedback instrument"]
+      "images": [
+        {
+          "base_filename": "video_feedback_thumb",
+          "name": "Video Feedback Instrument",
+          "description": "video screenshot of video feedback instrument"
+        }
       ]
     },
 
@@ -306,11 +410,13 @@
       "slug": "/project-physical-interface-prototype",
       "short_description": "An input device that reads the insertion depth of a movable column.",
       "tags": ["microcontroller", "hci"],
-      "thumb_base_filename_alt_pairs": [
-        ["physical_interface_thumb", "photo of laser-cut physical interface prototype"]
+      "images": [
+        {
+          "base_filename": "physical_interface_thumb",
+          "name": "Physical Interface Prototype",
+          "description": "photo of laser-cut physical interface prototype"
+        }
       ]
     }
-
   ]
-
 }

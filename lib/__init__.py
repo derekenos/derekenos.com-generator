@@ -1,4 +1,6 @@
 
+import os
+import shutil
 import re
 
 SLUGIFY_REGEX = re.compile(r'[^\w]')
@@ -15,3 +17,13 @@ def assert_ctx(context, k):
 
 # Define am empty include/macro Head/Body placeholder function.
 NotDefined = lambda context: ()
+
+def copy_if_newer(src, dest):
+    """Copy src to dest if src is newer and return a bool indicating whether
+    the copy took place.
+    """
+    if (not os.path.exists(dest)
+        or os.stat(src).st_mtime > os.stat(dest).st_mtime):
+        shutil.copy2(src, dest)
+        return True
+    return False
