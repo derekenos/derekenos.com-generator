@@ -35,15 +35,20 @@ class Context:
             setattr(self, k, v)
 
         # Maybe instantiate a large static store.
-        assert not hasattr(self, 'lss')
+        assert getattr(self, 'lss', None) is None
         self.lss = None
         if self.large_static_store is not None:
             self.lss = large_static_store.get(self.large_static_store)
 
     def static_last_modified_iso8601(self, filename):
-        return datetime.fromtimestamp(
-            os.stat(os.path.join(self.STATIC_DIR, filename)).st_mtime
-        ).isoformat()
+        # If the file exists, locally, stat it and return the result.
+        path = os.path.join(self.STATIC_DIR, filename)
+        if os.path.exists(path):
+            return datetime.fromtimestamp(os.stat(path).st_mtime).isoformat()
+        # The file does not exist locally, so check the lss.
+        if self.lss and self.lss.exists(filename):
+            return self.lss.meta(filename).last_modified.isoformat()
+        raise AssertionError(f'Filename not found: {filename}')
 
     def static(self, filename):
         """Format filename as a static asset path, assert that the file exists,
@@ -53,7 +58,7 @@ class Context:
         # Check that file exists either locally or in the lss.
         if not os.path.isfile(fs_path):
             # If the file exist in the lss, return that URL.
-            if not hasattr(self, 'lss') or not self.lss.exists(filename):
+            if not self.lss or not self.lss.exists(filename):
                 raise AssertionError(f'Path is not a regular file: {fs_path}')
             # File exists in lss.
             path = f'{self.large_static_store["endpoint"]}/{filename}'
@@ -66,7 +71,7 @@ class Context:
                 path = f'{self.large_static_store["endpoint"]}/{filename}'
             else:
                 # Warn if the file exists both locally and in the lss manifest.
-                if hasattr(self, 'lss') and self.lss.exists(filename):
+                if self.lss and self.lss.exists(filename):
                     print(f'Large, local file "{filename}" exists in the LSS.')
                 path = os.path.join(
                     self.SITE_RELATIVE_LARGE_STATIC_DIR,

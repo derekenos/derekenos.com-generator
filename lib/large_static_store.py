@@ -1,6 +1,8 @@
 
 import json
 import os
+from collections import namedtuple
+from datetime import datetime
 from http import client
 from subprocess import call
 from abc import (
@@ -13,6 +15,12 @@ from abc import (
 ###############################################################################
 
 MANIFEST_FILENAME = '.lss_manifest.json'
+
+###############################################################################
+# Types
+###############################################################################
+
+Metadata = namedtuple('Metadata', ('size_mb', 'last_modified'))
 
 ###############################################################################
 # Classes
@@ -50,7 +58,13 @@ class Store(ABC):
     def exists(self, path):
         pass
 
+    @abstractmethod
+    def meta(self, path):
+        pass
+
 class S3(Store):
+    LAST_MODIFIED_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+
     def sync(self, fs_path):
         """Use subprocess.call in conjunction with aws-cli to sync the
         local large objects directory to the remote.
@@ -75,8 +89,26 @@ class S3(Store):
         res = conn.getresponse()
         exists = res.status == 200
         if exists:
-            self.manifest[path] = dict(res.headers)
+            # Lowercase header names for internal consistency.
+            self.manifest[path] = {
+                k.lower(): v for k, v in res.headers.items()
+            }
         return exists
+
+    def meta(self, path):
+        """Return a Metadata object for the specified path if it exists,
+        otherwise return None.
+        """
+        if path not in self.manifest:
+            return None
+        headers = self.manifest[path]
+        return Metadata(
+            size_mb=int(headers['content-length']) / 1024 / 1024,
+            last_modified=datetime.strptime(
+                headers['last-modified'],
+                self.LAST_MODIFIED_FORMAT
+            )
+        )
 
 def get(config):
     """Instantiate and return a store based on the type specified in config.
