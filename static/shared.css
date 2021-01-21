@@ -11,7 +11,7 @@ body {
 
 img,
 video {
-  max-width: 100%;
+  max-width: calc(100% - 2rem);
   border-radius: 8px;
 }
 
@@ -204,9 +204,8 @@ ol.links > li > a {
 }
 
 @media screen and (min-width: 1024px) {
-  img,
   video {
-    max-width: 800px;
+    max-width: calc(1024px - 2rem);
   }
 
   nav {
