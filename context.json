@@ -269,6 +269,14 @@
           "name": "Babygate Video Game",
           "description": "screenshot of Babygate video game"
         }
+      ],
+      "videos": [
+        {
+          "filename": "iome_dev_kit_v1.mp4",
+          "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
+          "name": "Babygate Video Game Demo",
+          "description": "Demonstration of the Babygate video game played using the iome Dev Kit v1"
+        }
       ]
     },
 
@@ -283,7 +291,16 @@
           "name": "iome, A platform for physical web application development",
           "description": "lasercut iome dev kit photo"
         }
-      ]
+      ],
+      "videos": [
+        {
+          "filename": "iome_dev_kit_v1.mp4",
+          "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
+          "name": "iome Dev Kit v1 Demo",
+          "description": "Demonstration of the iome Dev Kit v1"
+        }
+      ],
+      "github_url": "https://github.com/derekenos/iome"
     },
 
     {
