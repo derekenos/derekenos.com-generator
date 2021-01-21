@@ -73,8 +73,10 @@ class S3(Store):
         conn = client.HTTPSConnection(self.endpoint.split('/', 2)[2])
         conn.request('HEAD', path)
         res = conn.getresponse()
-        self.manifest[path] = dict(res.headers)
-        return res.status == 200
+        exists = res.status == 200
+        if exists:
+            self.manifest[path] = dict(res.headers)
+        return exists
 
 def get(config):
     """Instantiate and return a store based on the type specified in config.
