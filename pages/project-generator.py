@@ -11,7 +11,7 @@ from lib.htmlephant import (
 import includes.project
 
 CONTEXT_ITEMS_GETTER = lambda context: context.projects
-FILENAME_GENERATOR = lambda project: f'{project["slug"]}.html'
+FILENAME_GENERATOR = lambda project: f'{project["slug"].lstrip("/")}.html'
 
 def get_meta_tags(context):
     """Return a list of Meta elements comprising project metadata.
