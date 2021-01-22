@@ -16,11 +16,11 @@ Head = NotDefined
 Body = lambda context, src, poster, name, description, upload_date, \
     itemprop=None, type=None: (
     Video(
-        "Your browser does not support HTML5 video.",
         itemprop=itemprop,
         itemscope='',
         itemtype=md.VIDEO_OBJECT,
         children=(
+            VideoSource(src=src, type=type),
             MDMeta(md.CONTENT_URL, src),
             MDMeta(md.THUMBNAIL_URL, poster),
             MDMeta(md.NAME, name),
@@ -30,7 +30,6 @@ Body = lambda context, src, poster, name, description, upload_date, \
                 type:=type or mimetypes.guess_type(src)[0]
             ),
             MDMeta(md.UPLOAD_DATE, upload_date),
-            VideoSource(src=src, type=type),
         ),
         controls='',
         poster=poster,

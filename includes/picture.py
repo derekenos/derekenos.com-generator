@@ -8,6 +8,7 @@ from lib.htmlephant import (
     MDMeta,
     Picture,
     PictureSource,
+    Span,
 )
 
 Head = NotDefined
@@ -16,7 +17,7 @@ import mimetypes
 
 Body = lambda context, srcsets, src, name, description, upload_date, \
     itemprop=None, type=None: (
-    Picture(
+    Span(
         itemprop=itemprop,
         itemscope='',
         itemtype=md.IMAGE_OBJECT,
@@ -30,14 +31,18 @@ Body = lambda context, srcsets, src, name, description, upload_date, \
                 type:=type or mimetypes.guess_type(src)[0]
             ),
             MDMeta(md.UPLOAD_DATE, upload_date),
-            *[
-                PictureSource(
-                    srcset=srcset,
-                    type=type
+            Picture(
+                children=(
+                    *[
+                        PictureSource(
+                            srcset=srcset,
+                            type=type
+                        )
+                        for srcset in srcsets
+                    ],
+                    Img(src=src, alt=description),
                 )
-                for srcset in srcsets
-            ],
-            Img(src=src, alt=description)
+            )
         )
     ),
 )
