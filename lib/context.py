@@ -111,7 +111,7 @@ class Context:
 ###############################################################################
 
 def normalize_projects(projects):
-    """Do an in-place normlization of the projects dict.
+    """Do an in-place normalization of the projects dict.
     """
     # Create a <project-name> -> <project-copy> map.
     name_project_map = {x['name']: x for x in projects}
