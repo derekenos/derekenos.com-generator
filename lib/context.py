@@ -34,15 +34,27 @@ class Context:
         # Initialize runtime attributes.
         self.current_page = None
         self.generator_item = None
+
+        # Maybe instantiate a large static store.
+        lss_config = kwargs.get('large_static_store')
+        self.lss = None
+        if lss_config is not None:
+            # Assert that the user context doesn't specify 'lss', which is
+            # reserved for the large static store instance.
+            assert 'lss' not in kwargs
+            self.lss = large_static_store.get(lss_config)
+
         # Add any custom attributes.
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-        # Maybe instantiate a large static store.
-        assert getattr(self, 'lss', None) is None
-        self.lss = None
-        if self.large_static_store is not None:
-            self.lss = large_static_store.get(self.large_static_store)
+    def raise_static_not_found(self, path):
+        """Static file not found exception message helper.
+        """
+        msg = 'Static file not found'
+        if self.lss is not None:
+            msg += ' locally or in large static store'
+        raise FileNotFoundError(f'{msg}: {path}')
 
     def static_last_modified_iso8601(self, filename):
         # If the file exists, locally, stat it and return the result.
@@ -52,7 +64,7 @@ class Context:
         # The file does not exist locally, so check the lss.
         if self.lss and self.lss.exists(filename):
             return self.lss.meta(filename).last_modified.isoformat()
-        raise AssertionError(f'Filename not found: {filename}')
+        self.raise_static_not_found(filename)
 
     def static(self, filename):
         """Format filename as a static asset path, assert that the file exists,
@@ -63,7 +75,7 @@ class Context:
         if not os.path.isfile(fs_path):
             # If the file exist in the lss, return that URL.
             if not self.lss or not self.lss.exists(filename):
-                raise AssertionError(f'Path is not a regular file: {fs_path}')
+                self.raise_static_not_found(fs_path)
             # File exists in lss.
             path = f'{self.large_static_store["endpoint"]}/{filename}'
         elif not self.is_large_static(filename):
