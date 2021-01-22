@@ -4,6 +4,10 @@ from datetime import datetime
 
 from lib import large_static_store
 
+COLLATERAL_CREATIONS = 'collateral_creations'
+DEPENDS_ON = 'depends_on'
+DEPENDENT_OF = 'dependent_of'
+
 class Context:
     """This class is used to represent the application state and provides
     methods for working with that state.
@@ -101,3 +105,42 @@ class Context:
         """
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
         return open(path, 'w', encoding='utf-8')
+
+###############################################################################
+# Context Normalization Helpers
+###############################################################################
+
+def normalize_projects(projects):
+    """Do an in-place normlization of the projects dict.
+    """
+    # Create a <project-name> -> <project-copy> map.
+    name_project_map = {x['name']: x for x in projects}
+
+    # Add any missing dependency properties.
+    for name, project in name_project_map.items():
+        for k in (DEPENDS_ON, DEPENDENT_OF):
+            if k not in project:
+                continue
+            other_k = DEPENDENT_OF if k == DEPENDS_ON else DEPENDS_ON
+            for other_name in project[k]:
+                other_project = name_project_map[other_name]
+                # Do not add a dependent_of relationship for values that
+                # already exist in collateral_creations.
+                if (COLLATERAL_CREATIONS in other_project
+                    and k == DEPENDENT_OF
+                    and name in other_project[COLLATERAL_CREATIONS]):
+                    continue
+                if other_k in other_project:
+                    if name not in other_project[other_k]:
+                        other_project[other_k].append(name)
+                else:
+                    other_project[other_k] = [name]
+
+def normalize_context(context):
+    """Do an in-place normalization of the context object, grooming values,
+    adding defaults for unspecified fields, enriching with inferred data, etc.
+    """
+    # Strip any trailing base_url slash.
+    context.base_url = context.base_url.rstrip('/')
+
+    normalize_projects(context.projects)

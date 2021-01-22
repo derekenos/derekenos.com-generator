@@ -6,10 +6,12 @@ from itertools import chain
 from glob import glob
 
 from lib import copy_if_newer
-from lib.context import Context
-from lib.context_projects import get_enriched_projects
 from lib.htmlephant import Document
 from lib.server import serve
+from lib.context import (
+    Context,
+    normalize_context,
+)
 
 import includes.head
 import includes.body
@@ -152,8 +154,8 @@ if __name__ == '__main__':
         **json.load(open(args.context_file, 'rb'))
     )
 
-    # Enrich the project objects by automatically adding any inferable properties.
-    context.projects = get_enriched_projects(context.projects)
+    # Do an in-place normalization of the context object values.
+    normalize_context(context)
 
     # Generate the site files.
     run(context)
