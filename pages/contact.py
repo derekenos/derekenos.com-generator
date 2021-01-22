@@ -1,20 +1,22 @@
 
+from lib import microdata as md
 from lib.htmlephant import (
     Anchor,
     Br,
     Div,
-    Div,
+    Em,
     H1,
+    MDMeta,
+    OGMeta,
+    Span,
+    StdMeta,
     Title,
 )
-from lib.htmlephant_extensions import (
-    Em,
-    OGMeta,
-    StdMeta,
-)
 
-from includes import section
-from includes import links_list
+from includes import (
+    links_list,
+    section,
+)
 
 DESCRIPTION = 'How to contact me'
 
@@ -27,15 +29,23 @@ Head = lambda context: (
 Body = lambda context: (
     Div(
         _class='content contact',
+        itemscope='',
+        itemtype=md.PERSON,
         children=(
+            MDMeta(md.NAME, context.name),
             H1(DESCRIPTION),
             *section.Body(
                 context,
                 'Email',
                 children=(
                     Anchor(
-                        context.email,
-                        href=f'mailto:{context.email}'
+                        href=f'mailto:{context.email}',
+                        children=(
+                            Span(
+                                context.email,
+                                itemprop=md.EMAIL,
+                            ),
+                        ),
                     ),
                 )
             ),
@@ -44,7 +54,9 @@ Body = lambda context: (
                 'Other channels',
                 children=links_list.Body(
                     context,
-                    context.social_name_url_pairs
+                    itemprop=md.CONTACT_POINT_PROP,
+                    itemtype=md.CONTACT_POINT,
+                    name_url_pairs=context.social_name_url_pairs
                 )
             )
         )

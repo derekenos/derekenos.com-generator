@@ -1,11 +1,9 @@
 
-from lib.htmlephant_extensions import (
-    OGMeta,
-    StdMeta,
-)
 from lib.htmlephant import (
     Div,
     H1,
+    OGMeta,
+    StdMeta,
     Title,
 )
 
@@ -27,7 +25,8 @@ Body = lambda context: (
             H1(DESCRIPTION),
             *collection.Body(
                 context,
-                [
+                name='Selected Projects',
+                items=[
                     project_card.Body(context, **prj)
                     for prj in context.projects
                     if not prj.get('hide_card', False)

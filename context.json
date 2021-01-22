@@ -11,6 +11,14 @@
     ["Patreon", "https://www.patreon.com/<you>"]
   ],
 
+  "large_static_store": {
+    "type": "S3",
+    "aws_profile": "<aws-profile-name>",
+    "aws_endpoint": "<aws-endpoint>",
+    "s3_url": "<s3-url>",
+    "endpoint": "<production-endpoint-url>"
+  },
+
   "google_analytics_id": "<your-google-analytics-id>",
 
   "navbar_page_name_label_pairs": [
@@ -19,33 +27,23 @@
   ],
 
   "projects": [
-    {
-      "name": "Project 1",
-      "slug": "/project-1",
-      "short_description": "The first project.",
-      "description": "A description of the first project.",
-      "tags": ["fun", "life-affirming"],
-      "thumb_base_filename_alt_pairs": [
-        ["project_1_thumb", "placeholder project image"]
-      ],
-      "related_projects": [
-        "Project 2"
-      ],
-      "collateral_creations": [
-        "Project 4"
-      ]
-    },
 
     {
-      "name": "Project 2",
-      "slug": "/project-2",
-      "short_description": "The second project.",
-      "description": "A description of the second project.",
-      "tags": ["challenging", "gratifying"],
-      "thumb_base_filename_alt_pairs": [
-        ["project_2_thumb", "placeholder project image"]
+      "name": "Project 4",
+      "slug": "/project-4",
+      "short_description": "The last project.",
+      "description": "A description of the final project.",
+      "tags": ["done", "never-again"],
+      "images": [
+        {
+          "base_filename": "project_4_thumb",
+          "name": "Project 4 Placeholder Image",
+          "description": "Project 4 Placeholder Image"
+        }
       ],
-      "related_projects": [
+      "depends_on": [
+        "Project 3",
+        "Project 2",
         "Project 1"
       ]
     },
@@ -56,22 +54,57 @@
       "short_description": "The third project.",
       "description": "A description of the third project.",
       "tags": ["difficult", "glad-its-done"],
-      "thumb_base_filename_alt_pairs": [
-        ["project_3_thumb", "placeholder project image"]
+      "images": [
+        {
+          "base_filename": "project_3_thumb",
+          "name": "Project 3 Placeholder Image",
+          "description": "Project 3 Placeholder Image"
+        }
+      ],
+      "depends_on": [
+        "Project 2",
+        "Project 1"
       ]
     },
 
     {
-      "name": "Project 4",
-      "slug": "/project-4",
-      "short_description": "The last project.",
-      "description": "A description of the final project.",
-      "tags": ["done", "never-again"],
-      "thumb_base_filename_alt_pairs": [
-        ["project_4_thumb", "placeholder project image"]
+      "name": "Project 2",
+      "slug": "/project-2",
+      "short_description": "The second project.",
+      "description": "A description of the second project.",
+      "tags": ["challenging", "gratifying"],
+      "images": [
+        {
+          "base_filename": "project_2_thumb",
+          "name": "Project 2 Placeholder Image",
+          "description": "Project 2 Placeholder Image"
+        }
+      ],
+      "depends_on": [
+        "Project 1"
+      ]
+    },
+
+    {
+      "name": "Project 1",
+      "slug": "/project-1",
+      "short_description": "The first project.",
+      "description": "A description of the first project.",
+      "tags": ["fun", "life-affirming"],
+      "images": [
+        {
+          "base_filename": "project_1_thumb",
+          "name": "Project 1 Placeholder Image",
+          "description": "Project 1 Placeholder Image"
+        }
+      ],
+      "depends_on": [
+        "Project 2"
+      ],
+      "collateral_creations": [
+        "Project 4"
       ]
     }
 
   ]
-
 }

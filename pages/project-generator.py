@@ -1,20 +1,17 @@
 
+from lib import microdata as md
 from lib.htmlephant import (
-    NOEL,
     Div,
     H1,
-    Meta,
+    OGMeta,
+    StdMeta,
     Title,
 )
-from lib.htmlephant_extensions import (
-    StdMeta,
-    OGMeta,
-)
 
-from includes import project as _project
+import includes.project
 
 CONTEXT_ITEMS_GETTER = lambda context: context.projects
-FILENAME_GENERATOR = lambda project: f'{project["slug"]}.html'
+FILENAME_GENERATOR = lambda project: f'{project["slug"].lstrip("/")}.html'
 
 def get_meta_tags(context):
     """Return a list of Meta elements comprising project metadata.
@@ -35,9 +32,7 @@ def get_meta_tags(context):
     tags.append(
         OGMeta(
             'image',
-            context.static_url(
-                f'{project["thumb_base_filename_alt_pairs"][0][0]}.png'
-            )
+            context.static_url(f'{project["images"][0]["base_filename"]}.png')
         )
     )
     # Keywords
@@ -60,9 +55,13 @@ def Head(context):
 Body = lambda context: (
     Div(
         _class='content project',
+        itemscope='',
+        itemtype=(md.SOFTWARE_SOURCE_CODE
+                  if 'github_url' in context.generator_item
+                  else md.CREATIVE_WORK),
         children=(
             H1(f'{context.generator_item["name"]} Project Details'),
-            *_project.Body(context, **context.generator_item)
+            *includes.project.Body(context, **context.generator_item)
         )
     ),
 )
