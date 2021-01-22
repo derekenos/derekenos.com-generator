@@ -56,7 +56,9 @@ Body = lambda context: (
     Div(
         _class='content project',
         itemscope='',
-        itemtype=md.CREATIVE_WORK,
+        itemtype=(md.SOFTWARE_SOURCE_CODE
+                  if 'github_url' in context.generator_item
+                  else md.CREATIVE_WORK),
         children=(
             H1(f'{context.generator_item["name"]} Project Details'),
             *includes.project.Body(context, **context.generator_item)

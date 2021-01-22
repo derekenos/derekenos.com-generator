@@ -7,6 +7,7 @@ from glob import glob
 
 from lib import copy_if_newer
 from lib.context import Context
+from lib.context_projects import get_enriched_projects
 from lib.htmlephant import Document
 from lib.server import serve
 
@@ -150,6 +151,9 @@ if __name__ == '__main__':
         production=not args.development,
         **json.load(open(args.context_file, 'rb'))
     )
+
+    # Enrich the project objects by automatically adding any inferable properties.
+    context.projects = get_enriched_projects(context.projects)
 
     # Generate the site files.
     run(context)

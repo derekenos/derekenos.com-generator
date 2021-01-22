@@ -29,7 +29,8 @@ def Body(context,
          tags,
          images,
          collateral_creations=None,
-         dependent_projects=None,
+         depends_on=None,
+         dependent_of=None,
          description=None,
          github_url=None,
          hide_card=False,
@@ -94,6 +95,7 @@ def Body(context,
                 children=(
                     Anchor(
                         'Github',
+                        itemprop=md.CODE_RESPOSITORY,
                         href=github_url
                     ),
                 )
@@ -119,12 +121,31 @@ def Body(context,
             )
         )
 
-    # Add dependent projects.
-    if dependent_projects:
+    # Add dependencies.
+    if depends_on:
         els.extend(
             section.Body(
                 context,
-                'Dependent Projects',
+                'Uses',
+                children=links_list.Body(
+                    context,
+                    itemprop=md.HAS_PART,
+                    itemtype=md.CREATIVE_WORK,
+                    name_url_pairs=[
+                        (project['name'], project['slug'])
+                        for project in context.projects
+                        if project['name'] in depends_on
+                    ]
+                )
+            )
+        )
+
+    # Add dependent projects.
+    if dependent_of:
+        els.extend(
+            section.Body(
+                context,
+                'Used By',
                 children=links_list.Body(
                     context,
                     itemprop=md.IS_PART_OF,
@@ -132,7 +153,7 @@ def Body(context,
                     name_url_pairs=[
                         (project['name'], project['slug'])
                         for project in context.projects
-                        if project['name'] in dependent_projects
+                        if project['name'] in dependent_of
                     ]
                 )
             )

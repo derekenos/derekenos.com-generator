@@ -30,6 +30,66 @@
   "projects": [
 
     {
+      "name": "Static Site Generator",
+      "slug": "/project-derekenos-com-generator",
+      "short_description": "The application that builds derekenos.com.",
+      "tags": ["python3", "html", "staticsitegenerator"],
+      "images": [
+        {
+          "base_filename": "derekenos_com_generator_thumb",
+          "name": "Screenshot of derekenos.com-generator Source Code",
+          "description": "screenshot of derekenos.com-generator source code"
+        }
+      ],
+      "description": "I built this static website generator to maintain my personal website, derekenos.com.<br><br>It's relatively simple, has accessibility, SEO best practices, and structured data (via Open Graph tags and Microdata markup) built in, supports cloud object storage for large static files, and has a live-reload feature for more joyful local development.",
+      "github_url": "https://github.com/derekenos/derekenos.com-generator"
+    },
+
+    {
+      "name": "HTMLephant",
+      "hide_card": true,
+      "slug": "/project-htmlephant",
+      "short_description": "A small and lazy HTML generator.",
+      "tags": ["python3", "html", "generator"],
+      "images": [
+        {
+          "base_filename": "htmlephant_thumb",
+          "name": "Screenshot of HTMLephant Source Code",
+          "description": "screenshot of HTMLephant source code"
+        }
+      ],
+      "github_url": "https://github.com/derekenos/htmlephant",
+      "dependent_of": [
+        "Static Site Generator",
+        "femtoweb"
+      ]
+    },
+
+    {
+      "name": "femtoweb",
+      "hide_card": true,
+      "slug": "/project-femtoweb",
+      "short_description": "An asynchronous HTTP server and web application framework.",
+      "tags": ["python3", "micropython", "httpserver", "webappframework"],
+      "images": [
+        {
+          "base_filename": "femtoweb_thumb",
+          "name": "Screenshot of femtoweb Source Code",
+          "description": "screenshot of femtoweb source code"
+        }
+      ],
+      "github_url": "https://github.com/derekenos/femtoweb",
+      "dependent_of": [
+        "Static Site Generator",
+        "Cardboard Boxcade",
+        "Weezel",
+        "Trtl",
+        "Sketchy",
+        "iome"
+      ]
+    },
+
+    {
       "name": "Weather Station",
       "slug": "/project-weather-station",
       "short_description": "An IOT weather forecast display appliance.",
@@ -63,6 +123,7 @@
 
     {
       "name": "Indicator Gauge",
+      "hide_card": true,
       "slug": "/project-indicator-gauge",
       "short_description": "A laser-cut, servo-powered indicator guage.",
       "tags": ["esp32", "micropython", "iot"],
@@ -73,18 +134,18 @@
           "description": "photo of laser-cut, servo-powered gauge"
         }
       ],
-      "hide_card": true,
       "description": "I designed this gauge as part of the Weather Station project.",
       "media_name_url_pairs": [
         ["Google Photos Album", "https://photos.app.goo.gl/w86c6Ep67xc9LZcf7"]
       ],
-      "dependent_projects": [
+      "dependent_of": [
         "Weather Station"
       ]
     },
 
     {
       "name": "Streaming JSON Parser",
+      "hide_card": true,
       "slug": "/project-streaming-json-parser",
       "short_description": "A Python streaming JSON parser for memory-constrained environments.",
       "tags": ["micropython", "parser"],
@@ -95,9 +156,8 @@
           "description": "screenshot of json-parser library source code"
         }
       ],
-      "hide_card": true,
       "description": "",
-      "dependent_projects": [
+      "dependent_of": [
         "Weather Station"
       ],
       "github_url": "https://github.com/derekenos/json-parser"
@@ -105,6 +165,7 @@
 
     {
       "name": "time.strptime()",
+      "hide_card": true,
       "slug": "/project-strptime",
       "short_description": "An implementation of Python time.strptime() for use with Micropython.",
       "tags": ["python", "micropython", "parser"],
@@ -115,9 +176,8 @@
           "description": "screenshot of time.strptime() library source code"
         }
       ],
-      "hide_card": true,
       "description": "",
-      "dependent_projects": [
+      "dependent_of": [
         "Weather Station"
       ],
       "github_url": "https://github.com/derekenos/micropython-time"
@@ -125,6 +185,7 @@
 
     {
       "name": "UTF-8 Decoder",
+      "hide_card": true,
       "slug": "/project-utf8-decoder",
       "short_description": "A toy incremental UTF-8 decoder.",
       "tags": ["python", "decoder"],
@@ -135,9 +196,8 @@
           "description": "screenshot of UTF-8 decoder library source code"
         }
       ],
-      "hide_card": true,
       "description": "",
-      "dependent_projects": [
+      "dependent_of": [
         "Weather Station"
       ],
       "github_url": "https://github.com/derekenos/utf8_decoder"
@@ -199,7 +259,7 @@
       "media_name_url_pairs": [
         ["Google Photos Album", "https://photos.app.goo.gl/KerbLsQsoxEZwaqK7"]
       ],
-      "tags": ["cnc", "laser-cut", "wood"],
+      "tags": ["cnc", "lasercut", "wood"],
       "images": [
         {
           "base_filename": "arcade_cabinet_thumb",
