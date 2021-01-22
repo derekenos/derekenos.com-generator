@@ -162,11 +162,13 @@ if __name__ == '__main__':
     print(f'Wrote new files to: {context.SITE_DIR}/')
 
     # Save store.exists_response_headers_cache
-    if hasattr(context, 'lss'):
+    if context.lss is not None:
         context.lss.save_manifest()
 
     # Maybe sync large static files to a remote store.
     if args.sync_large_static:
+        if context.lss is None:
+            raise Exception('Large static store is not configured. Please see: https://github.com/derekenos/derekenos.com-generator/blob/main/README.md#2-configure-the-store')
         context.lss.sync(context.SITE_LARGE_STATIC_DIR)
 
     # Maybe start the webserver.
