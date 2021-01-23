@@ -288,16 +288,17 @@
     {
       "name": "Important Message",
       "slug": "/project-important-message",
-      "short_description": "Testing the waters of the Cloudflare Apps platform.",
-      "description": "<a href=\"https://www.cloudflare.com/apps/important-message\">https://www.cloudflare.com/apps/important-message</a>",
-      "tags": ["javascript", "webcomponents", "webapp"],
+      "short_description": "A configurable website messaging component.",
+      "description": "A banner/modal website component with configurable message, DOM location, style, and dismissal period that I created to test drive the Cloudflare Apps platform.",
+      "tags": ["javascript", "webcomponents", "cloudflare", "app"],
       "images": [
         {
           "base_filename": "important-message",
           "name": "Important Message Cloudflare App",
           "description": "Important Message app banner image"
         }
-      ]
+      ],
+      "live_url": "https://www.cloudflare.com/apps/important-message"
     },
 
     {
