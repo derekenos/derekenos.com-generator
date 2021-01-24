@@ -41,12 +41,46 @@ git clone --recurse-submodules -b generic https://github.com/derekenos/derekenos
 ### 2. Configure
 Edit [context.json](https://github.com/derekenos/derekenos.com-generator/blob/generic/context.json) and [static/shared.css](https://github.com/derekenos/derekenos.com-generator/blob/generic/static/shared.css) to your liking.
 
-### 3. Add static assets
-Add project thumbnail images to `static/`.
+#### Configure Images
+Define an array of project images in the context file as follows:
+```
+<project>: {
+  ...
+  "images": [
+    {
+      "base_filename": "<image-filename-without-extension>",
+      "name": "<image-name>",
+      "description": "<image-description>"
+    }
+  ]
+}
+```
 
-For each `context.projects` item, the following corresponding files are expected to exist in `static/`:
-- `{project.thumb_base_filename}.webp`
-- `{project.thumb_base_filename}.png`
+For each `base_filename`, the following files are expected to exist in `static/`:
+
+- `{base_filename}.webp`
+- `{base_filename}.png`
+
+where `webp` will be used as the primary image with `png` as the unsupported fallback.
+
+#### Configure Videos
+Define an array of project videos in the context file as follows:
+```
+<project>: {
+  ...
+  videos": [
+    {
+      "filename": "<video-filename>",
+      "thumb_filename": "<video-thumb-image-filename>",
+      "name": "<video-name>",
+      "description": "<video-description>"
+    }
+  ]
+}
+```
+
+### 3. Add static assets
+Add your images, videos, etc. to `static/`.
 
 ### 4. Build
 Execute [run.py](https://github.com/derekenos/derekenos.com-generator/blob/generic/run.py) to build the site.
