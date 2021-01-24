@@ -8,6 +8,16 @@ COLLATERAL_CREATIONS = 'collateral_creations'
 DEPENDS_ON = 'depends_on'
 DEPENDENT_OF = 'dependent_of'
 
+###############################################################################
+# Exceptions
+###############################################################################
+
+class InvalidContext(Exception): pass
+
+###############################################################################
+# Context Class
+###############################################################################
+
 class Context:
     """This class is used to represent the application state and provides
     methods for working with that state.
@@ -122,14 +132,20 @@ class Context:
 # Context Normalization Helpers
 ###############################################################################
 
-def normalize_projects(projects):
+def normalize_projects(projects, all_tags):
     """Do an in-place normalization of the projects dict.
     """
     # Create a <project-name> -> <project-copy> map.
     name_project_map = {x['name']: x for x in projects}
 
-    # Add any missing dependency properties.
+    # Keep track of any invalid tags (i.e. not specified in all_tags).
+    invalid_tags = set()
+
     for name, project in name_project_map.items():
+        # Collect invalid tags.
+        invalid_tags.update(set(project['tags']).difference(all_tags))
+
+        # Add any missing dependency properties.
         for k in (DEPENDS_ON, DEPENDENT_OF):
             if k not in project:
                 continue
@@ -147,6 +163,10 @@ def normalize_projects(projects):
                         other_project[other_k].append(name)
                 else:
                     other_project[other_k] = [name]
+    # Abort if any project specifies an invalid tag.
+    if invalid_tags:
+        raise InvalidContext('The following project-specified tags do not '\
+                             f'appear in all_tags: {invalid_tags}')
 
 def normalize_context(context):
     """Do an in-place normalization of the context object, grooming values,
@@ -155,4 +175,10 @@ def normalize_context(context):
     # Strip any trailing base_url slash.
     context.base_url = context.base_url.rstrip('/')
 
-    normalize_projects(context.projects)
+    # Assert that all_tags is specified.
+    all_tags = getattr(context, 'all_tags', None)
+    if all_tags is None:
+        raise InvalidContext('context must define an all_tags array that '\
+                             'comprises the superset of all referenced tags.')
+
+    normalize_projects(context.projects, all_tags)

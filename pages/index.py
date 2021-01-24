@@ -15,6 +15,7 @@ DESCRIPTION = 'Home page displaying selected projects'
 Head = lambda context: (
     StdMeta('description', DESCRIPTION),
     OGMeta('description', DESCRIPTION),
+    StdMeta('keywords', ','.join(context.all_tags)),
     Title(f'{context.name} | Projects'),
 )
 

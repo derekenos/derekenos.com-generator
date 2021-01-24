@@ -1,6 +1,51 @@
 {
   "base_url": "https://derekenos.com",
 
+  "all_tags": [
+    "app",
+    "art",
+    "assemblylanguage",
+    "audio",
+    "bolts",
+    "cloudflare",
+    "cnc",
+    "decoder",
+    "effects",
+    "emergentbehavior",
+    "esp32",
+    "framework",
+    "generator",
+    "gpu",
+    "html",
+    "html5",
+    "http",
+    "humancomputerinteraction",
+    "iot",
+    "javascript",
+    "lasercut",
+    "metal",
+    "microcontroller",
+    "micropython",
+    "midi",
+    "parser",
+    "pic",
+    "python3",
+    "realtime",
+    "rockband",
+    "sampler",
+    "server",
+    "sound",
+    "staticsite",
+    "synthesizer",
+    "video",
+    "videoart",
+    "videogame",
+    "webapp",
+    "webaudio",
+    "webcomponents",
+    "wood"
+  ],
+
   "large_static_store": {
     "type": "S3",
     "aws_profile": "digitalocean",
@@ -33,7 +78,7 @@
       "name": "Static Site Generator",
       "slug": "/project-derekenos-com-generator",
       "short_description": "The application that builds derekenos.com.",
-      "tags": ["python3", "html", "staticsitegenerator"],
+      "tags": ["python3", "html", "staticsite", "generator"],
       "images": [
         {
           "base_filename": "derekenos_com_generator_thumb",
@@ -50,7 +95,7 @@
       "hide_card": true,
       "slug": "/project-htmlephant",
       "short_description": "A small and lazy HTML generator.",
-      "tags": ["python3", "html", "generator"],
+      "tags": ["python3", "micropython", "html", "generator"],
       "images": [
         {
           "base_filename": "htmlephant_thumb",
@@ -70,7 +115,8 @@
       "hide_card": true,
       "slug": "/project-femtoweb",
       "short_description": "An asynchronous HTTP server and web application framework.",
-      "tags": ["python3", "micropython", "httpserver", "webappframework"],
+      "tags": ["python3", "micropython", "http", "server", "webapp",
+               "framework"],
       "images": [
         {
           "base_filename": "femtoweb_thumb",
@@ -168,7 +214,7 @@
       "hide_card": true,
       "slug": "/project-strptime",
       "short_description": "An implementation of Python time.strptime() for use with Micropython.",
-      "tags": ["python", "micropython", "parser"],
+      "tags": ["python3", "micropython", "parser"],
       "images": [
         {
           "base_filename": "strptime_thumb",
@@ -188,7 +234,7 @@
       "hide_card": true,
       "slug": "/project-utf8-decoder",
       "short_description": "A toy incremental UTF-8 decoder.",
-      "tags": ["python", "decoder"],
+      "tags": ["python3", "decoder"],
       "images": [
         {
           "base_filename": "utf8_decoder_thumb",
@@ -259,7 +305,7 @@
       "media_name_url_pairs": [
         ["Google Photos Album", "https://photos.app.goo.gl/KerbLsQsoxEZwaqK7"]
       ],
-      "tags": ["cnc", "lasercut", "wood"],
+      "tags": ["cnc", "lasercut", "wood", "metal", "bolts"],
       "images": [
         {
           "base_filename": "arcade_cabinet_thumb",
@@ -445,7 +491,7 @@
       "slug": "/project-demidulator",
       "short_description": "A lo-fi, MIDI-controlled synthesizer and sampler.",
       "description": "More info at <a href=\"http://badhandshake.com/demidulator/\">badhandshake.com</a>",
-      "tags": ["picmicrocontroller", "assembly", "midi", "synthesizer", "sampler", "rockband"],
+      "tags": ["pic", "microcontroller", "assemblylanguage", "midi", "synthesizer", "sampler", "rockband"],
       "images": [
         {
           "base_filename": "demidulator_thumb",
@@ -487,7 +533,7 @@
       "name": "Physical Interface Prototype",
       "slug": "/project-physical-interface-prototype",
       "short_description": "An input device that reads the insertion depth of a movable column.",
-      "tags": ["microcontroller", "hci"],
+      "tags": ["microcontroller", "humancomputerinteraction"],
       "images": [
         {
           "base_filename": "physical_interface_thumb",
