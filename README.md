@@ -1,16 +1,16 @@
 # derekenos.com-generator
-This is a custom static website generator that I built specifically for https://derekenos.com
+A custom static website generator for https://derekenos.com.
 
 ## Features
 - Not too many features
 - No third-party libraries
-- Reasonable accessibility
+- Aspires to accessibility and SEO best practices 
 - Search engines don't hate it
-- [Microdata](https://schema.org/docs/gs.html) markup provides structured data for search engines ([example](https://search.google.com/structured-data/testing-tool/u/0/#url=https%3A%2F%2Fderekenos.com%2Fproject-weather-station))
-- [OpenGraph](https://ogp.me/) tags to enable rich embeds, e.g.:
+- Optionally redirect large static files to a cloud object store
+- Intergrates [Microdata](https://schema.org/docs/gs.html) markup to provide structured data for search engines ([example](https://search.google.com/structured-data/testing-tool/u/0/#url=https%3A%2F%2Fderekenos.com%2Fproject-weather-station))
+- Intergrates [OpenGraph](https://ogp.me/) tags for rich embeds, e.g.:
 
   ![Screenshot from 2021-01-17 16-16-28](https://user-images.githubusercontent.com/585182/104856230-6c213900-58df-11eb-8476-927c2f9d9ad3.png)
-- Redirect large static files to a cloud object store
 
 ## Dependencies
 - `Python 3.9`
@@ -41,12 +41,46 @@ git clone --recurse-submodules -b generic https://github.com/derekenos/derekenos
 ### 2. Configure
 Edit [context.json](https://github.com/derekenos/derekenos.com-generator/blob/generic/context.json) and [static/shared.css](https://github.com/derekenos/derekenos.com-generator/blob/generic/static/shared.css) to your liking.
 
-### 3. Add static assets
-Add project thumbnail images to `static/`.
+#### Configure Images
+Define an array of project images in the context file as follows:
+```
+<project>: {
+  ...
+  "images": [
+    {
+      "base_filename": "<image-filename-without-extension>",
+      "name": "<image-name>",
+      "description": "<image-description>"
+    }
+  ]
+}
+```
 
-For each `context.projects` item, the following corresponding files are expected to exist in `static/`:
-- `{project.thumb_base_filename}.webp`
-- `{project.thumb_base_filename}.png`
+For each `base_filename`, the following files are expected to exist in `static/`:
+
+- `{base_filename}.webp`
+- `{base_filename}.png`
+
+where `webp` will be used as the primary image with `png` as the unsupported fallback.
+
+#### Configure Videos
+Define an array of project videos in the context file as follows:
+```
+<project>: {
+  ...
+  videos": [
+    {
+      "filename": "<video-filename>",
+      "thumb_filename": "<video-thumb-image-filename>",
+      "name": "<video-name>",
+      "description": "<video-description>"
+    }
+  ]
+}
+```
+
+### 3. Add static assets
+Add your images, videos, etc. to `static/`.
 
 ### 4. Build
 Execute [run.py](https://github.com/derekenos/derekenos.com-generator/blob/generic/run.py) to build the site.
