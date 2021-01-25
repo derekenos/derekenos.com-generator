@@ -1,4 +1,9 @@
 
+
+from lib import (
+    flatten,
+    pluck,
+)
 from lib.htmlephant import (
     Div,
     H1,
@@ -15,7 +20,9 @@ DESCRIPTION = 'Home page displaying selected projects'
 Head = lambda context: (
     StdMeta('description', DESCRIPTION),
     OGMeta('description', DESCRIPTION),
-    StdMeta('keywords', ','.join(context.all_tags)),
+    StdMeta('keywords', ','.join(
+        sorted(set(flatten(pluck('tags', context.projects))))
+    )),
     Title(f'{context.name} | Projects'),
 )
 

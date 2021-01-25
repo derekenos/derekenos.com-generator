@@ -2,8 +2,13 @@
 import os
 import shutil
 import re
+from itertools import chain
 
 SLUGIFY_REGEX = re.compile(r'[^\w]')
+
+# Some toolz-type, functional helpers.
+pluck = lambda key, dicts: [d[key] for d in dicts]
+flatten = lambda iterable: chain(*iterable)
 
 # Replace non-alpha chars with a hyphen and lowercase.
 slugify = lambda s: SLUGIFY_REGEX.sub('-', s).lower()
