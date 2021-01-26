@@ -23,6 +23,7 @@ Types = SimpleNamespace(**{
 Props = SimpleNamespace(**{
     k: k for k in (
         'abstract',
+        'applicationCategory',
         'associatedMedia',
         'codeRepository',
         'contactPoint',
@@ -36,6 +37,7 @@ Props = SimpleNamespace(**{
         'isPartOf',
         'itemListElement',
         'name',
+        'operatingSystem',
         'position',
         'sameAs',
         'subjectOf',

@@ -9,7 +9,6 @@ from lib.htmlephant import (
     Div,
     H2,
     H3,
-    MDMeta,
     Section,
 )
 
@@ -29,15 +28,17 @@ def Body(context,
          tags,
          type,
          images,
+         category=None,
          collateral_creations=None,
-         depends_on=None,
          dependent_of=None,
+         depends_on=None,
          description=None,
          external_link_prop_type_name_urltype_url_tuples=None,
          github_url=None,
          hide_card=False,
          live_url=None,
          media_name_url_pairs=None,
+         operating_system=None,
          videos=None,
     ):
     image = images[0]

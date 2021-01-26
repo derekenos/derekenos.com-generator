@@ -383,6 +383,8 @@
       "description": "A banner/modal website component with configurable message, DOM location, style, and dismissal period that I created to test drive the Cloudflare Apps platform.",
       "tags": ["javascript", "webcomponents", "cloudflare", "app"],
       "type": "SoftwareApplication",
+      "category": "UI & Design",
+      "operating_system": "Web Browser",
       "images": [
         {
           "base_filename": "important-message",
@@ -432,6 +434,8 @@
       "short_description": "A vanilla JS / HTML5 demo game for the iome platform.",
       "tags": ["html5", "javascript", "webaudio", "videogame"],
       "type": "SoftwareApplication",
+      "category": "Games",
+      "operating_system": "Web Browser",
       "images": [
         {
           "base_filename": "babygate_thumb",
@@ -535,6 +539,8 @@
       "live_url": "/static/projects/composer/",
       "tags": ["javascript", "webaudio", "audio"],
       "type": "SoftwareApplication",
+      "category": "Music Composition",
+      "operating_system": "Web Browser",
       "images": [
         {
           "base_filename": "composer",
@@ -550,6 +556,8 @@
       "short_description": "A computationally inefficient exploration of the complex behaviors that arise from the interaction of simple rules.",
       "tags": ["javascript", "emergentbehavior"],
       "type": "SoftwareApplication",
+      "category": "Games",
+      "operating_system": "Web Browser",
       "live_url": "/static/projects/sim/",
       "images": [
         {
