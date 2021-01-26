@@ -27,11 +27,13 @@ def Body(context,
          slug,
          short_description,
          tags,
+         type,
          images,
          collateral_creations=None,
          depends_on=None,
          dependent_of=None,
          description=None,
+         external_link_prop_type_name_urltype_url_tuples=None,
          github_url=None,
          hide_card=False,
          live_url=None,
@@ -43,11 +45,11 @@ def Body(context,
     # Inline includes.section to specify itemprops.
     els = [
         Section(children=(
-            H2(name, itemprop=md.NAME),
-            H3(short_description, itemprop=md.ABSTRACT),
+            H2(name, itemprop=md.Props.name),
+            H3(short_description, itemprop=md.Props.abstract),
             *picture.Body(
                 context,
-                itemprop=md.SUBJECT_OF,
+                itemprop=md.Props.subjectOf,
                 srcsets=(context.static(fn:=f'{image_base_filename}.webp'),),
                 src=context.static(f'{image_base_filename}.png'),
                 name=image['name'],
@@ -65,7 +67,7 @@ def Body(context,
                 children=(
                     UnescapedParagraph(
                         description,
-                        itemprop=md.DESCRIPTION
+                        itemprop=md.Props.description
                     ),
                 )
             )
@@ -95,7 +97,7 @@ def Body(context,
                 children=(
                     Anchor(
                         'Github',
-                        itemprop=md.CODE_RESPOSITORY,
+                        itemprop=md.Props.codeRepository,
                         href=github_url
                     ),
                 )
@@ -110,10 +112,14 @@ def Body(context,
                 'Collateral Creations',
                 children=links_list.Body(
                     context,
-                    itemprop=md.HAS_PART,
-                    itemtype=md.CREATIVE_WORK,
-                    name_url_pairs=[
-                        (project['name'], project['slug'])
+                    prop_type_name_urltype_url_tuples=[
+                        (
+                            md.Props.hasPart,
+                            md.Types.CreativeWork,
+                            project['name'],
+                            md.Props.url,
+                            project['slug']
+                        )
                         for project in context.projects
                         if project['name'] in collateral_creations
                     ]
@@ -129,10 +135,14 @@ def Body(context,
                 'Uses',
                 children=links_list.Body(
                     context,
-                    itemprop=md.HAS_PART,
-                    itemtype=md.CREATIVE_WORK,
-                    name_url_pairs=[
-                        (project['name'], project['slug'])
+                    prop_type_name_urltype_url_tuples=[
+                        (
+                            md.Props.hasPart,
+                            md.Types.CreativeWork,
+                            project['name'],
+                            md.Props.url,
+                            project['slug']
+                        )
                         for project in context.projects
                         if project['name'] in depends_on
                     ]
@@ -148,10 +158,14 @@ def Body(context,
                 'Used By',
                 children=links_list.Body(
                     context,
-                    itemprop=md.IS_PART_OF,
-                    itemtype=md.CREATIVE_WORK,
-                    name_url_pairs=[
-                        (project['name'], project['slug'])
+                    prop_type_name_urltype_url_tuples=[
+                        (
+                            md.Props.isPartOf,
+                            md.Types.CreativeWork,
+                            project['name'],
+                            md.Props.url,
+                            project['slug']
+                        )
                         for project in context.projects
                         if project['name'] in dependent_of
                     ]
@@ -168,7 +182,7 @@ def Body(context,
                 children=chain((
                     video.Body(
                         context,
-                        itemprop=md.SUBJECT_OF,
+                        itemprop=md.Props.subjectOf,
                         src=context.static(vid['filename']),
                         poster=context.static(vid['thumb_filename']),
                         name=vid['name'],
@@ -182,17 +196,17 @@ def Body(context,
             )
         )
 
-    # Add media links.
-    if media_name_url_pairs:
+    # Add external links.
+    if external_link_prop_type_name_urltype_url_tuples:
         els.extend(
             section.Body(
                 context,
-                'Additional Media',
+                'External Links',
                 children=links_list.Body(
                     context,
-                    itemprop=md.ASSOCIATED_MEDIA,
-                    itemtype=md.MEDIA_OBJECT,
-                    name_url_pairs=media_name_url_pairs
+                    prop_type_name_urltype_url_tuples=(
+                        external_link_prop_type_name_urltype_url_tuples
+                    )
                 )
             )
         )

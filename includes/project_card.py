@@ -21,22 +21,22 @@ def Body(context, name, slug, short_description, tags,
     image_base_filename = image['base_filename']
     return (
         H2(
-            itemprop=md.NAME,
+            itemprop=md.Props.name,
             children=(Anchor(name, href=slug),)
         ),
         H3(
             short_description,
-            itemprop=md.DESCRIPTION
+            itemprop=md.Props.description
         ) if short_description else NOEL,
         H4(
             ' '.join(f'#{tag}' for tag in tags)
         ) if tags else NOEL,
         Anchor(
-            itemprop=md.URL,
+            itemprop=md.Props.url,
             href=slug,
             children=picture.Body(
                 context,
-                itemprop=md.SUBJECT_OF,
+                itemprop=md.Props.subjectOf,
                 srcsets=(
                     context.static(fn:=f'{image_base_filename}.webp'),
                 ),

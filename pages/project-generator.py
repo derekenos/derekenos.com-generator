@@ -1,5 +1,4 @@
 
-from lib import microdata as md
 from lib.htmlephant import (
     Div,
     H1,
@@ -56,12 +55,10 @@ Body = lambda context: (
     Div(
         _class='content project',
         itemscope='',
-        itemtype=(md.SOFTWARE_SOURCE_CODE
-                  if 'github_url' in context.generator_item
-                  else md.CREATIVE_WORK),
+        itemtype=(project:=context.generator_item)['type'],
         children=(
-            H1(f'{context.generator_item["name"]} Project Details'),
-            *includes.project.Body(context, **context.generator_item)
+            H1(f'{project["name"]} Project Details'),
+            *includes.project.Body(context, **project)
         )
     ),
 )

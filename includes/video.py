@@ -18,18 +18,18 @@ Body = lambda context, src, poster, name, description, upload_date, \
     Video(
         itemprop=itemprop,
         itemscope='',
-        itemtype=md.VIDEO_OBJECT,
+        itemtype=md.Types.VideoObject,
         children=(
             VideoSource(src=src, type=type),
-            MDMeta(md.CONTENT_URL, src),
-            MDMeta(md.THUMBNAIL_URL, poster),
-            MDMeta(md.NAME, name),
-            MDMeta(md.DESCRIPTION, description),
+            MDMeta(md.Props.contentUrl, src),
+            MDMeta(md.Props.thumbnailUrl, poster),
+            MDMeta(md.Props.name, name),
+            MDMeta(md.Props.description, description),
             MDMeta(
-                md.ENCODING_FORMAT,
+                md.Props.encodingFormat,
                 type:=type or mimetypes.guess_type(src)[0]
             ),
-            MDMeta(md.UPLOAD_DATE, upload_date),
+            MDMeta(md.Props.uploadDate, upload_date),
         ),
         controls='',
         poster=poster,

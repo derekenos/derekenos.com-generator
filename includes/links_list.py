@@ -10,25 +10,29 @@ from lib.htmlephant import (
 
 Head = NotDefined
 
-Body = lambda context, itemprop, itemtype, name_url_pairs: (
+Body = lambda context, prop_type_name_urltype_url_tuples: (
     Ol(
         _class='links',
         children=[
             Li(
-                itemprop=itemprop,
-                itemscope='',
-                itemtype=itemtype,
+                itemprop=prop,
+                itemscope='' if type is not None else None,
+                itemtype=type,
                 children=(
                     Anchor(
-                        itemprop=md.URL,
+                        itemprop=urltype,
                         href=url,
                         children=(
-                            Span(name, itemprop=md.NAME),
+                            Span(
+                                name,
+                                itemprop=md.Props.name if type is not None else None
+                            ),
                         )
                     ),
                 )
             )
-            for name, url in name_url_pairs
+            for prop, type, name, urltype, url in \
+            prop_type_name_urltype_url_tuples
         ]
     ),
 )

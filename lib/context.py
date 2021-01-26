@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 from lib import large_static_store
+from lib import microdata
 
 COLLATERAL_CREATIONS = 'collateral_creations'
 DEPENDS_ON = 'depends_on'
@@ -13,6 +14,12 @@ DEPENDENT_OF = 'dependent_of'
 ###############################################################################
 
 class InvalidContext(Exception): pass
+
+###############################################################################
+# Helpers
+###############################################################################
+
+get_type_url = lambda x: f'https://schema.org/{x}'
 
 ###############################################################################
 # Context Class
@@ -138,12 +145,44 @@ def normalize_projects(projects, all_tags):
     # Create a <project-name> -> <project-copy> map.
     name_project_map = {x['name']: x for x in projects}
 
-    # Keep track of any invalid tags (i.e. not specified in all_tags).
-    invalid_tags = set()
+    # Keep track of any invalid tags (i.e. not in all_tags) or types (i.e. not
+    # a schema.org type name).
+    invalid_d = {
+        'tags': set(),
+        'types': set(),
+        'props': set(),
+    }
+
+    microdata_type_urls = set(microdata.Types.__dict__.values())
+    microdata_props = set(microdata.Props.__dict__.values())
 
     for name, project in name_project_map.items():
-        # Collect invalid tags.
-        invalid_tags.update(set(project['tags']).difference(all_tags))
+        # Collect any invalid tags.
+        invalid_d['tags'].update(set(project['tags']).difference(all_tags))
+
+        # Expand project type name to full schema.org URL or collect it as
+        # invalid.
+        type_url = get_type_url(project['type'])
+        if type_url in microdata_type_urls:
+            project['type'] = type_url
+        else:
+            invalid_d['types'].add(project['type'])
+
+        # Expand external_link_prop_type_name_urltype_url_tuples type names to
+        # to full schema.org values and collect any invalid props, types, and
+        # urltypes.
+        for x in project.get(
+                'external_link_prop_type_name_urltype_url_tuples', ()):
+            prop, type, _, urltype, _ = x
+            if prop is not None and prop not in microdata_props:
+                invalid_d['props'].add(prop)
+            if type is not None:
+                if hasattr(microdata.Types, type):
+                    x[1] = getattr(microdata.Types, type)
+                else:
+                    invalid_d['types'].add(type)
+            if urltype not in microdata_props:
+                invalid_d['props'].add(urltype)
 
         # Add any missing dependency properties.
         for k in (DEPENDS_ON, DEPENDENT_OF):
@@ -163,10 +202,12 @@ def normalize_projects(projects, all_tags):
                         other_project[other_k].append(name)
                 else:
                     other_project[other_k] = [name]
-    # Abort if any project specifies an invalid tag.
-    if invalid_tags:
-        raise InvalidContext('The following project-specified tags do not '\
-                             f'appear in all_tags: {invalid_tags}')
+    # Abort if any project specifies an invalid field value.
+    error_strs = [
+        f'invalid {k}: {list(v)}' for k, v in invalid_d.items() if v
+    ]
+    if error_strs:
+        raise InvalidContext(', '.join(error_strs))
 
 def normalize_context(context):
     """Do an in-place normalization of the context object, grooming values,
@@ -176,8 +217,8 @@ def normalize_context(context):
     context.base_url = context.base_url.rstrip('/')
 
     # Assert that all_tags is specified.
-    all_tags = getattr(context, 'all_tags', None)
-    if all_tags is None:
+    all_tags = set(getattr(context, 'all_tags', ()))
+    if not all_tags:
         raise InvalidContext('context must define an all_tags array that '\
                              'comprises the superset of all referenced tags.')
 

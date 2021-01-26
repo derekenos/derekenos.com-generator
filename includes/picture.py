@@ -20,17 +20,17 @@ Body = lambda context, srcsets, src, name, description, upload_date, \
     Span(
         itemprop=itemprop,
         itemscope='',
-        itemtype=md.IMAGE_OBJECT,
+        itemtype=md.Types.ImageObject,
         children=(
-            MDMeta(md.CONTENT_URL, src),
-            MDMeta(md.THUMBNAIL_URL, src),
-            MDMeta(md.NAME, name),
-            MDMeta(md.DESCRIPTION, description),
+            MDMeta(md.Props.contentUrl, src),
+            MDMeta(md.Props.thumbnailUrl, src),
+            MDMeta(md.Props.name, name),
+            MDMeta(md.Props.description, description),
             MDMeta(
-                md.ENCODING_FORMAT,
+                md.Props.encodingFormat,
                 type:=type or mimetypes.guess_type(src)[0]
             ),
-            MDMeta(md.UPLOAD_DATE, upload_date),
+            MDMeta(md.Props.uploadDate, upload_date),
             Picture(
                 children=(
                     *[
