@@ -14,7 +14,7 @@ from lib.htmlephant import (
 )
 
 from includes import (
-    links_list,
+    scope_links_list,
     section,
 )
 
@@ -30,9 +30,9 @@ Body = lambda context: (
     Div(
         _class='content contact',
         itemscope='',
-        itemtype=md.PERSON,
+        itemtype=md.Types.Person,
         children=(
-            MDMeta(md.NAME, context.name),
+            MDMeta(md.Props.name, context.name),
             H1(DESCRIPTION),
             *section.Body(
                 context,
@@ -43,7 +43,7 @@ Body = lambda context: (
                         children=(
                             Span(
                                 context.email,
-                                itemprop=md.EMAIL,
+                                itemprop=md.Props.email,
                             ),
                         ),
                     ),
@@ -61,11 +61,17 @@ Body = lambda context: (
             *section.Body(
                 context,
                 'Other channels',
-                children=links_list.Body(
+                children=scope_links_list.Body(
                     context,
-                    itemprop=md.CONTACT_POINT_PROP,
-                    itemtype=md.CONTACT_POINT,
-                    name_url_pairs=context.social_name_url_pairs
+                    prop_type_name_url_tuples=[
+                        (
+                            md.Props.contactPoint,
+                            md.Types.ContactPoint,
+                            name,
+                            url
+                        )
+                        for name, url in context.social_name_url_pairs
+                    ]
                 )
             )
         )

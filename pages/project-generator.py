@@ -1,8 +1,10 @@
 
 from lib import microdata as md
 from lib.htmlephant import (
+    NOEL,
     Div,
     H1,
+    MDMeta,
     OGMeta,
     StdMeta,
     Title,
@@ -46,6 +48,22 @@ def get_meta_tags(context):
     tags.append(OGMeta('url', context.url(project['slug'])))
     return tags
 
+def get_microdata_meta(context):
+    """Return a list of MDMeta elements comprising that microdata meta tags
+    representing data that is not otherwise represented in includes.project.
+    """
+    project = context.generator_item
+    tags = []
+    # Category
+    if 'category' in project:
+        tags.append(MDMeta(md.Props.applicationCategory, project['category']))
+    # Operating system.
+    if 'operating_system' in project:
+        tags.append(
+            MDMeta(md.Props.operatingSystem, project['operating_system'])
+        )
+    return tags
+
 def Head(context):
     return (
         Title(f'{context.name} | {context.generator_item["name"]}'),
@@ -56,12 +74,11 @@ Body = lambda context: (
     Div(
         _class='content project',
         itemscope='',
-        itemtype=(md.SOFTWARE_SOURCE_CODE
-                  if 'github_url' in context.generator_item
-                  else md.CREATIVE_WORK),
+        itemtype=(project:=context.generator_item)['type'],
         children=(
-            H1(f'{context.generator_item["name"]} Project Details'),
-            *includes.project.Body(context, **context.generator_item)
+            H1(f'{project["name"]} Project Details'),
+            *get_microdata_meta(context),
+            *includes.project.Body(context, **project)
         )
     ),
 )

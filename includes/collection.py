@@ -12,17 +12,17 @@ Body = lambda context, name, items, wide=False: (
     Div(
         _class='collection',
         itemscope='',
-        itemtype=md.ITEM_LIST,
+        itemtype=md.Types.ItemList,
         children=(
-            MDMeta(md.NAME, name),
+            MDMeta(md.Props.name, name),
             *[
                 Div(
-                    itemprop=md.ITEM_LIST_ELEMENT,
+                    itemprop=md.Props.itemListElement,
                     itemscope='',
-                    itemtype=md.LIST_ITEM,
+                    itemtype=md.Types.ListItem,
                     _class=f'item{" wide" if wide else ""}',
                     children=(
-                        MDMeta(md.POSITION, i),
+                        MDMeta(md.Props.position, i),
                         *item
                     )
                 )
