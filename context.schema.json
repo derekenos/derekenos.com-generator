@@ -25,6 +25,8 @@
 
     "tags": {
       "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
       "items": {
         "type": "string",
         "enum": [
@@ -96,7 +98,8 @@
           ],
         },
         "aws_profile": {
-          "type": "string"
+          "type": "string",
+          "default": "default"
         },
         "aws_endpoint": {
           "type": "string",
@@ -110,7 +113,9 @@
           "type": "string",
           "format": "uri"
         }
-      }
+      },
+      "minProperties": 5,
+      "additionalProperties": false
     },
 
     "name": { "type": "string" },
@@ -254,8 +259,26 @@
             }
           }
 
-        }
+        },
+
+        "required": [
+          "name",
+          "type",
+          "slug",
+          "short_description",
+          "description",
+          "tags",
+          "images"
+        ]
       }
     }
-  }
+  },
+
+  "required": [
+    "base_url",
+    "name",
+    "email",
+    "navbar_page_name_label_pairs",
+    "projects"
+  ]
 }
