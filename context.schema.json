@@ -1,0 +1,261 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+
+  "definitions": {
+    "itemtype": {
+      "type": "string",
+      "enum": [
+        "CreativeWork",
+        "MediaObject",
+        "SoftwareApplication",
+        "SoftwareSourceCode"
+      ]
+    },
+
+    "itemprop": {
+      "type": "string",
+      "enum": [
+        "associatedMedia",
+        "installUrl",
+        "url"
+      ]
+    },
+
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "8bit",
+          "app",
+          "art",
+          "assemblylanguage",
+          "audio",
+          "bolts",
+          "cloudflare",
+          "cnc",
+          "decoder",
+          "effects",
+          "emergentbehavior",
+          "esp32",
+          "framework",
+          "generator",
+          "gpu",
+          "html",
+          "html5",
+          "http",
+          "humancomputerinteraction",
+          "iot",
+          "javascript",
+          "lasercut",
+          "lofi",
+          "metal",
+          "microcontroller",
+          "micropython",
+          "midi",
+          "parser",
+          "pic",
+          "python3",
+          "realtime",
+          "rockband",
+          "sampler",
+          "server",
+          "sound",
+          "staticsite",
+          "synthesizer",
+          "video",
+          "videoart",
+          "videogame",
+          "webapp",
+          "webaudio",
+          "webcomponents",
+          "wood"
+        ]
+      }
+    }
+  },
+
+  "properties": {
+    "base_url": {
+      "type": "string",
+      "format": "uri"
+    },
+
+    "large_static_store": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "S3"
+          ],
+        },
+        "aws_profile": {
+          "type": "string"
+        },
+        "aws_endpoint": {
+          "type": "string",
+          "format": "uri"
+        },
+        "s3_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+
+    "name": { "type": "string" },
+
+    "email": { "type": "string", "format": "email" },
+
+    "social_name_url_pairs": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          { "type": "string" },
+          { "type": "string", "format": "uri" }
+        ]
+      }
+
+    },
+
+    "google_analytics_id": {
+      "type": "string"
+    },
+
+    "navbar_page_name_label_pairs": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          { "type": "string" },
+          { "type": "string" }
+        ]
+      }
+    },
+
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+
+          "hide_card": {
+            "type": "boolean",
+            "default": false
+          },
+
+          "type": {
+            "$ref": "#/definitions/itemtype"
+          },
+
+          "slug": {
+            "type": "string"
+          },
+
+          "short_description": {
+            "type": "string"
+          },
+
+          "description": {
+            "type": "string"
+          },
+
+          "tags": {
+            "$ref": "#/definitions/tags"
+          },
+
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "base_filename": {
+                  "type": "string"
+                },
+
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+
+          "github_url": {
+            "type": "string",
+            "format": "uri"
+          },
+
+          "dependent_of": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+
+          "videos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "filename": {
+                  "type": "string"
+                },
+
+                "thumb_filename": {
+                  "type": "string"
+                },
+
+                "name": {
+                  "type": "string"
+                },
+
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+
+          "collateral_creations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+
+          "external_link_prop_type_name_urltype_url_tuples": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": [
+                { "type": "string" },
+                { "$ref": "#/definitions/itemtype" },
+                { "type": "string" },
+                { "$ref": "#/definitions/itemprop" },
+                { "type": "string", "format": "uri" },
+              ]
+            }
+          }
+
+        }
+      }
+    }
+  }
+}
