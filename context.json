@@ -154,12 +154,10 @@
         }
       ],
       "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.",
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          "associatedMedia",
-          "MediaObject",
+          "mainEntityOfPage",
           "Google Photos Album",
-          "url",
           "https://photos.app.goo.gl/n43fajMjPJhvcqR47"
         ]
       ],
@@ -194,12 +192,10 @@
         }
       ],
       "description": "I designed this gauge as part of the Weather Station project.",
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          "associatedMedia",
-          "MediaObject",
+          "mainEntityOfPage",
           "Google Photos Album",
-          "url",
           "https://photos.app.goo.gl/w86c6Ep67xc9LZcf7"
         ]
       ],
@@ -285,12 +281,10 @@
         }
       ],
       "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          "associatedMedia",
-          "MediaObject",
+          "mainEntityOfPage",
           "Google Photos Album",
-          "url",
           "https://photos.app.goo.gl/rdZx6bYMPJ1KLtBg9"
         ]
       ]
@@ -315,12 +309,10 @@
       "name": "Weezel",
       "slug": "/project-weezel",
       "short_description": "A drawing robot accessory for the Ikea MÅLA easel.",
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          "associatedMedia",
-          "MediaObject",
+          "mainEntityOfPage",
           "Google Photos Album",
-          "url",
           "https://photos.app.goo.gl/4Nu9vLZbMouLfBRD7"
         ]
       ],
@@ -339,12 +331,10 @@
       "name": "Modular Arcade Cabinet",
       "slug": "/project-modular-arcade-cabinet",
       "short_description": "A work in progress...",
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          "associatedMedia",
-          "MediaObject",
+          "mainEntityOfPage",
           "Google Photos Album",
-          "url",
           "https://photos.app.goo.gl/KerbLsQsoxEZwaqK7"
         ]
       ],
@@ -392,12 +382,10 @@
           "description": "Important Message app banner image"
         }
       ],
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          null,
-          null,
-          "Important Message on Cloudflare Apps",
           "installUrl",
+          "Important Message on Cloudflare Apps",
           "https://www.cloudflare.com/apps/important-message"
         ]
       ]
@@ -407,12 +395,10 @@
       "name": "Sketchy",
       "slug": "/project-sketchy",
       "short_description": "Internet-connected Motorized Etch-A-Sketch",
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          "associatedMedia",
-          "MediaObject",
+          "mainEntityOfPage",
           "Google Photos Album",
-          "url",
           "https://photos.app.goo.gl/4UtGs1rNt6jChj3T8"
         ]
       ],
@@ -481,12 +467,10 @@
       "name": "Laser-cut Keypad",
       "slug": "/project-laser-cut-keypad",
       "short_description": "A Internet-connected Keypad w/ Backlit, Lasercut Living Hinge Buttons.",
-      "external_link_prop_type_name_urltype_url_tuples": [
+      "external_link_prop_name_url_tuples": [
         [
-          "associatedMedia",
-          "MediaObject",
+          "mainEntityOfPage",
           "Google Photos Album",
-          "url",
           "https://photos.app.goo.gl/tzytTZA3BoazBSDr7"
         ]
       ],

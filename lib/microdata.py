@@ -36,6 +36,7 @@ Props = SimpleNamespace(**{
         'installUrl',
         'isPartOf',
         'itemListElement',
+        "mainEntityOfPage",
         'name',
         'operatingSystem',
         'position',

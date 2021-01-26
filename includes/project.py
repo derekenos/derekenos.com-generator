@@ -13,8 +13,9 @@ from lib.htmlephant import (
 )
 
 from includes import (
-    links_list,
     picture,
+    prop_links_list,
+    scope_links_list,
     section,
     video,
 )
@@ -33,7 +34,7 @@ def Body(context,
          dependent_of=None,
          depends_on=None,
          description=None,
-         external_link_prop_type_name_urltype_url_tuples=None,
+         external_link_prop_name_url_tuples=None,
          github_url=None,
          hide_card=False,
          live_url=None,
@@ -111,14 +112,13 @@ def Body(context,
             section.Body(
                 context,
                 'Collateral Creations',
-                children=links_list.Body(
+                children=scope_links_list.Body(
                     context,
-                    prop_type_name_urltype_url_tuples=[
+                    prop_type_name_url_tuples=[
                         (
                             md.Props.hasPart,
                             md.Types.CreativeWork,
                             project['name'],
-                            md.Props.url,
                             project['slug']
                         )
                         for project in context.projects
@@ -134,14 +134,13 @@ def Body(context,
             section.Body(
                 context,
                 'Uses',
-                children=links_list.Body(
+                children=scope_links_list.Body(
                     context,
-                    prop_type_name_urltype_url_tuples=[
+                    prop_type_name_url_tuples=[
                         (
                             md.Props.hasPart,
                             md.Types.CreativeWork,
                             project['name'],
-                            md.Props.url,
                             project['slug']
                         )
                         for project in context.projects
@@ -157,14 +156,13 @@ def Body(context,
             section.Body(
                 context,
                 'Used By',
-                children=links_list.Body(
+                children=scope_links_list.Body(
                     context,
-                    prop_type_name_urltype_url_tuples=[
+                    prop_type_name_url_tuples=[
                         (
                             md.Props.isPartOf,
                             md.Types.CreativeWork,
                             project['name'],
-                            md.Props.url,
                             project['slug']
                         )
                         for project in context.projects
@@ -198,16 +196,14 @@ def Body(context,
         )
 
     # Add external links.
-    if external_link_prop_type_name_urltype_url_tuples:
+    if external_link_prop_name_url_tuples:
         els.extend(
             section.Body(
                 context,
                 'External Links',
-                children=links_list.Body(
+                children=prop_links_list.Body(
                     context,
-                    prop_type_name_urltype_url_tuples=(
-                        external_link_prop_type_name_urltype_url_tuples
-                    )
+                    prop_name_url_tuples=external_link_prop_name_url_tuples
                 )
             )
         )

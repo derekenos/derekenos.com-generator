@@ -19,6 +19,7 @@
       "enum": [
         "associatedMedia",
         "installUrl",
+        "mainEntityOfPage",
         "url"
       ]
     },
@@ -245,15 +246,13 @@
             }
           },
 
-          "external_link_prop_type_name_urltype_url_tuples": {
+          "external_link_prop_name_url_tuples": {
             "type": "array",
             "items": {
               "type": "array",
               "items": [
-                { "type": "string" },
-                { "$ref": "#/definitions/itemtype" },
-                { "type": "string" },
                 { "$ref": "#/definitions/itemprop" },
+                { "type": "string" },
                 { "type": "string", "format": "uri" },
               ]
             }
