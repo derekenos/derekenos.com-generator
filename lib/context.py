@@ -50,6 +50,7 @@ class Context:
         ]
         # Initialize runtime attributes.
         self.current_page = None
+        self.current_page_mod = None
         self.generator_item = None
 
         # Maybe instantiate a large static store.

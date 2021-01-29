@@ -110,6 +110,8 @@ def run(context):
             f'{context.PAGES_DIR}.{page_name}',
             fromlist=page_name
         )
+        # Update the context object with the name of the current page module.
+        context.current_page_mod = page_mod
         # Check for page generator.
         if (not hasattr(page_mod, 'CONTEXT_ITEMS_GETTER')
             or not hasattr(page_mod, 'FILENAME_GENERATOR')):

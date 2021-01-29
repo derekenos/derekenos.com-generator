@@ -35,33 +35,8 @@ def Body(context):
         ]
     )
 
-    # Determine whether this is a specific project page.
-    project = getattr(context, 'generator_item')
-
-    # Return basic nav if this is not a project page.
-    if project is None:
-        return (nav,)
-
-    # Maybe add the projects sub-navigation element.
-    outer = Div(id='project-nav-outer')
-    inner = Div(id='project-nav-inner')
-    outer.children.append(inner)
-    for i, project in enumerate(sorted(
-            context.projects,
-            key=lambda x: x['name'] == project['name'],
-            reverse=True
-        )):
-        if i == 0:
-            inner.children.append(
-                Span(project['name'])
-            )
-        else:
-            inner.children.append(
-                Anchor(
-                    project['name'],
-                    href=project['slug']
-                )
-            )
-    nav.children.append(outer)
+    # Extend with any page module sub-navigation elements.
+    if hasattr(context.current_page_mod, 'Nav'):
+        nav.children.extend(context.current_page_mod.Nav(context))
 
     return (nav,)

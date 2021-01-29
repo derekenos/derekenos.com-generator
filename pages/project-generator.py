@@ -2,11 +2,13 @@
 from lib import microdata as md
 from lib.htmlephant import (
     NOEL,
+    Anchor,
     Div,
     H1,
     MDMeta,
     OGMeta,
     StdMeta,
+    Span,
     Title,
 )
 
@@ -69,6 +71,30 @@ def Head(context):
         Title(f'{context.name} | {context.generator_item["name"]}'),
         *get_meta_tags(context)
     )
+
+def Nav(context):
+    # Add the projects sub-navigation.
+    outer = Div(id='sub-nav-outer')
+    inner = Div(id='sub-nav-inner')
+    outer.children.append(inner)
+    current_project = context.generator_item
+    for i, project in enumerate(sorted(
+            context.projects,
+            key=lambda x: x['name'] == current_project['name'],
+            reverse=True
+        )):
+        if i == 0:
+            inner.children.append(
+                Span(project['name'])
+            )
+        else:
+            inner.children.append(
+                Anchor(
+                    project['name'],
+                    href=project['slug']
+                )
+            )
+    return (outer,)
 
 Body = lambda context: (
     Div(

@@ -9,6 +9,7 @@ from lib.htmlephant import (
     Div,
     H2,
     H3,
+    H4,
     Section,
 )
 
@@ -48,6 +49,15 @@ def Body(context,
     els = [
         Section(children=(
             H2(name, itemprop=md.Props.name),
+            Div(children=[
+                Anchor(
+                    f'#{tag}',
+                    _class='tag',
+                    itemprop=md.Props.isPartOf,
+                    href=f'/tagged-{tag}'
+                )
+                for tag in tags
+            ]),
             H3(short_description, itemprop=md.Props.abstract),
             *picture.Body(
                 context,

@@ -29,7 +29,15 @@ def Body(context, name, slug, short_description, tags,
             itemprop=md.Props.description
         ) if short_description else NOEL,
         H4(
-            ' '.join(f'#{tag}' for tag in tags)
+            children=[
+                Anchor(
+                    f'#{tag}',
+                    _class='tag',
+                    itemprop=md.Props.isPartOf,
+                    href=f'/tagged-{tag}'
+                )
+                for tag in tags
+            ]
         ) if tags else NOEL,
         Anchor(
             itemprop=md.Props.url,
