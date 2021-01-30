@@ -71,9 +71,9 @@
 
   "navbar_page_name_label_pairs": [
     ["index", "home"],
-    ["project-generator", "projects"],
+    ["projects", "projects"],
     ["ambitions", "ambitions"],
-    ["tag-generator", "tags"],
+    ["tags", "tags"],
     ["contact", "contact"]
   ],
 

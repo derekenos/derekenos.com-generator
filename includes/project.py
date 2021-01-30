@@ -13,6 +13,7 @@ from lib.htmlephant import (
     Section,
 )
 
+from pages import tag_generator
 from includes import (
     picture,
     prop_links_list,
@@ -54,7 +55,7 @@ def Body(context,
                     f'#{tag}',
                     _class='tag',
                     itemprop=md.Props.isPartOf,
-                    href=f'/tagged-{tag}'
+                    href=tag_generator.slugify(tag)
                 )
                 for tag in tags
             ]),

@@ -11,6 +11,7 @@ from lib.htmlephant import (
     NOEL,
 )
 
+from pages import tag_generator
 from includes import picture
 
 Head = NotDefined
@@ -34,7 +35,7 @@ def Body(context, name, slug, short_description, tags,
                     f'#{tag}',
                     _class='tag',
                     itemprop=md.Props.isPartOf,
-                    href=f'/tagged-{tag}'
+                    href=tag_generator.slugify(tag)
                 )
                 for tag in tags
             ]

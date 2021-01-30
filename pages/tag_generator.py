@@ -20,7 +20,7 @@ from includes import (
     subnav,
 )
 
-FILENAME_GENERATOR = lambda tag: f'tagged-{tag["name"]}.html'
+FILENAME_GENERATOR = lambda tag: f'tag-{tag["name"]}.html'
 
 slugify = lambda tag_name: \
     f'/{FILENAME_GENERATOR({"name": tag_name}).rsplit(".", 1)[0]}'
