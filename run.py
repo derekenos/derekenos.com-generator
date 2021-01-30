@@ -131,7 +131,7 @@ def run(context):
 
             # Create a collection entry point page that redirects to the first
             # collection item.
-            collection_name = page_mod.__name__.rsplit('.', 1)[1].split('-')[0]
+            collection_name = page_mod.__name__.rsplit('.', 1)[1].split('_')[0]
             filename = f'{collection_name}s.html'
             item = next(iter(items))
             context.generator_item = item
