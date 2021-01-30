@@ -86,7 +86,6 @@ def Nav(context):
     return subnav.Body(
         context,
         name_url_pairs,
-        title="Projects"
     )
 
 Body = lambda context: (

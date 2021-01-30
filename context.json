@@ -70,8 +70,10 @@
   "google_analytics_id": "UA-19335494-1",
 
   "navbar_page_name_label_pairs": [
-    ["index", "projects"],
+    ["index", "home"],
+    ["project-generator", "projects"],
     ["ambitions", "ambitions"],
+    ["tag-generator", "tags"],
     ["contact", "contact"]
   ],
 

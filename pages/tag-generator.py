@@ -20,11 +20,19 @@ from includes import (
     subnav,
 )
 
-CONTEXT_ITEMS_GETTER = lambda context: \
-    set(chain(*[project['tags'] for project in context.projects]))
-FILENAME_GENERATOR = lambda tag: f'tagged-{tag}.html'
+FILENAME_GENERATOR = lambda tag: f'tagged-{tag["name"]}.html'
 
-slugify = lambda tag: f'/{FILENAME_GENERATOR(tag).rsplit(".", 1)[0]}'
+slugify = lambda tag_name: \
+    f'/{FILENAME_GENERATOR({"name": tag_name}).rsplit(".", 1)[0]}'
+
+CONTEXT_ITEMS_GETTER = lambda context: [
+    {
+        'name': tag_name,
+        'slug': slugify(tag_name)
+    }
+    for tag_name in
+    sorted(set(chain(*[project['tags'] for project in context.projects])))
+]
 
 def Head(context):
     return (
@@ -34,24 +42,20 @@ def Head(context):
 def Nav(context):
     current_tag = context.generator_item
     name_url_pairs = [
-        (f'#{current_tag}', slugify(current_tag)),
+        (f'#{current_tag["name"]}', current_tag['slug']),
         *[
-            (f'#{tag}', slugify(tag))
-            for tag in context.all_tags
-            if tag != current_tag
+            (f'#{tag_name}', slugify(tag_name))
+            for tag_name in context.all_tags
+            if tag_name != current_tag['name']
         ]
     ]
-    return subnav.Body(
-        context,
-        name_url_pairs,
-        title="Tags"
-    )
+    return subnav.Body(context, name_url_pairs)
 
 Body = lambda context: (
     Div(
-        _class='content',
+        _class='content tag',
         children=(
-            H1(desc:=f'Projects Tagged #{(tag:=context.generator_item)}'),
+            H1(desc:=f'Projects Tagged #{(tag:=context.generator_item["name"])}'),
             *collection.Body(
                 context,
                 name=desc,

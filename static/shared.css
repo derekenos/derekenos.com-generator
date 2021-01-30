@@ -63,22 +63,14 @@ nav > ol > li > a:hover {
 }
 
 #sub-nav-outer {
-  padding: 0;
   white-space: nowrap;
   position: relative;
-}
-
-#sub-nav-outer > h2 {
-  margin: 0;
-  font-size: 1rem;
-  letter-spacing: .1em;
-  padding: .5rem 0 .5rem 1rem;
 }
 
 #sub-nav-inner {
   overflow-x: scroll;
   scrollbar-width: thin;
-  padding-bottom: .75rem;
+  padding: .75rem 0;
   font-size: 0;
 }
 
@@ -128,6 +120,7 @@ nav > ol > li > a:hover {
 
 .content.projects > h1,
 .content.project > h1,
+.content.tag > h1,
 .content.contact > h1 {
   visibility: hidden;
   margin: 0;
@@ -255,6 +248,7 @@ ol.links > li > a {
 
   #sub-nav-inner {
     scrollbar-width: auto;
+    padding-top: 0;
   }
 
   .section > * {

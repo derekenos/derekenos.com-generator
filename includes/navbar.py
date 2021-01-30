@@ -14,11 +14,17 @@ from lib.htmlephant import (
 )
 
 def _Li(context, name, label):
-    if name == context.current_page:
+    if name.endswith('-generator'):
+        is_current = context.current_page.startswith(name[:-9])
+        url = f'/{name[:-10]}s'
+    else:
+        is_current = name == context.current_page
+        url = f'/{"" if name == "index" else name}'
+
+    if is_current:
         return Li(label, _class='current')
-    if name == 'index':
-        name = ''
-    return Li(children=(Anchor(label, href=f'/{name}'),))
+
+    return Li(children=(Anchor(label, href=url),))
 
 Head = NotDefined
 

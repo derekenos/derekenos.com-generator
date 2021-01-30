@@ -5,9 +5,12 @@ import os
 from itertools import chain
 from glob import glob
 
-from lib import copy_if_newer
 from lib.htmlephant import Document
 from lib.server import serve
+from lib import (
+    copy_if_newer,
+    NotDefined,
+)
 from lib.context import (
     Context,
     normalize_context,
@@ -16,22 +19,23 @@ from lib.context import (
 import includes.head
 import includes.body
 import includes.footer
+import includes.redirect
 
 ###############################################################################
 # Site file writer helpers
 ###############################################################################
 
-def write_page(context, filename, page_mod):
+def write_page(context, filename, head=NotDefined, body=NotDefined):
     """Write a single HTML site page.
     """
     # Open the HTML output file.
     with context.open(filename) as fh:
         # Combine global includes with the module Head and Body to create
         # the final element tuples.
-        head_els = chain(includes.head.Head(context), page_mod.Head(context))
+        head_els = chain(includes.head.Head(context), head(context))
         body_els = chain(
             includes.body.Body(context),
-            page_mod.Body(context),
+            body(context),
             includes.footer.Body(context),
         )
         # Create the Document object.
@@ -119,15 +123,31 @@ def run(context):
             # Clear any previous generator item.
             context.generator_item = None
             filename = f'{page_name}.html'
-            write_page(context, filename, page_mod)
+            write_page(context, filename, page_mod.Head, page_mod.Body)
             filenames.append(filename)
         else:
             # Use the page generator to write 1 or more pages.
-            for item in page_mod.CONTEXT_ITEMS_GETTER(context):
+            items = page_mod.CONTEXT_ITEMS_GETTER(context)
+
+            # Create a collection entry point page that redirects to the first
+            # collection item.
+            collection_name = page_mod.__name__.rsplit('.', 1)[1].split('-')[0]
+            filename = f'{collection_name}s.html'
+            item = next(iter(items))
+            context.generator_item = item
+            write_page(
+                context,
+                filename,
+                lambda context: includes.redirect.Head(context, item['slug'])
+            )
+            filenames.append(filename)
+
+            # Write the individual item pages.
+            for item in items:
                 # Update the context object with the current item.
                 context.generator_item = item
                 filename = page_mod.FILENAME_GENERATOR(item)
-                write_page(context, filename, page_mod)
+                write_page(context, filename, page_mod.Head, page_mod.Body)
                 filenames.append(filename)
 
     # Write the sitemap and robots files.
