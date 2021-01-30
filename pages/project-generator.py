@@ -83,7 +83,11 @@ def Nav(context):
             if project != current_project
         ]
     ]
-    return subnav.Body(context, name_url_pairs)
+    return subnav.Body(
+        context,
+        name_url_pairs,
+        title="Projects"
+    )
 
 Body = lambda context: (
     Div(

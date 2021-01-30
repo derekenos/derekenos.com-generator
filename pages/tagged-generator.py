@@ -41,7 +41,11 @@ def Nav(context):
             if tag != current_tag
         ]
     ]
-    return subnav.Body(context, name_url_pairs)
+    return subnav.Body(
+        context,
+        name_url_pairs,
+        title="Tags"
+    )
 
 Body = lambda context: (
     Div(
