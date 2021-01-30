@@ -70,19 +70,15 @@ nav > ol > li > a:hover {
 
 #sub-nav-outer > h2 {
   margin: 0;
-  position: absolute;
-  width: 100%;
   font-size: 1rem;
-  padding: .4rem 0 .2rem 1rem;
-  opacity: 0.75;
-  background-color: #000;
-  border-radius: 8px 0 0 8px;
+  letter-spacing: .1em;
+  padding: .5rem 0 .5rem 1rem;
 }
 
 #sub-nav-inner {
   overflow-x: scroll;
   scrollbar-width: thin;
-  padding: 1.8rem 0 .75rem 0;
+  padding-bottom: .75rem;
   font-size: 0;
 }
 
@@ -95,13 +91,17 @@ nav > ol > li > a:hover {
   font-size: 1rem;
   background-color: #000;
   margin: 0 .1rem;
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px;
 }
 
 
 #sub-nav-inner > span {
   background-color: transparent;
   cursor: default;
+}
+
+#sub-nav-inner > a {
+  border-top: solid rgba(255, 255, 255, 0.15) 1px;
 }
 
 #sub-nav-inner > a:hover {
