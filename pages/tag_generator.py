@@ -36,7 +36,7 @@ CONTEXT_ITEMS_GETTER = lambda context: [
 
 def Head(context):
     return (
-        Title(f'{context.name} | #{context.generator_item}'),
+        Title(f'{context.name} | #{context.generator_item["name"]}'),
     )
 
 def Nav(context):
