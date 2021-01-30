@@ -6,12 +6,11 @@ from types import SimpleNamespace
 Types = SimpleNamespace(**{
     k: f'https://schema.org/{k}'
     for k in (
+            'Collection',
             'ContactPoint',
             'CreativeWork',
             'ImageObject',
             'Intangible',
-            'ItemList',
-            'ListItem',
             'MediaObject',
             'Person',
             'SoftwareApplication',
@@ -35,7 +34,6 @@ Props = SimpleNamespace(**{
         'image',
         'installUrl',
         'isPartOf',
-        'itemListElement',
         "mainEntityOfPage",
         'name',
         'operatingSystem',
