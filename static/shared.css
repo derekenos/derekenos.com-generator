@@ -62,23 +62,23 @@ nav > ol > li > a:hover {
   text-decoration: underline;
 }
 
-#project-nav-outer {
-  padding: 0;
+#sub-nav-outer {
   white-space: nowrap;
+  position: relative;
 }
 
-#project-nav-inner {
+#sub-nav-inner {
   overflow-x: scroll;
   scrollbar-width: thin;
-  padding: 1rem 0;
+  padding: .75rem 0;
   font-size: 0;
 }
 
-#project-nav-inner > span,
-#project-nav-inner > a {
+#sub-nav-inner > span,
+#sub-nav-inner > a {
   display: inline-block;
   white-space: norwap;
-  padding: 1.4rem;
+  padding: 1.2rem 1rem;
   text-decoration: none;
   font-size: 1rem;
   background-color: #000;
@@ -86,12 +86,17 @@ nav > ol > li > a:hover {
   border-radius: 8px;
 }
 
-#project-nav-inner > span {
+
+#sub-nav-inner > span {
   background-color: transparent;
   cursor: default;
 }
 
-#project-nav-inner > a:hover {
+#sub-nav-inner > a {
+  border-top: solid rgba(255, 255, 255, 0.15) 1px;
+}
+
+#sub-nav-inner > a:hover {
   text-decoration: underline;
 }
 
@@ -115,6 +120,7 @@ nav > ol > li > a:hover {
 
 .content.projects > h1,
 .content.project > h1,
+.content.tag > h1,
 .content.contact > h1 {
   visibility: hidden;
   margin: 0;
@@ -177,6 +183,16 @@ nav > ol > li > a:hover {
   opacity: 0.8;
 }
 
+.item a.tag,
+section a.tag {
+  text-decoration: none;
+}
+
+.item a.tag:hover,
+section a.tag:hover {
+  text-decoration: underline;
+}
+
 section .item > h4 {
   font-size: 1.3rem;
   font-style: normal;
@@ -230,8 +246,9 @@ ol.links > li > a {
     background-color: transparent;
   }
 
-  #project-nav-inner {
+  #sub-nav-inner {
     scrollbar-width: auto;
+    padding-top: 0;
   }
 
   .section > * {

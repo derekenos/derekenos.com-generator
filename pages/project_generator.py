@@ -2,15 +2,18 @@
 from lib import microdata as md
 from lib.htmlephant import (
     NOEL,
+    Anchor,
     Div,
     H1,
     MDMeta,
     OGMeta,
     StdMeta,
+    Span,
     Title,
 )
 
 import includes.project
+from includes import subnav
 
 CONTEXT_ITEMS_GETTER = lambda context: context.projects
 FILENAME_GENERATOR = lambda project: f'{project["slug"].lstrip("/")}.html'
@@ -68,6 +71,21 @@ def Head(context):
     return (
         Title(f'{context.name} | {context.generator_item["name"]}'),
         *get_meta_tags(context)
+    )
+
+def Nav(context):
+    current_project = context.generator_item
+    name_url_pairs = [
+        (current_project['name'], current_project['slug']),
+        *[
+            (project['name'], project['slug'])
+            for project in context.projects
+            if project != current_project
+        ]
+    ]
+    return subnav.Body(
+        context,
+        name_url_pairs,
     )
 
 Body = lambda context: (

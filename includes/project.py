@@ -9,9 +9,11 @@ from lib.htmlephant import (
     Div,
     H2,
     H3,
+    H4,
     Section,
 )
 
+from pages import tag_generator
 from includes import (
     picture,
     prop_links_list,
@@ -48,6 +50,15 @@ def Body(context,
     els = [
         Section(children=(
             H2(name, itemprop=md.Props.name),
+            Div(children=[
+                Anchor(
+                    f'#{tag}',
+                    _class='tag',
+                    itemprop=md.Props.isPartOf,
+                    href=tag_generator.slugify(tag)
+                )
+                for tag in tags
+            ]),
             H3(short_description, itemprop=md.Props.abstract),
             *picture.Body(
                 context,
