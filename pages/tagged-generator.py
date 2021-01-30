@@ -49,7 +49,7 @@ def Nav(context):
 
 Body = lambda context: (
     Div(
-        _class='content projects',
+        _class='content',
         children=(
             H1(desc:=f'Projects Tagged #{(tag:=context.generator_item)}'),
             *collection.Body(
