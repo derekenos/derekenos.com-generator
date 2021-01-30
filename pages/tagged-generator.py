@@ -17,11 +17,14 @@ from lib.htmlephant import (
 from includes import (
     collection,
     project_card,
+    subnav,
 )
 
 CONTEXT_ITEMS_GETTER = lambda context: \
     set(chain(*[project['tags'] for project in context.projects]))
 FILENAME_GENERATOR = lambda tag: f'tagged-{tag}.html'
+
+slugify = lambda tag: f'/{FILENAME_GENERATOR(tag).rsplit(".", 1)[0]}'
 
 def Head(context):
     return (
@@ -29,30 +32,16 @@ def Head(context):
     )
 
 def Nav(context):
-    # Add the tags sub-navigation.
-    outer = Div(id='sub-nav-outer')
-    inner = Div(id='sub-nav-inner')
-    outer.children.append(inner)
     current_tag = context.generator_item
-    tags = set(chain(*[project['tags'] for project in context.projects]))
-    for i, tag in enumerate(sorted(
-            tags,
-            key=lambda x: x == current_tag,
-            reverse=True
-    )):
-        if i == 0:
-            inner.children.append(
-                Span(f'#{tag}')
-            )
-        else:
-            inner.children.append(
-                Anchor(
-                    f'#{tag}',
-                    href=f'/tagged-{tag}'
-                )
-            )
-    return (outer,)
-
+    name_url_pairs = [
+        (f'#{current_tag}', slugify(current_tag)),
+        *[
+            (f'#{tag}', slugify(tag))
+            for tag in context.all_tags
+            if tag != current_tag
+        ]
+    ]
+    return subnav.Body(context, name_url_pairs)
 
 Body = lambda context: (
     Div(
