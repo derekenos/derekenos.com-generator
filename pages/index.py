@@ -23,7 +23,7 @@ Head = lambda context: (
     StdMeta('keywords', ','.join(
         sorted(set(flatten(pluck('tags', context.projects))))
     )),
-    Title(f'{context.name} | Projects'),
+    Title(f'{context.name} | Home'),
 )
 
 Body = lambda context: (
