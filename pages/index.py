@@ -1,11 +1,11 @@
 
 
+from lib.htmlephant_extensions import Main
 from lib import (
     flatten,
     pluck,
 )
 from lib.htmlephant import (
-    Div,
     H1,
     OGMeta,
     StdMeta,
@@ -27,7 +27,7 @@ Head = lambda context: (
 )
 
 Body = lambda context: (
-    Div(
+    Main(
         _class='content home',
         children=(
             H1(DESCRIPTION),

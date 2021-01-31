@@ -2,10 +2,10 @@
 from itertools import chain
 
 from lib import microdata as md
+from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
     NOEL,
     Anchor,
-    Div,
     H1,
     MDMeta,
     OGMeta,
@@ -82,7 +82,7 @@ def Body(context):
     tag_name = context.generator_item["name"]
     description = f'Projects Tagged #{tag_name}'
     return (
-        Div(
+        Main(
             _class='content tag',
             children=(
                 H1(description),

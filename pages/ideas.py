@@ -1,8 +1,8 @@
 
+from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
     NOEL,
     Anchor,
-    Div,
     H1,
     OGMeta,
     Script,
@@ -197,7 +197,7 @@ Head = lambda context: (
 )
 
 Body = lambda context: (
-    Div(
+    Main(
         _class='content ideas',
         children=(
             H1(DESCRIPTION),
@@ -245,15 +245,13 @@ Body = lambda context: (
                     name=name,
                     items=SMALL_BITES
                 )
-            )
+            ),
 
+            Anchor(
+                'Support Me',
+                href='https://www.patreon.com/bePatron?u=124133',
+                _data_patreon_widget_type='become-patron-button'
+            )
         )
     ),
-
-    Anchor(
-        'Support Me',
-        href='https://www.patreon.com/bePatron?u=124133',
-        _data_patreon_widget_type='become-patron-button'
-    )
-
 )

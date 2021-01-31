@@ -1,9 +1,9 @@
 
 from lib import microdata as md
+from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
     NOEL,
     Anchor,
-    Div,
     H1,
     MDMeta,
     OGMeta,
@@ -89,7 +89,7 @@ def Nav(context):
     )
 
 Body = lambda context: (
-    Div(
+    Main(
         _class='content project',
         itemscope='',
         itemtype=(project:=context.generator_item)['type'],

@@ -1,5 +1,6 @@
 
 from lib import microdata as md
+from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
     Anchor,
     Br,
@@ -27,7 +28,7 @@ Head = lambda context: (
 )
 
 Body = lambda context: (
-    Div(
+    Main(
         _class='content contact',
         itemscope='',
         itemtype=md.Types.Person,

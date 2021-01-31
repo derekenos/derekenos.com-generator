@@ -34,10 +34,19 @@ def write_page(context, filename, head=NotDefined, body=NotDefined):
         # Combine global includes with the module Head and Body to create
         # the final element tuples.
         head_els = chain(includes.head.Head(context), head(context))
-        # Wrap the module body in a <main>.
+        # Invoke the page body function and, if non-empty, assert that it
+        # returns a single <main> element.
+        page_body_els = body(context)
+        if page_body_els and (len(page_body_els) != 1
+                              or not isinstance(page_body_els[0], Main)):
+            raise AssertionError(
+                'Expected page_mod.Body() to return a single <main> element '
+                f'but got {page_body_els} instead when attempting to write '
+                f'file: {filename}'
+            )
         body_els = chain(
             includes.header.Body(context),
-            (Main(children=body(context)),),
+            page_body_els,
             includes.footer.Body(context),
         )
         # Create the Document object.
