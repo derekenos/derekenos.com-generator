@@ -189,7 +189,7 @@ DESCRIPTION = 'Some things that I have considered making or doing'
 Head = lambda context: (
     StdMeta('description', DESCRIPTION),
     OGMeta('description', DESCRIPTION),
-    Title(f'{context.name} | Ambitions'),
+    Title(f'{context.name} | Ideas'),
     Script(
         _async='',
         src='https://c6.patreon.com/becomePatronButton.bundle.js'
@@ -198,7 +198,7 @@ Head = lambda context: (
 
 Body = lambda context: (
     Div(
-        _class='content ambitions',
+        _class='content ideas',
         children=(
             H1(DESCRIPTION),
 

@@ -91,8 +91,8 @@ def Body(context):
                     name=description,
                     items=[
                         project_card.Body(context, **project)
-                    for project in context.projects
-                    if tag_name in project['tags']
+                        for project in context.projects
+                        if tag_name in project['tags']
                     ]
                 )
             )

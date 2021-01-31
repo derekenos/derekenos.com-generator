@@ -28,7 +28,7 @@ Head = lambda context: (
 
 Body = lambda context: (
     Div(
-        _class='content projects',
+        _class='content home',
         children=(
             H1(DESCRIPTION),
             *collection.Body(
