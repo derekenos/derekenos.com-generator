@@ -6,6 +6,7 @@ from itertools import chain
 from glob import glob
 
 from lib.htmlephant import Document
+from lib.htmlephant_extensions import Main
 from lib.server import serve
 from lib import (
     copy_if_newer,
@@ -17,8 +18,8 @@ from lib.context import (
 )
 
 import includes.head
-import includes.body
 import includes.footer
+import includes.header
 import includes.redirect
 
 ###############################################################################
@@ -33,9 +34,10 @@ def write_page(context, filename, head=NotDefined, body=NotDefined):
         # Combine global includes with the module Head and Body to create
         # the final element tuples.
         head_els = chain(includes.head.Head(context), head(context))
+        # Wrap the module body in a <main>.
         body_els = chain(
-            includes.body.Body(context),
-            body(context),
+            includes.header.Body(context),
+            (Main(children=body(context)),),
             includes.footer.Body(context),
         )
         # Create the Document object.

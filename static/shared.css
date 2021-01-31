@@ -25,12 +25,12 @@ a:active {
   color: #eef;
 }
 
-nav {
+#main-nav {
   display: block;
   padding: 0;
 }
 
-nav > ol {
+#main-nav > ol {
   display: flex;
   justify-content: center;
   list-style: none;
@@ -38,19 +38,19 @@ nav > ol {
   padding: 0;
 }
 
-nav > ol > li {
+#main-nav > ol > li {
   flex-grow: 1;
   font-size: 1.2rem;
   text-align: center;
   border: solid #262255 1px;
 }
 
-nav > ol > li.current {
+#main-nav > ol > li#active-main-nav-tab {
   border-bottom: none;
   padding: 1rem 0;
 }
 
-nav > ol > li > a {
+#main-nav > ol > li > a {
   text-decoration: none;
   display: block;
   width: 100%;
@@ -58,45 +58,45 @@ nav > ol > li > a {
   padding: 1rem 0;
 }
 
-nav > ol > li > a:hover {
+#main-nav > ol > li > a:hover {
   text-decoration: underline;
 }
 
-#sub-nav-outer {
+#sub-nav {
   white-space: nowrap;
   position: relative;
 }
 
-#sub-nav-inner {
+#sub-nav > ol {
   overflow-x: scroll;
   scrollbar-width: thin;
   padding: .75rem 0;
   font-size: 0;
 }
 
-#sub-nav-inner > span,
-#sub-nav-inner > a {
+#sub-nav > ol > li {
   display: inline-block;
-  white-space: norwap;
-  padding: 1.2rem 1rem;
-  text-decoration: none;
   font-size: 1rem;
   background-color: #000;
   margin: 0 .1rem;
   border-radius: 8px;
-}
-
-
-#sub-nav-inner > span {
-  background-color: transparent;
-  cursor: default;
-}
-
-#sub-nav-inner > a {
   border-top: solid rgba(255, 255, 255, 0.15) 1px;
 }
 
-#sub-nav-inner > a:hover {
+#sub-nav > ol > li:first-child {
+  background-color: transparent;
+  border: none;
+  cursor: default;
+  padding: 1.2rem 1rem;
+}
+
+#sub-nav > ol > li > a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 1.2rem 1rem;
+}
+
+#sub-nav > ol > li > a:hover {
   text-decoration: underline;
 }
 
@@ -224,17 +224,20 @@ ol.links > li > a {
     max-width: calc(1024px - 2rem);
   }
 
-  nav {
-    display: block;
+  header {
     border-bottom: solid #888 1px;
   }
 
-  nav > ol {
+  #main-nav {
     display: block;
   }
 
-  nav > ol > li,
-  nav > ol > li.current {
+  #main-nav > ol {
+    display: block;
+  }
+
+  #main-nav > ol > li,
+  #main-nav > ol > li#active-main-nav-tab {
     padding: 1rem 0 1rem 4rem;
     font-size: 1.2rem;
     text-align: left;
@@ -242,11 +245,11 @@ ol.links > li > a {
     display: inline-block;
   }
 
-  nav > ol > li > a {
+  #main-nav > ol > li > a {
     background-color: transparent;
   }
 
-  #sub-nav-inner {
+  #sub-nav > ol {
     scrollbar-width: auto;
     padding-top: 0;
   }

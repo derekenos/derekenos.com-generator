@@ -2,15 +2,13 @@
 from datetime import date
 
 from lib import NotDefined
-from lib.htmlephant import (
-    Anchor,
-    Div,
-)
+from lib.htmlephant import Anchor
+from lib.htmlephant_extensions import Footer
 
 Head = NotDefined
 
 Body = lambda context: (
-    Div(
+    Footer(
         f'Generated on {date.today()} by ',
         _class='footer',
         children=(

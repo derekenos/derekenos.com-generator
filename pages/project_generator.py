@@ -85,7 +85,7 @@ def Nav(context):
     ]
     return subnav.Body(
         context,
-        name_url_pairs,
+        name_url_pairs
     )
 
 Body = lambda context: (

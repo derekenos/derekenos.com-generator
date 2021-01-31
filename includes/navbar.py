@@ -6,11 +6,9 @@ from lib import (
 
 from lib.htmlephant import (
     Anchor,
-    Div,
     Li,
     Nav,
     Ol,
-    Span,
 )
 
 def _Li(context, name, label):
@@ -19,7 +17,7 @@ def _Li(context, name, label):
         and name == f'{context.current_page[:-10]}s'
     )
     if is_current:
-        return Li(label, _class='current')
+        return Li(label, id='active-main-nav-tab')
     return Li(children=(Anchor(label, href=f'/{"" if name == "index" else name}'),))
 
 Head = NotDefined
@@ -27,6 +25,7 @@ Head = NotDefined
 def Body(context):
     assert_ctx(context, 'navbar_page_name_label_pairs')
     nav = Nav(
+        id="main-nav",
         children=[
             Ol(
                 children=[
@@ -37,8 +36,11 @@ def Body(context):
         ]
     )
 
-    # Extend with any page module sub-navigation elements.
+    # If page module defines a Nav function, invoke and include its elements.
     if hasattr(context.current_page_mod, 'Nav'):
-        nav.children.extend(context.current_page_mod.Nav(context))
+        return (
+            nav,
+            *context.current_page_mod.Nav(context)
+        )
 
     return (nav,)
