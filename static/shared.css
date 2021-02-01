@@ -181,6 +181,8 @@ a:active {
 .item a.tag,
 section a.tag {
   text-decoration: none;
+  padding: 0.2rem;
+  display: inline-block;
 }
 
 .item a.tag:hover,
@@ -270,5 +272,10 @@ ol.links > li > a {
   ol.links > li > a {
     display: inline-block;
     padding: .2rem 0;
+  }
+
+  .item a.tag,
+  section a.tag {
+    padding: 0.1rem 0.05rem;
   }
 }
