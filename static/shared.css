@@ -174,7 +174,7 @@ a:active {
   font-weight: normal;
   line-height: 1.2rem;
   font-style: italic;
-  margin-top: 0;
+  margin: 0 0 0.7rem 0;
   opacity: 0.8;
 }
 
@@ -183,6 +183,11 @@ section a.tag {
   text-decoration: none;
   padding: 0.2rem;
   display: inline-block;
+}
+
+.item a.tag:first-child,
+section a.tag:first-child {
+  padding-left: 0;
 }
 
 .item a.tag:hover,
