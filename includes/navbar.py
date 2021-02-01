@@ -26,6 +26,7 @@ def Body(context):
     assert_ctx(context, 'navbar_page_name_label_pairs')
     nav = Nav(
         id="main-nav",
+        _aria_label='primary',
         children=[
             Ol(
                 children=[
