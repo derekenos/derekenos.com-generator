@@ -505,9 +505,17 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "sketchy_video_poster",
+          "base_filename": "sketchy_thumb",
           "name": "Sketchy, A Robotic Etch-A-Sketch",
           "description": "photo of motorized Etch-A-Sketch"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "sketchy.mp4",
+          "thumb_filename": "sketchy_video_poster.png",
+          "name": "Sketchy Demonstration",
+          "description": "An early demonstration of Sketchy writing its name."
         }
       ],
       "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy"
