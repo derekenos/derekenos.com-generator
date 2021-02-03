@@ -652,12 +652,27 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "delta_video_thumb",
+          "base_filename": "delta_robot_thumb",
           "name": "Laser-cut Delta Robot",
           "description": "photo of delta robot made from laser-cut wood"
         }
       ],
-      "github_url": "https://github.com/derekenos/delta_robot"
+      "videos": [
+        {
+          "filename": "delta_robot.mp4",
+          "thumb_filename": "delta_robot_poster.png",
+          "name": "Delta Robot Demonstration",
+          "description": "A laser-cut delta robot drawing a grid of dots."
+        }
+      ],
+      "github_url": "https://github.com/derekenos/delta_robot",
+      "external_link_prop_name_url_tuples": [
+        [
+          "mainEntityOfPage",
+          "Google Photos Album",
+          "https://photos.app.goo.gl/YxzYmPZedq4qrStS8"
+        ]
+      ]
     },
 
     {
