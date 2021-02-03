@@ -70,23 +70,17 @@ def get_microdata_meta(context):
 def Head(context):
     return (
         Title(f'{context.name} | {context.generator_item["name"]}'),
-        *get_meta_tags(context)
+        *get_meta_tags(context),
+        *subnav.Head(context),
     )
 
 def Nav(context):
     current_project = context.generator_item
     name_url_pairs = [
-        (current_project['name'], current_project['slug']),
-        *[
-            (project['name'], project['slug'])
-            for project in context.projects
-            if project != current_project
-        ]
+        (project['name'], project['slug'])
+        for project in context.projects
     ]
-    return subnav.Body(
-        context,
-        name_url_pairs
-    )
+    return subnav.Body(context, name_url_pairs, current_project['name'])
 
 Body = lambda context: (
     Main(

@@ -34,49 +34,40 @@ CONTEXT_ITEMS_GETTER = lambda context: [
     sorted(set(chain(*[project['tags'] for project in context.projects])))
 ]
 
-def Head(context):
+get_title = \
+    lambda context: f'{context.name} | #{context.generator_item["name"]}'
+
+def get_meta_tags(context):
     """Return a list of Meta elements comprising tag metadata.
     See:
       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name
       https://ogp.me/#metadata
     """
     tag = context.generator_item
-    els = []
-    # Author.
-    els.append(StdMeta('author', context.name))
-    # Description.
     description = f'A collection of projects associated with the tag #{tag["name"]}.'
-    els.extend((
+    return (
+        StdMeta('author', context.name),
         StdMeta('description', description),
-        OGMeta('description', description)
-    ))
-    # Keywords
-    els.append(
-        StdMeta('keywords', ', '.join((tag['name'], 'tag', 'projects')))
+        OGMeta('description', description),
+        StdMeta('keywords', ', '.join((tag['name'], 'tag', 'projects'))),
+        OGMeta('title', get_title(context)),
+        OGMeta('type', 'website'),
+        OGMeta('url', context.url(tag['slug'])),
     )
-    # Title
-    title = f'{context.name} | #{tag["name"]}'
-    els.extend((
-        OGMeta('title', title),
-        Title(title)
-    ))
-    # Type
-    els.append(OGMeta('type', 'website'))
-    # URL
-    els.append(OGMeta('url', context.url(tag['slug'])))
-    return els
+
+Head = lambda context: (
+    Title(get_title(context)),
+    *get_meta_tags(context),
+    *subnav.Head(context),
+)
 
 def Nav(context):
     current_tag = context.generator_item
     name_url_pairs = [
-        (f'#{current_tag["name"]}', current_tag['slug']),
-        *[
-            (f'#{tag_name}', slugify(tag_name))
-            for tag_name in context.all_tags
-            if tag_name != current_tag['name']
-        ]
+        (f'#{tag_name}', slugify(tag_name))
+        for tag_name in context.all_tags
     ]
-    return subnav.Body(context, name_url_pairs)
+    return subnav.Body(context, name_url_pairs, f'#{current_tag["name"]}')
 
 def Body(context):
     tag_name = context.generator_item["name"]

@@ -84,7 +84,7 @@ a:active {
   border-top: solid rgba(255, 255, 255, 0.15) 1px;
 }
 
-#sub-nav > ol > li:first-child {
+#sub-nav > ol > li.active {
   background-color: transparent;
   border: none;
   cursor: default;
