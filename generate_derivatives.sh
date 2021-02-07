@@ -20,6 +20,15 @@ else
     fi
 fi
 
+
+get_context_value () {
+    python3.9 -c "import json; context = json.load(open('context.json', 'r', encoding='utf-8')); print(context['$1'])"
+}
+
+
+formats=`get_context_value "prioritized_derivative_image_formats"`
+widths=`get_context_value "derivative_image_widths"`
+
 flatpak run org.gimp.GIMP -idf --batch-interpreter python-fu-eval \
-     -b "import sys; sys.path = ['.'] + sys.path; import generate_derivatives; generate_derivatives.run('$in_dir', '$out_dir')" \
+     -b "import sys; sys.path = ['.'] + sys.path; import generate_derivatives; generate_derivatives.run('$in_dir', '$out_dir', $formats, $widths)" \
      -b "pdb.gimp_quit(1)"

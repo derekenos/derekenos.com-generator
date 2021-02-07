@@ -69,6 +69,21 @@
 
   "google_analytics_id": "UA-19335494-1",
 
+  "prioritized_derivative_image_formats": [
+    "webp",
+    "png"
+  ],
+
+  "derivative_image_widths": [
+    2500,
+    1500,
+    1000,
+    750,
+    500,
+    300,
+    100
+  ],
+
   "navbar_page_name_label_pairs": [
     ["index", "home"],
     ["projects", "projects"],
