@@ -70,6 +70,8 @@
   "google_analytics_id": "UA-19335494-1",
 
   "normalized_image_filename_template": "{item_name}_{file_num}_{width}w_original.{extension}",
+  "normalized_image_filename_regex": "^(?P<item_name>.*)_(?P<file_num>\\d+)_(?P<width>\\d+)w_original\\.(?P<extension>.+)$",
+  "derivative_image_filename_template": "{item_name}_{file_num}_{width}w.{extension}",
 
   "prioritized_derivative_image_formats": [
     "webp",

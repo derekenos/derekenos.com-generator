@@ -12,12 +12,6 @@ QUALITY_FACTOR = 0.90
 LOSSY = QUALITY_FACTOR < 1
 
 INPUT_FILENAME_GLOB = '*_original.*'
-INPUT_FILENAME_REGEX = re.compile(
-    '^(?P<item_name>.*)_(?P<file_num>\d+)_(?P<width>\d+)w_original\..*$'
-)
-
-get_output_filename = lambda item_name, file_num, width, ext: \
-    '{}_{}_{}w.{}'.format(item_name, file_num, width, ext)
 
 def save_webp(image, drawable, path, filename):
     pdb.file_webp_save(
@@ -60,10 +54,20 @@ FORMAT_CUSTOM_SAVE_FUNC_MAP = {
     'png': save_png
 }
 
-def run(src_dir, dest_dir, formats, widths, overwrite, show_skipped):
+def run(
+        src_dir,
+        input_filename_regex,
+        dest_dir,
+        output_filename_template,
+        formats,
+        widths,
+        overwrite,
+        show_skipped
+    ):
     """Generate derivatives as required by derekenos.com-generator
     github.com/derekenos/derekenos.com-generator
     """
+    INPUT_FILENAME_REGEX = re.compile(input_filename_regex)
     for path in glob(os.path.join(src_dir, INPUT_FILENAME_GLOB)):
         filename = os.path.basename(path)
         match_d = INPUT_FILENAME_REGEX.match(filename).groupdict()
@@ -83,7 +87,12 @@ def run(src_dir, dest_dir, formats, widths, overwrite, show_skipped):
                 pdb.gimp_image_scale(image, width, height)
 
             for fmt in formats:
-                out_fn = get_output_filename(item_name, file_num, width, fmt)
+                out_fn = output_filename_template.format(
+                    item_name=item_name,
+                    file_num=file_num,
+                    width=width,
+                    extension=fmt
+                )
                 out_path = os.path.join(dest_dir, out_fn)
                 # Skip path if overwrite is False and file already exists.
                 if not overwrite and os.path.exists(out_path):
