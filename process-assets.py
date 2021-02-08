@@ -110,6 +110,10 @@ def generate_derivatives(input_path, context_file, output_path=None,
     widths = context['derivative_image_widths']
     input_filename_regex = context['normalized_image_filename_regex']
     output_filename_template = context['derivative_image_filename_template']
+    video_poster_filename_template = context[
+        'derivative_video_poster_filename_template'
+    ]
+
     # Execute the Gimp script.
     print_header('Generate image derivatives')
     res = exec_gimp_generate_derivatives(
@@ -133,8 +137,11 @@ def generate_derivatives(input_path, context_file, output_path=None,
     for ext in ('mp4',):
         print_header(f'Generate video poster images for type: {ext}')
         for path in glob(os.path.join(input_path, f'*.{ext}')):
-            base_filename = os.path.splitext(os.path.basename(path))[0]
-            final_path = f'{output_path}/{base_filename}_{ext}_poster.png'
+            poster_filename = video_poster_filename_template.format(
+                base_filename=os.path.splitext(os.path.basename(path))[0],
+                extension=ext
+            )
+            final_path = os.path.join(output_path, poster_filename)
             # Skip path if overwrite is False and file already exists.
             if not overwrite and os.path.exists(final_path):
                 if show_skipped:
@@ -147,7 +154,7 @@ def generate_derivatives(input_path, context_file, output_path=None,
                 )
 
             # Rename the output file to reflect the input.
-            os.rename(f'{output_path}/snap.png', final_path)
+            os.rename(os.path.join(output_path, 'snap.png'), final_path)
             print(f'Wrote: {final_path}')
 
 if __name__ == '__main__':
