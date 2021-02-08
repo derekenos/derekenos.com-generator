@@ -58,7 +58,7 @@ FORMAT_CUSTOM_SAVE_FUNC_MAP = {
     'png': save_png
 }
 
-def run(src_dir, dest_dir, formats, widths):
+def run(src_dir, dest_dir, formats, widths, overwrite, show_skipped):
     """Generate derivatives as required by derekenos.com-generator
     github.com/derekenos/derekenos.com-generator
     """
@@ -80,10 +80,16 @@ def run(src_dir, dest_dir, formats, widths):
 
             for fmt in formats:
                 out_fn = get_output_filename(base_name, width, fmt)
+                out_path = os.path.join(dest_dir, out_fn)
+                # Skip path if overwrite is False and file already exists.
+                if not overwrite and os.path.exists(out_path):
+                    if show_skipped:
+                        print('Skipping: {}'.format(out_path))
+                    continue
                 FORMAT_CUSTOM_SAVE_FUNC_MAP.get(fmt, pdb.gimp_file_save)(
                     image,
                     image.active_drawable,
-                    os.path.join(dest_dir, out_fn),
+                    out_path,
                     out_fn
                 )
                 print('Wrote: {}'.format(out_fn))
