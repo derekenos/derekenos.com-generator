@@ -8,11 +8,55 @@ from glob import glob
 import gimp
 from gimpfu import *
 
+QUALITY_FACTOR = 0.90
+LOSSY = QUALITY_FACTOR < 1
+
 INPUT_FILENAME_GLOB = '*_original.*'
 INPUT_FILENAME_REGEX = re.compile('^(?P<base_name>.*)_original\..*$')
 
 get_output_filename = lambda base_name, width, ext: \
     '{0}_{1}.{2}'.format(base_name, width, ext)
+
+def save_webp(image, drawable, path, filename):
+    pdb.file_webp_save(
+        image,
+        drawable,
+        path,
+        filename,
+        0, # preset=default
+        0 if LOSSY else 1, # lossless
+        100 * QUALITY_FACTOR, # quality,
+        100, # alpha quality
+        0, # use layers for animation
+        0, # loop indefinitely
+        0, # minimum animation size
+        0, # max distance between keyframes
+        1, # save exif data
+        1, # save iptc data (whatever that is)
+        1, # same xmp data (whatever that is)
+        0, # delay to use when timestamps not available
+        0, # force delay on all frames
+    )
+
+def save_png(image, drawable, path, filename):
+    pdb.file_png_save(
+        image,
+        drawable,
+        path,
+        filename,
+        0 if LOSSY else 1, # use adam7 interlacing
+        9 - int(9 * QUALITY_FACTOR), # deflate compression factor,
+        1, # write bKGD chunk
+        1, # write gAMA chunk
+        1, # write oFFs chunk
+        1, # write pHYs chunk
+        1, # write tIME chunk
+    )
+
+FORMAT_CUSTOM_SAVE_FUNC_MAP = {
+    'webp': save_webp,
+    'png': save_png
+}
 
 def run(src_dir, dest_dir, formats, widths):
     """Generate derivatives as required by derekenos.com-generator
@@ -36,7 +80,7 @@ def run(src_dir, dest_dir, formats, widths):
 
             for fmt in formats:
                 out_fn = get_output_filename(base_name, width, fmt)
-                pdb.gimp_file_save(
+                FORMAT_CUSTOM_SAVE_FUNC_MAP.get(fmt, pdb.gimp_file_save)(
                     image,
                     image.active_drawable,
                     os.path.join(dest_dir, out_fn),
