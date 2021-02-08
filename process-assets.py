@@ -8,11 +8,25 @@ from glob import glob
 def print_header(s):
     print(f'{"*" * 79}\n{s}\n{"*" * 79}')
 
-def normalize_filenames(input_path, base_filename):
-    pass
+def exec_gimp_normalize_item_image_filenames(input_path, template, item_name,
+                                             output_path):
+    """Given Execute the Gimp normalize_item_image_filenames script.
+    """
+    return subprocess.call((
+        'flatpak',
+        'run',
+        'org.gimp.GIMP',
+        '-idf',
+        '--batch-interpreter',
+        'python-fu-eval',
+        '-b',
+        f"import sys; sys.path = ['.'] + sys.path; import normalize_item_image_filenames; normalize_item_image_filenames.run('{input_path}', '{item_name}', '{template}', '{output_path}')",
+        '-b',
+        'pdb.gimp_quit(1)'
+    ))
 
-def exec_gimp(input_path, output_path, formats, widths, overwrite,
-              show_skipped):
+def exec_gimp_generate_derivatives(input_path, output_path, formats, widths,
+                                   overwrite, show_skipped):
     """Execute the Gimp generate_derivatives script.
     """
     return subprocess.call((
@@ -48,9 +62,34 @@ def exec_vlc(path, output_path):
         'vlc://quit'
     ))
 
+def normalize_item_image_filenames(input_path, context_file, item_name,
+                                   output_path):
+    # If an output path was not specified, write to {input_path}/normalized.
+    if output_path is None:
+        output_path = os.path.join(input_path, 'normalized')
+    # Create the output directory if necessary.
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
+
+    # Read the normalized filename format from the context file.
+    context = json.load(open(context_file, 'rb'))
+    template = context['normalized_image_filename_template']
+
+    print_header('Normalize item image filenames')
+    res = exec_gimp_normalize_item_image_filenames(
+        input_path,
+        template,
+        item_name,
+        output_path
+    )
+    if res != 0:
+        raise AssertionError(
+            'Gimp normalize_item_image_filenames exited with a non-zero code'
+        )
+
 def generate_derivatives(input_path, context_file, output_path=None,
                          overwrite=False, show_skipped=False):
-    # If output_path was not specified, write to
+    # If output_path was not specified, write to {input_path}/derivatives.
     if output_path is None:
         output_path = os.path.join(input_path, 'derivatives')
     # Create the output directory if necessary.
@@ -64,10 +103,12 @@ def generate_derivatives(input_path, context_file, output_path=None,
 
     # Execute the Gimp script.
     print_header('Generate image derivatives')
-    res = exec_gimp(input_path, output_path, formats, widths, overwrite,
-                    show_skipped)
+    res = exec_gimp_generate_derivatives(input_path, output_path, formats,
+                                         widths, overwrite, show_skipped)
     if res != 0:
-        raise AssertionError('Gimp exited with a non-zero code')
+        raise AssertionError(
+            'Gimp generate_derivatives exited with a non-zero code'
+        )
 
     # Use vlc to generate video poster images.
     # https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
@@ -94,22 +135,28 @@ def generate_derivatives(input_path, context_file, output_path=None,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--context-file', type=str, default='context.json')
     subparsers = parser.add_subparsers(dest='action', required=True)
 
-    norm_parser = subparsers.add_parser('normalize-filenames')
+    norm_parser = subparsers.add_parser('normalize-item-image-filenames')
     norm_parser.add_argument('input_path', type=str)
-    norm_parser.add_argument('new_base_filename', type=str)
+    norm_parser.add_argument('item_name', type=str)
+    norm_parser.add_argument('--output-path', type=str)
 
     gen_parser = subparsers.add_parser('generate-derivatives')
     gen_parser.add_argument('input_path', type=str)
-    gen_parser.add_argument('--output_path', type=str)
-    gen_parser.add_argument('--context-file', type=str, default='context.json')
+    gen_parser.add_argument('--output-path', type=str)
     gen_parser.add_argument('--overwrite', action='store_true')
     gen_parser.add_argument('--show-skipped', action='store_true')
     args = parser.parse_args()
 
-    if args.action == 'normalize-filenames':
-        normalize_filenames(args.input_path, args.new_base_filename)
+    if args.action == 'normalize-item-image-filenames':
+        normalize_item_image_filenames(
+            args.input_path,
+            args.context_file,
+            args.item_name,
+            args.output_path
+        )
     else:
         generate_derivatives(
             args.input_path,

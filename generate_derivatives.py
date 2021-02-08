@@ -12,10 +12,12 @@ QUALITY_FACTOR = 0.90
 LOSSY = QUALITY_FACTOR < 1
 
 INPUT_FILENAME_GLOB = '*_original.*'
-INPUT_FILENAME_REGEX = re.compile('^(?P<base_name>.*)_original\..*$')
+INPUT_FILENAME_REGEX = re.compile(
+    '^(?P<item_name>.*)_(?P<file_num>\d+)_(?P<width>\d+)w_original\..*$'
+)
 
-get_output_filename = lambda base_name, width, ext: \
-    '{0}_{1}.{2}'.format(base_name, width, ext)
+get_output_filename = lambda item_name, file_num, width, ext: \
+    '{}_{}_{}w.{}'.format(item_name, file_num, width, ext)
 
 def save_webp(image, drawable, path, filename):
     pdb.file_webp_save(
@@ -64,8 +66,10 @@ def run(src_dir, dest_dir, formats, widths, overwrite, show_skipped):
     """
     for path in glob(os.path.join(src_dir, INPUT_FILENAME_GLOB)):
         filename = os.path.basename(path)
-        match = INPUT_FILENAME_REGEX.match(filename)
-        base_name = match.group('base_name')
+        match_d = INPUT_FILENAME_REGEX.match(filename).groupdict()
+        item_name = match_d['item_name']
+        file_num = int(match_d['file_num'])
+        orig_width = int(match_d['width'])
         image = pdb.gimp_file_load(path, filename)
         # Iterate over widths in descending order.
         for width in sorted(widths, reverse=True):
@@ -79,7 +83,7 @@ def run(src_dir, dest_dir, formats, widths, overwrite, show_skipped):
                 pdb.gimp_image_scale(image, width, height)
 
             for fmt in formats:
-                out_fn = get_output_filename(base_name, width, fmt)
+                out_fn = get_output_filename(item_name, file_num, width, fmt)
                 out_path = os.path.join(dest_dir, out_fn)
                 # Skip path if overwrite is False and file already exists.
                 if not overwrite and os.path.exists(out_path):
