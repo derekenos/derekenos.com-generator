@@ -37,3 +37,20 @@ widths=`get_context_value "derivative_image_widths"`
 flatpak run org.gimp.GIMP -idf --batch-interpreter python-fu-eval \
      -b "import sys; sys.path = ['.'] + sys.path; import generate_derivatives; generate_derivatives.run('$in_dir', '$out_dir', $formats, $widths)" \
      -b "pdb.gimp_quit(1)"
+
+# Use vlc to generate video (currently only MP4) thumbnails.
+for ext in mp4; do
+    echo "Generating video thumbnail images for video type: $ext"
+    for f in `ls $in_dir/*.$ext`; do
+        # https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
+        vlc $f --rate=1 --video-filter=scene --vout=dummy --start-time=10 --stop-time=11 --scene-format=png --scene-ratio=240 --scene-prefix=snap --scene-path=$out_dir --scene-replace --quiet vlc://quit 2>/dev/null
+        if [ $? -ne 0 ]; then
+            echo "Could not generate poster image for video: $f"
+            exit 1
+        fi
+        # Rename the output file to reflect the input.
+        out_f="$out_dir/`basename $f .$ext`_"$ext"_poster.png"
+        mv $out_dir/snap.png $out_f
+        echo "Wrote: $out_f"
+    done
+done
