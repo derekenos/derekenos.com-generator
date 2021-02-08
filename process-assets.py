@@ -11,6 +11,43 @@ def print_header(s):
 def normalize_filenames(input_path, base_filename):
     pass
 
+def exec_gimp(input_path, output_path, formats, widths, overwrite,
+              show_skipped):
+    """Execute the Gimp generate_derivatives script.
+    """
+    return subprocess.call((
+        'flatpak',
+        'run',
+        'org.gimp.GIMP',
+        '-idf',
+        '--batch-interpreter',
+        'python-fu-eval',
+        '-b',
+        f"import sys; sys.path = ['.'] + sys.path; import generate_derivatives; generate_derivatives.run('{input_path}', '{output_path}', {formats}, {widths}, {overwrite}, {show_skipped})",
+        '-b',
+        'pdb.gimp_quit(1)'
+    ))
+
+def exec_vlc(path, output_path):
+    """Execute VLC to generate video poster images.
+    """
+    return subprocess.call((
+        'vlc',
+        path,
+        '--rate=1',
+        '--video-filter=scene',
+        '--vout=dummy',
+        '--start-time=0',
+        '--stop-time=1',
+        '--scene-format=png',
+        '--scene-ratio=240',
+        '--scene-prefix=snap',
+        f'--scene-path={output_path}',
+        '--scene-replace',
+        '--quiet',
+        'vlc://quit'
+    ))
+
 def generate_derivatives(input_path, context_file, output_path=None,
                          overwrite=False, show_skipped=False):
     # If output_path was not specified, write to
@@ -26,22 +63,17 @@ def generate_derivatives(input_path, context_file, output_path=None,
     widths = context['derivative_image_widths']
 
     # Execute the Gimp script.
-    print_header('Running Gimp to generate image derivatives')
-    ecode = subprocess.call([
-        'flatpak', 'run', 'org.gimp.GIMP', '-idf', '--batch-interpreter',
-        'python-fu-eval', '-b', f"import sys; sys.path = ['.'] + sys.path; import generate_derivatives; generate_derivatives.run('{input_path}', '{output_path}', {formats}, {widths}, {overwrite}, {show_skipped})", '-b',
-        'pdb.gimp_quit(1)'
-    ])
-    if ecode != 0:
+    print_header('Generate image derivatives')
+    res = exec_gimp(input_path, output_path, formats, widths, overwrite,
+                    show_skipped)
+    if res != 0:
         raise AssertionError('Gimp exited with a non-zero code')
 
     # Use vlc to generate video poster images.
     # https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
     # Only process MP4s for now.
     for ext in ('mp4',):
-        print_header(
-            f'Running VLC to generate video poster images for type: {ext}'
-        )
+        print_header(f'Generate video poster images for type: {ext}')
         for path in glob(os.path.join(input_path, f'*.{ext}')):
             base_filename = os.path.splitext(os.path.basename(path))[0]
             final_path = f'{output_path}/{base_filename}_{ext}_poster.png'
@@ -50,15 +82,8 @@ def generate_derivatives(input_path, context_file, output_path=None,
                 if show_skipped:
                     print(f'Skipping: {path}')
                 continue
-            ecode = subprocess.call((
-                'vlc', path, '--rate=1', '--video-filter=scene',
-                '--vout=dummy',
-                '--start-time=0', '--stop-time=1', '--scene-format=png',
-                '--scene-ratio=240', '--scene-prefix=snap',
-                f'--scene-path={output_path}', '--scene-replace', '--quiet',
-                'vlc://quit'
-            ))
-            if ecode != 0:
+            res = exec_vlc(path, output_path)
+            if res != 0:
                 raise AssertionError(
                     f'Could not generate poster image for video: {path}'
                 )
