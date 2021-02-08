@@ -9,7 +9,7 @@ fi
 
 # Derive the output directory.
 if [ -z "$2" ]; then
-    out_dir=$in_dir/thumbs
+    out_dir=$in_dir/derivatives
 else
     # Read the output dir and strip any trailing slash.
     out_dir=${2%/}
@@ -20,12 +20,17 @@ else
     fi
 fi
 
+# Create out_dir if it doesn't exist.
+if [ ! -d "$out_dir" ]; then
+    mkdir $out_dir
+fi
 
+# Define a helper function that prints the repr for a specified context field.
 get_context_value () {
     python3.9 -c "import json; context = json.load(open('context.json', 'r', encoding='utf-8')); print(context['$1'])"
 }
 
-
+# Read the output formats and widths arguments from context.json.
 formats=`get_context_value "prioritized_derivative_image_formats"`
 widths=`get_context_value "derivative_image_widths"`
 
