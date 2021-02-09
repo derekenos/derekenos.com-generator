@@ -20,7 +20,7 @@ def run(src_dir, output_file):
     and write it as JSON to the output_file.
     """
     filename_width_map = {}
-    for i, filename in enumerate(os.listdir(src_dir)):
+    for filename in os.listdir(src_dir):
         file_path = os.path.join(src_dir, filename)
         # Ignore directories.
         if os.path.isdir(file_path):

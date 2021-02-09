@@ -178,11 +178,14 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
     image_filename_width_map = get_image_widths(input_path)
 
     print_header('Normalizing item filenames')
-    for i, filename in enumerate(os.listdir(input_path), 1):
+    file_num = 0
+    for filename in os.listdir(input_path):
         file_path = os.path.join(input_path, filename)
         # Ignore directories.
         if os.path.isdir(file_path):
             continue
+        # Increment the file number.
+        file_num += 1
 
         # Use the appropriate template to generate the normalized filename.
         extension = os.path.splitext(filename)[1].lstrip('.')
@@ -190,14 +193,14 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
         if mime.startswith('image/'):
             normalized_filename = image_template.format(
                 item_name=item_name,
-                file_num=i,
+                file_num=file_num,
                 width=image_filename_width_map[filename],
                 extension=extension
             )
         elif mime.startswith('video/'):
             normalized_filename = video_template.format(
                 item_name=item_name,
-                file_num=i,
+                file_num=file_num,
                 extension=extension
             )
 
