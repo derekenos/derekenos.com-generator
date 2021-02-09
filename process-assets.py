@@ -6,9 +6,24 @@ import os
 import shutil
 import subprocess
 import tempfile
+from collections import defaultdict
 
 def print_header(s):
     print(f'{"*" * 79}\n{s}\n{"*" * 79}')
+
+def call_subprocess(args, **kwargs):
+    """A subprocess.call() helper that captures stderr and raises an
+    exception on non-zero exit.
+    """
+    stderr_fh = tempfile.TemporaryFile()
+    res = subprocess.call(
+        args,
+        stderr=stderr_fh,
+        **kwargs
+    )
+    if res != 0:
+        stderr_fh.seek(0)
+        raise AssertionError(f'Subprocess Error: {stderr_fh.read()}')
 
 def get_image_widths(input_path):
     """Execute Gimp to generate a filename -> width map.
@@ -27,15 +42,7 @@ def get_image_widths(input_path):
             '-b',
             'pdb.gimp_quit(1)'
         )
-        stderr_fh = tempfile.TemporaryFile()
-        res = subprocess.call(
-            args,
-            stdout=subprocess.DEVNULL,
-            stderr=stderr_fh
-        )
-        if res != 0:
-            stderr_fh.seek(0)
-            raise AssertionError(f'Gimp Error: {stderr_fh.read()}')
+        call_subprocess(args, stdout=subprocess.DEVNULL)
         fh.seek(0)
         filename_width_map = json.load(fh)
     return filename_width_map
@@ -52,7 +59,7 @@ def generate_image_derivatives(
     ):
     """Execute the Gimp generate_derivatives script.
     """
-    return subprocess.call((
+    call_subprocess((
         'flatpak',
         'run',
         'org.gimp.GIMP',
@@ -65,10 +72,10 @@ def generate_image_derivatives(
         'pdb.gimp_quit(1)'
     ))
 
-def exec_vlc(path, output_path):
-    """Execute VLC to generate video poster images.
+def generate_video_poster(path, output_path):
+    """Execute VLC to generate a video poster image.
     """
-    return subprocess.call((
+    call_subprocess((
         'vlc',
         path,
         '--rate=1',
@@ -85,7 +92,68 @@ def exec_vlc(path, output_path):
         'vlc://quit'
     ))
 
+def assert_no_unhandled_mime_types(input_path):
+    """Assert that input_path contains no unhandled files.
+    """
+    unhandled_mime_filenames_map = defaultdict(list)
+    for filename in os.listdir(input_path):
+        file_path = os.path.join(input_path, filename)
+        # Ignore directories.
+        if os.path.isdir(file_path):
+            continue
+        mime = mimetypes.guess_type(file_path)[0]
+        if mime is None or (
+                not mime.startswith('image/')
+                and not mime.startswith('video/')
+        ):
+            unhandled_mime_filenames_map[mime].append(filename)
+    if unhandled_mime_filenames_map:
+        raise AssertionError(
+            'Directory contains files of unknown or unhandled mime types: '
+            + str(dict(unhandled_mime_filenames_map))
+        )
+
+def generate_video_derivatives(
+        input_path,
+        poster_filename_template,
+        output_path,
+        overwrite,
+        show_skipped
+    ):
+    """Use vlc to generate video poster images.
+    https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
+    """
+    # Assert that we can handle all the files in input_path.
+    assert_no_unhandled_mime_types(input_path)
+
+    for filename in os.listdir(input_path):
+        file_path = os.path.join(input_path, filename)
+        # Ignore directories.
+        if os.path.isdir(file_path):
+            continue
+        # Ignore non-video files.
+        if not mimetypes.guess_type(file_path)[0].startswith('video/'):
+            continue
+
+        poster_filename = poster_filename_template.format(
+            base_filename=os.path.splitext(filename)[0]
+        )
+        final_path = os.path.join(output_path, poster_filename)
+        # Skip path if overwrite is False and file already exists.
+        if not overwrite and os.path.exists(final_path):
+            if show_skipped:
+                print(f'Skipping: {file_path}')
+            continue
+        generate_video_poster(file_path, output_path)
+
+        # Rename the output file to reflect the input.
+        os.rename(os.path.join(output_path, 'snap.png'), final_path)
+        print(f'Wrote: {final_path}')
+
 def normalize_item_filenames(input_path, context_file, item_name, output_path):
+    # Assert that we can handle all the files in input_path.
+    assert_no_unhandled_mime_types(input_path)
+
     # If an output path was not specified, write to {input_path}/normalized.
     if output_path is None:
         output_path = os.path.join(input_path, 'normalized')
@@ -109,17 +177,9 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
         if os.path.isdir(file_path):
             continue
 
-        # Get the mime type.
-        mime = mimetypes.guess_type(file_path)[0]
-        if mime is None:
-            raise AssertionError(
-                'Could not guess MIME type for filename: {}'.format(filename)
-            )
-
-        # Get the filename extension without the leading dot.
-        extension = os.path.splitext(filename)[1].lstrip('.')
-
         # Use the appropriate template to generate the normalized filename.
+        extension = os.path.splitext(filename)[1].lstrip('.')
+        mime = mimetypes.guess_type(file_path)[0]
         if mime.startswith('image/'):
             normalized_filename = image_template.format(
                 item_name=item_name,
@@ -133,8 +193,6 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
                 file_num=i,
                 extension=extension
             )
-        else:
-            raise NotImplemented(f'Unhandled mime type: {mime}')
 
         # Do the copy.
         new_path = os.path.join(output_path, normalized_filename)
@@ -160,9 +218,9 @@ def generate_derivatives(input_path, context_file, output_path=None,
         'derivative_video_poster_filename_template'
     ]
 
-    # Execute the Gimp script.
+    # Generate image derivatives.
     print_header('Generate image derivatives')
-    res = exec_gimp_generate_derivatives(
+    generate_image_derivatives(
         input_path,
         input_filename_regex,
         output_path,
@@ -172,46 +230,16 @@ def generate_derivatives(input_path, context_file, output_path=None,
         overwrite,
         show_skipped
     )
-    if res != 0:
-        raise AssertionError(
-            'Gimp generate_derivatives exited with a non-zero code'
-        )
 
-    # Use vlc to generate video poster images.
-    # https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
-    # Only process MP4s for now.
-    for filename in os.listdir(input_path):
-        file_path = os.path.join(input_path, filename)
-        # Ignore directories.
-        if os.path.isdir(file_path):
-            continue
-        # Ignore non-video files.
-        mime = mimetypes.guess_type(file_path)[0]
-        if mime is None:
-            raise AssertionError(
-                'Could not guess MIME type for filename: {}'.format(filename)
-            )
-        if not mime.startswith('video/'):
-            continue
-
-        poster_filename = video_poster_filename_template.format(
-            base_filename=os.path.splitext(filename)[0]
-        )
-        final_path = os.path.join(output_path, poster_filename)
-        # Skip path if overwrite is False and file already exists.
-        if not overwrite and os.path.exists(final_path):
-            if show_skipped:
-                print(f'Skipping: {file_path}')
-            continue
-        res = exec_vlc(file_path, output_path)
-        if res != 0:
-            raise AssertionError(
-                f'Could not generate poster image for video: {path}'
-            )
-
-        # Rename the output file to reflect the input.
-        os.rename(os.path.join(output_path, 'snap.png'), final_path)
-        print(f'Wrote: {final_path}')
+    # Generate video derivatives.
+    print_header('Generate video poster images')
+    generate_video_derivatives(
+        input_path,
+        video_poster_filename_template,
+        output_path,
+        overwrite,
+        show_skipped
+    )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

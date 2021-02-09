@@ -72,12 +72,7 @@ def run(
         if os.path.isdir(file_path):
             continue
         # Ignore non-image files.
-        mime = mimetypes.guess_type(filename)[0]
-        if mime is None:
-            raise AssertionError(
-                'Could not guess MIME type for filename: {}'.format(filename)
-            )
-        if not mime.startswith('image/'):
+        if not mimetypes.guess_type(filename)[0].startswith('image/'):
             continue
 
         # Parse the required fields from the filename.

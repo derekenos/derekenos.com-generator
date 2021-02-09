@@ -18,15 +18,8 @@ def run(src_dir, output_file):
         if os.path.isdir(file_path):
             continue
 
-        # Attempt to determine the mime type.
-        mime = mimetypes.guess_type(filename)[0]
-        # Raise an exception if detection failed.
-        if mime is None:
-            raise AssertionError(
-                'Could not guess MIME type for filename: {}'.format(filename)
-            )
         # Ignore non-image files.
-        if not mime.startswith('image/'):
+        if not mimetypes.guess_type(filename)[0].startswith('image/'):
             continue
 
         # Open the image and read the width.
