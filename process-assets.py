@@ -3,35 +3,44 @@ import argparse
 import json
 import mimetypes
 import os
+import shutil
 import subprocess
-from glob import glob
+import tempfile
 
 def print_header(s):
     print(f'{"*" * 79}\n{s}\n{"*" * 79}')
 
-def exec_gimp_normalize_item_filenames(
-        input_path,
-        image_template,
-        video_template,
-        item_name,
-        output_path
-    ):
-    """Given Execute the Gimp normalize_item_filenames script.
+def get_image_widths(input_path):
+    """Execute Gimp to generate a filename -> width map.
     """
-    return subprocess.call((
-        'flatpak',
-        'run',
-        'org.gimp.GIMP',
-        '-idf',
-        '--batch-interpreter',
-        'python-fu-eval',
-        '-b',
-        f"import sys; sys.path = ['.'] + sys.path; import gimp_normalize_item_filenames; gimp_normalize_item_filenames.run('{input_path}', '{item_name}', '{image_template}', '{video_template}', '{output_path}')",
-        '-b',
-        'pdb.gimp_quit(1)'
-    ))
+    # Create a named temporary file for the gimp script to write its result to.
+    with tempfile.NamedTemporaryFile() as fh:
+        args = (
+            'flatpak',
+            'run',
+            'org.gimp.GIMP',
+            '-idf',
+            '--batch-interpreter',
+            'python-fu-eval',
+            '-b',
+            f"import sys; sys.path = ['.'] + sys.path; import gimp_get_image_widths; gimp_get_image_widths.run('{input_path}', '{fh.name}')",
+            '-b',
+            'pdb.gimp_quit(1)'
+        )
+        stderr_fh = tempfile.TemporaryFile()
+        res = subprocess.call(
+            args,
+            stdout=subprocess.DEVNULL,
+            stderr=stderr_fh
+        )
+        if res != 0:
+            stderr_fh.seek(0)
+            raise AssertionError(f'Gimp Error: {stderr_fh.read()}')
+        fh.seek(0)
+        filename_width_map = json.load(fh)
+    return filename_width_map
 
-def exec_gimp_generate_derivatives(
+def generate_image_derivatives(
         input_path,
         input_filename_regex,
         output_path,
@@ -89,18 +98,48 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
     image_template = context['normalized_image_filename_template']
     video_template = context['normalized_video_filename_template']
 
-    print_header('Normalize item image filenames')
-    res = exec_gimp_normalize_item_filenames(
-        input_path,
-        image_template,
-        video_template,
-        item_name,
-        output_path
-    )
-    if res != 0:
-        raise AssertionError(
-            'Gimp normalize_item_filenames exited with a non-zero code'
-        )
+    # Get an image filename -> width map.
+    print_header('Reading image widths...')
+    image_filename_width_map = get_image_widths(input_path)
+
+    print_header('Normalizing item filenames')
+    for i, filename in enumerate(os.listdir(input_path), 1):
+        file_path = os.path.join(input_path, filename)
+        # Ignore directories.
+        if os.path.isdir(file_path):
+            continue
+
+        # Get the mime type.
+        mime = mimetypes.guess_type(file_path)[0]
+        if mime is None:
+            raise AssertionError(
+                'Could not guess MIME type for filename: {}'.format(filename)
+            )
+
+        # Get the filename extension without the leading dot.
+        extension = os.path.splitext(filename)[1].lstrip('.')
+
+        # Use the appropriate template to generate the normalized filename.
+        if mime.startswith('image/'):
+            normalized_filename = image_template.format(
+                item_name=item_name,
+                file_num=i,
+                width=image_filename_width_map[filename],
+                extension=extension
+            )
+        elif mime.startswith('video/'):
+            normalized_filename = video_template.format(
+                item_name=item_name,
+                file_num=i,
+                extension=extension
+            )
+        else:
+            raise NotImplemented(f'Unhandled mime type: {mime}')
+
+        # Do the copy.
+        new_path = os.path.join(output_path, normalized_filename)
+        shutil.copy(file_path, new_path)
+        print('Normalized {} to {}'.format(filename, normalized_filename))
 
 def generate_derivatives(input_path, context_file, output_path=None,
                          overwrite=False, show_skipped=False):
