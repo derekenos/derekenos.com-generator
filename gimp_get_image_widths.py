@@ -7,6 +7,14 @@ import os
 import gimp
 from gimpfu import pdb
 
+def guess_type(path):
+    """Define a mimetypes.guess_type() wrapper that also
+    handles webp.
+    """
+    if path.endswith('.webp'):
+        return ('image/webp', None)
+    return mimetypes.guess_type(path)
+
 def run(src_dir, output_file):
     """For all image files in src_dir, create a filename => width map
     and write it as JSON to the output_file.
@@ -19,7 +27,7 @@ def run(src_dir, output_file):
             continue
 
         # Ignore non-image files.
-        if not mimetypes.guess_type(filename)[0].startswith('image/'):
+        if not guess_type(filename)[0].startswith('image/'):
             continue
 
         # Open the image and read the width.

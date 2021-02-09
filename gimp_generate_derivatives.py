@@ -11,6 +11,14 @@ from gimpfu import *
 QUALITY_FACTOR = 0.90
 LOSSY = QUALITY_FACTOR < 1
 
+def guess_type(path):
+    """Define a mimetypes.guess_type() wrapper that also
+    handles webp.
+    """
+    if path.endswith('.webp'):
+        return ('image/webp', None)
+    return mimetypes.guess_type(path)
+
 def save_webp(image, drawable, path, filename):
     pdb.file_webp_save(
         image,
@@ -72,7 +80,7 @@ def run(
         if os.path.isdir(file_path):
             continue
         # Ignore non-image files.
-        if not mimetypes.guess_type(filename)[0].startswith('image/'):
+        if not guess_type(filename)[0].startswith('image/'):
             continue
 
         # Parse the required fields from the filename.

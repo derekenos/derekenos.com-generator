@@ -11,6 +11,14 @@ from collections import defaultdict
 def print_header(s):
     print(f'{"*" * 79}\n{s}\n{"*" * 79}')
 
+def guess_type(path):
+    """Define a mimetypes.guess_type() wrapper that also
+    handles webp.
+    """
+    if path.endswith('.webp'):
+        return ('image/webp', None)
+    return mimetypes.guess_type(path)
+
 def call_subprocess(args, **kwargs):
     """A subprocess.call() helper that captures stderr and raises an
     exception on non-zero exit.
@@ -103,11 +111,11 @@ def assert_no_unhandled_mime_types(input_path):
         # Ignore directories.
         if os.path.isdir(file_path):
             continue
-        mime = mimetypes.guess_type(file_path)[0]
+        mime = guess_type(file_path)[0]
         if mime is None or (
                 not mime.startswith('image/')
                 and not mime.startswith('video/')
-        ):
+            ):
             unhandled_mime_filenames_map[mime].append(filename)
     if unhandled_mime_filenames_map:
         raise AssertionError(
@@ -131,7 +139,7 @@ def generate_video_derivatives(
         if os.path.isdir(file_path):
             continue
         # Ignore non-video files.
-        if not mimetypes.guess_type(file_path)[0].startswith('video/'):
+        if not guess_type(file_path)[0].startswith('video/'):
             continue
 
         poster_filename = poster_filename_template.format(
@@ -178,7 +186,7 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
 
         # Use the appropriate template to generate the normalized filename.
         extension = os.path.splitext(filename)[1].lstrip('.')
-        mime = mimetypes.guess_type(file_path)[0]
+        mime = guess_type(file_path)[0]
         if mime.startswith('image/'):
             normalized_filename = image_template.format(
                 item_name=item_name,
