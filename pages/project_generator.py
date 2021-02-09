@@ -34,12 +34,28 @@ def get_meta_tags(context):
         OGMeta('description', project['short_description'])
     ))
     # Image
-    tags.append(
-        OGMeta(
-            'image',
-            context.static_url(f'{project["images"][0]["base_filename"]}.png')
+    # TODO - expect all project to have an image.
+    images = project.get('images')
+    if images:
+        image = images[0]
+        # Parse the image filename.
+        match_d = context.normalized_image_filename_regex.match(
+            image['filename']
+        ).groupdict()
+        # Generate a middle-of-the-road sized, lowest priority format
+        # derivative filename.
+        width = context.derivative_image_widths[
+            int(len(context.derivative_image_widths) / 2)
+        ]
+        format = context.prioritized_derivative_image_formats[-1]
+        filename = context.derivative_image_filename_template.format(
+            item_name=match_d['item_name'],
+            file_num=match_d['file_num'],
+            width=width,
+            extension=format
         )
-    )
+        tags.append(OGMeta('image', context.static_url(filename)))
+
     # Keywords
     if project['tags']:
         tags.append(StdMeta('keywords', ','.join(project['tags'])))

@@ -44,8 +44,11 @@ def Body(context,
          operating_system=None,
          videos=None,
     ):
-    image = images[0]
-    image_base_filename = image['base_filename']
+
+    # TODO - use the actual project image
+    #image = images[0]
+    image = images[0] if images else context.projects[3]['images'][0]
+
     # Inline includes.section to specify itemprops.
     els = [
         Section(children=(
@@ -63,11 +66,13 @@ def Body(context,
             *picture.Body(
                 context,
                 itemprop=md.Props.subjectOf,
-                srcsets=(context.static(fn:=f'{image_base_filename}.webp'),),
-                src=context.static(f'{image_base_filename}.png'),
+                srcsets=context.image_srcsets(image),
+                sizes='(min-width: 1024px) 90vw, 400px',
                 name=image['name'],
                 description=image['description'],
-                upload_date=context.static_last_modified_iso8601(fn)
+                upload_date=context.static_last_modified_iso8601(
+                    image['filename']
+                )
             )
         ))
     ]
@@ -194,7 +199,7 @@ def Body(context,
                         context,
                         itemprop=md.Props.subjectOf,
                         src=context.static(vid['filename']),
-                        poster=context.static(vid['thumb_filename']),
+                        poster=context.video_poster_url(vid),
                         name=vid['name'],
                         description=vid['description'],
                         upload_date=context.static_last_modified_iso8601(

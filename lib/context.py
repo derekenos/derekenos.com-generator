@@ -111,8 +111,10 @@ class Context:
                 path = f'{self.large_static_store["endpoint"]}/{filename}'
             else:
                 # Warn if the file exists both locally and in the lss manifest.
-                if self.lss and self.lss.exists(filename):
-                    print(f'Large, local file "{filename}" exists in the LSS.')
+                # TODO - this makes development super-slow with all of the new
+                #        auto-generated assets. Figure out what to do.
+                # if self.lss and self.lss.exists(filename):
+                #     print(f'Large, local file "{filename}" exists in the LSS.')
                 path = os.path.join(
                     self.SITE_RELATIVE_LARGE_STATIC_DIR,
                     filename
@@ -142,7 +144,7 @@ class Context:
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
         return open(path, 'w', encoding='utf-8')
 
-    def get_image_srcsets(self, image):
+    def image_srcsets(self, image):
         """For a given image object, return a list of prioritized srcset
         strings representing all available derivatives.
         """
@@ -163,13 +165,29 @@ class Context:
                     width=width,
                     extension=format
                 )
-                # If the derivative exists, add it to the srcset.
                 path = self.static(derivative_fn, False)
+                # Raise an exception if the derivative doesn't exists.
                 if path is not None:
                     srcset.append(f'{path} {width}w')
-            if srcset:
-                srcset_strs.append(', '.join(srcset))
+            # Raise an exception if no derivative images were found.
+            # Note that derivative at some widths may be missing
+            # on account of the original image being smaller than that
+            # width.
+            if not srcset:
+                raise AssertionError(
+                    f'No derivatives found for file: {image["filename"]}'
+                )
+            srcset_strs.append(', '.join(srcset))
         return srcset_strs
+
+    def video_poster_url(self, video):
+        """Return the poster URL for the specified video.
+        """
+        return self.static(
+            self.derivative_video_poster_filename_template.format(
+                base_filename=os.path.splitext(video['filename'])[0]
+            )
+        )
 
 ###############################################################################
 # Context Normalization Helpers
