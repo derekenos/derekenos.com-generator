@@ -1,17 +1,15 @@
 #! /usr/bin/env python
 
 import json
+import mimetypes
 import os
 import re
-from glob import glob
 
 import gimp
 from gimpfu import *
 
 QUALITY_FACTOR = 0.90
 LOSSY = QUALITY_FACTOR < 1
-
-INPUT_FILENAME_GLOB = '*_original.*'
 
 def save_webp(image, drawable, path, filename):
     pdb.file_webp_save(
@@ -68,13 +66,29 @@ def run(
     github.com/derekenos/derekenos.com-generator
     """
     INPUT_FILENAME_REGEX = re.compile(input_filename_regex)
-    for path in glob(os.path.join(src_dir, INPUT_FILENAME_GLOB)):
-        filename = os.path.basename(path)
+    for filename in os.listdir(src_dir):
+        file_path = os.path.join(src_dir, filename)
+        # Ignore directories.
+        if os.path.isdir(file_path):
+            continue
+        # Ignore non-image files.
+        mime = mimetypes.guess_type(filename)[0]
+        if mime is None:
+            raise AssertionError(
+                'Could not guess MIME type for filename: {}'.format(filename)
+            )
+        if not mime.startswith('image/'):
+            continue
+
+        # Parse the required fields from the filename.
         match_d = INPUT_FILENAME_REGEX.match(filename).groupdict()
         item_name = match_d['item_name']
         file_num = int(match_d['file_num'])
         orig_width = int(match_d['width'])
-        image = pdb.gimp_file_load(path, filename)
+
+        # Open the image.
+        image = pdb.gimp_file_load(file_path, filename)
+
         # Iterate over widths in descending order.
         for width in sorted(widths, reverse=True):
             if image.width < width:
