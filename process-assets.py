@@ -26,9 +26,10 @@ def call_subprocess(args, **kwargs):
         raise AssertionError(f'Subprocess Error: {stderr_fh.read()}')
 
 def get_image_widths(input_path):
-    """Execute Gimp to generate a filename -> width map.
+    """Return a filename -> width map for all image files in input_path.
     """
-    # Create a named temporary file for the gimp script to write its result to.
+    # Execute a Gimp script that collects image file widths and writes a
+    # JSON filename -> width map to a specified file.
     with tempfile.NamedTemporaryFile() as fh:
         args = (
             'flatpak',
@@ -43,6 +44,7 @@ def get_image_widths(input_path):
             'pdb.gimp_quit(1)'
         )
         call_subprocess(args, stdout=subprocess.DEVNULL)
+        # Load the written data from the file.
         fh.seek(0)
         filename_width_map = json.load(fh)
     return filename_width_map
@@ -123,9 +125,6 @@ def generate_video_derivatives(
     """Use vlc to generate video poster images.
     https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
     """
-    # Assert that we can handle all the files in input_path.
-    assert_no_unhandled_mime_types(input_path)
-
     for filename in os.listdir(input_path):
         file_path = os.path.join(input_path, filename)
         # Ignore directories.
@@ -199,8 +198,16 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
         shutil.copy(file_path, new_path)
         print('Normalized {} to {}'.format(filename, normalized_filename))
 
-def generate_derivatives(input_path, context_file, output_path=None,
-                         overwrite=False, show_skipped=False):
+def generate_derivatives(
+        input_path,
+        context_file,
+        output_path=None,
+        overwrite=False,
+        show_skipped=False
+    ):
+    # Assert that we can handle all the files in input_path.
+    assert_no_unhandled_mime_types(input_path)
+
     # If output_path was not specified, write to {input_path}/derivatives.
     if output_path is None:
         output_path = os.path.join(input_path, 'derivatives')
