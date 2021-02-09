@@ -1,6 +1,8 @@
 
 import os
+import re
 from datetime import datetime
+from itertools import count
 
 from lib import large_static_store
 from lib import microdata
@@ -48,6 +50,7 @@ class Context:
             for mod_name in os.listdir(self.PAGES_DIR)
             if mod_name.endswith('.py')
         ]
+
         # Initialize runtime attributes.
         self.current_page = None
         self.current_page_mod = None
@@ -84,16 +87,19 @@ class Context:
             return self.lss.meta(filename).last_modified.isoformat()
         self.raise_static_not_found(filename)
 
-    def static(self, filename):
-        """Format filename as a static asset path, assert that the file exists,
-        and return the path.
+    def static(self, filename, raise_on_not_found=True):
+        """Format filename as a static asset path, optionally assert that the
+        file exists, and return the path. If file does not exist and
+        raise_on_not_found=False, return None.
         """
         fs_path = f'{self.STATIC_DIR}/{filename}'
         # Check that file exists either locally or in the lss.
         if not os.path.isfile(fs_path):
             # If the file exist in the lss, return that URL.
             if not self.lss or not self.lss.exists(filename):
-                self.raise_static_not_found(fs_path)
+                if raise_on_not_found:
+                    self.raise_static_not_found(fs_path)
+                return None
             # File exists in lss.
             path = f'{self.large_static_store["endpoint"]}/{filename}'
         elif not self.is_large_static(filename):
@@ -135,6 +141,35 @@ class Context:
         """
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
         return open(path, 'w', encoding='utf-8')
+
+    def get_image_srcsets(self, image):
+        """For a given image object, return a list of prioritized srcset
+        strings representing all available derivatives.
+        """
+        # Parse the filename.
+        match_d = self.normalized_image_filename_regex.match(
+            image['filename']
+        ).groupdict()
+        item_name = match_d['item_name']
+        file_num = match_d['file_num']
+        srcset_strs = []
+        for format in self.prioritized_derivative_image_formats:
+            srcset = []
+            for width in self.derivative_image_widths:
+                # Generate the corresponding derivative filename.
+                derivative_fn = self.derivative_image_filename_template.format(
+                    item_name=item_name,
+                    file_num=file_num,
+                    width=width,
+                    extension=format
+                )
+                # If the derivative exists, add it to the srcset.
+                path = self.static(derivative_fn, False)
+                if path is not None:
+                    srcset.append(f'{path} {width}w')
+            if srcset:
+                srcset_strs.append(', '.join(srcset))
+        return srcset_strs
 
 ###############################################################################
 # Context Normalization Helpers
@@ -222,5 +257,10 @@ def normalize_context(context):
     if not all_tags:
         raise InvalidContext('context must define an all_tags array that '\
                              'comprises the superset of all referenced tags.')
+
+    # Compile regexes.
+    context.normalized_image_filename_regex = re.compile(
+        context.normalized_image_filename_regex
+    )
 
     normalize_projects(context.projects, all_tags)
