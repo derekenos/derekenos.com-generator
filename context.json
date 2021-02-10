@@ -254,7 +254,7 @@
         },
 
         {
-          "filename": "project-weather-station_13_4048px_original.jpg",
+          "filename": "project-weather-station_14_4048px_original.jpg",
           "name": "Weather Station",
           "description": "photo of a laser-cut wood weather station"
         },
@@ -269,12 +269,6 @@
           "filename": "project-weather-station_16_4048px_original.jpg",
           "name": "Weather Station",
           "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_17_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
         }
       ],
       "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.",
@@ -287,7 +281,7 @@
       ],
       "videos": [
         {
-          "filename": "project-weather-station_14_original.mp4",
+          "filename": "project-weather-station_13_original.mp4",
           "name": "Weather Station Introduction",
           "description": "The weather station powering up, spinning the busy indicator, and displaying the forecast."
         }
@@ -554,7 +548,7 @@
       ],
       "videos": [
         {
-          "filename": "project-weather-station_14_original.mp4",
+          "filename": "project-weather-station_13_original.mp4",
           "thumb_filename": "sketchy_video_poster.png",
           "name": "Sketchy Demonstration",
           "description": "An early demonstration of Sketchy writing its name."
@@ -581,7 +575,7 @@
       ],
       "videos": [
         {
-          "filename": "project-weather-station_14_original.mp4",
+          "filename": "project-weather-station_13_original.mp4",
           "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
           "name": "Babygate Video Game Demo",
           "description": "Demonstration of the Babygate video game played using the iome Dev Kit v1"
@@ -607,7 +601,7 @@
       ],
       "videos": [
         {
-          "filename": "project-weather-station_14_original.mp4",
+          "filename": "project-weather-station_13_original.mp4",
           "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
           "name": "iome Dev Kit v1 Demo",
           "description": "Demonstration of the iome Dev Kit v1"
@@ -676,7 +670,7 @@
       ],
       "videos": [
         {
-          "filename": "project-weather-station_14_original.mp4",
+          "filename": "project-weather-station_13_original.mp4",
           "thumb_filename": "delta_robot_poster.png",
           "name": "Delta Robot Demonstration",
           "description": "A laser-cut delta robot drawing a grid of dots."
