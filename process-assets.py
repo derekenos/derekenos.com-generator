@@ -268,7 +268,7 @@ def generate_derivatives(
 # Add to Project
 ###############################################################################
 
-def review_file(path, required_fields, viewer):
+def review_file(path, field_default_pairs, viewer):
     """Launch the appropriate viewer application so the user may see the file
     and prompt for the required metadata.
     """
@@ -283,8 +283,18 @@ def review_file(path, required_fields, viewer):
     # Prompt for the metadata.
     print('Add metadata for this file')
     metadata = {}
-    for field in required_fields:
-        metadata[field] = input(f'Enter {field}: ')
+    for field, default in field_default_pairs:
+        while True:
+            if default:
+                msg = f'Enter {field} (ENTER for "{default}"): '
+            else:
+                msg = f'Enter {field}: '
+            value = input(msg)
+            if value == '' and default is None:
+                continue
+            value = value if value else default
+            break
+        metadata[field] = value
 
     # If the viewer is still open, close it.
     if p.poll() is None:
@@ -300,7 +310,8 @@ def add_to_project(
         static_path,
         derivatives_path,
         image_viewer,
-        video_viewer
+        video_viewer,
+        accept_defaults
     ):
     """Add the assets in the specified directories to an existing project in
     the context file.
@@ -324,25 +335,33 @@ def add_to_project(
             f'Project "{project_name}" has existing defined images or videos'
         )
 
-    # Define the required metadata fields.
-    required_fields = ('name', 'description')
-
     # Start processing the normalized files.
     images = []
     videos = []
-    for filename in (os.listdir(normalized_path)[0],):
+    for filename in os.listdir(normalized_path):
         path = os.path.join(normalized_path, filename)
         mimetype = guess_mimetype(path)
         type = mimetype.split('/')[0]
+        type_name = 'picture' if type == 'image' else 'movie'
+
+        # Define the required metadata fields.
+        field_default_pairs = (
+            ('name', project_name),
+            ('description', f'A {type_name} of the {project_name}')
+        )
 
         item = { 'filename': filename }
-        item.update(
-            review_file(
-                path,
-                required_fields,
-                image_viewer if type == 'image' else video_viewer
+
+        if accept_defaults:
+            item.update(dict(field_default_pairs))
+        else:
+            item.update(
+                review_file(
+                    path,
+                    field_default_pairs,
+                    image_viewer if type == 'image' else video_viewer
+                )
             )
-        )
 
         (images if type == 'image' else videos).append(item)
 
@@ -409,6 +428,7 @@ if __name__ == '__main__':
     )
     add_to_project_parser.add_argument('--image-viewer', default='exo-open')
     add_to_project_parser.add_argument('--video-viewer', default='vlc')
+    add_to_project_parser.add_argument('--accept-defaults', action='store_true')
 
     args = parser.parse_args()
 
@@ -435,5 +455,6 @@ if __name__ == '__main__':
             args.static_path,
             args.derivatives_path,
             args.image_viewer,
-            args.video_viewer
+            args.video_viewer,
+            args.accept_defaults,
         )
