@@ -66,7 +66,7 @@ def Body(context,
             *picture.Body(
                 context,
                 itemprop=md.Props.subjectOf,
-                srcsets=image['srcsets'],
+                sources=image['sources'],
                 sizes='90vw',
                 name=image['name'],
                 description=image['description'],

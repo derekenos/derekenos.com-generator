@@ -47,7 +47,7 @@ def Body(context, name, slug, short_description, tags,
             children=picture.Body(
                 context,
                 itemprop=md.Props.subjectOf,
-                srcsets=image['srcsets'],
+                sources=image['sources'],
                 sizes='(min-width: 1024px) 20vw, 90vw',
                 name=image['name'],
                 description=image['description'],

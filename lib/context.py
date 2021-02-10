@@ -1,6 +1,7 @@
 
 import os
 import re
+from collections import namedtuple
 from datetime import datetime
 from itertools import count
 
@@ -8,6 +9,7 @@ from lib import (
     large_static_store,
     microdata,
     guess_extension,
+    guess_mimetype,
 )
 
 COLLATERAL_CREATIONS = 'collateral_creations'
@@ -134,12 +136,17 @@ class Context:
     def url(self, path):
         """Return path as an absolute URL.
         """
-        return f'{self.base_url if self.production else ""}/{path.lstrip("/")}'
+        return f'{self.base_url}/{path.lstrip("/")}'
 
     def static_url(self, filename):
         """Return an absolute URL for a static asset filename.
         """
-        return self.url(self.static(filename))
+        # Get the static path, which may be an absolute URL if environment is
+        # production and asset qualifies for large storage.
+        path = self.static(filename)
+        if path.startswith(('http://', 'https://')):
+            return path
+        return self.url(path)
 
     def open(self, path):
         """Return a writable UTF-8 file handle for a self.SITE_DIR sub-path.
@@ -168,25 +175,55 @@ def normalize_videos(context, videos):
 # Normalize Project Images
 ###############################################################################
 
-def add_srcsets(context, image):
-    """Add a srcsets property to the image object that comprises a list of
-    prioritized srcsets tuples representing all available derivatives and a
-    fallback in the format:
-    [
-      ( <mimetype>, [ (<path>, <width>), ... ] ),
-        ...,
-      ( <fallback-mimetype>, (<fallback-path>, <fallback-width>) )
-    ]
+ImageSource = namedtuple(
+    'ImageSource',
+    ('filename', 'mimetype', 'url', 'width')
+)
+
+def get_fallback_image_source(context, item_name, file_num):
+    """Return a fallback image source tuple for the specified item name and
+    # assset file number.
+    """
+    mimetype = context.prioritized_derivative_image_mimetypes[-1]
+    width = context.fallback_image_width
+    filename = context.derivative_image_filename_template.format(
+        item_name=item_name,
+        file_num=file_num,
+        width=width,
+        extension=guess_extension(mimetype)
+    )
+    url = context.static(filename)
+    return ImageSource(filename, mimetype, url, width)
+
+def add_sources(context, image):
+    """Extend the image dict with a 'sources' property that comprises the available
+    file sources as a dict in the format:
+    'sources': {
+      'original': <ImageSource>,
+      'derivatives': [ ( <mimetype>, [ <ImageSource>, ... ] ), ... ],
+      'fallback': <ImageSource>
+    }
     """
     # Parse the filename.
-    match_d = context.normalized_image_filename_regex.match(
-        image['filename']
-    ).groupdict()
-    item_name = match_d['item_name']
-    file_num = match_d['file_num']
-    srcsets = []
+    filename = image['filename']
+    match = context.normalized_image_filename_regex.match(filename)
+    item_name = match.group('item_name')
+    file_num = match.group('file_num')
+
+    sources = {
+        'original': ImageSource(
+            filename,
+            guess_mimetype(filename),
+            context.static(filename),
+            match.group('width'),
+        ),
+        'derivatives': [],
+        'fallback': get_fallback_image_source(context, item_name, file_num)
+    }
+
+    # Add the derivative sources.
     for mimetype in context.prioritized_derivative_image_mimetypes:
-        srcset = []
+        mimetype_derivative_sources = []
         # Iterate through widths in descending order.
         for width in sorted(context.derivative_image_widths, reverse=True):
             # Generate the corresponding derivative filename.
@@ -196,38 +233,28 @@ def add_srcsets(context, image):
                 width=width,
                 extension=guess_extension(mimetype)
             )
-            path = context.static(derivative_fn, False)
-            if path is not None:
-                srcset.append((path, width))
+            url = context.static(derivative_fn, False)
+            if url is not None:
+                mimetype_derivative_sources.append(
+                    ImageSource(derivative_fn, mimetype, url, width)
+                )
 
         # Raise an exception if no derivative images were found.
         # Note that derivative at some widths may be missing
         # on account of the original image being smaller than that
         # width.
-        if not srcset:
+        if not mimetype_derivative_sources:
             raise AssertionError(
-                f'No derivatives found for file: {image["filename"]}'
+                f'No derivatives of type {mimetype} found for file:'\
+                f'{image["filename"]}'
             )
-        srcsets.append((mimetype, srcset))
+        sources['derivatives'].append((mimetype, mimetype_derivative_sources))
 
-    # Generate the fallback and append it to srcsets.
-    fallback_mimetype = context.prioritized_derivative_image_mimetypes[-1]
-    fallback_fn = context.derivative_image_filename_template.format(
-        item_name=item_name,
-        file_num=file_num,
-        width=context.fallback_image_width,
-        extension=guess_extension(fallback_mimetype)
-    )
-    fallback_path = context.static(derivative_fn, False)
-    srcsets.append(
-        (fallback_mimetype, (fallback_path, context.fallback_image_width))
-    )
-
-    image['srcsets'] = srcsets
+    image['sources'] = sources
 
 def normalize_images(context, images):
     for image in images:
-        add_srcsets(context, image)
+        add_sources(context, image)
 
 ###############################################################################
 # Context Normalization Helpers
