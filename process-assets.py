@@ -7,7 +7,10 @@ import subprocess
 import tempfile
 from collections import defaultdict
 
-from lib import guess_mimetype
+from lib import (
+    guess_mimetype,
+    slugify,
+)
 
 ###############################################################################
 # Helper Functions
@@ -79,7 +82,7 @@ def get_image_widths(input_path):
         filename_width_map = json.load(fh)
     return filename_width_map
 
-def normalize_item_filenames(input_path, context_file, item_name, output_path):
+def normalize_item_filenames(context_file, input_path, item_name, output_path):
     # Assert that we can handle all the files in input_path.
     assert_no_unhandled_mimetypes(input_path)
 
@@ -129,7 +132,7 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
         # Do the copy.
         new_path = os.path.join(output_path, normalized_filename)
         shutil.copy(file_path, new_path)
-        print('Normalized {} to {}'.format(filename, normalized_filename))
+        print(f'Normalized {file_path} to {new_path}')
 
 ###############################################################################
 # Derivative Generation Functions
@@ -215,8 +218,8 @@ def generate_video_derivatives(
         print(f'Wrote: {final_path}')
 
 def generate_derivatives(
-        input_path,
         context_file,
+        input_path,
         output_path=None,
         overwrite=False,
         show_skipped=False
@@ -304,21 +307,17 @@ def review_file(path, field_default_pairs, viewer):
     return metadata
 
 def add_to_project(
-        project_name,
         context_file,
+        project_name,
         normalized_path,
-        static_path,
-        derivatives_path,
         image_viewer,
         video_viewer,
-        accept_defaults
+        accept_defaults,
+        overwrite
     ):
     """Add the assets in the specified directories to an existing project in
     the context file.
     """
-    if derivatives_path is None:
-        derivatives_path = os.path.join(normalized_path, 'derivatives')
-
     # Read the context file and get the project.
     context = json.load(open(context_file, 'rb'))
     projects = [x for x in context['projects'] if x['name'] == project_name]
@@ -326,11 +325,13 @@ def add_to_project(
     if num_matching_projects == 0:
         raise AssertionError(f'No project found for name: "{project_name}"')
     if num_matching_projects > 1:
-        raise AssertionError(f'Multiple projects found for name: "{project_name}"')
+        raise AssertionError(
+            f'Multiple projects found for name: "{project_name}"'
+        )
     project = projects[0]
 
     # Assert that the project doesn't define any images or videos.
-    if project.get('images') or project.get('videos'):
+    if not overwrite and (project.get('images') or project.get('videos')):
         raise AssertionError(
             f'Project "{project_name}" has existing defined images or videos'
         )
@@ -340,6 +341,9 @@ def add_to_project(
     videos = []
     for filename in os.listdir(normalized_path):
         path = os.path.join(normalized_path, filename)
+        # Ignore directories.
+        if os.path.isdir(path):
+            continue
         mimetype = guess_mimetype(path)
         type = mimetype.split('/')[0]
         type_name = 'picture' if type == 'image' else 'movie'
@@ -384,7 +388,57 @@ def add_to_project(
     print(f'Added {len(images)} images and {len(videos)} videos to '\
           f'"{project_name}"')
 
-    # TODO - copy the files into the static directory.
+###############################################################################
+# Auto
+###############################################################################
+
+def auto(
+        context_file,
+        assets_path,
+        project_name,
+        static_path,
+        image_viewer,
+        video_viewer,
+        accept_defaults,
+        overwrite
+    ):
+
+    # Normalize the asset filenames.
+    norm_dir = tempfile.mkdtemp()
+    item_name = slugify(project_name)
+    normalize_item_filenames(context_file, assets_path, item_name, norm_dir)
+
+    # Generate the derivatives.
+    deriv_dir = os.path.join(norm_dir, 'derivatives')
+    generate_derivatives(context_file, norm_dir, deriv_dir)
+
+    # Add to project.
+    add_to_project(
+        context_file,
+        project_name,
+        norm_dir,
+        image_viewer,
+        video_viewer,
+        accept_defaults,
+        overwrite
+    )
+
+    # Move the normalized and derivative files into the static dir.
+    num_norm = 0
+    for path in os.listdir(norm_dir):
+        shutil.move(os.path.join(norm_dir, path), static_path)
+        num_norm += 1
+    print(f'Moved {num_norm} files from {norm_dir} to {static_path}')
+
+    num_deriv = 0
+    for path in os.listdir(deriv_dir):
+        shutil.move(os.path.join(deriv_dir, path), static_path)
+        num_deriv += 1
+    print(f'Moved {num_deriv} files from {deriv_dir} to {static_path}')
+
+    # Remove the temp directories.
+    os.rmdir(norm_dir)
+    os.rmdir(deriv_dir)
 
 ###############################################################################
 # CLI
@@ -394,6 +448,19 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--context-file', type=str, default='context.json')
     subparsers = parser.add_subparsers(dest='action', required=True)
+
+    auto_parser = subparsers.add_parser('auto')
+    auto_parser.add_argument('assets_path', type=str)
+    auto_parser.add_argument('project_name', type=str)
+    auto_parser.add_argument('static_path', type=str)
+    auto_parser.add_argument('--image-viewer', default='exo-open')
+    auto_parser.add_argument('--video-viewer', default='vlc')
+    auto_parser.add_argument('--accept-defaults', action='store_true')
+    auto_parser.add_argument(
+        '--overwrite',
+        action='store_true',
+        help='Overwrite existing project images and videos defined in context'
+    )
 
     norm_parser = subparsers.add_parser('normalize-item-filenames')
     norm_parser.add_argument('input_path', type=str)
@@ -414,47 +481,55 @@ if __name__ == '__main__':
         help='The path to the directory containing the files generated by '\
         'normalize-item-filenames'
     )
-    add_to_project_parser.add_argument(
-        'static_path',
-        type=str,
-        help='The path to the directory containing your site\'s static assets'\
-        ', to which the normalized and derivative files will be moved'
-    )
-    add_to_project_parser.add_argument(
-        '--derivatives-path',
-        type=str,
-        help='The path to the directory containing the files generated by '\
-        'generate-derivatives'
-    )
     add_to_project_parser.add_argument('--image-viewer', default='exo-open')
     add_to_project_parser.add_argument('--video-viewer', default='vlc')
-    add_to_project_parser.add_argument('--accept-defaults', action='store_true')
+    add_to_project_parser.add_argument(
+        '--accept-defaults',
+        action='store_true'
+    )
+    add_to_project_parser.add_argument(
+        '--overwrite',
+        action='store_true',
+        help='Overwrite existing project images and videos defined in context'
+    )
+
+    add_to_project_parser = subparsers.add_parser('add-to-project')
 
     args = parser.parse_args()
 
-    if args.action == 'normalize-item-filenames':
-        normalize_item_filenames(
-            args.input_path,
+    if args.action == 'auto':
+        auto(
             args.context_file,
+            args.assets_path,
+            args.project_name,
+            args.static_path,
+            args.image_viewer,
+            args.video_viewer,
+            args.accept_defaults,
+            args.overwrite
+        )
+    elif args.action == 'normalize-item-filenames':
+        normalize_item_filenames(
+            args.context_file,
+            args.input_path,
             args.item_name,
             args.output_path
         )
     elif args.action == 'generate-derivatives':
         generate_derivatives(
-            args.input_path,
             args.context_file,
+            args.input_path,
             args.output_path,
             args.overwrite,
             args.show_skipped
         )
     else:
         add_to_project(
-            args.project_name,
             args.context_file,
+            args.project_name,
             args.normalized_path,
-            args.static_path,
-            args.derivatives_path,
             args.image_viewer,
             args.video_viewer,
             args.accept_defaults,
+            args.overwrite
         )
