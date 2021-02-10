@@ -1,5 +1,8 @@
 
-from lib import microdata as md
+from lib import (
+    guess_extension,
+    microdata as md,
+)
 from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
     NOEL,
@@ -37,22 +40,20 @@ def get_meta_tags(context):
     # TODO - expect all project to have an image.
     images = project.get('images')
     if images:
+        # Get the first image in the list.
         image = images[0]
-        # Parse the image filename.
+        # Parse the filename.
         match_d = context.normalized_image_filename_regex.match(
             image['filename']
         ).groupdict()
-        # Generate a middle-of-the-road sized, lowest priority format
-        # derivative filename.
-        width = context.derivative_image_widths[
-            int(len(context.derivative_image_widths) / 2)
-        ]
-        format = context.prioritized_derivative_image_formats[-1]
+        # Get the fallback (i.e. last) image mimetype.
+        mimetype = context.prioritized_derivative_image_mimetypes[-1]
+        # Generate the matching derivative filename.
         filename = context.derivative_image_filename_template.format(
             item_name=match_d['item_name'],
             file_num=match_d['file_num'],
-            width=width,
-            extension=format
+            width=context.fallback_image_width,
+            extension=guess_extension(mimetype)
         )
         tags.append(OGMeta('image', context.static_url(filename)))
 

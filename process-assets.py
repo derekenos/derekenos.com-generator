@@ -1,23 +1,16 @@
 
 import argparse
 import json
-import mimetypes
 import os
 import shutil
 import subprocess
 import tempfile
 from collections import defaultdict
 
+from lib import guess_mimetype
+
 def print_header(s):
     print(f'{"*" * 79}\n{s}\n{"*" * 79}')
-
-def guess_type(path):
-    """Define a mimetypes.guess_type() wrapper that also
-    handles webp.
-    """
-    if path.endswith('.webp'):
-        return ('image/webp', None)
-    return mimetypes.guess_type(path)
 
 def call_subprocess(args, **kwargs):
     """A subprocess.call() helper that captures stderr and raises an
@@ -62,7 +55,7 @@ def generate_image_derivatives(
         input_filename_regex,
         output_path,
         output_filename_template,
-        formats,
+        mimetypes,
         widths,
         overwrite,
         show_skipped
@@ -77,7 +70,7 @@ def generate_image_derivatives(
         '--batch-interpreter',
         'python-fu-eval',
         '-b',
-        f"import sys; sys.path = ['.'] + sys.path; import gimp_generate_derivatives; gimp_generate_derivatives.run('{input_path}', '{input_filename_regex}', '{output_path}', '{output_filename_template}', {formats}, {widths}, {overwrite}, {show_skipped})",
+        f"import sys; sys.path = ['.'] + sys.path; import gimp_generate_derivatives; gimp_generate_derivatives.run('{input_path}', '{input_filename_regex}', '{output_path}', '{output_filename_template}', {mimetypes}, {widths}, {overwrite}, {show_skipped})",
         '-b',
         'pdb.gimp_quit(1)'
     ))
@@ -102,25 +95,25 @@ def generate_video_poster(path, output_path):
         'vlc://quit'
     ))
 
-def assert_no_unhandled_mime_types(input_path):
+def assert_no_unhandled_mimetypes(input_path):
     """Assert that input_path contains no unhandled files.
     """
-    unhandled_mime_filenames_map = defaultdict(list)
+    unhandled_mimetype_filenames_map = defaultdict(list)
     for filename in os.listdir(input_path):
         file_path = os.path.join(input_path, filename)
         # Ignore directories.
         if os.path.isdir(file_path):
             continue
-        mime = guess_type(file_path)[0]
-        if mime is None or (
-                not mime.startswith('image/')
-                and not mime.startswith('video/')
+        mimetype = guess_mimetype(file_path)
+        if mimetype is None or (
+                not mimetype.startswith('image/')
+                and not mimetype.startswith('video/')
             ):
-            unhandled_mime_filenames_map[mime].append(filename)
-    if unhandled_mime_filenames_map:
+            unhandled_mimetype_filenames_map[mimetype].append(filename)
+    if unhandled_mimetype_filenames_map:
         raise AssertionError(
-            'Directory contains files of unknown or unhandled mime types: '
-            + str(dict(unhandled_mime_filenames_map))
+            'Directory contains files of unknown or unhandled mimetypes: '
+            + str(dict(unhandled_mimetype_filenames_map))
         )
 
 def generate_video_derivatives(
@@ -139,7 +132,7 @@ def generate_video_derivatives(
         if os.path.isdir(file_path):
             continue
         # Ignore non-video files.
-        if not guess_type(file_path)[0].startswith('video/'):
+        if not guess_mimetype(file_path).startswith('video/'):
             continue
 
         poster_filename = poster_filename_template.format(
@@ -159,7 +152,7 @@ def generate_video_derivatives(
 
 def normalize_item_filenames(input_path, context_file, item_name, output_path):
     # Assert that we can handle all the files in input_path.
-    assert_no_unhandled_mime_types(input_path)
+    assert_no_unhandled_mimetypes(input_path)
 
     # If an output path was not specified, write to {input_path}/normalized.
     if output_path is None:
@@ -188,16 +181,16 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
         file_num += 1
 
         # Use the appropriate template to generate the normalized filename.
-        extension = os.path.splitext(filename)[1].lstrip('.')
-        mime = guess_type(file_path)[0]
-        if mime.startswith('image/'):
+        extension = os.path.splitext(filename)[1]
+        mimetype = guess_mimetype(file_path)
+        if mimetype.startswith('image/'):
             normalized_filename = image_template.format(
                 item_name=item_name,
                 file_num=file_num,
                 width=image_filename_width_map[filename],
                 extension=extension
             )
-        elif mime.startswith('video/'):
+        elif mimetype.startswith('video/'):
             normalized_filename = video_template.format(
                 item_name=item_name,
                 file_num=file_num,
@@ -217,7 +210,7 @@ def generate_derivatives(
         show_skipped=False
     ):
     # Assert that we can handle all the files in input_path.
-    assert_no_unhandled_mime_types(input_path)
+    assert_no_unhandled_mimetypes(input_path)
 
     # If output_path was not specified, write to {input_path}/derivatives.
     if output_path is None:
@@ -226,9 +219,9 @@ def generate_derivatives(
     if not os.path.exists(output_path):
         os.mkdir(output_path)
 
-    # Read the configured formats and widths from context file.
+    # Read the configured mimetypes and widths from context file.
     context = json.load(open(context_file, 'rb'))
-    formats = context['prioritized_derivative_image_formats']
+    mimetypes = context['prioritized_derivative_image_mimetypes']
     widths = context['derivative_image_widths']
     input_filename_regex = context['normalized_image_filename_regex']
     output_filename_template = context['derivative_image_filename_template']
@@ -243,7 +236,7 @@ def generate_derivatives(
         input_filename_regex,
         output_path,
         output_filename_template,
-        formats,
+        mimetypes,
         widths,
         overwrite,
         show_skipped
@@ -275,6 +268,9 @@ if __name__ == '__main__':
     gen_parser.add_argument('--overwrite', action='store_true')
     gen_parser.add_argument('--show-skipped', action='store_true')
     args = parser.parse_args()
+
+    add_parser = subparsers.add_parser('add-to-project')
+    #???
 
     if args.action == 'normalize-item-filenames':
         normalize_item_filenames(

@@ -1,8 +1,6 @@
 """https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture
 """
 
-import mimetypes
-
 from lib import NotDefined
 from lib import microdata as md
 from lib.htmlephant import (
@@ -13,12 +11,8 @@ from lib.htmlephant import (
     Span,
 )
 
-def get_srcset_mimetype(srcset):
-    first_src = srcset.split(',')[0].split(' ')[0]
-    # Hack in support for webp.
-    if first_src.endswith('.webp'):
-        return 'image/webp'
-    return mimetypes.guess_type(first_src)[0]
+srcset_to_srcset_str = lambda srcset: \
+    ', '.join(f'{path} {width}w' for path, width in srcset)
 
 Head = NotDefined
 
@@ -31,34 +25,30 @@ def Body(
         upload_date,
         itemprop=None
     ):
-    # Use the first item in the last srcset as the fallback image.
-    src = srcsets[-1].split(',')[0].split(' ')[0]
+    fallback_mimetype, (fallback_url, fallback_width) = srcsets[-1]
     return (
         Span(
             itemprop=itemprop,
             itemscope='',
             itemtype=md.Types.ImageObject,
             children=(
-                MDMeta(md.Props.contentUrl, src),
-                MDMeta(md.Props.thumbnailUrl, src),
+                MDMeta(md.Props.contentUrl, fallback_url),
+                MDMeta(md.Props.thumbnailUrl, fallback_url),
                 MDMeta(md.Props.name, name),
                 MDMeta(md.Props.description, description),
-                MDMeta(
-                    md.Props.encodingFormat,
-                    mimetypes.guess_type(src)[0]
-                ),
+                MDMeta(md.Props.encodingFormat, fallback_mimetype),
                 MDMeta(md.Props.uploadDate, upload_date),
                 Picture(
                     children=(
                         *[
                             PictureSource(
-                                srcset=srcset,
+                                srcset=srcset_to_srcset_str(srcset),
                                 sizes=sizes,
-                                type=get_srcset_mimetype(srcset)
+                                type=mimetype
                             )
-                            for srcset in srcsets
+                            for mimetype, srcset in srcsets[:-1]
                         ],
-                        Img(src=src, alt=description),
+                        Img(src=fallback_url, alt=description),
                     )
                 )
             )

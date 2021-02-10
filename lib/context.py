@@ -4,8 +4,11 @@ import re
 from datetime import datetime
 from itertools import count
 
-from lib import large_static_store
-from lib import microdata
+from lib import (
+    large_static_store,
+    microdata,
+    guess_extension,
+)
 
 COLLATERAL_CREATIONS = 'collateral_creations'
 DEPENDS_ON = 'depends_on'
@@ -144,56 +147,93 @@ class Context:
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
         return open(path, 'w', encoding='utf-8')
 
-    def image_srcsets(self, image):
-        """For a given image object, return a list of prioritized srcset
-        strings representing all available derivatives.
-        """
-        # Parse the filename.
-        match_d = self.normalized_image_filename_regex.match(
-            image['filename']
-        ).groupdict()
-        item_name = match_d['item_name']
-        file_num = match_d['file_num']
-        srcset_strs = []
-        for format in self.prioritized_derivative_image_formats:
-            srcset = []
-            for width in self.derivative_image_widths:
-                # Generate the corresponding derivative filename.
-                derivative_fn = self.derivative_image_filename_template.format(
-                    item_name=item_name,
-                    file_num=file_num,
-                    width=width,
-                    extension=format
-                )
-                path = self.static(derivative_fn, False)
-                # Raise an exception if the derivative doesn't exists.
-                if path is not None:
-                    srcset.append(f'{path} {width}w')
-            # Raise an exception if no derivative images were found.
-            # Note that derivative at some widths may be missing
-            # on account of the original image being smaller than that
-            # width.
-            if not srcset:
-                raise AssertionError(
-                    f'No derivatives found for file: {image["filename"]}'
-                )
-            srcset_strs.append(', '.join(srcset))
-        return srcset_strs
+###############################################################################
+# Normalize Project Videos
+###############################################################################
 
-    def video_poster_url(self, video):
-        """Return the poster URL for the specified video.
-        """
-        return self.static(
-            self.derivative_video_poster_filename_template.format(
-                base_filename=os.path.splitext(video['filename'])[0]
-            )
+def add_poster_url(context, video):
+    """Add a poster URL property to the video object.
+    """
+    video['poster_url'] = context.static(
+        context.derivative_video_poster_filename_template.format(
+            base_filename=os.path.splitext(video['filename'])[0]
         )
+    )
+
+def normalize_videos(context, videos):
+    for video in videos:
+        add_poster_url(context, video)
+
+###############################################################################
+# Normalize Project Images
+###############################################################################
+
+def add_srcsets(context, image):
+    """Add a srcsets property to the image object that comprises a list of
+    prioritized srcsets tuples representing all available derivatives and a
+    fallback in the format:
+    [
+      ( <mimetype>, [ (<path>, <width>), ... ] ),
+        ...,
+      ( <fallback-mimetype>, (<fallback-path>, <fallback-width>) )
+    ]
+    """
+    # Parse the filename.
+    match_d = context.normalized_image_filename_regex.match(
+        image['filename']
+    ).groupdict()
+    item_name = match_d['item_name']
+    file_num = match_d['file_num']
+    srcsets = []
+    for mimetype in context.prioritized_derivative_image_mimetypes:
+        srcset = []
+        # Iterate through widths in descending order.
+        for width in sorted(context.derivative_image_widths, reverse=True):
+            # Generate the corresponding derivative filename.
+            derivative_fn = context.derivative_image_filename_template.format(
+                item_name=item_name,
+                file_num=file_num,
+                width=width,
+                extension=guess_extension(mimetype)
+            )
+            path = context.static(derivative_fn, False)
+            if path is not None:
+                srcset.append((path, width))
+
+        # Raise an exception if no derivative images were found.
+        # Note that derivative at some widths may be missing
+        # on account of the original image being smaller than that
+        # width.
+        if not srcset:
+            raise AssertionError(
+                f'No derivatives found for file: {image["filename"]}'
+            )
+        srcsets.append((mimetype, srcset))
+
+    # Generate the fallback and append it to srcsets.
+    fallback_mimetype = context.prioritized_derivative_image_mimetypes[-1]
+    fallback_fn = context.derivative_image_filename_template.format(
+        item_name=item_name,
+        file_num=file_num,
+        width=context.fallback_image_width,
+        extension=guess_extension(fallback_mimetype)
+    )
+    fallback_path = context.static(derivative_fn, False)
+    srcsets.append(
+        (fallback_mimetype, (fallback_path, context.fallback_image_width))
+    )
+
+    image['srcsets'] = srcsets
+
+def normalize_images(context, images):
+    for image in images:
+        add_srcsets(context, image)
 
 ###############################################################################
 # Context Normalization Helpers
 ###############################################################################
 
-def normalize_projects(projects, all_tags):
+def normalize_projects(context, projects, all_tags):
     """Do an in-place normalization of the projects dict.
     """
     # Create a <project-name> -> <project-copy> map.
@@ -213,6 +253,16 @@ def normalize_projects(projects, all_tags):
     for name, project in name_project_map.items():
         # Collect any invalid tags.
         invalid_d['tags'].update(set(project['tags']).difference(all_tags))
+
+        # Normalize images.
+        images = project.get('images')
+        if images:
+            normalize_images(context, images)
+
+        # Normalize videos.
+        videos = project.get('videos')
+        if videos:
+            normalize_videos(context, videos)
 
         # Expand project type name to full schema.org URL or collect it as
         # invalid.
@@ -281,4 +331,4 @@ def normalize_context(context):
         context.normalized_image_filename_regex
     )
 
-    normalize_projects(context.projects, all_tags)
+    normalize_projects(context, context.projects, all_tags)

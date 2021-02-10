@@ -268,7 +268,7 @@ ol.links > li > a {
   }
 
   .item {
-    max-width: 400px;
+    width: 20vw;
   }
 
   .item.wide {

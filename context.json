@@ -69,15 +69,15 @@
 
   "google_analytics_id": "UA-19335494-1",
 
-  "normalized_image_filename_template": "{item_name}_{file_num}_{width}px_original.{extension}",
-  "normalized_video_filename_template": "{item_name}_{file_num}_original.{extension}",
-  "normalized_image_filename_regex": "^(?P<item_name>.*)_(?P<file_num>\\d+)_(?P<width>\\d+)px_original\\.(?P<extension>.+)$",
-  "derivative_image_filename_template": "{item_name}_{file_num}_{width}px.{extension}",
+  "normalized_image_filename_template": "{item_name}_{file_num}_{width}px_original{extension}",
+  "normalized_video_filename_template": "{item_name}_{file_num}_original{extension}",
+  "normalized_image_filename_regex": "^(?P<item_name>.*)_(?P<file_num>\\d+)_(?P<width>\\d+)px_original(?P<extension>.+)$",
+  "derivative_image_filename_template": "{item_name}_{file_num}_{width}px{extension}",
   "derivative_video_poster_filename_template": "{base_filename}_poster.png",
 
-  "prioritized_derivative_image_formats": [
-    "webp",
-    "png"
+  "prioritized_derivative_image_mimetypes": [
+    "image/webp",
+    "image/png"
   ],
 
   "derivative_image_widths": [
@@ -89,6 +89,8 @@
     300,
     100
   ],
+
+  "fallback_image_width": 750,
 
   "navbar_page_name_label_pairs": [
     ["index", "home"],
@@ -113,7 +115,7 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "base_filename": "derekenos_com_generator_thumb",
+          "filename": "project-static-site-generator_1_1146px_original.png",
           "name": "Screenshot of derekenos.com-generator Source Code",
           "description": "screenshot of derekenos.com-generator source code"
         }
@@ -135,11 +137,6 @@
       ],
       "type": "SoftwareSourceCode",
       "images": [
-        {
-          "base_filename": "htmlephant_thumb",
-          "name": "Screenshot of HTMLephant Source Code",
-          "description": "screenshot of HTMLephant source code"
-        }
       ],
       "github_url": "https://github.com/derekenos/htmlephant",
       "dependent_of": [
@@ -163,11 +160,6 @@
       ],
       "type": "SoftwareSourceCode",
       "images": [
-        {
-          "base_filename": "femtoweb_thumb",
-          "name": "Screenshot of femtoweb Source Code",
-          "description": "screenshot of femtoweb source code"
-        }
       ],
       "github_url": "https://github.com/derekenos/femtoweb",
       "dependent_of": [
@@ -194,8 +186,93 @@
       ],
       "type": "CreativeWork",
       "images": [
+
         {
-          "base_filename": "weather_station_thumb",
+          "filename": "project-weather-station_1_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_2_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_3_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_4_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_5_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_6_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_7_3036px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_8_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_10_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_11_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_12_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_13_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_15_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_16_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "photo of a laser-cut wood weather station"
+        },
+
+        {
+          "filename": "project-weather-station_17_4048px_original.jpg",
           "name": "Weather Station",
           "description": "photo of a laser-cut wood weather station"
         }
@@ -210,8 +287,7 @@
       ],
       "videos": [
         {
-          "filename": "weather_station.mp4",
-          "thumb_filename": "weather_station_mp4_thumb.png",
+          "filename": "project-weather-station_14_original.mp4",
           "name": "Weather Station Introduction",
           "description": "The weather station powering up, spinning the busy indicator, and displaying the forecast."
         }
@@ -236,11 +312,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "laser_cut_servo_powered_gauge_4",
-          "name": "Indicator Gauge",
-          "description": "photo of laser-cut, servo-powered gauge"
-        }
       ],
       "description": "I designed this gauge as part of the Weather Station project.",
       "external_link_prop_name_url_tuples": [
@@ -269,11 +340,6 @@
       ],
       "type": "SoftwareSourceCode",
       "images": [
-        {
-          "base_filename": "json_parser_thumb",
-          "name": "JSON Parser",
-          "description": "screenshot of json-parser library source code"
-        }
       ],
       "description": "",
       "dependent_of": [
@@ -294,11 +360,6 @@
       ],
       "type": "SoftwareSourceCode",
       "images": [
-        {
-          "base_filename": "strptime_thumb",
-          "name": "time.strptime()",
-          "description": "screenshot of time.strptime() library source code"
-        }
       ],
       "description": "",
       "dependent_of": [
@@ -319,11 +380,6 @@
       ],
       "type": "SoftwareSourceCode",
       "images": [
-        {
-          "base_filename": "utf8_decoder_thumb",
-          "name": "UTF-8 Decoder",
-          "description": "screenshot of UTF-8 decoder library source code"
-        }
       ],
       "description": "",
       "dependent_of": [
@@ -346,11 +402,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "cardboard_boxcade_thumb",
-          "name": "Cardboard Boxcade",
-          "description": "photo of a cardboard box with a screen and switches"
-        }
       ],
       "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
       "external_link_prop_name_url_tuples": [
@@ -379,11 +430,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "trtl_thumb",
-          "name": "Trtl Drawing Robot",
-          "description": "photo of the T.r.t.l. drawing robot"
-        }
       ]
     },
 
@@ -411,11 +457,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "weezel_thumb",
-          "name": "Weezel Drawing Robot",
-          "description": "photo of the Weezel drawing robot"
-        }
       ]
     },
 
@@ -440,11 +481,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "arcade_cabinet_thumb",
-          "name": "Modular Arcade Cabinet",
-          "description": "lasercut arcade cabinet scale model photo"
-        }
       ]
     },
 
@@ -463,11 +499,6 @@
       ],
       "type": "SoftwareSourceCode",
       "images": [
-        {
-          "base_filename": "gritty-viddy",
-          "name": "Gritty Viddy Browser-based Video Effects",
-          "description": "gritty viddy video effects app screenshot"
-        }
       ],
       "github_url": "https://github.com/derekenos/gritty-viddy"
     },
@@ -488,11 +519,6 @@
       "category": "UI & Design",
       "operating_system": "Web Browser",
       "images": [
-        {
-          "base_filename": "important-message",
-          "name": "Important Message Cloudflare App",
-          "description": "Important Message app banner image"
-        }
       ],
       "external_link_prop_name_url_tuples": [
         [
@@ -525,15 +551,10 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "sketchy_thumb",
-          "name": "Sketchy, A Robotic Etch-A-Sketch",
-          "description": "photo of motorized Etch-A-Sketch"
-        }
       ],
       "videos": [
         {
-          "filename": "sketchy.mp4",
+          "filename": "project-weather-station_14_original.mp4",
           "thumb_filename": "sketchy_video_poster.png",
           "name": "Sketchy Demonstration",
           "description": "An early demonstration of Sketchy writing its name."
@@ -557,15 +578,10 @@
       "category": "Games",
       "operating_system": "Web Browser",
       "images": [
-        {
-          "base_filename": "babygate_thumb",
-          "name": "Babygate Video Game",
-          "description": "screenshot of Babygate video game"
-        }
       ],
       "videos": [
         {
-          "filename": "iome_dev_kit_v1.mp4",
+          "filename": "project-weather-station_14_original.mp4",
           "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
           "name": "Babygate Video Game Demo",
           "description": "Demonstration of the Babygate video game played using the iome Dev Kit v1"
@@ -588,15 +604,10 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "game_console_20191008_thumb",
-          "name": "iome, A platform for physical web application development",
-          "description": "lasercut iome dev kit photo"
-        }
       ],
       "videos": [
         {
-          "filename": "iome_dev_kit_v1.mp4",
+          "filename": "project-weather-station_14_original.mp4",
           "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
           "name": "iome Dev Kit v1 Demo",
           "description": "Demonstration of the iome Dev Kit v1"
@@ -624,11 +635,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "lasercut_keypad_thumb",
-          "name": "Laser-cut Keypad",
-          "description": "photo of laser-cut wooden keypad"
-        }
       ]
     },
 
@@ -648,11 +654,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "platformer_thumb",
-          "name": "Physical Platformer Game Prototype",
-          "description": "photo of motorized x/y axis made from laser-cut wood"
-        }
       ]
     },
 
@@ -672,15 +673,10 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "delta_robot_thumb",
-          "name": "Laser-cut Delta Robot",
-          "description": "photo of delta robot made from laser-cut wood"
-        }
       ],
       "videos": [
         {
-          "filename": "delta_robot.mp4",
+          "filename": "project-weather-station_14_original.mp4",
           "thumb_filename": "delta_robot_poster.png",
           "name": "Delta Robot Demonstration",
           "description": "A laser-cut delta robot drawing a grid of dots."
@@ -712,11 +708,6 @@
       "category": "Music Composition",
       "operating_system": "Web Browser",
       "images": [
-        {
-          "base_filename": "composer",
-          "name": "Composer, A Web-based Audio Composition Toy",
-          "description": "sound composer web app screenshot"
-        }
       ]
     },
 
@@ -735,11 +726,6 @@
       "operating_system": "Web Browser",
       "live_url": "/static/projects/sim/",
       "images": [
-        {
-          "base_filename": "ionModelScreenThumb",
-          "name": "Web-based Ion Model Simulator",
-          "description": "ion model application screenshot"
-        }
       ]
     },
 
@@ -761,11 +747,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "demidulator_thumb",
-          "name": "deMIDulator 8-bit MIDI sampler / synth",
-          "description": "photo of the deMIDulator 8-bit synth"
-        }
       ]
     },
 
@@ -782,11 +763,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "beginners_box_thumb",
-          "name": "Beginner's Box",
-          "description": "photo of laser-cut force-sensitive tone generator boxes"
-        }
       ]
     },
 
@@ -801,11 +777,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "video_feedback_thumb",
-          "name": "Video Feedback Instrument",
-          "description": "video screenshot of video feedback instrument"
-        }
       ]
     },
 
@@ -821,11 +792,6 @@
       ],
       "type": "CreativeWork",
       "images": [
-        {
-          "base_filename": "physical_interface_thumb",
-          "name": "Physical Interface Prototype",
-          "description": "photo of laser-cut physical interface prototype"
-        }
       ]
     }
   ]

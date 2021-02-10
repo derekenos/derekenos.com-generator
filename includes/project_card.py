@@ -47,8 +47,8 @@ def Body(context, name, slug, short_description, tags,
             children=picture.Body(
                 context,
                 itemprop=md.Props.subjectOf,
-                srcsets=context.image_srcsets(image),
-                sizes='(min-width: 1024px) 400px, 90vw',
+                srcsets=image['srcsets'],
+                sizes='(min-width: 1024px) 20vw, 90vw',
                 name=image['name'],
                 description=image['description'],
                 upload_date=context.static_last_modified_iso8601(

@@ -1,8 +1,9 @@
 
-import mimetypes
-
-from lib import NotDefined
-from lib import microdata as md
+from lib import (
+    NotDefined,
+    guess_mimetype,
+    microdata as md,
+)
 
 from lib.htmlephant import (
     MDMeta,
@@ -27,7 +28,7 @@ Body = lambda context, src, poster, name, description, upload_date, \
             MDMeta(md.Props.description, description),
             MDMeta(
                 md.Props.encodingFormat,
-                type:=type or mimetypes.guess_type(src)[0]
+                type:=type or guess_mimetype(src)
             ),
             MDMeta(md.Props.uploadDate, upload_date),
         ),
