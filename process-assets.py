@@ -9,6 +9,10 @@ from collections import defaultdict
 
 from lib import guess_mimetype
 
+###############################################################################
+# Helper Functions
+###############################################################################
+
 def print_header(s):
     print(f'{"*" * 79}\n{s}\n{"*" * 79}')
 
@@ -25,6 +29,31 @@ def call_subprocess(args, **kwargs):
     if res != 0:
         stderr_fh.seek(0)
         raise AssertionError(f'Subprocess Error: {stderr_fh.read()}')
+
+def assert_no_unhandled_mimetypes(input_path):
+    """Assert that input_path contains no unhandled files.
+    """
+    unhandled_mimetype_filenames_map = defaultdict(list)
+    for filename in os.listdir(input_path):
+        file_path = os.path.join(input_path, filename)
+        # Ignore directories.
+        if os.path.isdir(file_path):
+            continue
+        mimetype = guess_mimetype(file_path)
+        if mimetype is None or (
+                not mimetype.startswith('image/')
+                and not mimetype.startswith('video/')
+            ):
+            unhandled_mimetype_filenames_map[mimetype].append(filename)
+    if unhandled_mimetype_filenames_map:
+        raise AssertionError(
+            'Directory contains files of unknown or unhandled mimetypes: '
+            + str(dict(unhandled_mimetype_filenames_map))
+        )
+
+###############################################################################
+# Item Filename Normalization Functions
+###############################################################################
 
 def get_image_widths(input_path):
     """Return a filename -> width map for all image files in input_path.
@@ -49,106 +78,6 @@ def get_image_widths(input_path):
         fh.seek(0)
         filename_width_map = json.load(fh)
     return filename_width_map
-
-def generate_image_derivatives(
-        input_path,
-        input_filename_regex,
-        output_path,
-        output_filename_template,
-        mimetypes,
-        widths,
-        overwrite,
-        show_skipped
-    ):
-    """Execute the Gimp generate_derivatives script.
-    """
-    call_subprocess((
-        'flatpak',
-        'run',
-        'org.gimp.GIMP',
-        '-idf',
-        '--batch-interpreter',
-        'python-fu-eval',
-        '-b',
-        f"import sys; sys.path = ['.'] + sys.path; import gimp_generate_derivatives; gimp_generate_derivatives.run('{input_path}', '{input_filename_regex}', '{output_path}', '{output_filename_template}', {mimetypes}, {widths}, {overwrite}, {show_skipped})",
-        '-b',
-        'pdb.gimp_quit(1)'
-    ))
-
-def generate_video_poster(path, output_path):
-    """Execute VLC to generate a video poster image.
-    """
-    call_subprocess((
-        'vlc',
-        path,
-        '--rate=1',
-        '--video-filter=scene',
-        '--vout=dummy',
-        '--start-time=0',
-        '--stop-time=1',
-        '--scene-format=png',
-        '--scene-ratio=240',
-        '--scene-prefix=snap',
-        f'--scene-path={output_path}',
-        '--scene-replace',
-        '--quiet',
-        'vlc://quit'
-    ))
-
-def assert_no_unhandled_mimetypes(input_path):
-    """Assert that input_path contains no unhandled files.
-    """
-    unhandled_mimetype_filenames_map = defaultdict(list)
-    for filename in os.listdir(input_path):
-        file_path = os.path.join(input_path, filename)
-        # Ignore directories.
-        if os.path.isdir(file_path):
-            continue
-        mimetype = guess_mimetype(file_path)
-        if mimetype is None or (
-                not mimetype.startswith('image/')
-                and not mimetype.startswith('video/')
-            ):
-            unhandled_mimetype_filenames_map[mimetype].append(filename)
-    if unhandled_mimetype_filenames_map:
-        raise AssertionError(
-            'Directory contains files of unknown or unhandled mimetypes: '
-            + str(dict(unhandled_mimetype_filenames_map))
-        )
-
-def generate_video_derivatives(
-        input_path,
-        poster_filename_template,
-        output_path,
-        overwrite,
-        show_skipped
-    ):
-    """Use vlc to generate video poster images.
-    https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
-    """
-    for filename in os.listdir(input_path):
-        file_path = os.path.join(input_path, filename)
-        # Ignore directories.
-        if os.path.isdir(file_path):
-            continue
-        # Ignore non-video files.
-        if not guess_mimetype(file_path).startswith('video/'):
-            continue
-
-        poster_filename = poster_filename_template.format(
-            base_filename=os.path.splitext(filename)[0]
-        )
-        final_path = os.path.join(output_path, poster_filename)
-        # Skip path if overwrite is False and file already exists.
-        if not overwrite and os.path.exists(final_path):
-            if show_skipped:
-                print(f'Skipping: {file_path}')
-            continue
-        generate_video_poster(file_path, output_path)
-
-        # Rename the output file to reflect the input.
-        os.rename(os.path.join(output_path, 'snap.png'), final_path)
-        print(f'Wrote: {final_path}')
 
 def normalize_item_filenames(input_path, context_file, item_name, output_path):
     # Assert that we can handle all the files in input_path.
@@ -202,6 +131,89 @@ def normalize_item_filenames(input_path, context_file, item_name, output_path):
         shutil.copy(file_path, new_path)
         print('Normalized {} to {}'.format(filename, normalized_filename))
 
+###############################################################################
+# Derivative Generation Functions
+###############################################################################
+
+def generate_image_derivatives(
+        input_path,
+        input_filename_regex,
+        output_path,
+        output_filename_template,
+        mimetypes,
+        widths,
+        overwrite,
+        show_skipped
+    ):
+    """Execute the Gimp generate_derivatives script.
+    """
+    call_subprocess((
+        'flatpak',
+        'run',
+        'org.gimp.GIMP',
+        '-idf',
+        '--batch-interpreter',
+        'python-fu-eval',
+        '-b',
+        f"import sys; sys.path = ['.'] + sys.path; import gimp_generate_derivatives; gimp_generate_derivatives.run('{input_path}', '{input_filename_regex}', '{output_path}', '{output_filename_template}', {mimetypes}, {widths}, {overwrite}, {show_skipped})",
+        '-b',
+        'pdb.gimp_quit(1)'
+    ))
+
+def generate_video_poster(path, output_path):
+    """Execute VLC to generate a video poster image.
+    """
+    call_subprocess((
+        'vlc',
+        path,
+        '--rate=1',
+        '--video-filter=scene',
+        '--vout=dummy',
+        '--start-time=0',
+        '--stop-time=1',
+        '--scene-format=png',
+        '--scene-ratio=240',
+        '--scene-prefix=snap',
+        f'--scene-path={output_path}',
+        '--scene-replace',
+        '--quiet',
+        'vlc://quit'
+    ))
+
+def generate_video_derivatives(
+        input_path,
+        poster_filename_template,
+        output_path,
+        overwrite,
+        show_skipped
+    ):
+    """Use vlc to generate video poster images.
+    https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
+    """
+    for filename in os.listdir(input_path):
+        file_path = os.path.join(input_path, filename)
+        # Ignore directories.
+        if os.path.isdir(file_path):
+            continue
+        # Ignore non-video files.
+        if not guess_mimetype(file_path).startswith('video/'):
+            continue
+
+        poster_filename = poster_filename_template.format(
+            base_filename=os.path.splitext(filename)[0]
+        )
+        final_path = os.path.join(output_path, poster_filename)
+        # Skip path if overwrite is False and file already exists.
+        if not overwrite and os.path.exists(final_path):
+            if show_skipped:
+                print(f'Skipping: {file_path}')
+            continue
+        generate_video_poster(file_path, output_path)
+
+        # Rename the output file to reflect the input.
+        os.rename(os.path.join(output_path, 'snap.png'), final_path)
+        print(f'Wrote: {final_path}')
+
 def generate_derivatives(
         input_path,
         context_file,
@@ -252,6 +264,113 @@ def generate_derivatives(
         show_skipped
     )
 
+###############################################################################
+# Add to Project
+###############################################################################
+
+def review_file(path, required_fields, viewer):
+    """Launch the appropriate viewer application so the user may see the file
+    and prompt for the required metadata.
+    """
+    # Launch the viewer.
+    print(f'Opening viewer for: {path}')
+    p = subprocess.Popen(
+        (viewer, path),
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+
+    # Prompt for the metadata.
+    print('Add metadata for this file')
+    metadata = {}
+    for field in required_fields:
+        metadata[field] = input(f'Enter {field}: ')
+
+    # If the viewer is still open, close it.
+    if p.poll() is None:
+        p.kill()
+        p.wait()
+
+    return metadata
+
+def add_to_project(
+        project_name,
+        context_file,
+        normalized_path,
+        static_path,
+        derivatives_path,
+        image_viewer,
+        video_viewer
+    ):
+    """Add the assets in the specified directories to an existing project in
+    the context file.
+    """
+    if derivatives_path is None:
+        derivatives_path = os.path.join(normalized_path, 'derivatives')
+
+    # Read the context file and get the project.
+    context = json.load(open(context_file, 'rb'))
+    projects = [x for x in context['projects'] if x['name'] == project_name]
+    num_matching_projects = len(projects)
+    if num_matching_projects == 0:
+        raise AssertionError(f'No project found for name: "{project_name}"')
+    if num_matching_projects > 1:
+        raise AssertionError(f'Multiple projects found for name: "{project_name}"')
+    project = projects[0]
+
+    # Assert that the project doesn't define any images or videos.
+    if project.get('images') or project.get('videos'):
+        raise AssertionError(
+            f'Project "{project_name}" has existing defined images or videos'
+        )
+
+    # Define the required metadata fields.
+    required_fields = ('name', 'description')
+
+    # Start processing the normalized files.
+    images = []
+    videos = []
+    for filename in (os.listdir(normalized_path)[0],):
+        path = os.path.join(normalized_path, filename)
+        mimetype = guess_mimetype(path)
+        type = mimetype.split('/')[0]
+
+        item = { 'filename': filename }
+        item.update(
+            review_file(
+                path,
+                required_fields,
+                image_viewer if type == 'image' else video_viewer
+            )
+        )
+
+        (images if type == 'image' else videos).append(item)
+
+    # Update the project images.
+    if images:
+        project['images'] = images
+    elif 'images' in project:
+        del project['images']
+
+    # Update the project videos.
+    if videos:
+        project['videos'] = videos
+    elif 'videos' in project:
+        del project['videos']
+
+    # Update the context file.
+    with open(context_file, 'w', encoding='utf-8') as fh:
+        json.dump(context, fh, indent=2)
+
+    print(f'Added {len(images)} images and {len(videos)} videos to '\
+          f'"{project_name}"')
+
+    # TODO - copy the files into the static directory.
+
+###############################################################################
+# CLI
+###############################################################################
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--context-file', type=str, default='context.json')
@@ -267,10 +386,31 @@ if __name__ == '__main__':
     gen_parser.add_argument('--output-path', type=str)
     gen_parser.add_argument('--overwrite', action='store_true')
     gen_parser.add_argument('--show-skipped', action='store_true')
-    args = parser.parse_args()
 
-    add_parser = subparsers.add_parser('add-to-project')
-    #???
+    add_to_project_parser = subparsers.add_parser('add-to-project')
+    add_to_project_parser.add_argument('project_name', type=str)
+    add_to_project_parser.add_argument(
+        'normalized_path',
+        type=str,
+        help='The path to the directory containing the files generated by '\
+        'normalize-item-filenames'
+    )
+    add_to_project_parser.add_argument(
+        'static_path',
+        type=str,
+        help='The path to the directory containing your site\'s static assets'\
+        ', to which the normalized and derivative files will be moved'
+    )
+    add_to_project_parser.add_argument(
+        '--derivatives-path',
+        type=str,
+        help='The path to the directory containing the files generated by '\
+        'generate-derivatives'
+    )
+    add_to_project_parser.add_argument('--image-viewer', default='exo-open')
+    add_to_project_parser.add_argument('--video-viewer', default='vlc')
+
+    args = parser.parse_args()
 
     if args.action == 'normalize-item-filenames':
         normalize_item_filenames(
@@ -279,11 +419,21 @@ if __name__ == '__main__':
             args.item_name,
             args.output_path
         )
-    else:
+    elif args.action == 'generate-derivatives':
         generate_derivatives(
             args.input_path,
             args.context_file,
             args.output_path,
             args.overwrite,
             args.show_skipped
+        )
+    else:
+        add_to_project(
+            args.project_name,
+            args.context_file,
+            args.normalized_path,
+            args.static_path,
+            args.derivatives_path,
+            args.image_viewer,
+            args.video_viewer
         )
