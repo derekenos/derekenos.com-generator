@@ -1,6 +1,5 @@
 {
   "base_url": "https://derekenos.com",
-
   "all_tags": [
     "8bit",
     "app",
@@ -48,7 +47,6 @@
     "wifi",
     "wood"
   ],
-
   "large_static_store": {
     "type": "S3",
     "aws_profile": "digitalocean",
@@ -56,30 +54,40 @@
     "s3_url": "s3://derekenos-com/",
     "endpoint": "https://derekenos-com.nyc3.cdn.digitaloceanspaces.com"
   },
-
   "name": "Derek Enos",
   "email": "derek@derekenos.com",
   "social_name_url_pairs": [
-    ["Github", "https://github.com/derekenos"],
-    ["Instagram", "https://www.instagram.com/derekjenos"],
-    ["YouTube", "https://www.youtube.com/derekenos"],
-    ["LinkedIn", "https://www.linkedin.com/in/derekenos"],
-    ["Patreon", "https://www.patreon.com/derekenos"]
+    [
+      "Github",
+      "https://github.com/derekenos"
+    ],
+    [
+      "Instagram",
+      "https://www.instagram.com/derekjenos"
+    ],
+    [
+      "YouTube",
+      "https://www.youtube.com/derekenos"
+    ],
+    [
+      "LinkedIn",
+      "https://www.linkedin.com/in/derekenos"
+    ],
+    [
+      "Patreon",
+      "https://www.patreon.com/derekenos"
+    ]
   ],
-
   "google_analytics_id": "UA-19335494-1",
-
   "normalized_image_filename_template": "{item_name}_{file_num}_{width}px_original{extension}",
   "normalized_video_filename_template": "{item_name}_{file_num}_original{extension}",
   "normalized_image_filename_regex": "^(?P<item_name>.*)_(?P<file_num>\\d+)_(?P<width>\\d+)px_original(?P<extension>.+)$",
   "derivative_image_filename_template": "{item_name}_{file_num}_{width}px{extension}",
   "derivative_video_poster_filename_template": "{base_filename}_poster.png",
-
   "prioritized_derivative_image_mimetypes": [
     "image/webp",
     "image/png"
   ],
-
   "derivative_image_widths": [
     2500,
     1500,
@@ -89,19 +97,31 @@
     300,
     100
   ],
-
   "fallback_image_width": 750,
-
+  "collection_item_picture_sizes": "(min-width: 1024px) 25vw, 94vw",
   "navbar_page_name_label_pairs": [
-    ["index", "home"],
-    ["projects", "projects"],
-    ["ideas", "ideas"],
-    ["tags", "tags"],
-    ["contact", "contact"]
+    [
+      "index",
+      "home"
+    ],
+    [
+      "projects",
+      "projects"
+    ],
+    [
+      "ideas",
+      "ideas"
+    ],
+    [
+      "tags",
+      "tags"
+    ],
+    [
+      "contact",
+      "contact"
+    ]
   ],
-
   "projects": [
-
     {
       "name": "Static Site Generator",
       "slug": "/project-derekenos-com-generator",
@@ -116,14 +136,13 @@
       "images": [
         {
           "filename": "project-static-site-generator_1_1146px_original.png",
-          "name": "Screenshot of derekenos.com-generator Source Code",
-          "description": "screenshot of derekenos.com-generator source code"
+          "name": "Static Site Generator",
+          "description": "A picture of the Static Site Generator"
         }
       ],
       "description": "I built this static website generator to maintain my personal website, derekenos.com.<br><br>It's relatively simple, has accessibility, SEO best practices, and structured data (via Open Graph tags and Microdata markup) built in, supports cloud object storage for large static files, and has a live-reload feature for more joyful local development.",
       "github_url": "https://github.com/derekenos/derekenos.com-generator"
     },
-
     {
       "name": "HTMLephant",
       "hide_card": true,
@@ -136,15 +155,13 @@
         "python3"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-      ],
+      "images": [],
       "github_url": "https://github.com/derekenos/htmlephant",
       "dependent_of": [
         "Static Site Generator",
         "femtoweb"
       ]
     },
-
     {
       "name": "femtoweb",
       "hide_card": true,
@@ -159,8 +176,7 @@
         "webapp"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-      ],
+      "images": [],
       "github_url": "https://github.com/derekenos/femtoweb",
       "dependent_of": [
         "Static Site Generator",
@@ -171,7 +187,6 @@
         "iome"
       ]
     },
-
     {
       "name": "Weather Station",
       "slug": "/project-weather-station",
@@ -186,104 +201,88 @@
       ],
       "type": "CreativeWork",
       "images": [
-
-        {
-          "filename": "project-weather-station_1_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_2_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_3_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_4_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_5_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_6_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_7_3036px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
         {
           "filename": "project-weather-station_8_4048px_original.jpg",
           "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
+          "description": "A picture of the Weather Station"
         },
-
         {
-          "filename": "project-weather-station_10_4048px_original.jpg",
+          "filename": "project-weather-station_9_4048px_original.jpg",
           "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
+          "description": "A picture of the Weather Station"
         },
-
-        {
-          "filename": "project-weather-station_11_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
-        {
-          "filename": "project-weather-station_12_4048px_original.jpg",
-          "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
-        },
-
         {
           "filename": "project-weather-station_14_4048px_original.jpg",
           "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
+          "description": "A picture of the Weather Station"
         },
-
+        {
+          "filename": "project-weather-station_11_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_4_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_1_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_7_3036px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
         {
           "filename": "project-weather-station_15_4048px_original.jpg",
           "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
+          "description": "A picture of the Weather Station"
         },
-
+        {
+          "filename": "project-weather-station_2_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_12_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_3_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
         {
           "filename": "project-weather-station_16_4048px_original.jpg",
           "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_6_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_5_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station_10_4048px_original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
         }
       ],
       "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/n43fajMjPJhvcqR47"
-        ]
-      ],
       "videos": [
         {
           "filename": "project-weather-station_13_original.mp4",
-          "name": "Weather Station Introduction",
-          "description": "The weather station powering up, spinning the busy indicator, and displaying the forecast."
+          "name": "Weather Station",
+          "description": "A movie of the Weather Station"
         }
       ],
       "collateral_creations": [
@@ -293,7 +292,6 @@
         "UTF-8 Decoder"
       ]
     },
-
     {
       "name": "Indicator Gauge",
       "hide_card": true,
@@ -305,8 +303,7 @@
         "servo"
       ],
       "type": "CreativeWork",
-      "images": [
-      ],
+      "images": [],
       "description": "I designed this gauge as part of the Weather Station project.",
       "external_link_prop_name_url_tuples": [
         [
@@ -319,7 +316,6 @@
         "Weather Station"
       ]
     },
-
     {
       "name": "Streaming JSON Parser",
       "hide_card": true,
@@ -333,15 +329,13 @@
         "streaming"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-      ],
+      "images": [],
       "description": "",
       "dependent_of": [
         "Weather Station"
       ],
       "github_url": "https://github.com/derekenos/json-parser"
     },
-
     {
       "name": "time.strptime()",
       "hide_card": true,
@@ -353,15 +347,12 @@
         "python3"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-      ],
       "description": "",
       "dependent_of": [
         "Weather Station"
       ],
       "github_url": "https://github.com/derekenos/micropython-time"
     },
-
     {
       "name": "UTF-8 Decoder",
       "hide_card": true,
@@ -373,15 +364,89 @@
         "unicode"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-      ],
       "description": "",
       "dependent_of": [
         "Weather Station"
       ],
-      "github_url": "https://github.com/derekenos/utf8_decoder"
+      "github_url": "https://github.com/derekenos/utf8_decoder",
+      "images": [
+        {
+          "filename": "project-weather-station_8_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_9_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_14_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_11_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_4_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_1_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_7_3036px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_15_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_2_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_12_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_3_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_16_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_6_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_5_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        },
+        {
+          "filename": "project-weather-station_10_4048px_original.jpg",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        }
+      ]
     },
-
     {
       "name": "Cardboard Boxcade",
       "slug": "/project-cardboard-boxcade",
@@ -395,8 +460,7 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ],
+      "images": [],
       "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
       "external_link_prop_name_url_tuples": [
         [
@@ -406,7 +470,6 @@
         ]
       ]
     },
-
     {
       "name": "Trtl",
       "slug": "/project-trtl",
@@ -423,14 +486,12 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Weezel",
       "slug": "/project-weezel",
-      "short_description": "A drawing robot accessory for the Ikea MÅLA easel.",
+      "short_description": "A drawing robot accessory for the Ikea M\u00c5LA easel.",
       "external_link_prop_name_url_tuples": [
         [
           "mainEntityOfPage",
@@ -450,10 +511,8 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Modular Arcade Cabinet",
       "slug": "/project-modular-arcade-cabinet",
@@ -474,10 +533,8 @@
         "wood"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Gritty Viddy",
       "slug": "/project-gritty-viddy",
@@ -492,11 +549,9 @@
         "video"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-      ],
+      "images": [],
       "github_url": "https://github.com/derekenos/gritty-viddy"
     },
-
     {
       "name": "Important Message",
       "slug": "/project-important-message",
@@ -512,8 +567,7 @@
       "type": "SoftwareApplication",
       "category": "UI & Design",
       "operating_system": "Web Browser",
-      "images": [
-      ],
+      "images": [],
       "external_link_prop_name_url_tuples": [
         [
           "installUrl",
@@ -522,7 +576,6 @@
         ]
       ]
     },
-
     {
       "name": "Sketchy",
       "slug": "/project-sketchy",
@@ -544,19 +597,8 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ],
-      "videos": [
-        {
-          "filename": "project-weather-station_13_original.mp4",
-          "thumb_filename": "sketchy_video_poster.png",
-          "name": "Sketchy Demonstration",
-          "description": "An early demonstration of Sketchy writing its name."
-        }
-      ],
       "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy"
     },
-
     {
       "name": "Babygate",
       "slug": "/project-babygate",
@@ -570,19 +612,8 @@
       ],
       "type": "SoftwareApplication",
       "category": "Games",
-      "operating_system": "Web Browser",
-      "images": [
-      ],
-      "videos": [
-        {
-          "filename": "project-weather-station_13_original.mp4",
-          "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
-          "name": "Babygate Video Game Demo",
-          "description": "Demonstration of the Babygate video game played using the iome Dev Kit v1"
-        }
-      ]
+      "operating_system": "Web Browser"
     },
-
     {
       "name": "iome",
       "slug": "/project-iome",
@@ -597,19 +628,8 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ],
-      "videos": [
-        {
-          "filename": "project-weather-station_13_original.mp4",
-          "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
-          "name": "iome Dev Kit v1 Demo",
-          "description": "Demonstration of the iome Dev Kit v1"
-        }
-      ],
       "github_url": "https://github.com/derekenos/iome"
     },
-
     {
       "name": "Laser-cut Keypad",
       "slug": "/project-laser-cut-keypad",
@@ -628,10 +648,8 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Physical Platformer Game Prototype",
       "slug": "/project-physical-platformer-game-prototype",
@@ -647,10 +665,8 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Delta Robot",
       "slug": "/project-delta-robot",
@@ -666,16 +682,6 @@
         "wifi"
       ],
       "type": "CreativeWork",
-      "images": [
-      ],
-      "videos": [
-        {
-          "filename": "project-weather-station_13_original.mp4",
-          "thumb_filename": "delta_robot_poster.png",
-          "name": "Delta Robot Demonstration",
-          "description": "A laser-cut delta robot drawing a grid of dots."
-        }
-      ],
       "github_url": "https://github.com/derekenos/delta_robot",
       "external_link_prop_name_url_tuples": [
         [
@@ -685,7 +691,6 @@
         ]
       ]
     },
-
     {
       "name": "Composer",
       "slug": "/project-composer",
@@ -701,10 +706,8 @@
       "type": "SoftwareApplication",
       "category": "Music Composition",
       "operating_system": "Web Browser",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Ion Model",
       "slug": "/project-ion-model",
@@ -719,10 +722,8 @@
       "category": "Games",
       "operating_system": "Web Browser",
       "live_url": "/static/projects/sim/",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "deMIDulator",
       "slug": "/project-demidulator",
@@ -740,10 +741,8 @@
         "synthesizer"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Beginner's Box",
       "slug": "/project-beginner-s-box",
@@ -756,10 +755,8 @@
         "microcontroller"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Video Feedback Instrument",
       "slug": "/project-video-feedback-instrument",
@@ -770,10 +767,8 @@
         "video"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     },
-
     {
       "name": "Physical Interface Prototype",
       "slug": "/project-physical-interface-prototype",
@@ -785,8 +780,7 @@
         "physicalcomputing"
       ],
       "type": "CreativeWork",
-      "images": [
-      ]
+      "images": []
     }
   ]
 }

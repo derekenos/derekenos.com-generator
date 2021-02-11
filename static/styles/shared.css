@@ -154,7 +154,7 @@ main > section > .collection {
 }
 
 main > section > .collection > .item {
-  padding: 1rem;
+  padding: 3vw;
 }
 
 main > section > .collection > .item > h2 {
@@ -257,9 +257,8 @@ ol.links > li > a {
     padding-top: 0;
   }
 
-  main > section > video,
   main > section img {
-    max-width: calc(1024px - 2rem);
+    max-width: 1024px;
   }
 
   main > section > .collection {
