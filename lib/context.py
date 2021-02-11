@@ -233,24 +233,31 @@ def add_sources(context, image):
     match = context.normalized_image_filename_regex.match(filename)
     item_name = match.group('item_name')
     file_num = match.group('file_num')
+    original_width = int(match.group('width'))
 
     sources = {
         'original': ImageSource(
             filename,
             guess_mimetype(filename),
             context.static(filename),
-            match.group('width'),
+            original_width,
             context.static_last_modified(filename)
         ),
         'derivatives': [],
         'fallback': get_fallback_image_source(context, item_name, file_num)
     }
 
+    # Add the original width to the set of derivative images widths and
+    # sort descending.
+    widths = sorted(
+        set(context.derivative_image_widths).union((original_width,)),
+        reverse=True
+    )
+
     # Add the derivative sources.
     for mimetype in context.prioritized_derivative_image_mimetypes:
         mimetype_derivative_sources = []
-        # Iterate through widths in descending order.
-        for width in sorted(context.derivative_image_widths, reverse=True):
+        for width in widths:
             # Generate the corresponding derivative filename.
             derivative_fn = context.derivative_image_filename_template.format(
                 item_name=item_name,

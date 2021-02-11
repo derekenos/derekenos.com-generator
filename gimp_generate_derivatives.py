@@ -11,6 +11,7 @@ from gimpfu import *
 from lib import (
     guess_extension,
     guess_mimetype,
+    listfiles,
 )
 
 QUALITY_FACTOR = 0.90
@@ -71,11 +72,7 @@ def run(
     github.com/derekenos/derekenos.com-generator
     """
     INPUT_FILENAME_REGEX = re.compile(input_filename_regex)
-    for filename in os.listdir(src_dir):
-        file_path = os.path.join(src_dir, filename)
-        # Ignore directories.
-        if os.path.isdir(file_path):
-            continue
+    for filename, file_path in listfiles(src_dir):
         # Ignore non-image files.
         if not guess_mimetype(filename).startswith('image/'):
             continue
@@ -89,12 +86,17 @@ def run(
         # Open the image.
         image = pdb.gimp_file_load(file_path, filename)
 
+        # Ensure that the original image width is included in widths and sort
+        # dedescending.
+        widths = sorted(set(widths).union((image.width,)), reverse=True)
+
+        # Drop any widths larger than the original image.
+        original_width_idx = widths.index(image.width)
+        if original_width_idx > 0:
+            widths = widths[original_width_idx:]
+
         # Iterate over widths in descending order.
         for width in sorted(widths, reverse=True):
-            if image.width < width:
-                # Image is smaller than width so ignore this width.
-                continue
-
             if image.width > width:
                 # Scale image down to width.
                 height = int(float(width) / image.width * image.height)
