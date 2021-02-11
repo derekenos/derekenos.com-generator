@@ -83,14 +83,17 @@ class Context:
         raise FileNotFoundError(f'{msg}: {path}')
 
     def static_last_modified_iso8601(self, filename):
-        # If the file exists, locally, stat it and return the result.
         path = os.path.join(self.STATIC_DIR, filename)
         if os.path.exists(path):
-            return datetime.fromtimestamp(os.stat(path).st_mtime).isoformat()
-        # The file does not exist locally, so check the lss.
-        if self.lss and self.lss.exists(filename):
-            return self.lss.meta(filename).last_modified.isoformat()
-        self.raise_static_not_found(filename)
+            # The file exists locally, so stat it.
+            last_modified = datetime.fromtimestamp(os.stat(path).st_mtime)
+        elif self.lss and self.lss.exists(filename):
+            # The file does not exist locally, so check the lss.
+            last_modified = self.lss.meta(filename).last_modified
+        else:
+            self.raise_static_not_found(filename)
+        # Truncate microseconds and return the ISO8601 string.
+        return last_modified.replace(microsecond=0).isoformat()
 
     def static(self, filename, raise_on_not_found=True):
         """Format filename as a static asset path, optionally assert that the
