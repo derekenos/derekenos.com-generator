@@ -198,8 +198,8 @@ def Body(context,
                     video.Body(
                         context,
                         itemprop=md.Props.subjectOf,
-                        src=context.static(vid['filename']),
-                        poster=vid['poster_url'],
+                        src=vid['filename'],
+                        poster=vid['poster_filename'],
                         name=vid['name'],
                         description=vid['description'],
                         upload_date=context.static_last_modified_iso8601(

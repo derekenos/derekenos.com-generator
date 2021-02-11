@@ -21,9 +21,15 @@ Body = lambda context, src, poster, name, description, upload_date, \
         itemscope='',
         itemtype=md.Types.VideoObject,
         children=(
-            VideoSource(src=src, type=type),
-            MDMeta(md.Props.contentUrl, src),
-            MDMeta(md.Props.thumbnailUrl, poster),
+            VideoSource(src=context.static(src), type=type),
+            MDMeta(
+                md.Props.contentUrl,
+                context.static_url(src)
+            ),
+            MDMeta(
+                md.Props.thumbnailUrl,
+                context.static_url(poster)
+            ),
             MDMeta(md.Props.name, name),
             MDMeta(md.Props.description, description),
             MDMeta(

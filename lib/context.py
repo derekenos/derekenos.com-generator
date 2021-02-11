@@ -158,18 +158,17 @@ class Context:
 # Normalize Project Videos
 ###############################################################################
 
-def add_poster_url(context, video):
-    """Add a poster URL property to the video object.
+def add_poster_filename(context, video):
+    """Add a poster filename property to the video object.
     """
-    video['poster_url'] = context.static(
+    video['poster_filename'] = \
         context.derivative_video_poster_filename_template.format(
             base_filename=os.path.splitext(video['filename'])[0]
         )
-    )
 
 def normalize_videos(context, videos):
     for video in videos:
-        add_poster_url(context, video)
+        add_poster_filename(context, video)
 
 ###############################################################################
 # Normalize Project Images
