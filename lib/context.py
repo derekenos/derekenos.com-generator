@@ -247,12 +247,14 @@ def add_sources(context, image):
         'fallback': get_fallback_image_source(context, item_name, file_num)
     }
 
-    # Add the original width to the set of derivative images widths and
-    # sort descending.
-    widths = sorted(
-        set(context.derivative_image_widths).union((original_width,)),
-        reverse=True
-    )
+    # Sort widths descending.
+    widths = sorted(context.derivative_image_widths, reverse=True)
+
+    # If any widths are larger than the original image, add the original width
+    # to the list and drop the larger values.
+    i = next(i for i, width in enumerate(widths) if width < original_width)
+    if i > 0:
+        widths = [original_width] + widths[i:]
 
     # Add the derivative sources.
     for mimetype in context.prioritized_derivative_image_mimetypes:

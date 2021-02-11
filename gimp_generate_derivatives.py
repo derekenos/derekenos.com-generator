@@ -86,17 +86,16 @@ def run(
         # Open the image.
         image = pdb.gimp_file_load(file_path, filename)
 
-        # Ensure that the original image width is included in widths and sort
-        # dedescending.
-        widths = sorted(set(widths).union((image.width,)), reverse=True)
+        # Sort widths descending.
+        widths = sorted(widths, reverse=True)
 
-        # Drop any widths larger than the original image.
-        original_width_idx = widths.index(image.width)
-        if original_width_idx > 0:
-            widths = widths[original_width_idx:]
+        # If any requested widths are larger than the original image,
+        # add the original width to the list and drop the larger values.
+        i = next(i for i, width in enumerate(widths) if width < image.width)
+        if i > 0:
+            widths = [image.width] + widths[i:]
 
-        # Iterate over widths in descending order.
-        for width in sorted(widths, reverse=True):
+        for width in widths:
             if image.width > width:
                 # Scale image down to width.
                 height = int(float(width) / image.width * image.height)
