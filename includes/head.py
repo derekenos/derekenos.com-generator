@@ -15,7 +15,7 @@ Head = lambda context: chain(
             'generator',
             'https://github.com/derekenos/derekenos.com-generator'
         ),
-        Link(rel='stylesheet', href=context.static('shared.css'))
+        Link(rel='stylesheet', href=context.static('styles/shared.css'))
     ),
     live_dev.Head(context) if not context.production else (),
     google_analytics.Head(context) if context.production else ()
