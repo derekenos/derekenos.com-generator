@@ -120,4 +120,4 @@ def run(
                     out_path,
                     out_fn
                 )
-                print('Wrote: {}'.format(out_fn))
+                print('Wrote: {}'.format(out_path))

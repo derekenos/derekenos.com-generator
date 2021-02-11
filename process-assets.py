@@ -8,6 +8,7 @@ import tempfile
 from collections import defaultdict
 
 from lib import (
+    listfiles,
     guess_mimetype,
     slugify,
 )
@@ -37,11 +38,7 @@ def assert_no_unhandled_mimetypes(input_path):
     """Assert that input_path contains no unhandled files.
     """
     unhandled_mimetype_filenames_map = defaultdict(list)
-    for filename in os.listdir(input_path):
-        file_path = os.path.join(input_path, filename)
-        # Ignore directories.
-        if os.path.isdir(file_path):
-            continue
+    for filename, file_path in listfiles(input_path):
         mimetype = guess_mimetype(file_path)
         if mimetype is None or (
                 not mimetype.startswith('image/')
@@ -104,11 +101,7 @@ def normalize_item_filenames(context_file, input_path, item_name, output_path):
 
     print_header('Normalizing item filenames')
     file_num = 0
-    for filename in os.listdir(input_path):
-        file_path = os.path.join(input_path, filename)
-        # Ignore directories.
-        if os.path.isdir(file_path):
-            continue
+    for filename, file_path in listfiles(input_path):
         # Increment the file number.
         file_num += 1
 
@@ -193,11 +186,7 @@ def generate_video_derivatives(
     """Use vlc to generate video poster images.
     https://wiki.videolan.org/VLC_HowTo/Make_thumbnails/
     """
-    for filename in os.listdir(input_path):
-        file_path = os.path.join(input_path, filename)
-        # Ignore directories.
-        if os.path.isdir(file_path):
-            continue
+    for filename, file_path in listfiles(input_path):
         # Ignore non-video files.
         if not guess_mimetype(file_path).startswith('video/'):
             continue
@@ -339,11 +328,7 @@ def add_to_project(
     # Start processing the normalized files.
     images = []
     videos = []
-    for filename in os.listdir(normalized_path):
-        path = os.path.join(normalized_path, filename)
-        # Ignore directories.
-        if os.path.isdir(path):
-            continue
+    for filename, path in listfiles(normalized_path):
         mimetype = guess_mimetype(path)
         type = mimetype.split('/')[0]
         type_name = 'picture' if type == 'image' else 'movie'
@@ -405,7 +390,7 @@ def auto(
 
     # Normalize the asset filenames.
     norm_dir = tempfile.mkdtemp()
-    item_name = slugify(project_name)
+    item_name = f'project-{slugify(project_name)}'
     normalize_item_filenames(context_file, assets_path, item_name, norm_dir)
 
     # Generate the derivatives.
@@ -425,20 +410,20 @@ def auto(
 
     # Move the normalized and derivative files into the static dir.
     num_norm = 0
-    for path in os.listdir(norm_dir):
-        shutil.move(os.path.join(norm_dir, path), static_path)
+    for _, path in listfiles(norm_dir):
+        shutil.move(path, static_path)
         num_norm += 1
     print(f'Moved {num_norm} files from {norm_dir} to {static_path}')
 
     num_deriv = 0
-    for path in os.listdir(deriv_dir):
-        shutil.move(os.path.join(deriv_dir, path), static_path)
+    for _, path in listfiles(deriv_dir):
+        shutil.move(path, static_path)
         num_deriv += 1
     print(f'Moved {num_deriv} files from {deriv_dir} to {static_path}')
 
     # Remove the temp directories.
-    os.rmdir(norm_dir)
     os.rmdir(deriv_dir)
+    os.rmdir(norm_dir)
 
 ###############################################################################
 # CLI

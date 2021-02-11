@@ -17,10 +17,10 @@ from includes import picture
 Head = NotDefined
 
 def Body(context, name, slug, short_description, tags,
-         images, **kwargs):
+         images=(), **kwargs):
     # TODO - use the actual project image.
     #image = images[0]
-    image = context.projects[3]['images'][0]
+    image = images[0] if images else context.projects[3]['images'][0]
     return (
         H2(
             itemprop=md.Props.name,

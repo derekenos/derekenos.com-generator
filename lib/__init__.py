@@ -58,3 +58,11 @@ def guess_extension(mimetype):
             'can not guess extension for mimetype: {}'.format(mimetype)
         )
     return extension
+
+def listfiles(_dir):
+    """Yield each non-directory entry in a directory along with its full path.
+    """
+    for filename in os.listdir(_dir):
+        path = os.path.join(_dir, filename)
+        if not os.path.isdir(path):
+            yield filename, path
