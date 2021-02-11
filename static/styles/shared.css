@@ -9,12 +9,6 @@ body {
   margin: 0;
 }
 
-img,
-video {
-  width: calc(100% - 2rem);
-  border-radius: 8px;
-}
-
 a:link,
 a:visited {
   color: #bbf;
@@ -101,30 +95,22 @@ a:active {
   text-decoration: underline;
 }
 
-.content > * {
+main > * {
   padding: 1rem;
 }
 
-.content > section {
-  padding: 0 0 2rem 0;
-}
-
-.content > section > * {
-  padding: 0 1rem;
-}
-
-.content.home > h1,
-.content.project > h1,
-.content.ideas > h1,
-.content.contact > h1 {
+main.home > h1,
+main.project > h1,
+main.ideas > h1,
+main.contact > h1 {
   visibility: hidden;
   margin: 0;
   padding: 0;
   line-height: 0;
 }
 
-.content > h1,
-.content > section > h2 {
+main > h1,
+main > section > h2 {
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.4rem;
@@ -133,44 +119,65 @@ a:active {
   border: solid 1px #222;
 }
 
-.content > section > h3 {
+main > section {
+  padding: 0 0 2rem 0;
+}
+
+main > section > * {
+  padding: 0 1rem;
+}
+
+main > section img {
+  border-radius: 8px;
+  width: calc(100% - 2rem);
+}
+
+main > section > h3 {
   font-size: 1.1rem;
   font-weight: normal;
   padding: 1rem;
 }
 
-.content > section > h4 {
+main > section > h4 {
   font-size: 1.3rem;
   font-weight: normal;
 }
 
-.content > section > ol {
+main > section > ol {
   list-style: none;
 }
 
-.collection {
+main > section > .collection {
   display: flex;
   flex-flow: column;
   padding: 0 0 2rem 0;
 }
 
-.item {
+main > section > .collection > .item {
   padding: 1rem;
 }
 
-.item > h2 {
+main > section > .collection > .item > h2 {
   font-size: 1.4rem;
   font-weight: normal;
   line-height: 1.4rem;
 }
 
-.item > h3 {
+main > section > .collection > .item > h3 {
   font-size: 1rem;
   font-weight: normal;
   margin-bottom: .4rem;
 }
 
-.item > h4 {
+main > section > h4 {
+  font-size: 1.3rem;
+  font-style: normal;
+  line-height: 1.5rem;
+  margin: 0;
+  padding: .5rem 0;
+}
+
+main > section > .collection > .item > h4 {
   font-size: 1rem;
   font-weight: normal;
   line-height: 1.2rem;
@@ -179,29 +186,26 @@ a:active {
   opacity: 0.8;
 }
 
-.item a.tag,
-section a.tag {
+main > section > .collection > .item img,
+main > section > .collection > .item > video {
+  border-radius: 8px;
+  width: 100%;
+}
+
+main > section a.tag {
   text-decoration: none;
   padding: 0.2rem;
   display: inline-block;
 }
 
-.item a.tag:first-child,
-section a.tag:first-child {
+main > section a.tag:first-child,
+main > section > .collection > .item a.tag:first-child {
   padding-left: 0;
 }
 
-.item a.tag:hover,
-section a.tag:hover {
+main > section a.tag:hover,
+main > section > .collection > .item a.tag:hover {
   text-decoration: underline;
-}
-
-section .item > h4 {
-  font-size: 1.3rem;
-  font-style: normal;
-  line-height: 1.5rem;
-  margin: 0;
-  padding: .5rem 0;
 }
 
 .footer {
@@ -223,10 +227,6 @@ ol.links > li > a {
 }
 
 @media screen and (min-width: 1024px) {
-  video {
-    max-width: calc(1024px - 2rem);
-  }
-
   header {
     border-bottom: solid #888 1px;
   }
@@ -257,21 +257,22 @@ ol.links > li > a {
     padding-top: 0;
   }
 
-  .section > * {
-    padding: 0 4rem;
+  main > section > video,
+  main > section img {
+    max-width: calc(1024px - 2rem);
   }
 
-  .collection {
+  main > section > .collection {
     flex-flow: row wrap;
     justify-content: space-between;
     padding: 0 3rem 2rem 3rem;
   }
 
-  .item {
-    width: 20vw;
+  main > section > .collection > .item {
+    width: 25vw;
   }
 
-  .item.wide {
+  main > section > .collection > .item.wide {
     max-width: 100%;
   }
 
@@ -280,8 +281,8 @@ ol.links > li > a {
     padding: .2rem 0;
   }
 
-  .item a.tag,
-  section a.tag {
+  main > section > .collection > .item a.tag,
+  main > section a.tag {
     padding: 0.1rem 0.05rem;
   }
 }

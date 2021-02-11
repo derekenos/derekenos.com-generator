@@ -101,7 +101,7 @@ def Nav(context):
 
 Body = lambda context: (
     Main(
-        _class='content project',
+        _class='project',
         itemscope='',
         itemtype=(project:=context.generator_item)['type'],
         children=(

@@ -48,7 +48,7 @@ def Body(context, name, slug, short_description, tags,
                 context,
                 itemprop=md.Props.subjectOf,
                 sources=image['sources'],
-                sizes='(min-width: 1024px) 20vw, 90vw',
+                sizes=context.collection_item_picture_sizes,
                 name=image['name'],
                 description=image['description']
             )

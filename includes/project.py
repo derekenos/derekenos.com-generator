@@ -15,6 +15,7 @@ from lib.htmlephant import (
 
 from pages import tag_generator
 from includes import (
+    collection,
     picture,
     prop_links_list,
     scope_links_list,
@@ -191,19 +192,50 @@ def Body(context,
             section.Body(
                 context,
                 'Videos',
-                children=chain((
-                    video.Body(
-                        context,
-                        itemprop=md.Props.subjectOf,
-                        src=vid['source'].url,
-                        mimetype=vid['source'].mimetype,
-                        upload_date=vid['source'].last_modified.isoformat(),
-                        poster_src=vid['source'].poster_url,
-                        name=vid['name'],
-                        description=vid['description']
-                    )
-                    for vid in videos
-                )),
+                children=collection.Body(
+                    context,
+                    name='Videos',
+                    items=[
+                        video.Body(
+                            context,
+                            itemprop=md.Props.subjectOf,
+                            src=vid['source'].url,
+                            mimetype=vid['source'].mimetype,
+                            upload_date=vid['source'].last_modified.isoformat(),
+                            poster_src=vid['source'].poster_url,
+                            name=vid['name'],
+                            description=vid['description']
+                        )
+                        for vid in videos
+                    ]
+                )
+            )
+        )
+
+    # Add images.
+    if len(images) > 1:
+        els.extend(
+            section.Body(
+                context,
+                'More Images',
+                children=collection.Body(
+                    context,
+                    name='Additional Images',
+                    items=[
+                        (Anchor(
+                            href=image['sources']['original'].url,
+                            children=picture.Body(
+                                context,
+                                itemprop=md.Props.subjectOf,
+                                sources=image['sources'],
+                                sizes=context.collection_item_picture_sizes,
+                                name=image['name'],
+                                description=image['description']
+                            )
+                        ),)
+                        for image in images[1:]
+                    ]
+                )
             )
         )
 

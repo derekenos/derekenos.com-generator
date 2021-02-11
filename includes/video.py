@@ -30,5 +30,5 @@ Body = lambda context, src, mimetype, upload_date, poster_src, name, \
         ),
         controls='',
         poster=poster_src
-    )
+    ),
 )

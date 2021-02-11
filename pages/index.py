@@ -1,5 +1,4 @@
 
-
 from lib.htmlephant_extensions import Main
 from lib import (
     flatten,
@@ -12,8 +11,11 @@ from lib.htmlephant import (
     Title,
 )
 
-from includes import project_card
-from includes import collection
+from includes import (
+    collection,
+    project_card,
+    section,
+)
 
 DESCRIPTION = 'Home page displaying selected projects'
 
@@ -28,17 +30,20 @@ Head = lambda context: (
 
 Body = lambda context: (
     Main(
-        _class='content home',
+        _class='home',
         children=(
             H1(DESCRIPTION),
-            *collection.Body(
+            *section.Body(
                 context,
-                name='Selected Projects',
-                items=[
-                    project_card.Body(context, **prj)
-                    for prj in context.projects
-                    if not prj.get('hide_card', False)
-                ]
+                children=collection.Body(
+                    context,
+                    name='Selected Projects',
+                    items=[
+                        project_card.Body(context, **prj)
+                        for prj in context.projects
+                        if not prj.get('hide_card', False)
+                    ]
+                )
             )
         )
     ),

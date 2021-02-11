@@ -203,7 +203,7 @@ Head = lambda context: (
 
 Body = lambda context: (
     Main(
-        _class='content ideas',
+        _class='ideas',
         children=(
             H1(DESCRIPTION),
 

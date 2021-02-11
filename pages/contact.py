@@ -29,7 +29,7 @@ Head = lambda context: (
 
 Body = lambda context: (
     Main(
-        _class='content contact',
+        _class='contact',
         itemscope='',
         itemtype=md.Types.Person,
         children=(

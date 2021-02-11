@@ -74,7 +74,7 @@ def Body(context):
     description = f'Projects Tagged #{tag_name}'
     return (
         Main(
-            _class='content tag',
+            _class='tag',
             children=(
                 H1(description),
                 *collection.Body(
