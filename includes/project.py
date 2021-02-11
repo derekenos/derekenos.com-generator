@@ -69,10 +69,7 @@ def Body(context,
                 sources=image['sources'],
                 sizes='90vw',
                 name=image['name'],
-                description=image['description'],
-                upload_date=context.static_last_modified_iso8601(
-                    image['filename']
-                )
+                description=image['description']
             )
         ))
     ]
@@ -198,13 +195,12 @@ def Body(context,
                     video.Body(
                         context,
                         itemprop=md.Props.subjectOf,
-                        src=vid['filename'],
-                        poster=vid['poster_filename'],
+                        src=vid['source'].url,
+                        mimetype=vid['source'].mimetype,
+                        upload_date=vid['source'].last_modified.isoformat(),
+                        poster_src=vid['source'].poster_url,
                         name=vid['name'],
-                        description=vid['description'],
-                        upload_date=context.static_last_modified_iso8601(
-                            vid['filename']
-                        )
+                        description=vid['description']
                     )
                     for vid in videos
                 )),

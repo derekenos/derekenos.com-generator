@@ -11,30 +11,27 @@ from lib.htmlephant import (
     Span,
 )
 
-image_sources_to_srcset_str = lambda image_sources: \
-    ', '.join(f'{path} {width}w' for _, _, path, width in image_sources)
+image_sources_to_srcset_str = lambda image_sources: ', '.join(
+    f'{path} {width}w' for _, _, path, width, _ in image_sources
+)
 
 Head = NotDefined
 
-Body = lambda context, sources, sizes, name, description, upload_date, \
-    itemprop=None: (
+Body = lambda context, sources, sizes, name, description, itemprop=None: (
     Span(
         itemprop=itemprop,
         itemscope='',
         itemtype=md.Types.ImageObject,
         children=(
-            MDMeta(
-                md.Props.contentUrl,
-                context.static_url(sources['original'].filename)
-            ),
-            MDMeta(
-                md.Props.thumbnailUrl,
-                context.static_url(sources['fallback'].filename)
-            ),
+            MDMeta(md.Props.contentUrl, sources['original'].url),
+            MDMeta(md.Props.thumbnailUrl, sources['fallback'].url),
             MDMeta(md.Props.name, name),
             MDMeta(md.Props.description, description),
             MDMeta(md.Props.encodingFormat, sources['original'].mimetype),
-            MDMeta(md.Props.uploadDate, upload_date),
+            MDMeta(
+                md.Props.uploadDate,
+                sources['original'].last_modified.isoformat()
+            ),
             Picture(
                 children=(
                     *[

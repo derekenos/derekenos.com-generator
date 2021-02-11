@@ -23,6 +23,20 @@ DEPENDENT_OF = 'dependent_of'
 class InvalidContext(Exception): pass
 
 ###############################################################################
+# Types
+###############################################################################
+
+ImageSource = namedtuple(
+    'ImageSource',
+    ('filename', 'mimetype', 'url', 'width', 'last_modified')
+)
+
+VideoSource = namedtuple(
+    'VideoSource',
+    ('filename', 'mimetype', 'url', 'last_modified', 'poster_url')
+)
+
+###############################################################################
 # Helpers
 ###############################################################################
 
@@ -42,7 +56,7 @@ class Context:
     SITE_DIR = 'site'
     SITE_RELATIVE_STATIC_DIR = 'static'
     SITE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_STATIC_DIR}'
-    STATIC_LARGE_FILE_THRESHOLD_MB = 1
+    STATIC_LARGE_FILE_THRESHOLD_KB = 100
     SITE_RELATIVE_LARGE_STATIC_DIR = f'static/_large'
     SITE_LARGE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_LARGE_STATIC_DIR}'
     SITEMAP_FILENAME = 'sitemap.txt'
@@ -82,7 +96,10 @@ class Context:
             msg += ' locally or in large static store'
         raise FileNotFoundError(f'{msg}: {path}')
 
-    def static_last_modified_iso8601(self, filename):
+    def static_last_modified(self, filename):
+        """Return a datetime object representing the static file's
+        last-modified time.
+        """
         path = os.path.join(self.STATIC_DIR, filename)
         if os.path.exists(path):
             # The file exists locally, so stat it.
@@ -92,8 +109,8 @@ class Context:
             last_modified = self.lss.meta(filename).last_modified
         else:
             self.raise_static_not_found(filename)
-        # Truncate microseconds and return the ISO8601 string.
-        return last_modified.replace(microsecond=0).isoformat()
+        # Truncate microseconds.
+        return last_modified.replace(microsecond=0)
 
     def static(self, filename, raise_on_not_found=True):
         """Format filename as a static asset path, optionally assert that the
@@ -133,8 +150,8 @@ class Context:
         path = f'{self.STATIC_DIR}/{filename}'
         if not os.path.isfile(path):
             raise AssertionError(f'Path is not a regular file: {path}')
-        return os.stat(path).st_size / 1024 / 1024 \
-            >= self.STATIC_LARGE_FILE_THRESHOLD_MB
+        return os.stat(path).st_size / 1024 \
+            >= self.STATIC_LARGE_FILE_THRESHOLD_KB
 
     def url(self, path):
         """Return path as an absolute URL.
@@ -161,26 +178,30 @@ class Context:
 # Normalize Project Videos
 ###############################################################################
 
-def add_poster_filename(context, video):
-    """Add a poster filename property to the video object.
+def add_source(context, video):
+    """Add a VideoSource-type source property to the video dict that comprises
+    a bunch of computed values.
     """
-    video['poster_filename'] = \
-        context.derivative_video_poster_filename_template.format(
-            base_filename=os.path.splitext(video['filename'])[0]
+    filename = video['filename']
+    video['source'] = VideoSource(
+        filename=filename,
+        mimetype=guess_mimetype(filename),
+        url=context.static(filename),
+        last_modified=context.static_last_modified(filename),
+        poster_url=context.static(
+            context.derivative_video_poster_filename_template.format(
+                base_filename=os.path.splitext(filename)[0]
+            )
         )
+    )
 
 def normalize_videos(context, videos):
     for video in videos:
-        add_poster_filename(context, video)
+        add_source(context, video)
 
 ###############################################################################
 # Normalize Project Images
 ###############################################################################
-
-ImageSource = namedtuple(
-    'ImageSource',
-    ('filename', 'mimetype', 'url', 'width')
-)
 
 def get_fallback_image_source(context, item_name, file_num):
     """Return a fallback image source tuple for the specified item name and
@@ -195,7 +216,8 @@ def get_fallback_image_source(context, item_name, file_num):
         extension=guess_extension(mimetype)
     )
     url = context.static(filename)
-    return ImageSource(filename, mimetype, url, width)
+    last_modified = context.static_last_modified(filename)
+    return ImageSource(filename, mimetype, url, width, last_modified)
 
 def add_sources(context, image):
     """Extend the image dict with a 'sources' property that comprises the available
@@ -218,6 +240,7 @@ def add_sources(context, image):
             guess_mimetype(filename),
             context.static(filename),
             match.group('width'),
+            context.static_last_modified(filename)
         ),
         'derivatives': [],
         'fallback': get_fallback_image_source(context, item_name, file_num)
@@ -238,7 +261,13 @@ def add_sources(context, image):
             url = context.static(derivative_fn, False)
             if url is not None:
                 mimetype_derivative_sources.append(
-                    ImageSource(derivative_fn, mimetype, url, width)
+                    ImageSource(
+                        derivative_fn,
+                        mimetype,
+                        url,
+                        width,
+                        context.static_last_modified(derivative_fn)
+                    )
                 )
 
         # Raise an exception if no derivative images were found.

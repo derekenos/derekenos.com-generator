@@ -2,8 +2,8 @@
 import argparse
 import json
 import os
+import shutil
 from itertools import chain
-from glob import glob
 
 from lib.htmlephant import Document
 from lib.htmlephant_extensions import Main
@@ -84,27 +84,27 @@ def copy_static(context):
     # Iterate through files in the static directory.
     static_dir = context.STATIC_DIR
     static_dir_len = len(static_dir)
-    for fs_path in glob(f'{static_dir}/*'):
-        # Ignore directory-type paths.
-        if os.path.isdir(fs_path):
-            continue
-        # Get the static-dir-relative path.
-        filename = fs_path[static_dir_len + 1:]
-        # Check whether the file exceeds the large object threshold.
-        if context.is_large_static(filename):
-            # This is a large file - create a symlink in the destination
-            # directory instead of actually copying it.
+    for filename in os.listdir(static_dir):
+        path = os.path.join(static_dir, filename)
+        if os.path.isdir(path):
+            # Path is a directory, so copy it as-is.
+            dest = os.path.join(context.SITE_STATIC_DIR, filename)
+            shutil.copytree(path, dest, dirs_exist_ok=True)
+        elif not context.is_large_static(filename):
+            # This is not a large file, so copy to SITE_STATIC_DIR.
+            dest = os.path.join(context.SITE_STATIC_DIR, filename)
+            copy_if_newer(path, dest)
+        else:
+            # This is a large file, so create a symlink in
+            # SITE_LARGE_STATIC_DIR instead of actually copying it.
             dest = os.path.join(context.SITE_LARGE_STATIC_DIR, filename)
             if not os.path.lexists(dest):
                 # Use the absolute file system path as the symlink src instead
                 # of trying to figure out how many parent dirs to references.
                 os.symlink(
-                    os.path.join(os.path.dirname(__file__), fs_path),
+                    os.path.join(os.path.dirname(__file__), path),
                     dest
                 )
-        else:
-            dest = os.path.join(context.SITE_STATIC_DIR, filename)
-            copy_if_newer(fs_path, dest)
 
 ###############################################################################
 # Run Function

@@ -50,10 +50,7 @@ def Body(context, name, slug, short_description, tags,
                 sources=image['sources'],
                 sizes='(min-width: 1024px) 20vw, 90vw',
                 name=image['name'],
-                description=image['description'],
-                upload_date=context.static_last_modified_iso8601(
-                    image['filename']
-                )
+                description=image['description']
             )
         )
     )
