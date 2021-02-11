@@ -17,6 +17,7 @@ from lib.htmlephant import (
 from includes import (
     collection,
     project_card,
+    section,
     subnav,
 )
 
@@ -77,14 +78,17 @@ def Body(context):
             _class='tag',
             children=(
                 H1(description),
-                *collection.Body(
+                *section.Body(
                     context,
-                    name=description,
-                    items=[
-                        project_card.Body(context, **project)
-                        for project in context.projects
-                        if tag_name in project['tags']
-                    ]
+                    children=collection.Body(
+                        context,
+                        name=description,
+                        items=[
+                            project_card.Body(context, **project)
+                            for project in context.projects
+                            if tag_name in project['tags']
+                        ]
+                    )
                 )
             )
         ),

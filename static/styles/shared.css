@@ -138,11 +138,6 @@ main > section > h3 {
   padding: 1rem;
 }
 
-main > section > h4 {
-  font-size: 1.3rem;
-  font-weight: normal;
-}
-
 main > section > ol {
   list-style: none;
 }
@@ -169,14 +164,6 @@ main > section > .collection > .item > h3 {
   margin-bottom: .4rem;
 }
 
-main > section > h4 {
-  font-size: 1.3rem;
-  font-style: normal;
-  line-height: 1.5rem;
-  margin: 0;
-  padding: .5rem 0;
-}
-
 main > section > .collection > .item > h4 {
   font-size: 1rem;
   font-weight: normal;
@@ -184,6 +171,18 @@ main > section > .collection > .item > h4 {
   font-style: italic;
   margin: 0 0 0.7rem 0;
   opacity: 0.8;
+}
+
+main.ideas > section > .collection {
+  padding: 0;
+}
+
+main.ideas > section > .collection > .item > h4 {
+  font-size: 1.3rem;
+  font-style: normal;
+  line-height: 1.5rem;
+  margin: 0;
+  padding: .5rem 0;
 }
 
 main > section > .collection > .item img,
@@ -267,12 +266,17 @@ ol.links > li > a {
     padding: 0 3rem 2rem 3rem;
   }
 
+  main.ideas > section > .collection {
+    padding: 0 1rem;
+  }
+
   main > section > .collection > .item {
     width: 25vw;
+    padding: 1rem;
   }
 
   main > section > .collection > .item.wide {
-    max-width: 100%;
+    width: 100%;
   }
 
   ol.links > li > a {
