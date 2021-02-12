@@ -17,6 +17,7 @@ from pages import tag_generator
 from includes import (
     collection,
     picture,
+    prop_collection,
     prop_links_list,
     scope_links_list,
     section,
@@ -192,13 +193,14 @@ def Body(context,
             section.Body(
                 context,
                 'Videos',
-                children=collection.Body(
+                children=prop_collection.Body(
                     context,
-                    name='Videos',
+                    itemprop=md.Props.subjectOf,
+                    name=f'{name} Videos',
                     items=[
                         video.Body(
                             context,
-                            itemprop=md.Props.subjectOf,
+                            itemprop=md.Props.hasPart,
                             src=vid['source'].url,
                             mimetype=vid['source'].mimetype,
                             upload_date=vid['source'].last_modified.isoformat(),
@@ -218,15 +220,16 @@ def Body(context,
             section.Body(
                 context,
                 'More Images',
-                children=collection.Body(
+                children=prop_collection.Body(
                     context,
-                    name='Additional Images',
+                    itemprop=md.Props.subjectOf,
+                    name=f'{name} Images',
                     items=[
                         (Anchor(
                             href=image['sources']['original'].url,
                             children=picture.Body(
                                 context,
-                                itemprop=md.Props.subjectOf,
+                                itemprop=md.Props.hasPart,
                                 sources=image['sources'],
                                 sizes=context.collection_item_picture_sizes,
                                 name=image['name'],
