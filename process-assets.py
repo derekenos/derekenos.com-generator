@@ -9,9 +9,16 @@ from collections import defaultdict
 
 from lib import (
     listfiles,
+    md5sum,
     guess_mimetype,
     slugify,
 )
+
+###############################################################################
+# Exceptions
+###############################################################################
+
+class SubprocessFailed(Exception): pass
 
 ###############################################################################
 # Helper Functions
@@ -22,7 +29,8 @@ def print_header(s):
 
 def call_subprocess(args, **kwargs):
     """A subprocess.call() helper that captures stderr and raises an
-    exception on non-zero exit.
+    exception on non-zero exit, and also return the stderr file handle
+    in case it knows something that the exit code doesn't.
     """
     stderr_fh = tempfile.TemporaryFile()
     res = subprocess.call(
@@ -30,9 +38,19 @@ def call_subprocess(args, **kwargs):
         stderr=stderr_fh,
         **kwargs
     )
+    stderr_fh.seek(0)
     if res != 0:
-        stderr_fh.seek(0)
-        raise AssertionError(f'Subprocess Error: {stderr_fh.read()}')
+        raise SubprocessFailed(stderr_fh.read())
+    return stderr_fh
+
+def call_gimp_subprocess(args, **kwargs):
+    """Gimp produces a zero exit code even when a batch command raises an
+    exception so check stderr output for "Traceback".
+    """
+    stderr_fh = call_subprocess(args, **kwargs)
+    stderr_str = stderr_fh.read()
+    if b'Traceback' in stderr_str:
+        raise SubprocessFailed(stderr_str)
 
 def assert_no_unhandled_mimetypes(input_path):
     """Assert that input_path contains no unhandled files.
@@ -73,7 +91,7 @@ def get_image_widths(input_path):
             '-b',
             'pdb.gimp_quit(1)'
         )
-        call_subprocess(args, stdout=subprocess.DEVNULL)
+        call_gimp_subprocess(args, stdout=subprocess.DEVNULL)
         # Load the written data from the file.
         fh.seek(0)
         filename_width_map = json.load(fh)
@@ -100,25 +118,23 @@ def normalize_item_filenames(context_file, input_path, item_name, output_path):
     image_filename_width_map = get_image_widths(input_path)
 
     print_header('Normalizing item filenames')
-    file_num = 0
     for filename, file_path in listfiles(input_path):
-        # Increment the file number.
-        file_num += 1
-
         # Use the appropriate template to generate the normalized filename.
         extension = os.path.splitext(filename)[1]
         mimetype = guess_mimetype(file_path)
+        # Use the first 8 chars of file contents MD5 as the asset ID.
+        asset_id = md5sum(file_path)[:8]
         if mimetype.startswith('image/'):
             normalized_filename = image_template.format(
                 item_name=item_name,
-                file_num=file_num,
+                asset_id=asset_id,
                 width=image_filename_width_map[filename],
                 extension=extension
             )
         elif mimetype.startswith('video/'):
             normalized_filename = video_template.format(
                 item_name=item_name,
-                file_num=file_num,
+                asset_id=asset_id,
                 extension=extension
             )
 
@@ -143,7 +159,7 @@ def generate_image_derivatives(
     ):
     """Execute the Gimp generate_derivatives script.
     """
-    call_subprocess((
+    call_gimp_subprocess((
         'flatpak',
         'run',
         'org.gimp.GIMP',

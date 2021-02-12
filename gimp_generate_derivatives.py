@@ -80,7 +80,7 @@ def run(
         # Parse the required fields from the filename.
         match_d = INPUT_FILENAME_REGEX.match(filename).groupdict()
         item_name = match_d['item_name']
-        file_num = int(match_d['file_num'])
+        asset_id = match_d['asset_id']
         orig_width = int(match_d['width'])
 
         # Open the image.
@@ -104,7 +104,7 @@ def run(
             for mimetype in mimetypes:
                 out_fn = output_filename_template.format(
                     item_name=item_name,
-                    file_num=file_num,
+                    asset_id=asset_id,
                     width=width,
                     extension=guess_extension(mimetype)
                 )

@@ -1,6 +1,7 @@
 """General, Python2.7-friendly, utilities.
 """
 
+import hashlib
 import mimetypes
 import os
 import shutil
@@ -66,3 +67,18 @@ def listfiles(_dir):
         path = os.path.join(_dir, filename)
         if not os.path.isdir(path):
             yield filename, path
+
+def md5sum(path):
+    """Return the MD5 hash of the file contents.
+    """
+    BUF_SIZE = 1024 * 64
+    buf = bytearray(BUF_SIZE)
+    mv = memoryview(buf)
+    md5 = hashlib.md5()
+    with open(path, 'rb') as fh:
+        while True:
+            num_bytes = fh.readinto(buf)
+            md5.update(mv[:num_bytes])
+            if num_bytes < BUF_SIZE:
+                break
+    return md5.hexdigest()

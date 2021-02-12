@@ -203,7 +203,7 @@ def normalize_videos(context, videos):
 # Normalize Project Images
 ###############################################################################
 
-def get_fallback_image_source(context, item_name, file_num):
+def get_fallback_image_source(context, item_name, asset_id):
     """Return a fallback image source tuple for the specified item name and
     # assset file number.
     """
@@ -211,7 +211,7 @@ def get_fallback_image_source(context, item_name, file_num):
     width = context.fallback_image_width
     filename = context.derivative_image_filename_template.format(
         item_name=item_name,
-        file_num=file_num,
+        asset_id=asset_id,
         width=width,
         extension=guess_extension(mimetype)
     )
@@ -232,7 +232,7 @@ def add_sources(context, image):
     filename = image['filename']
     match = context.normalized_image_filename_regex.match(filename)
     item_name = match.group('item_name')
-    file_num = match.group('file_num')
+    asset_id = match.group('asset_id')
     original_width = int(match.group('width'))
 
     sources = {
@@ -244,7 +244,7 @@ def add_sources(context, image):
             context.static_last_modified(filename)
         ),
         'derivatives': [],
-        'fallback': get_fallback_image_source(context, item_name, file_num)
+        'fallback': get_fallback_image_source(context, item_name, asset_id)
     }
 
     # Sort widths descending.
@@ -263,7 +263,7 @@ def add_sources(context, image):
             # Generate the corresponding derivative filename.
             derivative_fn = context.derivative_image_filename_template.format(
                 item_name=item_name,
-                file_num=file_num,
+                asset_id=asset_id,
                 width=width,
                 extension=guess_extension(mimetype)
             )
