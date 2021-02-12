@@ -187,6 +187,19 @@ def Body(context,
             )
         )
 
+    # Add external links.
+    if external_link_prop_name_url_tuples:
+        els.extend(
+            section.Body(
+                context,
+                'External Links',
+                children=prop_links_list.Body(
+                    context,
+                    prop_name_url_tuples=external_link_prop_name_url_tuples
+                )
+            )
+        )
+
     # Add videos.
     if videos:
         els.extend(
@@ -234,19 +247,6 @@ def Body(context,
                         ),)
                         for image in images[1:]
                     ]
-                )
-            )
-        )
-
-    # Add external links.
-    if external_link_prop_name_url_tuples:
-        els.extend(
-            section.Body(
-                context,
-                'External Links',
-                children=prop_links_list.Body(
-                    context,
-                    prop_name_url_tuples=external_link_prop_name_url_tuples
                 )
             )
         )
