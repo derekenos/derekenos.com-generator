@@ -195,12 +195,10 @@ def Body(context,
                 'Videos',
                 children=prop_collection.Body(
                     context,
-                    itemprop=md.Props.subjectOf,
-                    name=f'{name} Videos',
                     items=[
                         video.Body(
                             context,
-                            itemprop=md.Props.hasPart,
+                            itemprop=md.Props.subjectOf,
                             src=vid['source'].url,
                             mimetype=vid['source'].mimetype,
                             upload_date=vid['source'].last_modified.isoformat(),
@@ -222,14 +220,12 @@ def Body(context,
                 'More Images',
                 children=prop_collection.Body(
                     context,
-                    itemprop=md.Props.subjectOf,
-                    name=f'{name} Images',
                     items=[
                         (Anchor(
                             href=image['sources']['original'].url,
                             children=picture.Body(
                                 context,
-                                itemprop=md.Props.hasPart,
+                                itemprop=md.Props.subjectOf,
                                 sources=image['sources'],
                                 sizes=context.collection_item_picture_sizes,
                                 name=image['name'],
