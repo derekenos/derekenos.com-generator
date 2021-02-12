@@ -51,7 +51,7 @@ def get_meta_tags(context):
         # Generate the matching derivative filename.
         filename = context.derivative_image_filename_template.format(
             item_name=match_d['item_name'],
-            file_num=match_d['file_num'],
+            asset_id=match_d['asset_id'],
             width=context.fallback_image_width,
             extension=guess_extension(mimetype)
         )
