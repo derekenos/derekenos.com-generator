@@ -48,11 +48,16 @@ def get_meta_tags(context):
         ).groupdict()
         # Get the fallback (i.e. last) image mimetype.
         mimetype = context.prioritized_derivative_image_mimetypes[-1]
+        # Use the min of the original and fallback image widths.
+        width = min(
+            image['sources']['original'].width,
+            context.fallback_image_width
+        )
         # Generate the matching derivative filename.
         filename = context.derivative_image_filename_template.format(
             item_name=match_d['item_name'],
             asset_id=match_d['asset_id'],
-            width=context.fallback_image_width,
+            width=width,
             extension=guess_extension(mimetype)
         )
         tags.append(OGMeta('image', context.static_url(filename)))

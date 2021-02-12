@@ -203,12 +203,12 @@ def normalize_videos(context, videos):
 # Normalize Project Images
 ###############################################################################
 
-def get_fallback_image_source(context, item_name, asset_id):
+def get_fallback_image_source(context, original_width, item_name, asset_id):
     """Return a fallback image source tuple for the specified item name and
     # assset file number.
     """
     mimetype = context.prioritized_derivative_image_mimetypes[-1]
-    width = context.fallback_image_width
+    width = min(original_width, context.fallback_image_width)
     filename = context.derivative_image_filename_template.format(
         item_name=item_name,
         asset_id=asset_id,
@@ -244,7 +244,9 @@ def add_sources(context, image):
             context.static_last_modified(filename)
         ),
         'derivatives': [],
-        'fallback': get_fallback_image_source(context, item_name, asset_id)
+        'fallback': get_fallback_image_source(
+            context, original_width, item_name, asset_id
+        )
     }
 
     # Sort widths descending.
