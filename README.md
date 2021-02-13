@@ -77,7 +77,7 @@ project-static-site-generator-4cb061e3-1146px-original.webp
 
 ##### Derivatives
 
-The current code does not present original image files, which are assumed to be large and/or and not well supported by web browsers, directly. Instead, derivatives of the original, in web-friendly formats (defined by [prioritized_derivative_image_mimetypes](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L87-L90)) and a variety of sizes (defined by [derivative_image_widths](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L91-L99)), are assumed to have been generated, and will be included as options from which the browser will select at will.
+The current code does not present original image files, which are assumed to be large and/or not well supported by web browsers, directly. Instead, derivatives of the original, in web-friendly formats (as defined by [prioritized_derivative_image_mimetypes](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L87-L90)) and a variety of sizes (as defined by [derivative_image_widths](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L91-L99)), are assumed to have been generated, and will be included as options from which the browser will select at will.
 
 Derivative filenames must have the same `item_name` and `asset_id` as the original file and, as defined by [derivative_image_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/generate-derivatives-integration/context.json#L85), have the format:
 ```
@@ -134,7 +134,7 @@ Define an array of project videos in the context file as follows:
 }
 ```
 
-Like images, videos are expected to have a name that conforms to a template, defined by [normalized_video_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L83), like:
+Like images, videos are expected to have a name that conforms to a template, as defined by [normalized_video_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L83), like:
 ```
 {item_name}-{asset_id}-original{extension}
 ```
@@ -144,7 +144,7 @@ A valid filename is:
 project-weather-station-82fc52a8-original.mp4
 ```
 
-The only required derivative for a video is the poster image, which also has a template, defined by [derivative_video_poster_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L86), like:
+The only required derivative for a video is the poster image, which also has a template, as defined by [derivative_video_poster_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L86), like:
 ```
 {base_filename}-poster.png
 ```
