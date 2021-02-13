@@ -1,5 +1,8 @@
 
-from lib import microdata as md
+from lib import (
+    guess_extension,
+    microdata as md,
+)
 from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
     NOEL,
@@ -28,27 +31,49 @@ def get_meta_tags(context):
     tags = []
     # Author.
     tags.append(StdMeta('author', context.name))
+
     # Description.
     tags.extend((
         StdMeta('description', project['short_description']),
         OGMeta('description', project['short_description'])
     ))
+
     # Image
-    tags.append(
-        OGMeta(
-            'image',
-            context.static_url(f'{project["images"][0]["base_filename"]}.png')
-        )
+    # Get the first image in the list.
+    image = project['images'][0]
+    # Parse the filename.
+    match_d = context.normalized_image_filename_regex.match(
+        image['filename']
+    ).groupdict()
+    # Get the fallback (i.e. last) image mimetype.
+    mimetype = context.prioritized_derivative_image_mimetypes[-1]
+    # Use the min of the original and fallback image widths.
+    width = min(
+        image['sources']['original'].width,
+        context.fallback_image_width
     )
+    # Generate the matching derivative filename.
+    filename = context.derivative_image_filename_template.format(
+        item_name=match_d['item_name'],
+        asset_id=match_d['asset_id'],
+        width=width,
+        extension=guess_extension(mimetype)
+    )
+    tags.append(OGMeta('image', context.static_url(filename)))
+
     # Keywords
     if project['tags']:
         tags.append(StdMeta('keywords', ','.join(project['tags'])))
+
     # Title
     tags.append(OGMeta('title', project['name']))
+
     # Type
     tags.append(OGMeta('type', 'website'))
+
     # URL
     tags.append(OGMeta('url', context.url(project['slug'])))
+
     return tags
 
 def get_microdata_meta(context):
@@ -84,7 +109,7 @@ def Nav(context):
 
 Body = lambda context: (
     Main(
-        _class='content project',
+        _class='project',
         itemscope='',
         itemtype=(project:=context.generator_item)['type'],
         children=(

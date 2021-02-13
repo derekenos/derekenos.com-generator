@@ -1,6 +1,5 @@
 {
   "base_url": "https://derekenos.com",
-
   "all_tags": [
     "8bit",
     "app",
@@ -48,7 +47,6 @@
     "wifi",
     "wood"
   ],
-
   "large_static_store": {
     "type": "S3",
     "aws_profile": "digitalocean",
@@ -56,29 +54,74 @@
     "s3_url": "s3://derekenos-com/",
     "endpoint": "https://derekenos-com.nyc3.cdn.digitaloceanspaces.com"
   },
-
   "name": "Derek Enos",
   "email": "derek@derekenos.com",
   "social_name_url_pairs": [
-    ["Github", "https://github.com/derekenos"],
-    ["Instagram", "https://www.instagram.com/derekjenos"],
-    ["YouTube", "https://www.youtube.com/derekenos"],
-    ["LinkedIn", "https://www.linkedin.com/in/derekenos"],
-    ["Patreon", "https://www.patreon.com/derekenos"]
+    [
+      "Github",
+      "https://github.com/derekenos"
+    ],
+    [
+      "Instagram",
+      "https://www.instagram.com/derekjenos"
+    ],
+    [
+      "YouTube",
+      "https://www.youtube.com/derekenos"
+    ],
+    [
+      "LinkedIn",
+      "https://www.linkedin.com/in/derekenos"
+    ],
+    [
+      "Patreon",
+      "https://www.patreon.com/derekenos"
+    ]
   ],
-
   "google_analytics_id": "UA-19335494-1",
-
-  "navbar_page_name_label_pairs": [
-    ["index", "home"],
-    ["projects", "projects"],
-    ["ideas", "ideas"],
-    ["tags", "tags"],
-    ["contact", "contact"]
+  "normalized_image_filename_template": "{item_name}-{asset_id}-{width}px-original{extension}",
+  "normalized_video_filename_template": "{item_name}-{asset_id}-original{extension}",
+  "normalized_image_filename_regex": "^(?P<item_name>.*)\\-(?P<asset_id>[a-z0-9]+)\\-(?P<width>\\d+)px\\-original(?P<extension>.+)$",
+  "derivative_image_filename_template": "{item_name}-{asset_id}-{width}px{extension}",
+  "derivative_video_poster_filename_template": "{base_filename}-poster.png",
+  "prioritized_derivative_image_mimetypes": [
+    "image/webp",
+    "image/png"
   ],
-
+  "derivative_image_widths": [
+    2500,
+    1500,
+    1000,
+    750,
+    500,
+    300,
+    100
+  ],
+  "fallback_image_width": 750,
+  "collection_item_picture_sizes": "(min-width: 1024px) 25vw, 94vw",
+  "navbar_page_name_label_pairs": [
+    [
+      "index",
+      "home"
+    ],
+    [
+      "projects",
+      "projects"
+    ],
+    [
+      "ideas",
+      "ideas"
+    ],
+    [
+      "tags",
+      "tags"
+    ],
+    [
+      "contact",
+      "contact"
+    ]
+  ],
   "projects": [
-
     {
       "name": "Static Site Generator",
       "slug": "/project-derekenos-com-generator",
@@ -92,15 +135,14 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "base_filename": "derekenos_com_generator_thumb",
-          "name": "Screenshot of derekenos.com-generator Source Code",
-          "description": "screenshot of derekenos.com-generator source code"
+          "filename": "project-static-site-generator-4cb061e3-1146px-original.webp",
+          "name": "Static Site Generator",
+          "description": "A picture of the Static Site Generator"
         }
       ],
       "description": "I built this static website generator to maintain my personal website, derekenos.com.<br><br>It's relatively simple, has accessibility, SEO best practices, and structured data (via Open Graph tags and Microdata markup) built in, supports cloud object storage for large static files, and has a live-reload feature for more joyful local development.",
       "github_url": "https://github.com/derekenos/derekenos.com-generator"
     },
-
     {
       "name": "HTMLephant",
       "hide_card": true,
@@ -115,9 +157,9 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "base_filename": "htmlephant_thumb",
-          "name": "Screenshot of HTMLephant Source Code",
-          "description": "screenshot of HTMLephant source code"
+          "filename": "project-htmlephant-f3c46928-714px-original.webp",
+          "name": "HTMLephant",
+          "description": "A picture of the HTMLephant"
         }
       ],
       "github_url": "https://github.com/derekenos/htmlephant",
@@ -126,7 +168,6 @@
         "femtoweb"
       ]
     },
-
     {
       "name": "femtoweb",
       "hide_card": true,
@@ -143,9 +184,9 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "base_filename": "femtoweb_thumb",
-          "name": "Screenshot of femtoweb Source Code",
-          "description": "screenshot of femtoweb source code"
+          "filename": "project-femtoweb-d80c32e4-750px-original.webp",
+          "name": "femtoweb",
+          "description": "A picture of the femtoweb"
         }
       ],
       "github_url": "https://github.com/derekenos/femtoweb",
@@ -158,7 +199,6 @@
         "iome"
       ]
     },
-
     {
       "name": "Weather Station",
       "slug": "/project-weather-station",
@@ -174,25 +214,22 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "weather_station_thumb",
+          "filename": "project-weather-station-efe7b6da-1224px-original.png",
           "name": "Weather Station",
-          "description": "photo of a laser-cut wood weather station"
+          "description": "A picture of the Weather Station"
+        },
+        {
+          "filename": "project-weather-station-384a2943-4048px-original.jpg",
+          "name": "Weather Station",
+          "description": "A picture of the Weather Station"
         }
       ],
       "description": "This project uses laser-cut, servo-powered gauges to display the current local weather forecast.",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/n43fajMjPJhvcqR47"
-        ]
-      ],
       "videos": [
         {
-          "filename": "weather_station.mp4",
-          "thumb_filename": "weather_station_mp4_thumb.png",
-          "name": "Weather Station Introduction",
-          "description": "The weather station powering up, spinning the busy indicator, and displaying the forecast."
+          "filename": "project-weather-station-82fc52a8-original.mp4",
+          "name": "Weather Station",
+          "description": "A movie of the Weather Station"
         }
       ],
       "collateral_creations": [
@@ -202,7 +239,6 @@
         "UTF-8 Decoder"
       ]
     },
-
     {
       "name": "Indicator Gauge",
       "hide_card": true,
@@ -216,24 +252,36 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "laser_cut_servo_powered_gauge_4",
+          "filename": "project-indicator-gauge-4f8a33ce-400px-original.jpg",
           "name": "Indicator Gauge",
-          "description": "photo of laser-cut, servo-powered gauge"
+          "description": "A picture of the Indicator Gauge"
+        },
+        {
+          "filename": "project-indicator-gauge-9afe139b-400px-original.jpg",
+          "name": "Indicator Gauge",
+          "description": "A picture of the Indicator Gauge"
+        },
+        {
+          "filename": "project-indicator-gauge-21bdcf7e-400px-original.jpg",
+          "name": "Indicator Gauge",
+          "description": "A picture of the Indicator Gauge"
+        },
+        {
+          "filename": "project-indicator-gauge-0fab3188-400px-original.jpg",
+          "name": "Indicator Gauge",
+          "description": "A picture of the Indicator Gauge"
+        },
+        {
+          "filename": "project-indicator-gauge-dbb389e4-400px-original.jpg",
+          "name": "Indicator Gauge",
+          "description": "A picture of the Indicator Gauge"
         }
       ],
       "description": "I designed this gauge as part of the Weather Station project.",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/w86c6Ep67xc9LZcf7"
-        ]
-      ],
       "dependent_of": [
         "Weather Station"
       ]
     },
-
     {
       "name": "Streaming JSON Parser",
       "hide_card": true,
@@ -249,9 +297,9 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "base_filename": "json_parser_thumb",
-          "name": "JSON Parser",
-          "description": "screenshot of json-parser library source code"
+          "filename": "project-streaming-json-parser-f0d00137-758px-original.webp",
+          "name": "Streaming JSON Parser",
+          "description": "A picture of the Streaming JSON Parser"
         }
       ],
       "description": "",
@@ -260,7 +308,6 @@
       ],
       "github_url": "https://github.com/derekenos/json-parser"
     },
-
     {
       "name": "time.strptime()",
       "hide_card": true,
@@ -272,20 +319,19 @@
         "python3"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-        {
-          "base_filename": "strptime_thumb",
-          "name": "time.strptime()",
-          "description": "screenshot of time.strptime() library source code"
-        }
-      ],
       "description": "",
       "dependent_of": [
         "Weather Station"
       ],
-      "github_url": "https://github.com/derekenos/micropython-time"
+      "github_url": "https://github.com/derekenos/micropython-time",
+      "images": [
+        {
+          "filename": "project-time-strptime---33226283-758px-original.webp",
+          "name": "time.strptime()",
+          "description": "A picture of the time.strptime()"
+        }
+      ]
     },
-
     {
       "name": "UTF-8 Decoder",
       "hide_card": true,
@@ -297,20 +343,19 @@
         "unicode"
       ],
       "type": "SoftwareSourceCode",
-      "images": [
-        {
-          "base_filename": "utf8_decoder_thumb",
-          "name": "UTF-8 Decoder",
-          "description": "screenshot of UTF-8 decoder library source code"
-        }
-      ],
       "description": "",
       "dependent_of": [
         "Weather Station"
       ],
-      "github_url": "https://github.com/derekenos/utf8_decoder"
+      "github_url": "https://github.com/derekenos/utf8_decoder",
+      "images": [
+        {
+          "filename": "project-utf-8-decoder-009b0947-758px-original.webp",
+          "name": "UTF-8 Decoder",
+          "description": "A picture of the UTF-8 Decoder"
+        }
+      ]
     },
-
     {
       "name": "Cardboard Boxcade",
       "slug": "/project-cardboard-boxcade",
@@ -326,21 +371,90 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "cardboard_boxcade_thumb",
+          "filename": "project-cardboard-boxcade-4dcf0690-4048px-original.jpg",
           "name": "Cardboard Boxcade",
-          "description": "photo of a cardboard box with a screen and switches"
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-19c84043-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-c2e90e68-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-b546b3a0-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-1fa04b55-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-f377c959-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-559a1590-3036px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-84fe164f-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-85d80090-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-23f4bdbb-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-6b9964cc-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-934b8bfc-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-1d1e06e0-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-bdc68662-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
+          "filename": "project-cardboard-boxcade-61d695f7-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
         }
       ],
       "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/rdZx6bYMPJ1KLtBg9"
-        ]
+      "videos": [
+        {
+          "filename": "project-cardboard-boxcade-e0e3880f-original.mp4",
+          "name": "Cardboard Boxcade",
+          "description": "A movie of the Cardboard Boxcade"
+        }
       ]
     },
-
     {
       "name": "Trtl",
       "slug": "/project-trtl",
@@ -359,24 +473,16 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "trtl_thumb",
-          "name": "Trtl Drawing Robot",
-          "description": "photo of the T.r.t.l. drawing robot"
+          "filename": "project-trtl-fff59022-4048px-original.jpg",
+          "name": "Trtl",
+          "description": "A picture of the Trtl"
         }
       ]
     },
-
     {
       "name": "Weezel",
       "slug": "/project-weezel",
-      "short_description": "A drawing robot accessory for the Ikea MÅLA easel.",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/4Nu9vLZbMouLfBRD7"
-        ]
-      ],
+      "short_description": "A drawing robot accessory for the Ikea M\u00c5LA easel.",
       "tags": [
         "art",
         "cnc",
@@ -391,24 +497,163 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "weezel_thumb",
-          "name": "Weezel Drawing Robot",
-          "description": "photo of the Weezel drawing robot"
+          "filename": "project-weezel-81ce9409-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-33718d12-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-93a121cc-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-80a95725-3036px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-dfca7621-3036px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-00b3ec48-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-ef1e2b06-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-4c60166f-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-0433cc14-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-b5cd0834-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-e7d90556-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-b9ab1159-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-02c005a0-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-bec5668c-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-0eae2a0a-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-e833b6f6-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-weezel-983d7924-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-1b8be62e-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-b22a6a1f-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-71f25e93-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-4e67b02e-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-3b378b60-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-156f7003-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-72968b7f-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-e1315bb0-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-34f3bc70-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-653e593c-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-ee88eed2-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-0bfd3168-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
+        },
+        {
+          "filename": "project-weezel-1c0df222-original.mp4",
+          "name": "Weezel",
+          "description": "A movie of the Weezel"
         }
       ]
     },
-
     {
       "name": "Modular Arcade Cabinet",
       "slug": "/project-modular-arcade-cabinet",
       "short_description": "A work in progress...",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/KerbLsQsoxEZwaqK7"
-        ]
-      ],
       "tags": [
         "bolts",
         "cnc",
@@ -420,13 +665,79 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "arcade_cabinet_thumb",
+          "filename": "project-modular-arcade-cabinet-4995fe8d-3036px-original.jpg",
           "name": "Modular Arcade Cabinet",
-          "description": "lasercut arcade cabinet scale model photo"
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-d02937f1-3036px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-62bd63b4-4048px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-6353f71d-4048px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-cbd57374-4048px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-1176fff5-3036px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-05caa0d8-3036px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-f1fe7b23-4048px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-75d55627-4048px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-c58ec0db-3036px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-b6106979-3036px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-de391b64-4048px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        },
+        {
+          "filename": "project-modular-arcade-cabinet-06db98bc-3036px-original.jpg",
+          "name": "Modular Arcade Cabinet",
+          "description": "A picture of the Modular Arcade Cabinet"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-modular-arcade-cabinet-0265c60f-original.mp4",
+          "name": "Modular Arcade Cabinet",
+          "description": "A movie of the Modular Arcade Cabinet"
         }
       ]
     },
-
     {
       "name": "Gritty Viddy",
       "slug": "/project-gritty-viddy",
@@ -443,14 +754,13 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "base_filename": "gritty-viddy",
-          "name": "Gritty Viddy Browser-based Video Effects",
-          "description": "gritty viddy video effects app screenshot"
+          "filename": "project-gritty-viddy-6d38d732-1920px-original.png",
+          "name": "Gritty Viddy",
+          "description": "A picture of the Gritty Viddy"
         }
       ],
       "github_url": "https://github.com/derekenos/gritty-viddy"
     },
-
     {
       "name": "Important Message",
       "slug": "/project-important-message",
@@ -468,9 +778,9 @@
       "operating_system": "Web Browser",
       "images": [
         {
-          "base_filename": "important-message",
-          "name": "Important Message Cloudflare App",
-          "description": "Important Message app banner image"
+          "filename": "project-important-message-581d5f43-420px-original.png",
+          "name": "Important Message",
+          "description": "A picture of the Important Message"
         }
       ],
       "external_link_prop_name_url_tuples": [
@@ -481,18 +791,10 @@
         ]
       ]
     },
-
     {
       "name": "Sketchy",
       "slug": "/project-sketchy",
       "short_description": "Internet-connected Motorized Etch-A-Sketch",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/4UtGs1rNt6jChj3T8"
-        ]
-      ],
       "tags": [
         "art",
         "microcontroller",
@@ -503,24 +805,42 @@
         "wifi"
       ],
       "type": "CreativeWork",
+      "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy",
       "images": [
         {
-          "base_filename": "sketchy_thumb",
-          "name": "Sketchy, A Robotic Etch-A-Sketch",
-          "description": "photo of motorized Etch-A-Sketch"
+          "filename": "project-sketchy-970c14a9-4048px-original.jpg",
+          "name": "Sketchy",
+          "description": "A picture of the Sketchy"
+        },
+        {
+          "filename": "project-sketchy-45aaadc4-4048px-original.jpg",
+          "name": "Sketchy",
+          "description": "A picture of the Sketchy"
+        },
+        {
+          "filename": "project-sketchy-ca2b7431-4048px-original.jpg",
+          "name": "Sketchy",
+          "description": "A picture of the Sketchy"
         }
       ],
       "videos": [
         {
-          "filename": "sketchy.mp4",
-          "thumb_filename": "sketchy_video_poster.png",
-          "name": "Sketchy Demonstration",
-          "description": "An early demonstration of Sketchy writing its name."
+          "filename": "project-sketchy-f51a8a56-original.mp4",
+          "name": "Sketchy",
+          "description": "A movie of the Sketchy"
+        },
+        {
+          "filename": "project-sketchy-3e40fc58-original.mp4",
+          "name": "Sketchy",
+          "description": "A movie of the Sketchy"
+        },
+        {
+          "filename": "project-sketchy-ef6c77a4-original.mp4",
+          "name": "Sketchy",
+          "description": "A movie of the Sketchy"
         }
-      ],
-      "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy"
+      ]
     },
-
     {
       "name": "Babygate",
       "slug": "/project-babygate",
@@ -537,21 +857,19 @@
       "operating_system": "Web Browser",
       "images": [
         {
-          "base_filename": "babygate_thumb",
-          "name": "Babygate Video Game",
-          "description": "screenshot of Babygate video game"
+          "filename": "project-babygate-a6ee8df2-1920px-original.png",
+          "name": "Babygate",
+          "description": "A picture of the Babygate"
         }
       ],
       "videos": [
         {
-          "filename": "iome_dev_kit_v1.mp4",
-          "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
-          "name": "Babygate Video Game Demo",
-          "description": "Demonstration of the Babygate video game played using the iome Dev Kit v1"
+          "filename": "project-iome-43a5b6ea-original.mp4",
+          "name": "Babygate",
+          "description": "A movie of the Babygate video game"
         }
       ]
     },
-
     {
       "name": "iome",
       "slug": "/project-iome",
@@ -566,35 +884,39 @@
         "wifi"
       ],
       "type": "CreativeWork",
+      "github_url": "https://github.com/derekenos/iome",
+      "collateral_creations": [
+        "Babygate"
+      ],
       "images": [
         {
-          "base_filename": "game_console_20191008_thumb",
-          "name": "iome, A platform for physical web application development",
-          "description": "lasercut iome dev kit photo"
+          "filename": "project-iome-6143a777-4048px-original.jpg",
+          "name": "iome",
+          "description": "A picture of the iome"
+        },
+        {
+          "filename": "project-iome-10b6409c-4048px-original.jpg",
+          "name": "iome",
+          "description": "A picture of the iome"
+        },
+        {
+          "filename": "project-iome-7313c58a-4048px-original.jpg",
+          "name": "iome",
+          "description": "A picture of the iome"
         }
       ],
       "videos": [
         {
-          "filename": "iome_dev_kit_v1.mp4",
-          "thumb_filename": "iome_dev_kit_v1_mp4_thumb.png",
-          "name": "iome Dev Kit v1 Demo",
-          "description": "Demonstration of the iome Dev Kit v1"
+          "filename": "project-iome-43a5b6ea-original.mp4",
+          "name": "iome",
+          "description": "A movie of the iome"
         }
-      ],
-      "github_url": "https://github.com/derekenos/iome"
+      ]
     },
-
     {
       "name": "Laser-cut Keypad",
       "slug": "/project-laser-cut-keypad",
       "short_description": "A Internet-connected Keypad w/ Backlit, Lasercut Living Hinge Buttons.",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/tzytTZA3BoazBSDr7"
-        ]
-      ],
       "tags": [
         "microcontroller",
         "micropython",
@@ -604,13 +926,34 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "lasercut_keypad_thumb",
+          "filename": "project-laser-cut-keypad-9dbea680-4048px-original.jpg",
           "name": "Laser-cut Keypad",
-          "description": "photo of laser-cut wooden keypad"
+          "description": "A picture of the Laser-cut Keypad"
+        },
+        {
+          "filename": "project-laser-cut-keypad-cd054916-4048px-original.jpg",
+          "name": "Laser-cut Keypad",
+          "description": "A picture of the Laser-cut Keypad"
+        },
+        {
+          "filename": "project-laser-cut-keypad-aeb97ff1-2862px-original.jpg",
+          "name": "Laser-cut Keypad",
+          "description": "A picture of the Laser-cut Keypad"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-laser-cut-keypad-56dee6a7-original.mp4",
+          "name": "Laser-cut Keypad",
+          "description": "A movie of the Laser-cut Keypad"
+        },
+        {
+          "filename": "project-laser-cut-keypad-e896cfc6-original.mp4",
+          "name": "Laser-cut Keypad",
+          "description": "A movie of the Laser-cut Keypad"
         }
       ]
     },
-
     {
       "name": "Physical Platformer Game Prototype",
       "slug": "/project-physical-platformer-game-prototype",
@@ -626,15 +969,21 @@
         "wifi"
       ],
       "type": "CreativeWork",
+      "videos": [
+        {
+          "filename": "project-physical-platformer-game-prototype-600930f1-original.mp4",
+          "name": "Physical Platformer Game Prototype",
+          "description": "A movie of the Physical Platformer Game Prototype"
+        }
+      ],
       "images": [
         {
-          "base_filename": "platformer_thumb",
+          "filename": "project-physical-platformer-game-prototype-003419d0-1920px-original.png",
           "name": "Physical Platformer Game Prototype",
-          "description": "photo of motorized x/y axis made from laser-cut wood"
+          "description": "A picture of the Physical Platformer Game Prototype"
         }
       ]
     },
-
     {
       "name": "Delta Robot",
       "slug": "/project-delta-robot",
@@ -650,31 +999,87 @@
         "wifi"
       ],
       "type": "CreativeWork",
+      "github_url": "https://github.com/derekenos/delta_robot",
       "images": [
         {
-          "base_filename": "delta_robot_thumb",
-          "name": "Laser-cut Delta Robot",
-          "description": "photo of delta robot made from laser-cut wood"
+          "filename": "project-delta-robot-a2ac0a81-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-077d5920-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-cb438149-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-21736f04-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-05966c8c-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-733db74a-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-ea7a2f52-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-532c0554-2788px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-a0fb2416-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-2a599b1a-3036px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-1ba2eb32-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
         }
       ],
       "videos": [
         {
-          "filename": "delta_robot.mp4",
-          "thumb_filename": "delta_robot_poster.png",
-          "name": "Delta Robot Demonstration",
-          "description": "A laser-cut delta robot drawing a grid of dots."
+          "filename": "project-delta-robot-65f86187-original.mp4",
+          "name": "Delta Robot",
+          "description": "A movie of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-c648724f-original.mp4",
+          "name": "Delta Robot",
+          "description": "A movie of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-e1b8412d-original.mp4",
+          "name": "Delta Robot",
+          "description": "A movie of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-0e4ffa7f-original.mp4",
+          "name": "Delta Robot",
+          "description": "A movie of the Delta Robot"
         }
-      ],
-      "github_url": "https://github.com/derekenos/delta_robot",
-      "external_link_prop_name_url_tuples": [
-        [
-          "mainEntityOfPage",
-          "Google Photos Album",
-          "https://photos.app.goo.gl/YxzYmPZedq4qrStS8"
-        ]
       ]
     },
-
     {
       "name": "Composer",
       "slug": "/project-composer",
@@ -692,13 +1097,19 @@
       "operating_system": "Web Browser",
       "images": [
         {
-          "base_filename": "composer",
-          "name": "Composer, A Web-based Audio Composition Toy",
-          "description": "sound composer web app screenshot"
+          "filename": "project-composer-9fb7fad3-1920px-original.png",
+          "name": "Composer",
+          "description": "A picture of the Composer"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-composer-ce732f28-original.mp4",
+          "name": "Composer",
+          "description": "A movie of the Composer"
         }
       ]
     },
-
     {
       "name": "Ion Model",
       "slug": "/project-ion-model",
@@ -715,18 +1126,23 @@
       "live_url": "/static/projects/sim/",
       "images": [
         {
-          "base_filename": "ionModelScreenThumb",
-          "name": "Web-based Ion Model Simulator",
-          "description": "ion model application screenshot"
+          "filename": "project-ion-model-4c42c711-1920px-original.png",
+          "name": "Ion Model",
+          "description": "A picture of the Ion Model"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-ion-model-101121e5-original.mp4",
+          "name": "Ion Model",
+          "description": "A movie of the Ion Model"
         }
       ]
     },
-
     {
       "name": "deMIDulator",
       "slug": "/project-demidulator",
       "short_description": "A lo-fi, MIDI-controlled synthesizer and sampler.",
-      "description": "More info at <a href=\"http://badhandshake.com/demidulator/\">badhandshake.com</a>",
       "tags": [
         "8bit",
         "assemblylanguage",
@@ -739,15 +1155,88 @@
         "synthesizer"
       ],
       "type": "CreativeWork",
+      "external_link_prop_name_url_tuples": [
+        [
+          "mainEntityOfPage",
+          "More info at badhandshake.com",
+          "http://badhandshake.com/demidulator/index.html"
+        ]
+      ],
       "images": [
         {
-          "base_filename": "demidulator_thumb",
-          "name": "deMIDulator 8-bit MIDI sampler / synth",
-          "description": "photo of the deMIDulator 8-bit synth"
+          "filename": "project-demidulator-df36e55e-2410px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-c5396ae0-1199px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-9a12fcf6-2738px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-d56f0a5f-2598px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-29841268-2674px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-8f2e56e8-2495px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-bc9f3cd2-1161px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-2f4fec25-1235px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-c734b06c-1205px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-65bbd3a1-775px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-e33a0eb9-775px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-c369ad80-986px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-eeb5f55f-1373px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-demidulator-c4055085-original.mp4",
+          "name": "deMIDulator",
+          "description": "A movie of the deMIDulator"
         }
       ]
     },
-
     {
       "name": "Beginner's Box",
       "slug": "/project-beginner-s-box",
@@ -762,13 +1251,79 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "beginners_box_thumb",
+          "filename": "project-beginner-s-box-a772d6fc-3264px-original.jpg",
           "name": "Beginner's Box",
-          "description": "photo of laser-cut force-sensitive tone generator boxes"
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-316f6beb-2736px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-db874177-2736px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-eb789b66-2736px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-6ac3453e-3264px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-b0c15099-3264px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-956898af-3648px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-a2226298-3648px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-2eb146f3-3648px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-2d062b6e-3648px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-d1ebc8d1-3264px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-aac8bf6a-3648px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        },
+        {
+          "filename": "project-beginner-s-box-e99b184a-3648px-original.jpg",
+          "name": "Beginner's Box",
+          "description": "A picture of the Beginner's Box"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-beginner-s-box-9ef6bdbb-original.mp4",
+          "name": "Beginner's Box",
+          "description": "A movie of the Beginner's Box"
         }
       ]
     },
-
     {
       "name": "Video Feedback Instrument",
       "slug": "/project-video-feedback-instrument",
@@ -781,13 +1336,19 @@
       "type": "CreativeWork",
       "images": [
         {
-          "base_filename": "video_feedback_thumb",
+          "filename": "project-video-feedback-instrument-01b04ed7-1920px-original.png",
           "name": "Video Feedback Instrument",
-          "description": "video screenshot of video feedback instrument"
+          "description": "A picture of the Video Feedback Instrument"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-video-feedback-instrument-9e635055-original.mp4",
+          "name": "Video Feedback Instrument",
+          "description": "A movie of the Video Feedback Instrument"
         }
       ]
     },
-
     {
       "name": "Physical Interface Prototype",
       "slug": "/project-physical-interface-prototype",
@@ -799,11 +1360,30 @@
         "physicalcomputing"
       ],
       "type": "CreativeWork",
+      "external_link_prop_name_url_tuples": [
+        [
+          "mainEntityOfPage",
+          "More info at badhandshake.com",
+          "http://badhandshake.com/concepts/physicalControllerA.html"
+        ]
+      ],
       "images": [
         {
-          "base_filename": "physical_interface_thumb",
+          "filename": "project-physical-interface-prototype-2b27ac07-2431px-original.jpg",
           "name": "Physical Interface Prototype",
-          "description": "photo of laser-cut physical interface prototype"
+          "description": "A picture of the Physical Interface Prototype"
+        },
+        {
+          "filename": "project-physical-interface-prototype-f265d507-1015px-original.png",
+          "name": "Physical Interface Prototype",
+          "description": "A picture of the Physical Interface Prototype"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-physical-interface-prototype-7ffa454f-original.mp4",
+          "name": "Physical Interface Prototype",
+          "description": "A movie of the Physical Interface Prototype"
         }
       ]
     }

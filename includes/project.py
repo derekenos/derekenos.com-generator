@@ -15,7 +15,9 @@ from lib.htmlephant import (
 
 from pages import tag_generator
 from includes import (
+    collection,
     picture,
+    prop_collection,
     prop_links_list,
     scope_links_list,
     section,
@@ -44,9 +46,10 @@ def Body(context,
          operating_system=None,
          videos=None,
     ):
-    image = images[0]
-    image_base_filename = image['base_filename']
+
+
     # Inline includes.section to specify itemprops.
+    image = images[0]
     els = [
         Section(children=(
             H2(name, itemprop=md.Props.name),
@@ -63,11 +66,10 @@ def Body(context,
             *picture.Body(
                 context,
                 itemprop=md.Props.subjectOf,
-                srcsets=(context.static(fn:=f'{image_base_filename}.webp'),),
-                src=context.static(f'{image_base_filename}.png'),
+                sources=image['sources'],
+                sizes='90vw',
                 name=image['name'],
-                description=image['description'],
-                upload_date=context.static_last_modified_iso8601(fn)
+                description=image['description']
             )
         ))
     ]
@@ -183,29 +185,6 @@ def Body(context,
             )
         )
 
-    # Add videos.
-    if videos:
-        els.extend(
-            section.Body(
-                context,
-                'Videos',
-                children=chain((
-                    video.Body(
-                        context,
-                        itemprop=md.Props.subjectOf,
-                        src=context.static(vid['filename']),
-                        poster=context.static(vid['thumb_filename']),
-                        name=vid['name'],
-                        description=vid['description'],
-                        upload_date=context.static_last_modified_iso8601(
-                            vid['filename']
-                        )
-                    )
-                    for vid in videos
-                )),
-            )
-        )
-
     # Add external links.
     if external_link_prop_name_url_tuples:
         els.extend(
@@ -215,6 +194,57 @@ def Body(context,
                 children=prop_links_list.Body(
                     context,
                     prop_name_url_tuples=external_link_prop_name_url_tuples
+                )
+            )
+        )
+
+    # Add videos.
+    if videos:
+        els.extend(
+            section.Body(
+                context,
+                'Videos',
+                children=prop_collection.Body(
+                    context,
+                    items=[
+                        video.Body(
+                            context,
+                            itemprop=md.Props.subjectOf,
+                            src=vid['source'].url,
+                            mimetype=vid['source'].mimetype,
+                            upload_date=vid['source'].last_modified.isoformat(),
+                            poster_src=vid['source'].poster_url,
+                            name=vid['name'],
+                            description=vid['description']
+                        )
+                        for vid in videos
+                    ]
+                )
+            )
+        )
+
+    # Add images.
+    if len(images) > 1:
+        els.extend(
+            section.Body(
+                context,
+                'More Images',
+                children=prop_collection.Body(
+                    context,
+                    items=[
+                        (Anchor(
+                            href=image['sources']['original'].url,
+                            children=picture.Body(
+                                context,
+                                itemprop=md.Props.subjectOf,
+                                sources=image['sources'],
+                                sizes=context.collection_item_picture_sizes,
+                                name=image['name'],
+                                description=image['description']
+                            )
+                        ),)
+                        for image in images[1:]
+                    ]
                 )
             )
         )

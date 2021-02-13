@@ -1,4 +1,8 @@
+"""General, Python2.7-friendly, utilities.
+"""
 
+import hashlib
+import mimetypes
 import os
 import shutil
 import re
@@ -15,9 +19,11 @@ slugify = lambda s: SLUGIFY_REGEX.sub('-', s).lower()
 
 def assert_ctx(context, k):
     if not hasattr(context, k):
-        raise AssertionError(f'context has no attribute "{k}"')
+        raise AssertionError('context has no attribute "{}"'.format(k))
     if not getattr(context, k):
-        raise AssertionError(f'context.{k} is not defined, or otherwise falsy')
+        raise AssertionError(
+            'context.{} is not defined, or otherwise falsy'.format(k)
+        )
     return True
 
 # Define am empty include/macro Head/Body placeholder function.
@@ -32,3 +38,47 @@ def copy_if_newer(src, dest):
         shutil.copy2(src, dest)
         return True
     return False
+
+def guess_mimetype(path):
+    """Define a mimetypes.guess_type() wrapper that returns just the type and
+    also handles webp.
+    """
+    if path.endswith('.webp'):
+        return 'image/webp'
+    return mimetypes.guess_type(path)[0]
+
+def guess_extension(mimetype):
+    """Define a mimetypes.guess_extension() wrapper that handles webp and
+    raises an exception on unguessable type.
+    """
+    if mimetype == 'image/webp':
+        return '.webp'
+    extension = mimetypes.guess_extension(mimetype)
+    if extension is None:
+        raise AssertionError(
+            'can not guess extension for mimetype: {}'.format(mimetype)
+        )
+    return extension
+
+def listfiles(_dir):
+    """Yield each non-directory entry in a directory along with its full path.
+    """
+    for filename in os.listdir(_dir):
+        path = os.path.join(_dir, filename)
+        if not os.path.isdir(path):
+            yield filename, path
+
+def md5sum(path):
+    """Return the MD5 hash of the file contents.
+    """
+    BUF_SIZE = 1024 * 64
+    buf = bytearray(BUF_SIZE)
+    mv = memoryview(buf)
+    md5 = hashlib.md5()
+    with open(path, 'rb') as fh:
+        while True:
+            num_bytes = fh.readinto(buf)
+            md5.update(mv[:num_bytes])
+            if num_bytes < BUF_SIZE:
+                break
+    return md5.hexdigest()

@@ -1,9 +1,16 @@
 
 import os
+import re
+from collections import namedtuple
 from datetime import datetime
+from itertools import count
 
-from lib import large_static_store
-from lib import microdata
+from lib import (
+    large_static_store,
+    microdata,
+    guess_extension,
+    guess_mimetype,
+)
 
 COLLATERAL_CREATIONS = 'collateral_creations'
 DEPENDS_ON = 'depends_on'
@@ -14,6 +21,20 @@ DEPENDENT_OF = 'dependent_of'
 ###############################################################################
 
 class InvalidContext(Exception): pass
+
+###############################################################################
+# Types
+###############################################################################
+
+ImageSource = namedtuple(
+    'ImageSource',
+    ('filename', 'mimetype', 'url', 'width', 'last_modified')
+)
+
+VideoSource = namedtuple(
+    'VideoSource',
+    ('filename', 'mimetype', 'url', 'last_modified', 'poster_url')
+)
 
 ###############################################################################
 # Helpers
@@ -35,7 +56,7 @@ class Context:
     SITE_DIR = 'site'
     SITE_RELATIVE_STATIC_DIR = 'static'
     SITE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_STATIC_DIR}'
-    STATIC_LARGE_FILE_THRESHOLD_MB = 1
+    STATIC_LARGE_FILE_THRESHOLD_KB = 100
     SITE_RELATIVE_LARGE_STATIC_DIR = f'static/_large'
     SITE_LARGE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_LARGE_STATIC_DIR}'
     SITEMAP_FILENAME = 'sitemap.txt'
@@ -48,6 +69,7 @@ class Context:
             for mod_name in os.listdir(self.PAGES_DIR)
             if mod_name.endswith('.py')
         ]
+
         # Initialize runtime attributes.
         self.current_page = None
         self.current_page_mod = None
@@ -74,26 +96,35 @@ class Context:
             msg += ' locally or in large static store'
         raise FileNotFoundError(f'{msg}: {path}')
 
-    def static_last_modified_iso8601(self, filename):
-        # If the file exists, locally, stat it and return the result.
+    def static_last_modified(self, filename):
+        """Return a datetime object representing the static file's
+        last-modified time.
+        """
         path = os.path.join(self.STATIC_DIR, filename)
         if os.path.exists(path):
-            return datetime.fromtimestamp(os.stat(path).st_mtime).isoformat()
-        # The file does not exist locally, so check the lss.
-        if self.lss and self.lss.exists(filename):
-            return self.lss.meta(filename).last_modified.isoformat()
-        self.raise_static_not_found(filename)
+            # The file exists locally, so stat it.
+            last_modified = datetime.fromtimestamp(os.stat(path).st_mtime)
+        elif self.lss and self.lss.exists(filename):
+            # The file does not exist locally, so check the lss.
+            last_modified = self.lss.meta(filename).last_modified
+        else:
+            self.raise_static_not_found(filename)
+        # Truncate microseconds.
+        return last_modified.replace(microsecond=0)
 
-    def static(self, filename):
-        """Format filename as a static asset path, assert that the file exists,
-        and return the path.
+    def static(self, filename, raise_on_not_found=True):
+        """Format filename as a static asset path, optionally assert that the
+        file exists, and return the path. If file does not exist and
+        raise_on_not_found=False, return None.
         """
         fs_path = f'{self.STATIC_DIR}/{filename}'
         # Check that file exists either locally or in the lss.
         if not os.path.isfile(fs_path):
             # If the file exist in the lss, return that URL.
             if not self.lss or not self.lss.exists(filename):
-                self.raise_static_not_found(fs_path)
+                if raise_on_not_found:
+                    self.raise_static_not_found(fs_path)
+                return None
             # File exists in lss.
             path = f'{self.large_static_store["endpoint"]}/{filename}'
         elif not self.is_large_static(filename):
@@ -105,8 +136,10 @@ class Context:
                 path = f'{self.large_static_store["endpoint"]}/{filename}'
             else:
                 # Warn if the file exists both locally and in the lss manifest.
-                if self.lss and self.lss.exists(filename):
-                    print(f'Large, local file "{filename}" exists in the LSS.')
+                # TODO - this makes development super-slow with all of the new
+                #        auto-generated assets. Figure out what to do.
+                # if self.lss and self.lss.exists(filename):
+                #     print(f'Large, local file "{filename}" exists in the LSS.')
                 path = os.path.join(
                     self.SITE_RELATIVE_LARGE_STATIC_DIR,
                     filename
@@ -117,18 +150,23 @@ class Context:
         path = f'{self.STATIC_DIR}/{filename}'
         if not os.path.isfile(path):
             raise AssertionError(f'Path is not a regular file: {path}')
-        return os.stat(path).st_size / 1024 / 1024 \
-            >= self.STATIC_LARGE_FILE_THRESHOLD_MB
+        return os.stat(path).st_size / 1024 \
+            >= self.STATIC_LARGE_FILE_THRESHOLD_KB
 
     def url(self, path):
         """Return path as an absolute URL.
         """
-        return f'{self.base_url if self.production else ""}/{path.lstrip("/")}'
+        return f'{self.base_url}/{path.lstrip("/")}'
 
     def static_url(self, filename):
         """Return an absolute URL for a static asset filename.
         """
-        return self.url(self.static(filename))
+        # Get the static path, which may be an absolute URL if environment is
+        # production and asset qualifies for large storage.
+        path = self.static(filename)
+        if path.startswith(('http://', 'https://')):
+            return path
+        return self.url(path)
 
     def open(self, path):
         """Return a writable UTF-8 file handle for a self.SITE_DIR sub-path.
@@ -137,10 +175,134 @@ class Context:
         return open(path, 'w', encoding='utf-8')
 
 ###############################################################################
+# Normalize Project Videos
+###############################################################################
+
+def add_source(context, video):
+    """Add a VideoSource-type source property to the video dict that comprises
+    a bunch of computed values.
+    """
+    filename = video['filename']
+    video['source'] = VideoSource(
+        filename=filename,
+        mimetype=guess_mimetype(filename),
+        url=context.static(filename),
+        last_modified=context.static_last_modified(filename),
+        poster_url=context.static(
+            context.derivative_video_poster_filename_template.format(
+                base_filename=os.path.splitext(filename)[0]
+            )
+        )
+    )
+
+def normalize_videos(context, videos):
+    for video in videos:
+        add_source(context, video)
+
+###############################################################################
+# Normalize Project Images
+###############################################################################
+
+def get_fallback_image_source(context, original_width, item_name, asset_id):
+    """Return a fallback image source tuple for the specified item name and
+    # assset file number.
+    """
+    mimetype = context.prioritized_derivative_image_mimetypes[-1]
+    width = min(original_width, context.fallback_image_width)
+    filename = context.derivative_image_filename_template.format(
+        item_name=item_name,
+        asset_id=asset_id,
+        width=width,
+        extension=guess_extension(mimetype)
+    )
+    url = context.static(filename)
+    last_modified = context.static_last_modified(filename)
+    return ImageSource(filename, mimetype, url, width, last_modified)
+
+def add_sources(context, image):
+    """Extend the image dict with a 'sources' property that comprises the available
+    file sources as a dict in the format:
+    'sources': {
+      'original': <ImageSource>,
+      'derivatives': [ ( <mimetype>, [ <ImageSource>, ... ] ), ... ],
+      'fallback': <ImageSource>
+    }
+    """
+    # Parse the filename.
+    filename = image['filename']
+    match = context.normalized_image_filename_regex.match(filename)
+    item_name = match.group('item_name')
+    asset_id = match.group('asset_id')
+    original_width = int(match.group('width'))
+
+    sources = {
+        'original': ImageSource(
+            filename,
+            guess_mimetype(filename),
+            context.static(filename),
+            original_width,
+            context.static_last_modified(filename)
+        ),
+        'derivatives': [],
+        'fallback': get_fallback_image_source(
+            context, original_width, item_name, asset_id
+        )
+    }
+
+    # Sort widths descending.
+    widths = sorted(context.derivative_image_widths, reverse=True)
+
+    # If any widths are larger than the original image, add the original width
+    # to the list and drop the larger values.
+    i = next(i for i, width in enumerate(widths) if width < original_width)
+    if i > 0:
+        widths = [original_width] + widths[i:]
+
+    # Add the derivative sources.
+    for mimetype in context.prioritized_derivative_image_mimetypes:
+        mimetype_derivative_sources = []
+        for width in widths:
+            # Generate the corresponding derivative filename.
+            derivative_fn = context.derivative_image_filename_template.format(
+                item_name=item_name,
+                asset_id=asset_id,
+                width=width,
+                extension=guess_extension(mimetype)
+            )
+            url = context.static(derivative_fn, False)
+            if url is not None:
+                mimetype_derivative_sources.append(
+                    ImageSource(
+                        derivative_fn,
+                        mimetype,
+                        url,
+                        width,
+                        context.static_last_modified(derivative_fn)
+                    )
+                )
+
+        # Raise an exception if no derivative images were found.
+        # Note that derivative at some widths may be missing
+        # on account of the original image being smaller than that
+        # width.
+        if not mimetype_derivative_sources:
+            raise AssertionError(
+                f'No derivatives of type {mimetype} found for file:'\
+                f'{image["filename"]}'
+            )
+        sources['derivatives'].append((mimetype, mimetype_derivative_sources))
+
+    image['sources'] = sources
+
+def normalize_images(context, images):
+    for image in images:
+        add_sources(context, image)
+
+###############################################################################
 # Context Normalization Helpers
 ###############################################################################
 
-def normalize_projects(projects, all_tags):
+def normalize_projects(context, projects, all_tags):
     """Do an in-place normalization of the projects dict.
     """
     # Create a <project-name> -> <project-copy> map.
@@ -160,6 +322,16 @@ def normalize_projects(projects, all_tags):
     for name, project in name_project_map.items():
         # Collect any invalid tags.
         invalid_d['tags'].update(set(project['tags']).difference(all_tags))
+
+        # Normalize images.
+        images = project.get('images')
+        if images:
+            normalize_images(context, images)
+
+        # Normalize videos.
+        videos = project.get('videos')
+        if videos:
+            normalize_videos(context, videos)
 
         # Expand project type name to full schema.org URL or collect it as
         # invalid.
@@ -223,4 +395,9 @@ def normalize_context(context):
         raise InvalidContext('context must define an all_tags array that '\
                              'comprises the superset of all referenced tags.')
 
-    normalize_projects(context.projects, all_tags)
+    # Compile regexes.
+    context.normalized_image_filename_regex = re.compile(
+        context.normalized_image_filename_regex
+    )
+
+    normalize_projects(context, context.projects, all_tags)

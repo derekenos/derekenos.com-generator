@@ -16,10 +16,8 @@ from includes import picture
 
 Head = NotDefined
 
-def Body(context, name, slug, short_description, tags,
-         images, **kwargs):
+def Body(context, name, slug, short_description, tags, images, **kwargs):
     image = images[0]
-    image_base_filename = image['base_filename']
     return (
         H2(
             itemprop=md.Props.name,
@@ -46,13 +44,10 @@ def Body(context, name, slug, short_description, tags,
             children=picture.Body(
                 context,
                 itemprop=md.Props.subjectOf,
-                srcsets=(
-                    context.static(fn:=f'{image_base_filename}.webp'),
-                ),
-                src=context.static(f'{image_base_filename}.png'),
+                sources=image['sources'],
+                sizes=context.collection_item_picture_sizes,
                 name=image['name'],
-                description=image['description'],
-                upload_date=context.static_last_modified_iso8601(fn)
+                description=image['description']
             )
         )
     )
