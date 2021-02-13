@@ -117,7 +117,18 @@ Here's an example of how all derivatives are presented in the source for the fir
 ```
 You can see that the first `<source>` offers a bunch of next-gen `webp`s because they're rad. The second `<source>` offers `png`s which are not as awesome but are well-supported (note that the biggest sizes have been offloaded to the large static store). The `<img>` at the end serves as a fallback for browsers that don't support the `<picture>` tag.
 
-The `process-assets.py` script takes care of all this filename normalization and derivative generation for you. I've probably documented that somewhere in here.
+The `process-assets.py` script can take care of all this nightmare filename normalization and derivative generation for you, and has this sweet `auto` action that accepts:
+- the path to a directory of misfitly-named, project-specific images and videos
+- the name of a project already defined in `context.json`
+- the path to the website generator static asset directory
+
+and automatically does all of:
+- copy files to a mysterious temporary location with normalized names
+- generate all required derivatives
+- update the project's `images` and `videos` fields in `context.json`
+- move all the normalized original and derivative files into the static dir
+
+I'm sure I've documented that somewhere in here. :eyes:
 
 #### Configure Videos
 Define an array of project videos in the context file as follows:
