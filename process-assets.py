@@ -183,7 +183,7 @@ def generate_video_poster(path, output_path):
         '--vout=dummy',
         '--start-time=0',
         '--stop-time=1',
-        '--scene-format=png',
+        '--scene-format=jpg',
         '--scene-ratio=240',
         '--scene-prefix=snap',
         f'--scene-path={output_path}',
@@ -219,7 +219,7 @@ def generate_video_derivatives(
         generate_video_poster(file_path, output_path)
 
         # Rename the output file to reflect the input.
-        os.rename(os.path.join(output_path, 'snap.png'), final_path)
+        os.rename(os.path.join(output_path, 'snap.jpg'), final_path)
         print(f'Wrote: {final_path}')
 
 def generate_derivatives(

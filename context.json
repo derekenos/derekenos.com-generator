@@ -83,10 +83,10 @@
   "normalized_video_filename_template": "{item_name}-{asset_id}-original{extension}",
   "normalized_image_filename_regex": "^(?P<item_name>.*)\\-(?P<asset_id>[a-z0-9]+)\\-(?P<width>\\d+)px\\-original(?P<extension>.+)$",
   "derivative_image_filename_template": "{item_name}-{asset_id}-{width}px{extension}",
-  "derivative_video_poster_filename_template": "{base_filename}-poster.png",
+  "derivative_video_poster_filename_template": "{base_filename}-poster.jpg",
   "prioritized_derivative_image_mimetypes": [
     "image/webp",
-    "image/png"
+    "image/jpeg"
   ],
   "derivative_image_widths": [
     2500,
