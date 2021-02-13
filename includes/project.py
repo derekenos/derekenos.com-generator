@@ -32,7 +32,7 @@ def Body(context,
          short_description,
          tags,
          type,
-         images=(),
+         images,
          category=None,
          collateral_creations=None,
          dependent_of=None,
@@ -47,11 +47,9 @@ def Body(context,
          videos=None,
     ):
 
-    # TODO - use the actual project image
-    #image = images[0]
-    image = images[0] if images else context.projects[3]['images'][0]
 
     # Inline includes.section to specify itemprops.
+    image = images[0]
     els = [
         Section(children=(
             H2(name, itemprop=md.Props.name),
