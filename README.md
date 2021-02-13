@@ -7,6 +7,7 @@ A custom static website generator for https://derekenos.com.
 - Aspires to accessibility and SEO best practices 
 - Search engines don't hate it
 - Optionally redirect large static files to a cloud object store
+- Implements [responsive images](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)
 - Intergrates [Microdata](https://schema.org/docs/gs.html) markup to provide structured data for search engines ([example](https://search.google.com/structured-data/testing-tool/u/0/#url=https%3A%2F%2Fderekenos.com%2Fproject-weather-station))
 - Intergrates [OpenGraph](https://ogp.me/) tags for rich embeds, e.g.:
 
@@ -18,6 +19,12 @@ A custom static website generator for https://derekenos.com.
 ### Additional `dev.sh` Dependencies
 - `bash`
 - `inotifywait`
+
+### Additional `process-assets.py` Dependencies
+| Dependency | Tested Version | Needed For |
+| --- | --- | --- |
+| [Gimp](https://www.gimp.org/) | 2.10.22 | image width detection and derivative generation |
+| [VLC](https://www.videolan.org/vlc/) | 3.0.8 | video poster image generation |
 
 ### Additional Large Static Store Dependencies
 | LSS Type | Dependencies |
@@ -48,7 +55,7 @@ Define an array of project images in the context file as follows:
   ...
   "images": [
     {
-      "base_filename": "<image-filename-without-extension>",
+      "filename": "<original-image-normalized-filename>",
       "name": "<image-name>",
       "description": "<image-description>"
     }
@@ -56,12 +63,61 @@ Define an array of project images in the context file as follows:
 }
 ```
 
-For each `base_filename`, the following files are expected to exist in `static/`:
+Where `<original-image-normalized-filename>` names the original, full-size image file in `static/` (or custom static dir) and conforms to the `normalized_image_filename_template` [defined in `context.json`](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L82).
 
-- `{base_filename}.webp`
-- `{base_filename}.png`
+For example, given the template:
+```
+"{item_name}-{asset_id}-{width}px-original{extension}"`
+```
 
-where `webp` will be used as the primary image with `png` as the unsupported fallback.
+A valid filename is:
+```
+project-static-site-generator-4cb061e3-1146px-original.webp
+```
+
+##### Derivatives
+
+The current code does not present original image files, which are assumed to be large and/or and not well supported by web browsers, directly. Instead, derivatives of the original, in web-friendly formats (defined by [prioritized_derivative_image_mimetypes](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L87-L90)) and a variety of sizes (defined by [derivative_image_widths](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L91-L99)), are assumed to have been generated, and will be included as options from which the browser will select at will.
+
+Derivative filenames must have the same `item_name` and `asset_id` as the original file and, as defined by [derivative_image_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/generate-derivatives-integration/context.json#L85), have the format:
+```
+{item_name}-{asset_id}-{width}px{extension}
+```
+
+Given the previous original filename example, a valid derivative filename is:
+```
+project-static-site-generator-4cb061e3-750px.webp
+```
+
+Here's an example of how all derivatives are presented in the source for the first image on [this page](https://derekenos.com/project-derekenos-com-generator):
+```
+<picture>
+  <source
+    srcset="static/project-static-site-generator-4cb061e3-1146px.webp 1146w,                                                                                                                               
+            static/project-static-site-generator-4cb061e3-1000px.webp 1000w,                                                                                                                               
+            static/project-static-site-generator-4cb061e3-750px.webp 750w,                                                                                                                                 
+            static/project-static-site-generator-4cb061e3-500px.webp 500w,                                                                                                                                 
+            static/project-static-site-generator-4cb061e3-300px.webp 300w,                                                                                                                                 
+            static/project-static-site-generator-4cb061e3-100px.webp 100w"
+    sizes="90vw"
+    type="image/webp">
+  <source
+    srcset="https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1146px.png 1146w,                                                                                 
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1000px.png 1000w,                                                                                 
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-750px.png 750w,                                                                                   
+            static/project-static-site-generator-4cb061e3-500px.png 500w,                                                                                                                                  
+            static/project-static-site-generator-4cb061e3-300px.png 300w,                                                                                                                                  
+            static/project-static-site-generator-4cb061e3-100px.png 100w"
+    sizes="90vw"
+    type="image/png">
+  <img
+    src="https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-750px.png"
+    alt="A picture of the Static Site Generator">
+</picture>
+```
+You can see that that the first `<source>` offers a bunch of next-gen `webp`s because they're rad. The second `<source>` offers `png`s which are not as awesome but are well-supported, and note that the biggest sizes have been offloaded to the large static store. The `<img>` at the end serves as a fallback for browsers that don't support the `<picture>` tag.
+
+The `process-assets.py` script takes care of all this filename normalization and derivative generation for you. I've probably documented that somewhere in here.
 
 #### Configure Videos
 Define an array of project videos in the context file as follows:
@@ -70,13 +126,33 @@ Define an array of project videos in the context file as follows:
   ...
   videos": [
     {
-      "filename": "<video-filename>",
-      "thumb_filename": "<video-thumb-image-filename>",
+      "filename": "<original-video-normalized-filename>",
       "name": "<video-name>",
       "description": "<video-description>"
     }
   ]
 }
+```
+
+Like images, videos are expected to have a name that conforms to a template, defined by [normalized_video_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L83), like:
+```
+{item_name}-{asset_id}-original{extension}
+```
+
+A valid filename is:
+```
+project-weather-station-82fc52a8-original.mp4
+```
+
+The only required derivative for a video is the poster image, which also has a template, defined by [derivative_video_poster_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L86), like:
+```
+{base_filename}-poster.png
+```
+_Why did I not make that `{item_name}-{asset_id}-poster.png`? I'll [endeavor to fix](https://github.com/derekenos/derekenos.com-generator/issues/18) this._
+
+A valid poster image filename is:
+```
+project-weather-station-82fc52a8-original-poster.png
 ```
 
 ### 3. Add static assets
