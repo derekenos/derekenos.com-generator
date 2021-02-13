@@ -55,7 +55,7 @@ def save_png(image, drawable, path, filename):
 
 MIMETYPE_SAVE_FUNC_MAP = {
     'image/webp': save_webp,
-    'image.png': save_png
+    'image/png': save_png
 }
 
 def run(
