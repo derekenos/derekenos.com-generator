@@ -2,7 +2,7 @@
 A custom static website generator for https://derekenos.com.
 
 ## Features
-- Not too many features
+- ~Not too many features~ Seriously, it's gone off the rails with the Microdata and responsive images stuff.
 - No third-party libraries
 - Aspires to accessibility and SEO best practices 
 - Search engines don't hate it
