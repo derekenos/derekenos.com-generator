@@ -115,7 +115,7 @@ Here's an example of how all derivatives are presented in the source for the fir
     alt="A picture of the Static Site Generator">
 </picture>
 ```
-You can see that that the first `<source>` offers a bunch of next-gen `webp`s because they're rad. The second `<source>` offers `png`s which are not as awesome but are well-supported, and note that the biggest sizes have been offloaded to the large static store. The `<img>` at the end serves as a fallback for browsers that don't support the `<picture>` tag.
+You can see that the first `<source>` offers a bunch of next-gen `webp`s because they're rad. The second `<source>` offers `png`s which are not as awesome but are well-supported (note that the biggest sizes have been offloaded to the large static store). The `<img>` at the end serves as a fallback for browsers that don't support the `<picture>` tag.
 
 The `process-assets.py` script takes care of all this filename normalization and derivative generation for you. I've probably documented that somewhere in here.
 
