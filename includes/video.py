@@ -29,6 +29,7 @@ Body = lambda context, src, mimetype, upload_date, poster_src, name, \
             MDMeta(md.Props.uploadDate, upload_date),
         ),
         controls='',
+        preload='none',
         poster=poster_src
     ),
 )
