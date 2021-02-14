@@ -135,7 +135,7 @@ main > section img {
 main > section > h3 {
   font-size: 1.1rem;
   font-weight: normal;
-  padding: 1rem;
+  padding: 0 1rem 0.5rem 1rem;
 }
 
 main > section > ol {
@@ -192,18 +192,20 @@ main > section > .collection > .item > video {
 }
 
 main > section a.tag {
-  text-decoration: none;
-  padding: 0.2rem;
   display: inline-block;
+  text-decoration: none;
+  padding: 0.75rem;
+  background-color: rgba(128, 128, 128, 0.1);
+  color: #ccf;
+  border-radius: 8px;
+  margin-top: 0.5rem;
 }
 
-main > section a.tag:first-child,
-main > section > .collection > .item a.tag:first-child {
-  padding-left: 0;
+main.home > section a.tag {
+  display: none;
 }
 
-main > section a.tag:hover,
-main > section > .collection > .item a.tag:hover {
+main > section a.tag:hover {
   text-decoration: underline;
 }
 
@@ -284,8 +286,17 @@ ol.links > li > a {
     padding: .2rem 0;
   }
 
-  main > section > .collection > .item a.tag,
   main > section a.tag {
-    padding: 0.1rem 0.05rem;
+    background-color: transparent;
+    padding: 0 0.25rem;
+    margin-top: 0;
+  }
+
+  main > section a.tag:first-child {
+    padding-left: 0;
+  }
+
+  main.home > section a.tag {
+    display: inline-block;
   }
 }
