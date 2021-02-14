@@ -9,13 +9,17 @@ from lib.htmlephant import (
     Div,
     H2,
     H3,
-    MDMeta,
+    H4,
     Section,
 )
 
+from pages import tag_generator
 from includes import (
-    links_list,
+    collection,
     picture,
+    prop_collection,
+    prop_links_list,
+    scope_links_list,
     section,
     video,
 )
@@ -27,32 +31,45 @@ def Body(context,
          slug,
          short_description,
          tags,
+         type,
          images,
+         category=None,
          collateral_creations=None,
-         depends_on=None,
          dependent_of=None,
+         depends_on=None,
          description=None,
+         external_link_prop_name_url_tuples=None,
          github_url=None,
          hide_card=False,
          live_url=None,
          media_name_url_pairs=None,
+         operating_system=None,
          videos=None,
     ):
-    image = images[0]
-    image_base_filename = image['base_filename']
+
+
     # Inline includes.section to specify itemprops.
+    image = images[0]
     els = [
         Section(children=(
-            H2(name, itemprop=md.NAME),
-            H3(short_description, itemprop=md.ABSTRACT),
+            H2(name, itemprop=md.Props.name),
+            Div(children=[
+                Anchor(
+                    f'#{tag}',
+                    _class='tag',
+                    itemprop=md.Props.isPartOf,
+                    href=tag_generator.slugify(tag)
+                )
+                for tag in tags
+            ]),
+            H3(short_description, itemprop=md.Props.abstract),
             *picture.Body(
                 context,
-                itemprop=md.SUBJECT_OF,
-                srcsets=(context.static(fn:=f'{image_base_filename}.webp'),),
-                src=context.static(f'{image_base_filename}.png'),
+                itemprop=md.Props.subjectOf,
+                sources=image['sources'],
+                sizes='90vw',
                 name=image['name'],
-                description=image['description'],
-                upload_date=context.static_last_modified_iso8601(fn)
+                description=image['description']
             )
         ))
     ]
@@ -65,7 +82,7 @@ def Body(context,
                 children=(
                     UnescapedParagraph(
                         description,
-                        itemprop=md.DESCRIPTION
+                        itemprop=md.Props.description
                     ),
                 )
             )
@@ -95,7 +112,7 @@ def Body(context,
                 children=(
                     Anchor(
                         'Github',
-                        itemprop=md.CODE_RESPOSITORY,
+                        itemprop=md.Props.codeRepository,
                         href=github_url
                     ),
                 )
@@ -108,12 +125,15 @@ def Body(context,
             section.Body(
                 context,
                 'Collateral Creations',
-                children=links_list.Body(
+                children=scope_links_list.Body(
                     context,
-                    itemprop=md.HAS_PART,
-                    itemtype=md.CREATIVE_WORK,
-                    name_url_pairs=[
-                        (project['name'], project['slug'])
+                    prop_type_name_url_tuples=[
+                        (
+                            md.Props.hasPart,
+                            md.Types.CreativeWork,
+                            project['name'],
+                            project['slug']
+                        )
                         for project in context.projects
                         if project['name'] in collateral_creations
                     ]
@@ -127,12 +147,15 @@ def Body(context,
             section.Body(
                 context,
                 'Uses',
-                children=links_list.Body(
+                children=scope_links_list.Body(
                     context,
-                    itemprop=md.HAS_PART,
-                    itemtype=md.CREATIVE_WORK,
-                    name_url_pairs=[
-                        (project['name'], project['slug'])
+                    prop_type_name_url_tuples=[
+                        (
+                            md.Props.hasPart,
+                            md.Types.CreativeWork,
+                            project['name'],
+                            project['slug']
+                        )
                         for project in context.projects
                         if project['name'] in depends_on
                     ]
@@ -146,15 +169,31 @@ def Body(context,
             section.Body(
                 context,
                 'Used By',
-                children=links_list.Body(
+                children=scope_links_list.Body(
                     context,
-                    itemprop=md.IS_PART_OF,
-                    itemtype=md.CREATIVE_WORK,
-                    name_url_pairs=[
-                        (project['name'], project['slug'])
+                    prop_type_name_url_tuples=[
+                        (
+                            md.Props.isPartOf,
+                            md.Types.CreativeWork,
+                            project['name'],
+                            project['slug']
+                        )
                         for project in context.projects
                         if project['name'] in dependent_of
                     ]
+                )
+            )
+        )
+
+    # Add external links.
+    if external_link_prop_name_url_tuples:
+        els.extend(
+            section.Body(
+                context,
+                'External Links',
+                children=prop_links_list.Body(
+                    context,
+                    prop_name_url_tuples=external_link_prop_name_url_tuples
                 )
             )
         )
@@ -165,34 +204,47 @@ def Body(context,
             section.Body(
                 context,
                 'Videos',
-                children=chain((
-                    video.Body(
-                        context,
-                        itemprop=md.SUBJECT_OF,
-                        src=context.static(vid['filename']),
-                        poster=context.static(vid['thumb_filename']),
-                        name=vid['name'],
-                        description=vid['description'],
-                        upload_date=context.static_last_modified_iso8601(
-                            vid['filename']
+                children=prop_collection.Body(
+                    context,
+                    items=[
+                        video.Body(
+                            context,
+                            itemprop=md.Props.subjectOf,
+                            src=vid['source'].url,
+                            mimetype=vid['source'].mimetype,
+                            upload_date=vid['source'].last_modified.isoformat(),
+                            poster_src=vid['source'].poster_url,
+                            name=vid['name'],
+                            description=vid['description']
                         )
-                    )
-                    for vid in videos
-                )),
+                        for vid in videos
+                    ]
+                )
             )
         )
 
-    # Add media links.
-    if media_name_url_pairs:
+    # Add images.
+    if len(images) > 1:
         els.extend(
             section.Body(
                 context,
-                'Additional Media',
-                children=links_list.Body(
+                'More Images',
+                children=prop_collection.Body(
                     context,
-                    itemprop=md.ASSOCIATED_MEDIA,
-                    itemtype=md.MEDIA_OBJECT,
-                    name_url_pairs=media_name_url_pairs
+                    items=[
+                        (Anchor(
+                            href=image['sources']['original'].url,
+                            children=picture.Body(
+                                context,
+                                itemprop=md.Props.subjectOf,
+                                sources=image['sources'],
+                                sizes=context.collection_item_picture_sizes,
+                                name=image['name'],
+                                description=image['description']
+                            )
+                        ),)
+                        for image in images[1:]
+                    ]
                 )
             )
         )

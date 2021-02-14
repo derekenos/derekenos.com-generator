@@ -11,36 +11,40 @@ from lib.htmlephant import (
     Span,
 )
 
+image_sources_to_srcset_str = lambda image_sources: ', '.join(
+    f'{path} {width}w' for _, _, path, width, _ in image_sources
+)
+
 Head = NotDefined
 
-import mimetypes
-
-Body = lambda context, srcsets, src, name, description, upload_date, \
-    itemprop=None, type=None: (
+Body = lambda context, sources, sizes, name, description, itemprop=None: (
     Span(
         itemprop=itemprop,
         itemscope='',
-        itemtype=md.IMAGE_OBJECT,
+        itemtype=md.Types.ImageObject,
         children=(
-            MDMeta(md.CONTENT_URL, src),
-            MDMeta(md.THUMBNAIL_URL, src),
-            MDMeta(md.NAME, name),
-            MDMeta(md.DESCRIPTION, description),
+            MDMeta(md.Props.contentUrl, sources['original'].url),
+            MDMeta(md.Props.thumbnailUrl, sources['fallback'].url),
+            MDMeta(md.Props.name, name),
+            MDMeta(md.Props.description, description),
+            MDMeta(md.Props.encodingFormat, sources['original'].mimetype),
             MDMeta(
-                md.ENCODING_FORMAT,
-                type:=type or mimetypes.guess_type(src)[0]
+                md.Props.uploadDate,
+                sources['original'].last_modified.isoformat()
             ),
-            MDMeta(md.UPLOAD_DATE, upload_date),
             Picture(
                 children=(
                     *[
                         PictureSource(
-                            srcset=srcset,
-                            type=type
+                            srcset=image_sources_to_srcset_str(
+                                image_sources
+                            ),
+                            sizes=sizes,
+                            type=mimetype
                         )
-                        for srcset in srcsets
+                        for mimetype, image_sources in sources['derivatives']
                     ],
-                    Img(src=src, alt=description),
+                    Img(src=sources['fallback'].url, alt=description),
                 )
             )
         )

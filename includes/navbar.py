@@ -6,25 +6,27 @@ from lib import (
 
 from lib.htmlephant import (
     Anchor,
-    Div,
     Li,
     Nav,
     Ol,
-    Span,
 )
 
 def _Li(context, name, label):
-    if name == context.current_page:
-        return Li(label, _class='current')
-    if name == 'index':
-        name = ''
-    return Li(children=(Anchor(label, href=f'/{name}'),))
+    is_current = name == context.current_page or (
+        context.current_page.endswith('_generator')
+        and name == f'{context.current_page[:-10]}s'
+    )
+    if is_current:
+        return Li(label, id='active-main-nav-tab')
+    return Li(children=(Anchor(label, href=f'/{"" if name == "index" else name}'),))
 
 Head = NotDefined
 
 def Body(context):
     assert_ctx(context, 'navbar_page_name_label_pairs')
     nav = Nav(
+        id="main-nav",
+        _aria_label='primary',
         children=[
             Ol(
                 children=[
@@ -35,33 +37,11 @@ def Body(context):
         ]
     )
 
-    # Determine whether this is a specific project page.
-    project = getattr(context, 'generator_item')
-
-    # Return basic nav if this is not a project page.
-    if project is None:
-        return (nav,)
-
-    # Maybe add the projects sub-navigation element.
-    outer = Div(id='project-nav-outer')
-    inner = Div(id='project-nav-inner')
-    outer.children.append(inner)
-    for i, project in enumerate(sorted(
-            context.projects,
-            key=lambda x: x['name'] == project['name'],
-            reverse=True
-        )):
-        if i == 0:
-            inner.children.append(
-                Span(project['name'])
-            )
-        else:
-            inner.children.append(
-                Anchor(
-                    project['name'],
-                    href=project['slug']
-                )
-            )
-    nav.children.append(outer)
+    # If page module defines a Nav function, invoke and include its elements.
+    if hasattr(context.current_page_mod, 'Nav'):
+        return (
+            nav,
+            *context.current_page_mod.Nav(context)
+        )
 
     return (nav,)

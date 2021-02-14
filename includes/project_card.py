@@ -11,39 +11,43 @@ from lib.htmlephant import (
     NOEL,
 )
 
+from pages import tag_generator
 from includes import picture
 
 Head = NotDefined
 
-def Body(context, name, slug, short_description, tags,
-         images, **kwargs):
+def Body(context, name, slug, short_description, tags, images, **kwargs):
     image = images[0]
-    image_base_filename = image['base_filename']
     return (
         H2(
-            itemprop=md.NAME,
+            itemprop=md.Props.name,
             children=(Anchor(name, href=slug),)
         ),
         H3(
             short_description,
-            itemprop=md.DESCRIPTION
+            itemprop=md.Props.description
         ) if short_description else NOEL,
         H4(
-            ' '.join(f'#{tag}' for tag in tags)
+            children=[
+                Anchor(
+                    f'#{tag}',
+                    _class='tag',
+                    itemprop=md.Props.isPartOf,
+                    href=tag_generator.slugify(tag)
+                )
+                for tag in tags
+            ]
         ) if tags else NOEL,
         Anchor(
-            itemprop=md.URL,
+            itemprop=md.Props.url,
             href=slug,
             children=picture.Body(
                 context,
-                itemprop=md.SUBJECT_OF,
-                srcsets=(
-                    context.static(fn:=f'{image_base_filename}.webp'),
-                ),
-                src=context.static(f'{image_base_filename}.png'),
+                itemprop=md.Props.subjectOf,
+                sources=image['sources'],
+                sizes=context.collection_item_picture_sizes,
                 name=image['name'],
-                description=image['description'],
-                upload_date=context.static_last_modified_iso8601(fn)
+                description=image['description']
             )
         )
     )

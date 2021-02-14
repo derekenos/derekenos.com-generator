@@ -1,16 +1,16 @@
 {
-  "base_url": "<your-production-root-address>",
-
-  "name": "<your-name>",
-  "email": "<your-email-address>",
-  "social_name_url_pairs": [
-    ["Github", "https://github.com/<you>"],
-    ["Instagram", "https://www.instagram.com/<you>"],
-    ["YouTube", "https://www.youtube.com/<you>"],
-    ["LinkedIn", "https://www.linkedin.com/in/<you>"],
-    ["Patreon", "https://www.patreon.com/<you>"]
+  "base_url": "https://<your-host>",
+  "all_tags": [
+    "done",
+    "never-again",
+    "difficult",
+    "glad-its-done",
+    "challenging",
+    "gratifying",
+    "fun",
+    "life-affirming",
+    "rocket"
   ],
-
   "large_static_store": {
     "type": "S3",
     "aws_profile": "<aws-profile-name>",
@@ -18,93 +18,152 @@
     "s3_url": "<s3-url>",
     "endpoint": "<production-endpoint-url>"
   },
-
-  "google_analytics_id": "<your-google-analytics-id>",
-
-  "navbar_page_name_label_pairs": [
-    ["index", "projects"],
-    ["contact", "contact"]
+  "name": "<your-name>",
+  "email": "<your-email-address>",
+  "social_name_url_pairs": [
+    [
+      "Github",
+      "https://github.com/<github-user-id>"
+    ],
+    [
+      "Instagram",
+      "https://www.instagram.com/<instagram-user-id>"
+    ],
+    [
+      "YouTube",
+      "https://www.youtube.com/<youtube-user-id>"
+    ],
+    [
+      "LinkedIn",
+      "https://www.linkedin.com/in/<linkedin-user-id>"
+    ],
+    [
+      "Patreon",
+      "https://www.patreon.com/<patreon-user-id>"
+    ]
   ],
-
+  "google_analytics_id": "<google-analytics-id>",
+  "normalized_image_filename_template": "{item_name}-{asset_id}-{width}px-original{extension}",
+  "normalized_video_filename_template": "{item_name}-{asset_id}-original{extension}",
+  "normalized_image_filename_regex": "^(?P<item_name>.*)\\-(?P<asset_id>[a-z0-9]+)\\-(?P<width>\\d+)px\\-original(?P<extension>.+)$",
+  "derivative_image_filename_template": "{item_name}-{asset_id}-{width}px{extension}",
+  "derivative_video_poster_filename_template": "{base_filename}-poster.png",
+  "prioritized_derivative_image_mimetypes": [
+    "image/webp",
+    "image/png"
+  ],
+  "derivative_image_widths": [
+    2500,
+    1500,
+    1000,
+    750,
+    500,
+    300,
+    100
+  ],
+  "fallback_image_width": 750,
+  "collection_item_picture_sizes": "(min-width: 1024px) 25vw, 94vw",
+  "navbar_page_name_label_pairs": [
+    [
+      "index",
+      "home"
+    ],
+    [
+      "projects",
+      "projects"
+    ],
+    [
+      "tags",
+      "tags"
+    ],
+    [
+      "contact",
+      "contact"
+    ]
+  ],
   "projects": [
-
     {
       "name": "Project 4",
+      "type": "CreativeWork",
       "slug": "/project-4",
       "short_description": "The last project.",
       "description": "A description of the final project.",
-      "tags": ["done", "never-again"],
-      "images": [
-        {
-          "base_filename": "project_4_thumb",
-          "name": "Project 4 Placeholder Image",
-          "description": "Project 4 Placeholder Image"
-        }
+      "tags": [
+        "done",
+        "never-again",
+        "rocket"
       ],
       "depends_on": [
         "Project 3",
-        "Project 2",
         "Project 1"
+      ],
+      "images": [
+        {
+          "filename": "project-project-4-163ada13-1245px-original.jpg",
+          "name": "Project 4",
+          "description": "A picture of the Project 4"
+        }
       ]
     },
-
     {
       "name": "Project 3",
+      "type": "CreativeWork",
       "slug": "/project-3",
       "short_description": "The third project.",
       "description": "A description of the third project.",
-      "tags": ["difficult", "glad-its-done"],
+      "tags": [
+        "difficult",
+        "glad-its-done",
+        "rocket"
+      ],
+      "collateral_creations": [
+        "Project 2"
+      ],
       "images": [
         {
-          "base_filename": "project_3_thumb",
-          "name": "Project 3 Placeholder Image",
-          "description": "Project 3 Placeholder Image"
+          "filename": "project-project-3-b0107fa0-1536px-original.jpg",
+          "name": "Project 3",
+          "description": "A picture of the Project 3"
         }
-      ],
-      "depends_on": [
-        "Project 2",
-        "Project 1"
       ]
     },
-
     {
       "name": "Project 2",
+      "type": "CreativeWork",
       "slug": "/project-2",
       "short_description": "The second project.",
       "description": "A description of the second project.",
-      "tags": ["challenging", "gratifying"],
+      "tags": [
+        "challenging",
+        "gratifying",
+        "rocket"
+      ],
       "images": [
         {
-          "base_filename": "project_2_thumb",
-          "name": "Project 2 Placeholder Image",
-          "description": "Project 2 Placeholder Image"
+          "filename": "project-project-2-cd2ea0e2-1536px-original.jpg",
+          "name": "Project 2",
+          "description": "A picture of the Project 2"
         }
-      ],
-      "depends_on": [
-        "Project 1"
       ]
     },
-
     {
       "name": "Project 1",
+      "type": "CreativeWork",
       "slug": "/project-1",
       "short_description": "The first project.",
       "description": "A description of the first project.",
-      "tags": ["fun", "life-affirming"],
+      "tags": [
+        "fun",
+        "life-affirming",
+        "rocket"
+      ],
       "images": [
         {
-          "base_filename": "project_1_thumb",
-          "name": "Project 1 Placeholder Image",
-          "description": "Project 1 Placeholder Image"
+          "filename": "project-project-1-7053064d-1536px-original.jpg",
+          "name": "Project 1",
+          "description": "A picture of the Project 1"
         }
-      ],
-      "depends_on": [
-        "Project 2"
-      ],
-      "collateral_creations": [
-        "Project 4"
       ]
     }
-
   ]
 }

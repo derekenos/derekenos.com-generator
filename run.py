@@ -2,36 +2,51 @@
 import argparse
 import json
 import os
+import shutil
 from itertools import chain
-from glob import glob
 
-from lib import copy_if_newer
 from lib.htmlephant import Document
+from lib.htmlephant_extensions import Main
 from lib.server import serve
+from lib import (
+    copy_if_newer,
+    NotDefined,
+)
 from lib.context import (
     Context,
     normalize_context,
 )
 
 import includes.head
-import includes.body
 import includes.footer
+import includes.header
+import includes.redirect
 
 ###############################################################################
 # Site file writer helpers
 ###############################################################################
 
-def write_page(context, filename, page_mod):
+def write_page(context, filename, head=NotDefined, body=NotDefined):
     """Write a single HTML site page.
     """
     # Open the HTML output file.
     with context.open(filename) as fh:
         # Combine global includes with the module Head and Body to create
         # the final element tuples.
-        head_els = chain(includes.head.Head(context), page_mod.Head(context))
+        head_els = chain(includes.head.Head(context), head(context))
+        # Invoke the page body function and, if non-empty, assert that it
+        # returns a single <main> element.
+        page_body_els = body(context)
+        if page_body_els and (len(page_body_els) != 1
+                              or not isinstance(page_body_els[0], Main)):
+            raise AssertionError(
+                'Expected page_mod.Body() to return a single <main> element '
+                f'but got {page_body_els} instead when attempting to write '
+                f'file: {filename}'
+            )
         body_els = chain(
-            includes.body.Body(context),
-            page_mod.Body(context),
+            includes.header.Body(context),
+            page_body_els,
             includes.footer.Body(context),
         )
         # Create the Document object.
@@ -69,27 +84,27 @@ def copy_static(context):
     # Iterate through files in the static directory.
     static_dir = context.STATIC_DIR
     static_dir_len = len(static_dir)
-    for fs_path in glob(f'{static_dir}/*'):
-        # Ignore directory-type paths.
-        if os.path.isdir(fs_path):
-            continue
-        # Get the static-dir-relative path.
-        filename = fs_path[static_dir_len + 1:]
-        # Check whether the file exceeds the large object threshold.
-        if context.is_large_static(filename):
-            # This is a large file - create a symlink in the destination
-            # directory instead of actually copying it.
+    for filename in os.listdir(static_dir):
+        path = os.path.join(static_dir, filename)
+        if os.path.isdir(path):
+            # Path is a directory, so copy it as-is.
+            dest = os.path.join(context.SITE_STATIC_DIR, filename)
+            shutil.copytree(path, dest, dirs_exist_ok=True)
+        elif not context.is_large_static(filename):
+            # This is not a large file, so copy to SITE_STATIC_DIR.
+            dest = os.path.join(context.SITE_STATIC_DIR, filename)
+            copy_if_newer(path, dest)
+        else:
+            # This is a large file, so create a symlink in
+            # SITE_LARGE_STATIC_DIR instead of actually copying it.
             dest = os.path.join(context.SITE_LARGE_STATIC_DIR, filename)
             if not os.path.lexists(dest):
                 # Use the absolute file system path as the symlink src instead
                 # of trying to figure out how many parent dirs to references.
                 os.symlink(
-                    os.path.join(os.path.dirname(__file__), fs_path),
+                    os.path.join(os.path.dirname(__file__), path),
                     dest
                 )
-        else:
-            dest = os.path.join(context.SITE_STATIC_DIR, filename)
-            copy_if_newer(fs_path, dest)
 
 ###############################################################################
 # Run Function
@@ -110,6 +125,8 @@ def run(context):
             f'{context.PAGES_DIR}.{page_name}',
             fromlist=page_name
         )
+        # Update the context object with the name of the current page module.
+        context.current_page_mod = page_mod
         # Check for page generator.
         if (not hasattr(page_mod, 'CONTEXT_ITEMS_GETTER')
             or not hasattr(page_mod, 'FILENAME_GENERATOR')):
@@ -117,15 +134,31 @@ def run(context):
             # Clear any previous generator item.
             context.generator_item = None
             filename = f'{page_name}.html'
-            write_page(context, filename, page_mod)
+            write_page(context, filename, page_mod.Head, page_mod.Body)
             filenames.append(filename)
         else:
             # Use the page generator to write 1 or more pages.
-            for item in page_mod.CONTEXT_ITEMS_GETTER(context):
+            items = page_mod.CONTEXT_ITEMS_GETTER(context)
+
+            # Create a collection entry point page that redirects to the first
+            # collection item.
+            collection_name = page_mod.__name__.rsplit('.', 1)[1].split('_')[0]
+            filename = f'{collection_name}s.html'
+            item = next(iter(items))
+            context.generator_item = item
+            write_page(
+                context,
+                filename,
+                lambda context: includes.redirect.Head(context, item['slug'])
+            )
+            filenames.append(filename)
+
+            # Write the individual item pages.
+            for item in items:
                 # Update the context object with the current item.
                 context.generator_item = item
                 filename = page_mod.FILENAME_GENERATOR(item)
-                write_page(context, filename, page_mod)
+                write_page(context, filename, page_mod.Head, page_mod.Body)
                 filenames.append(filename)
 
     # Write the sitemap and robots files.
