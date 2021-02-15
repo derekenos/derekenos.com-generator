@@ -90,7 +90,7 @@ def copy_static(context):
             # Path is a directory, so copy it as-is.
             dest = os.path.join(context.SITE_STATIC_DIR, filename)
             shutil.copytree(path, dest, dirs_exist_ok=True)
-        elif not context.is_large_static(filename):
+        elif not context.is_large_static_storable(filename):
             # This is not a large file, so copy to SITE_STATIC_DIR.
             dest = os.path.join(context.SITE_STATIC_DIR, filename)
             copy_if_newer(path, dest)

@@ -53,6 +53,9 @@ def guess_extension(mimetype):
     """
     if mimetype == 'image/webp':
         return '.webp'
+    # Reutrn '.jpg' for image/jpeg. Python < 3.7 returns '.jpe'.
+    if mimetype == 'image/jpeg':
+        return '.jpg'
     extension = mimetypes.guess_extension(mimetype)
     if extension is None:
         raise AssertionError(

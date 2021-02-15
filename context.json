@@ -83,10 +83,10 @@
   "normalized_video_filename_template": "{item_name}-{asset_id}-original{extension}",
   "normalized_image_filename_regex": "^(?P<item_name>.*)\\-(?P<asset_id>[a-z0-9]+)\\-(?P<width>\\d+)px\\-original(?P<extension>.+)$",
   "derivative_image_filename_template": "{item_name}-{asset_id}-{width}px{extension}",
-  "derivative_video_poster_filename_template": "{base_filename}-poster.png",
+  "derivative_video_poster_filename_template": "{base_filename}-poster.jpg",
   "prioritized_derivative_image_mimetypes": [
     "image/webp",
-    "image/png"
+    "image/jpeg"
   ],
   "derivative_image_widths": [
     2500,
@@ -376,6 +376,11 @@
           "description": "A picture of the Cardboard Boxcade"
         },
         {
+          "filename": "project-cardboard-boxcade-61d695f7-4048px-original.jpg",
+          "name": "Cardboard Boxcade",
+          "description": "A picture of the Cardboard Boxcade"
+        },
+        {
           "filename": "project-cardboard-boxcade-19c84043-4048px-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
@@ -439,11 +444,6 @@
           "filename": "project-cardboard-boxcade-bdc68662-4048px-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
-        },
-        {
-          "filename": "project-cardboard-boxcade-61d695f7-4048px-original.jpg",
-          "name": "Cardboard Boxcade",
-          "description": "A picture of the Cardboard Boxcade"
         }
       ],
       "description": "This project explores using low-cost, commodity components to create custom physical interfaces. This initial version is built into a cardboard box and uses household light switches and dimmer knobs as inputs, and an Amazon Fire tablet running a full-screen web browser as the display. The inputs are attached via alligator clips to a battery-powered, breadboarded ESP32-PICO-KIT that communicates input state changes to the Fire Tablet via WiFi.",
@@ -502,6 +502,11 @@
           "description": "A picture of the Weezel"
         },
         {
+          "filename": "project-weezel-bec5668c-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
           "filename": "project-weezel-33718d12-4048px-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
@@ -512,17 +517,7 @@
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-80a95725-3036px-original.jpg",
-          "name": "Weezel",
-          "description": "A picture of the Weezel"
-        },
-        {
           "filename": "project-weezel-dfca7621-3036px-original.jpg",
-          "name": "Weezel",
-          "description": "A picture of the Weezel"
-        },
-        {
-          "filename": "project-weezel-00b3ec48-4048px-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
@@ -542,16 +537,6 @@
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-b5cd0834-4048px-original.jpg",
-          "name": "Weezel",
-          "description": "A picture of the Weezel"
-        },
-        {
-          "filename": "project-weezel-e7d90556-4048px-original.jpg",
-          "name": "Weezel",
-          "description": "A picture of the Weezel"
-        },
-        {
           "filename": "project-weezel-b9ab1159-4048px-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
@@ -562,17 +547,27 @@
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-bec5668c-4048px-original.jpg",
-          "name": "Weezel",
-          "description": "A picture of the Weezel"
-        },
-        {
           "filename": "project-weezel-0eae2a0a-4048px-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
+          "filename": "project-weezel-00b3ec48-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-b5cd0834-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
           "filename": "project-weezel-e833b6f6-4048px-original.jpg",
+          "name": "Weezel",
+          "description": "A picture of the Weezel"
+        },
+        {
+          "filename": "project-weezel-80a95725-3036px-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         }
@@ -1027,6 +1022,16 @@
           "description": "A picture of the Delta Robot"
         },
         {
+          "filename": "project-delta-robot-bc07cdeb-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
+          "filename": "project-delta-robot-3753ba3b-4048px-original.jpg",
+          "name": "Delta Robot",
+          "description": "A picture of the Delta Robot"
+        },
+        {
           "filename": "project-delta-robot-733db74a-4048px-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
@@ -1174,6 +1179,11 @@
           "description": "A picture of the deMIDulator"
         },
         {
+          "filename": "project-demidulator-8f2e56e8-2495px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
           "filename": "project-demidulator-9a12fcf6-2738px-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
@@ -1189,22 +1199,17 @@
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-8f2e56e8-2495px-original.png",
-          "name": "deMIDulator",
-          "description": "A picture of the deMIDulator"
-        },
-        {
-          "filename": "project-demidulator-bc9f3cd2-1161px-original.png",
-          "name": "deMIDulator",
-          "description": "A picture of the deMIDulator"
-        },
-        {
           "filename": "project-demidulator-2f4fec25-1235px-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
           "filename": "project-demidulator-c734b06c-1205px-original.png",
+          "name": "deMIDulator",
+          "description": "A picture of the deMIDulator"
+        },
+        {
+          "filename": "project-demidulator-bc9f3cd2-1161px-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
