@@ -44,7 +44,11 @@ Body = lambda context, sources, sizes, name, description, itemprop=None: (
                         )
                         for mimetype, image_sources in sources['derivatives']
                     ],
-                    Img(src=sources['fallback'].url, alt=description),
+                    Img(
+                        src=sources['fallback'].url,
+                        loading='lazy',
+                        alt=description
+                    ),
                 )
             )
         )

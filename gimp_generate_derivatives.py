@@ -53,9 +53,28 @@ def save_png(image, drawable, path, filename):
         1, # write tIME chunk
     )
 
+def save_jpg(image, drawable, path, filename):
+    # See: https://en.wikibooks.org/wiki/GIMP/Saving_as_JPEG
+    pdb.file_jpeg_save(
+        image,
+        drawable,
+        path,
+        filename,
+        QUALITY_FACTOR, # quality
+        0.10, # smoothing (whatever that is)
+        1, # optimize
+        1, # progressive
+        '', # comment
+        1, # subsmp
+        0, # baseline
+        16, # restart (apparent default in Gimp UI)
+        0, # DCT
+    )
+
 MIMETYPE_SAVE_FUNC_MAP = {
     'image/webp': save_webp,
-    'image/png': save_png
+    'image/png': save_png,
+    'image/jpeg': save_jpg,
 }
 
 def run(
