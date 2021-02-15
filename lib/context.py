@@ -56,7 +56,7 @@ class Context:
     SITE_DIR = 'site'
     SITE_RELATIVE_STATIC_DIR = 'static'
     SITE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_STATIC_DIR}'
-    STATIC_LARGE_FILE_THRESHOLD_KB = 100
+    STATIC_LARGE_FILE_THRESHOLD_KB = 0
     SITE_RELATIVE_LARGE_STATIC_DIR = f'static/_large'
     SITE_LARGE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_LARGE_STATIC_DIR}'
     SITEMAP_FILENAME = 'sitemap.txt'
@@ -127,7 +127,7 @@ class Context:
                 return None
             # File exists in lss.
             path = f'{self.large_static_store["endpoint"]}/{filename}'
-        elif not self.is_large_static(filename):
+        elif not self.is_large_static_storable(filename):
             # It's a small, local file.
             path = f'{self.SITE_RELATIVE_STATIC_DIR}/{filename}'
         else:
@@ -146,7 +146,16 @@ class Context:
                 )
         return path
 
-    def is_large_static(self, filename):
+    def is_large_static_storable(self, filename):
+        """Return a bool indicating whether the specified file should be
+        considered a large static asset that's subject to large static store
+        offloading.
+        """
+        # Files in static subdirectories are excluded from consideration with
+        # regard to large static store offloading, so if this file is in a
+        # subdirectory, return False.
+        if os.path.dirname(filename) != '':
+            return False
         path = f'{self.STATIC_DIR}/{filename}'
         if not os.path.isfile(path):
             raise AssertionError(f'Path is not a regular file: {path}')
