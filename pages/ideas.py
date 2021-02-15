@@ -46,8 +46,8 @@ REALIZED_BY_OTHERS = (
 
 SMALL_BITES = (
     (
-        'Infinidine',
-        """A distributed network of standalone garden sheds, each large enough for a table that spans the width of the center and one or two diners on either side. The walls along which the table edges rest are projection screens. Cameras and microphones capture the local diners. Feeds from other sheds are projected onto the screens and played as ambient audio to create a virtual co-dining experience in which participants are seated along a rectangular table that extends infinitely in both directions. Participants can arrange to sit alongside their friends or be randomly slotted in, <a href="https://youtu.be/Y70vcs3oV14?t=11">Matrix stockroom-style</a> (complete with fans to simulate the airflow).
+        'Table at the End of the World',
+        """A distributed network of standalone garden sheds, each large enough for a table that spans the width of the center and one or two diners on either side. The walls along which the table edges rest are projection screens. Cameras and microphones capture the local diners. Feeds from other sheds are projected onto the screens and played as ambient audio to create a co-dining experience in which participants are seated along a rectangular table that extends virtually into other sheds in both directions. Participants can arrange to sit alongside their friends or be randomly slotted in, <a href="https://youtu.be/Y70vcs3oV14?t=11">Matrix stockroom-style</a> (complete with fans to simulate the airflow).
         """
     ),
 
