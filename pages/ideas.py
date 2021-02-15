@@ -46,6 +46,23 @@ REALIZED_BY_OTHERS = (
 
 SMALL_BITES = (
     (
+        'Table at the End of the World',
+        """A distributed network of standalone garden sheds, each large enough for a table that spans the width of the center and one or two diners on either side. The walls along which the table edges rest are projection screens. Cameras and microphones capture the local diners. Feeds from other sheds are projected onto the screens and played as ambient audio to create a co-dining experience in which participants are seated along a rectangular table that extends virtually into other sheds in both directions. Participants can arrange to sit alongside their friends or be randomly slotted in, <a href="https://youtu.be/Y70vcs3oV14?t=11">Matrix stockroom-style</a> (complete with fans to simulate the airflow).
+        """
+    ),
+
+    (
+        'Sugarcoater',
+        """A radio, or standalone audio processing device, for listening to news and other talk programs that has a knob to adjust the tone of what is said. Listening to breakfast jazz with your kids when the news comes on talking about violent subway attacks and virus-related deaths? Turn the reality knob from "Hard, Cold" to "Nerf". See: <a href="#augmented-reality-microphone">Augmented Reality Microphone</a>
+        """
+    ),
+
+    (
+        'Augmented Reality Microphone',
+        """A handheld battery-powered device with a microphone on one end and a speaker on the other, similar to a voice-changer mic, that uses an ML model of your voice to produce speech that is different in meaning and/or content from that which was spoken. Mode selection controls the manner of augmentation, e.g. replace words with [ant|syn]onyms, add uncomfortable pauses, interjections, superfluous phrase, etc."""
+    ),
+
+    (
         'Guitar Effects Platform',
         """Custom guitar effects pedal platform. Line 6 was doing something like this with their ToneCore DSP product, but it was expensive and prescriptive. The killer feature that I wanted to implement was the ability to clone an existing pedal through automated manipulation of its physical controls in conjunction with input signal generation and target output analysis. Recently, in 2020, there was this <a href="https://teddykoker.com/2020/05/deep-learning-for-guitar-effect-emulation/">Deep Learning for Guitar Effect Emulation</a>."""
     ),
@@ -141,14 +158,6 @@ SMALL_BITES = (
     ),
 
     (
-        'Developer the Game',
-        """<em>Chat Client</em><br><br>
-          A 2D scroller where your character walks down the street (which represents the timeline) and goes past other characters (i.e. coworkers) with stuff to say, or a group of people if a thread. "Go to Most Recent" zooms you down the street, e.g. a cape pops out and you fly Superman style, you hop on a car, bike, etc.
-          <br><br><em>Issues Client</em><br><br>
-          A game like Leisure Suit Larry where you interact with characters who are the authors of issues. Your character has some idle loop (e.g. typing at a computer) and gets interrupted (e.g. people call on the phone, walk in through the door, etc.) when people create new, or comment on, related issues."""
-    ),
-
-    (
         'Make an Entrance',
         """Based on the trope of a person entering a room, accompanied by an enthralled audience, who delivers a final, out-of-context punchline. Stage is a series of themed rooms arranged in a circle with the protagonist and companions continuously making an entrance from one to the next, delivering ever-changing punchlines. Over time the performers become wary, the jokes become tedious and no longer funny. Maybe things eventually take a violent turn."""
     ),
@@ -181,12 +190,7 @@ SMALL_BITES = (
     (
         'Robotic Marionette Game',
         """A game in which you control a real marionette, articulated by motors, using a gamepad to navigate a deformable, projection-mapped physical play field."""
-    ),
-
-    (
-        'Augmented Reality Microphone',
-        """A handheld battery-powered device with a microphone on one end and a speaker on the other, similar to a voice-changer mic, that uses an ML model of your voice to produce speech that is different in meaning and/or content from that which was spoken. Mode selection controls the manner of augmentation, e.g. replace words with [ant|syn]onyms, add uncomfortable pauses, interjections, superfluous phrase, etc."""
-    ),
+    )
 )
 
 DESCRIPTION = 'Some things that I have considered making or doing'
