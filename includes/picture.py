@@ -4,7 +4,7 @@
 from lib import NotDefined
 from lib import microdata as md
 from lib.htmlephant import (
-    Div,
+    Span,
     Img,
     MDMeta,
     Picture,
@@ -18,12 +18,12 @@ image_sources_to_srcset_str = lambda image_sources: ', '.join(
 Head = NotDefined
 
 Body = lambda context, sources, sizes, name, description, itemprop=None: (
-    Div(
+    Span(
         itemprop=itemprop,
         itemscope='',
         itemtype=md.Types.ImageObject,
-        _class='picture-aspect-box',
-        style=f"height: 0; padding-bottom: {sources['original'].height / sources['original'].width * 100}%;",
+        _class='picture-wrapper',
+        style='display: inline-block;',
         children=(
             MDMeta(md.Props.contentUrl, sources['original'].url),
             MDMeta(md.Props.thumbnailUrl, sources['fallback'].url),
@@ -35,6 +35,7 @@ Body = lambda context, sources, sizes, name, description, itemprop=None: (
                 sources['original'].last_modified.isoformat()
             ),
             Picture(
+                style=f"display: inline-block; width: 100%; height: 0; position: relative; padding-bottom: {sources['original'].height / sources['original'].width * 100}%;",
                 children=(
                     *[
                         PictureSource(
@@ -49,7 +50,8 @@ Body = lambda context, sources, sizes, name, description, itemprop=None: (
                     Img(
                         src=sources['fallback'].url,
                         loading='lazy',
-                        alt=description
+                        alt=description,
+                        style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'
                     ),
                 )
             )
