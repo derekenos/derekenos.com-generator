@@ -209,6 +209,11 @@ main > section a.tag:hover {
   text-decoration: underline;
 }
 
+.picture-aspect-box {
+  background-color: rgba(0, 0, 0, 0.10);
+  border-radius: 8px;
+}
+
 .footer {
   font-size: .8rem;
   padding: 1rem;

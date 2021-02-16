@@ -4,24 +4,26 @@
 from lib import NotDefined
 from lib import microdata as md
 from lib.htmlephant import (
+    Div,
     Img,
     MDMeta,
     Picture,
     PictureSource,
-    Span,
 )
 
 image_sources_to_srcset_str = lambda image_sources: ', '.join(
-    f'{path} {width}w' for _, _, path, width, _ in image_sources
+    f'{path} {width}w' for _, _, path, width, _, _ in image_sources
 )
 
 Head = NotDefined
 
 Body = lambda context, sources, sizes, name, description, itemprop=None: (
-    Span(
+    Div(
         itemprop=itemprop,
         itemscope='',
         itemtype=md.Types.ImageObject,
+        _class='picture-aspect-box',
+        style=f"height: 0; padding-bottom: {sources['original'].height / sources['original'].width * 100}%;",
         children=(
             MDMeta(md.Props.contentUrl, sources['original'].url),
             MDMeta(md.Props.thumbnailUrl, sources['fallback'].url),

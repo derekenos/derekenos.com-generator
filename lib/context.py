@@ -28,7 +28,7 @@ class InvalidContext(Exception): pass
 
 ImageSource = namedtuple(
     'ImageSource',
-    ('filename', 'mimetype', 'url', 'width', 'last_modified')
+    ('filename', 'mimetype', 'url', 'width', 'height', 'last_modified')
 )
 
 VideoSource = namedtuple(
@@ -212,12 +212,14 @@ def normalize_videos(context, videos):
 # Normalize Project Images
 ###############################################################################
 
-def get_fallback_image_source(context, original_width, item_name, asset_id):
+def get_fallback_image_source(context, original_width, aspect, item_name,
+                              asset_id):
     """Return a fallback image source tuple for the specified item name and
     # assset file number.
     """
     mimetype = context.prioritized_derivative_image_mimetypes[-1]
     width = min(original_width, context.fallback_image_width)
+    height = width / aspect
     filename = context.derivative_image_filename_template.format(
         item_name=item_name,
         asset_id=asset_id,
@@ -226,7 +228,7 @@ def get_fallback_image_source(context, original_width, item_name, asset_id):
     )
     url = context.static(filename)
     last_modified = context.static_last_modified(filename)
-    return ImageSource(filename, mimetype, url, width, last_modified)
+    return ImageSource(filename, mimetype, url, width, height, last_modified)
 
 def add_sources(context, image):
     """Extend the image dict with a 'sources' property that comprises the available
@@ -243,6 +245,8 @@ def add_sources(context, image):
     item_name = match.group('item_name')
     asset_id = match.group('asset_id')
     original_width = int(match.group('width'))
+    original_height = int(match.group('height'))
+    aspect = original_height / original_width
 
     sources = {
         'original': ImageSource(
@@ -250,11 +254,12 @@ def add_sources(context, image):
             guess_mimetype(filename),
             context.static(filename),
             original_width,
+            original_height,
             context.static_last_modified(filename)
         ),
         'derivatives': [],
         'fallback': get_fallback_image_source(
-            context, original_width, item_name, asset_id
+            context, original_width, aspect, item_name, asset_id
         )
     }
 
@@ -286,6 +291,7 @@ def add_sources(context, image):
                         mimetype,
                         url,
                         width,
+                        width / aspect,
                         context.static_last_modified(derivative_fn)
                     )
                 )
