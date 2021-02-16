@@ -91,6 +91,8 @@ def run(
     github.com/derekenos/derekenos.com-generator
     """
     INPUT_FILENAME_REGEX = re.compile(input_filename_regex)
+    # Ensure that widths are sorted descending.
+    widths = sorted(widths, reverse=True)
     for filename, file_path in listfiles(src_dir):
         # Ignore non-image files.
         if not guess_mimetype(filename).startswith('image/'):
@@ -105,16 +107,12 @@ def run(
         # Open the image.
         image = pdb.gimp_file_load(file_path, filename)
 
-        # Sort widths descending.
-        widths = sorted(widths, reverse=True)
-
         # If any requested widths are larger than the original image,
         # add the original width to the list and drop the larger values.
         i = next(i for i, width in enumerate(widths) if width < image.width)
-        if i > 0:
-            widths = [image.width] + widths[i:]
+        final_widths = [image.width] + widths[i:] if i > 0 else widths
 
-        for width in widths:
+        for width in final_widths:
             if image.width > width:
                 # Scale image down to width.
                 height = int(float(width) / image.width * image.height)

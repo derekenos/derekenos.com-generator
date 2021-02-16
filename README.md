@@ -93,29 +93,30 @@ Here's an example of how all derivatives are presented in the source for the fir
 ```
 <picture>
   <source
-    srcset="static/project-static-site-generator-4cb061e3-1146px.webp 1146w,                                                                                                                               
-            static/project-static-site-generator-4cb061e3-1000px.webp 1000w,                                                                                                                               
-            static/project-static-site-generator-4cb061e3-750px.webp 750w,                                                                                                                                 
-            static/project-static-site-generator-4cb061e3-500px.webp 500w,                                                                                                                                 
-            static/project-static-site-generator-4cb061e3-300px.webp 300w,                                                                                                                                 
-            static/project-static-site-generator-4cb061e3-100px.webp 100w"
+    srcset="https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1146px.webp 1146w,           
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1000px.webp 1000w,           
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-750px.webp 750w,             
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-500px.webp 500w,             
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-300px.webp 300w,             
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-100px.webp 100w"
     sizes="90vw"
     type="image/webp">
   <source
-    srcset="https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1146px.png 1146w,                                                                                 
-            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1000px.png 1000w,                                                                                 
-            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-750px.png 750w,                                                                                   
-            static/project-static-site-generator-4cb061e3-500px.png 500w,                                                                                                                                  
-            static/project-static-site-generator-4cb061e3-300px.png 300w,                                                                                                                                  
-            static/project-static-site-generator-4cb061e3-100px.png 100w"
+    srcset="https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1146px.jpg 1146w,            
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-1000px.jpg 1000w,            
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-750px.jpg 750w,              
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-500px.jpg 500w,              
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-300px.jpg 300w,              
+            https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-100px.jpg 100w"
     sizes="90vw"
-    type="image/png">
+    type="image/jpeg">
   <img
-    src="https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-750px.png"
+    src="https://derekenos-com.nyc3.cdn.digitaloceanspaces.com/project-static-site-generator-4cb061e3-750px.jpg"
+    loading="lazy"
     alt="A picture of the Static Site Generator">
 </picture>
 ```
-You can see that the first `<source>` offers a bunch of next-gen `webp`s because they're rad. The second `<source>` offers `png`s which are not as awesome but are well-supported (note that the biggest sizes have been offloaded to the large static store). The `<img>` at the end serves as a fallback for browsers that don't support the `<picture>` tag.
+You can see that the first `<source>` offers a bunch of next-gen `webp`s because they're rad. The second `<source>` offers `jpg`s which are not as awesome but are well-supported. The `<img>` at the end serves as a fallback for browsers that don't support the `<picture>` tag.
 
 The `process-assets.py` script can take care of all this nightmare filename normalization and derivative generation for you, and has this sweet `auto` action that accepts:
 - the path to a directory of misfitly-named, project-specific images and videos
@@ -157,13 +158,13 @@ project-weather-station-82fc52a8-original.mp4
 
 The only required derivative for a video is the poster image, which also has a template, as defined by [derivative_video_poster_filename_template](https://github.com/derekenos/derekenos.com-generator/blob/dc888fb0eee1d02860b87d82dc3cec48eb3f6dd9/context.json#L86), like:
 ```
-{base_filename}-poster.png
+{base_filename}-poster.jpg
 ```
-_Why did I not make that `{item_name}-{asset_id}-poster.png`? I'll [endeavor to fix](https://github.com/derekenos/derekenos.com-generator/issues/18) this._
+_Why did I not make that `{item_name}-{asset_id}-poster.jpg`? I'll [endeavor to fix](https://github.com/derekenos/derekenos.com-generator/issues/18) this._
 
 A valid poster image filename is:
 ```
-project-weather-station-82fc52a8-original-poster.png
+project-weather-station-82fc52a8-original-poster.jpg
 ```
 
 ### 3. Add static assets
