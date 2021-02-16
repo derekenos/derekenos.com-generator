@@ -73,7 +73,7 @@ def assert_no_unhandled_mimetypes(input_path):
 # Item Filename Normalization Functions
 ###############################################################################
 
-def get_image_widths(input_path):
+def get_image_dims(input_path):
     """Return a filename -> width map for all image files in input_path.
     """
     # Execute a Gimp script that collects image file widths and writes a
@@ -87,15 +87,15 @@ def get_image_widths(input_path):
             '--batch-interpreter',
             'python-fu-eval',
             '-b',
-            f"import sys; sys.path = ['.'] + sys.path; import gimp_get_image_widths; gimp_get_image_widths.run('{input_path}', '{fh.name}')",
+            f"import sys; sys.path = ['.'] + sys.path; import gimp_get_image_dims; gimp_get_image_dims.run('{input_path}', '{fh.name}')",
             '-b',
             'pdb.gimp_quit(1)'
         )
         call_gimp_subprocess(args, stdout=subprocess.DEVNULL)
         # Load the written data from the file.
         fh.seek(0)
-        filename_width_map = json.load(fh)
-    return filename_width_map
+        filename_dims_map = json.load(fh)
+    return filename_dims_map
 
 def normalize_item_filenames(context_file, input_path, item_name, output_path):
     # Assert that we can handle all the files in input_path.
@@ -114,8 +114,8 @@ def normalize_item_filenames(context_file, input_path, item_name, output_path):
     video_template = context['normalized_video_filename_template']
 
     # Get an image filename -> width map.
-    print_header('Reading image widths...')
-    image_filename_width_map = get_image_widths(input_path)
+    print_header('Reading image dimensions...')
+    image_filename_dims_map = get_image_dims(input_path)
 
     print_header('Normalizing item filenames')
     for filename, file_path in listfiles(input_path):
@@ -125,10 +125,12 @@ def normalize_item_filenames(context_file, input_path, item_name, output_path):
         # Use the first 8 chars of file contents MD5 as the asset ID.
         asset_id = md5sum(file_path)[:8]
         if mimetype.startswith('image/'):
+            width, height = image_filename_dims_map[filename]
             normalized_filename = image_template.format(
                 item_name=item_name,
                 asset_id=asset_id,
-                width=image_filename_width_map[filename],
+                width=width,
+                height=height,
                 extension=extension
             )
         elif mimetype.startswith('video/'):

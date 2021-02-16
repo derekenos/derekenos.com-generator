@@ -4,15 +4,15 @@
 from lib import NotDefined
 from lib import microdata as md
 from lib.htmlephant import (
+    Span,
     Img,
     MDMeta,
     Picture,
     PictureSource,
-    Span,
 )
 
 image_sources_to_srcset_str = lambda image_sources: ', '.join(
-    f'{path} {width}w' for _, _, path, width, _ in image_sources
+    f'{path} {width}w' for _, _, path, width, _, _ in image_sources
 )
 
 Head = NotDefined
@@ -22,6 +22,8 @@ Body = lambda context, sources, sizes, name, description, itemprop=None: (
         itemprop=itemprop,
         itemscope='',
         itemtype=md.Types.ImageObject,
+        _class='picture-wrapper',
+        style='display: inline-block;',
         children=(
             MDMeta(md.Props.contentUrl, sources['original'].url),
             MDMeta(md.Props.thumbnailUrl, sources['fallback'].url),
@@ -33,6 +35,7 @@ Body = lambda context, sources, sizes, name, description, itemprop=None: (
                 sources['original'].last_modified.isoformat()
             ),
             Picture(
+                style=f"display: inline-block; width: 100%; height: 0; position: relative; padding-bottom: {sources['original'].height / sources['original'].width * 100}%;",
                 children=(
                     *[
                         PictureSource(
@@ -47,7 +50,8 @@ Body = lambda context, sources, sizes, name, description, itemprop=None: (
                     Img(
                         src=sources['fallback'].url,
                         loading='lazy',
-                        alt=description
+                        alt=description,
+                        style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;'
                     ),
                 )
             )
