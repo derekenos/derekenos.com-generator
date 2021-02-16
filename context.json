@@ -51,8 +51,8 @@
     "type": "S3",
     "aws_profile": "digitalocean",
     "aws_endpoint": "https://nyc3.digitaloceanspaces.com",
-    "s3_url": "s3://derekenos-com/",
-    "endpoint": "https://derekenos-com.nyc3.cdn.digitaloceanspaces.com"
+    "s3_url": "s3://derekenos-com-1/",
+    "endpoint": "https://derekenos-com-1.nyc3.cdn.digitaloceanspaces.com"
   },
   "name": "Derek Enos",
   "email": "derek@derekenos.com",
@@ -135,7 +135,7 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "filename": "project-static-site-generator-4cb061e3-1146px-original.webp",
+          "filename": "project-static-site-generator-4cb061e3-1146x830-original.webp",
           "name": "Static Site Generator",
           "description": "A picture of the Static Site Generator"
         }
@@ -157,7 +157,7 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "filename": "project-htmlephant-f3c46928-714px-original.webp",
+          "filename": "project-htmlephant-f3c46928-714x661-original.webp",
           "name": "HTMLephant",
           "description": "A picture of the HTMLephant"
         }
@@ -184,7 +184,7 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "filename": "project-femtoweb-d80c32e4-750px-original.webp",
+          "filename": "project-femtoweb-d80c32e4-750x838-original.webp",
           "name": "femtoweb",
           "description": "A picture of the femtoweb"
         }
@@ -214,12 +214,12 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-weather-station-efe7b6da-1224px-original.png",
+          "filename": "project-weather-station-efe7b6da-1224x1090-original.png",
           "name": "Weather Station",
           "description": "A picture of the Weather Station"
         },
         {
-          "filename": "project-weather-station-384a2943-4048px-original.jpg",
+          "filename": "project-weather-station-384a2943-4048x3036-original.jpg",
           "name": "Weather Station",
           "description": "A picture of the Weather Station"
         }
@@ -252,27 +252,27 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-indicator-gauge-4f8a33ce-400px-original.jpg",
+          "filename": "project-indicator-gauge-9afe139b-400x431-original.jpg",
           "name": "Indicator Gauge",
           "description": "A picture of the Indicator Gauge"
         },
         {
-          "filename": "project-indicator-gauge-9afe139b-400px-original.jpg",
+          "filename": "project-indicator-gauge-0fab3188-400x537-original.jpg",
           "name": "Indicator Gauge",
           "description": "A picture of the Indicator Gauge"
         },
         {
-          "filename": "project-indicator-gauge-21bdcf7e-400px-original.jpg",
+          "filename": "project-indicator-gauge-4f8a33ce-400x463-original.jpg",
           "name": "Indicator Gauge",
           "description": "A picture of the Indicator Gauge"
         },
         {
-          "filename": "project-indicator-gauge-0fab3188-400px-original.jpg",
+          "filename": "project-indicator-gauge-dbb389e4-400x363-original.jpg",
           "name": "Indicator Gauge",
           "description": "A picture of the Indicator Gauge"
         },
         {
-          "filename": "project-indicator-gauge-dbb389e4-400px-original.jpg",
+          "filename": "project-indicator-gauge-21bdcf7e-400x397-original.jpg",
           "name": "Indicator Gauge",
           "description": "A picture of the Indicator Gauge"
         }
@@ -297,7 +297,7 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "filename": "project-streaming-json-parser-f0d00137-758px-original.webp",
+          "filename": "project-streaming-json-parser-f0d00137-758x646-original.webp",
           "name": "Streaming JSON Parser",
           "description": "A picture of the Streaming JSON Parser"
         }
@@ -326,7 +326,7 @@
       "github_url": "https://github.com/derekenos/micropython-time",
       "images": [
         {
-          "filename": "project-time-strptime---33226283-758px-original.webp",
+          "filename": "project-time-strptime---33226283-758x664-original.webp",
           "name": "time.strptime()",
           "description": "A picture of the time.strptime()"
         }
@@ -350,7 +350,7 @@
       "github_url": "https://github.com/derekenos/utf8_decoder",
       "images": [
         {
-          "filename": "project-utf-8-decoder-009b0947-758px-original.webp",
+          "filename": "project-utf-8-decoder-009b0947-758x728-original.webp",
           "name": "UTF-8 Decoder",
           "description": "A picture of the UTF-8 Decoder"
         }
@@ -371,77 +371,77 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-cardboard-boxcade-4dcf0690-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-4dcf0690-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-61d695f7-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-61d695f7-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-19c84043-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-b546b3a0-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-c2e90e68-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-bdc68662-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-b546b3a0-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-934b8bfc-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-1fa04b55-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-1fa04b55-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-f377c959-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-19c84043-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-559a1590-3036px-original.jpg",
+          "filename": "project-cardboard-boxcade-85d80090-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-84fe164f-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-84fe164f-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-85d80090-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-1d1e06e0-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-23f4bdbb-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-23f4bdbb-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-6b9964cc-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-559a1590-3036x4048-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-934b8bfc-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-f377c959-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-1d1e06e0-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-6b9964cc-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         },
         {
-          "filename": "project-cardboard-boxcade-bdc68662-4048px-original.jpg",
+          "filename": "project-cardboard-boxcade-c2e90e68-4048x3036-original.jpg",
           "name": "Cardboard Boxcade",
           "description": "A picture of the Cardboard Boxcade"
         }
@@ -473,7 +473,7 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-trtl-fff59022-4048px-original.jpg",
+          "filename": "project-trtl-fff59022-4048x3036-original.jpg",
           "name": "Trtl",
           "description": "A picture of the Trtl"
         }
@@ -497,77 +497,77 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-weezel-81ce9409-4048px-original.jpg",
+          "filename": "project-weezel-81ce9409-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-bec5668c-4048px-original.jpg",
+          "filename": "project-weezel-93a121cc-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-33718d12-4048px-original.jpg",
+          "filename": "project-weezel-0433cc14-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-93a121cc-4048px-original.jpg",
+          "filename": "project-weezel-ef1e2b06-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-dfca7621-3036px-original.jpg",
+          "filename": "project-weezel-4c60166f-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-ef1e2b06-4048px-original.jpg",
+          "filename": "project-weezel-02c005a0-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-4c60166f-4048px-original.jpg",
+          "filename": "project-weezel-bec5668c-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-0433cc14-4048px-original.jpg",
+          "filename": "project-weezel-b5cd0834-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-b9ab1159-4048px-original.jpg",
+          "filename": "project-weezel-e833b6f6-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-02c005a0-4048px-original.jpg",
+          "filename": "project-weezel-33718d12-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-0eae2a0a-4048px-original.jpg",
+          "filename": "project-weezel-dfca7621-3036x4048-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-00b3ec48-4048px-original.jpg",
+          "filename": "project-weezel-80a95725-3036x4048-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-b5cd0834-4048px-original.jpg",
+          "filename": "project-weezel-00b3ec48-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-e833b6f6-4048px-original.jpg",
+          "filename": "project-weezel-0eae2a0a-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         },
         {
-          "filename": "project-weezel-80a95725-3036px-original.jpg",
+          "filename": "project-weezel-b9ab1159-4048x3036-original.jpg",
           "name": "Weezel",
           "description": "A picture of the Weezel"
         }
@@ -660,67 +660,67 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-modular-arcade-cabinet-4995fe8d-3036px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-4995fe8d-3036x4048-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-d02937f1-3036px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-c58ec0db-3036x4048-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-62bd63b4-4048px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-62bd63b4-4048x3036-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-6353f71d-4048px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-f1fe7b23-4048x3036-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-cbd57374-4048px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-1176fff5-3036x3374-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-1176fff5-3036px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-b6106979-3036x4048-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-05caa0d8-3036px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-05caa0d8-3036x4048-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-f1fe7b23-4048px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-75d55627-4048x3036-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-75d55627-4048px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-6353f71d-4048x3036-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-c58ec0db-3036px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-d02937f1-3036x4048-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-b6106979-3036px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-06db98bc-3036x4048-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-de391b64-4048px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-de391b64-4048x3036-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         },
         {
-          "filename": "project-modular-arcade-cabinet-06db98bc-3036px-original.jpg",
+          "filename": "project-modular-arcade-cabinet-cbd57374-4048x3036-original.jpg",
           "name": "Modular Arcade Cabinet",
           "description": "A picture of the Modular Arcade Cabinet"
         }
@@ -749,7 +749,7 @@
       "type": "SoftwareSourceCode",
       "images": [
         {
-          "filename": "project-gritty-viddy-6d38d732-1920px-original.png",
+          "filename": "project-gritty-viddy-6d38d732-1920x1080-original.png",
           "name": "Gritty Viddy",
           "description": "A picture of the Gritty Viddy"
         }
@@ -773,7 +773,7 @@
       "operating_system": "Web Browser",
       "images": [
         {
-          "filename": "project-important-message-581d5f43-420px-original.png",
+          "filename": "project-important-message-581d5f43-420x268-original.png",
           "name": "Important Message",
           "description": "A picture of the Important Message"
         }
@@ -803,17 +803,17 @@
       "github_url": "https://github.com/derekenos/iome/tree/master/appliances/sketchy",
       "images": [
         {
-          "filename": "project-sketchy-970c14a9-4048px-original.jpg",
+          "filename": "project-sketchy-970c14a9-4048x3036-original.jpg",
           "name": "Sketchy",
           "description": "A picture of the Sketchy"
         },
         {
-          "filename": "project-sketchy-45aaadc4-4048px-original.jpg",
+          "filename": "project-sketchy-45aaadc4-4048x3036-original.jpg",
           "name": "Sketchy",
           "description": "A picture of the Sketchy"
         },
         {
-          "filename": "project-sketchy-ca2b7431-4048px-original.jpg",
+          "filename": "project-sketchy-ca2b7431-4048x3036-original.jpg",
           "name": "Sketchy",
           "description": "A picture of the Sketchy"
         }
@@ -852,16 +852,9 @@
       "operating_system": "Web Browser",
       "images": [
         {
-          "filename": "project-babygate-a6ee8df2-1920px-original.png",
+          "filename": "project-babygate-a6ee8df2-1920x1080-original.png",
           "name": "Babygate",
           "description": "A picture of the Babygate"
-        }
-      ],
-      "videos": [
-        {
-          "filename": "project-iome-43a5b6ea-original.mp4",
-          "name": "Babygate",
-          "description": "A movie of the Babygate video game"
         }
       ]
     },
@@ -885,17 +878,17 @@
       ],
       "images": [
         {
-          "filename": "project-iome-6143a777-4048px-original.jpg",
+          "filename": "project-iome-6143a777-4048x3036-original.jpg",
           "name": "iome",
           "description": "A picture of the iome"
         },
         {
-          "filename": "project-iome-10b6409c-4048px-original.jpg",
+          "filename": "project-iome-10b6409c-4048x3036-original.jpg",
           "name": "iome",
           "description": "A picture of the iome"
         },
         {
-          "filename": "project-iome-7313c58a-4048px-original.jpg",
+          "filename": "project-iome-7313c58a-4048x3036-original.jpg",
           "name": "iome",
           "description": "A picture of the iome"
         }
@@ -921,17 +914,17 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-laser-cut-keypad-9dbea680-4048px-original.jpg",
+          "filename": "project-laser-cut-keypad-9dbea680-4048x3036-original.jpg",
           "name": "Laser-cut Keypad",
           "description": "A picture of the Laser-cut Keypad"
         },
         {
-          "filename": "project-laser-cut-keypad-cd054916-4048px-original.jpg",
+          "filename": "project-laser-cut-keypad-cd054916-4048x3036-original.jpg",
           "name": "Laser-cut Keypad",
           "description": "A picture of the Laser-cut Keypad"
         },
         {
-          "filename": "project-laser-cut-keypad-aeb97ff1-2862px-original.jpg",
+          "filename": "project-laser-cut-keypad-aeb97ff1-2862x2772-original.jpg",
           "name": "Laser-cut Keypad",
           "description": "A picture of the Laser-cut Keypad"
         }
@@ -973,7 +966,7 @@
       ],
       "images": [
         {
-          "filename": "project-physical-platformer-game-prototype-003419d0-1920px-original.png",
+          "filename": "project-physical-platformer-game-prototype-003419d0-1920x1090-original.png",
           "name": "Physical Platformer Game Prototype",
           "description": "A picture of the Physical Platformer Game Prototype"
         }
@@ -997,67 +990,67 @@
       "github_url": "https://github.com/derekenos/delta_robot",
       "images": [
         {
-          "filename": "project-delta-robot-a2ac0a81-4048px-original.jpg",
+          "filename": "project-delta-robot-a2ac0a81-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-077d5920-4048px-original.jpg",
+          "filename": "project-delta-robot-077d5920-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-cb438149-4048px-original.jpg",
+          "filename": "project-delta-robot-ea7a2f52-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-21736f04-4048px-original.jpg",
+          "filename": "project-delta-robot-21736f04-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-05966c8c-4048px-original.jpg",
+          "filename": "project-delta-robot-cb438149-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-bc07cdeb-4048px-original.jpg",
+          "filename": "project-delta-robot-05966c8c-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-3753ba3b-4048px-original.jpg",
+          "filename": "project-delta-robot-a0fb2416-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-733db74a-4048px-original.jpg",
+          "filename": "project-delta-robot-2a599b1a-3036x4048-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-ea7a2f52-4048px-original.jpg",
+          "filename": "project-delta-robot-1ba2eb32-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-532c0554-2788px-original.jpg",
+          "filename": "project-delta-robot-733db74a-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-a0fb2416-4048px-original.jpg",
+          "filename": "project-delta-robot-3753ba3b-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-2a599b1a-3036px-original.jpg",
+          "filename": "project-delta-robot-532c0554-2788x2508-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         },
         {
-          "filename": "project-delta-robot-1ba2eb32-4048px-original.jpg",
+          "filename": "project-delta-robot-bc07cdeb-4048x3036-original.jpg",
           "name": "Delta Robot",
           "description": "A picture of the Delta Robot"
         }
@@ -1102,7 +1095,7 @@
       "operating_system": "Web Browser",
       "images": [
         {
-          "filename": "project-composer-9fb7fad3-1920px-original.png",
+          "filename": "project-composer-9fb7fad3-1920x1080-original.png",
           "name": "Composer",
           "description": "A picture of the Composer"
         }
@@ -1131,7 +1124,7 @@
       "live_url": "/static/projects/sim/",
       "images": [
         {
-          "filename": "project-ion-model-4c42c711-1920px-original.png",
+          "filename": "project-ion-model-4c42c711-1920x1080-original.png",
           "name": "Ion Model",
           "description": "A picture of the Ion Model"
         }
@@ -1169,67 +1162,67 @@
       ],
       "images": [
         {
-          "filename": "project-demidulator-df36e55e-2410px-original.png",
+          "filename": "project-demidulator-df36e55e-2410x1810-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-c5396ae0-1199px-original.png",
+          "filename": "project-demidulator-8f2e56e8-2495x1656-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-8f2e56e8-2495px-original.png",
+          "filename": "project-demidulator-e33a0eb9-775x724-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-9a12fcf6-2738px-original.png",
+          "filename": "project-demidulator-29841268-2674x1958-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-d56f0a5f-2598px-original.png",
+          "filename": "project-demidulator-9a12fcf6-2738x1506-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-29841268-2674px-original.png",
+          "filename": "project-demidulator-c734b06c-1205x925-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-2f4fec25-1235px-original.png",
+          "filename": "project-demidulator-eeb5f55f-1373x787-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-c734b06c-1205px-original.png",
+          "filename": "project-demidulator-c369ad80-986x898-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-bc9f3cd2-1161px-original.png",
+          "filename": "project-demidulator-2f4fec25-1235x903-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-65bbd3a1-775px-original.png",
+          "filename": "project-demidulator-bc9f3cd2-1161x797-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-e33a0eb9-775px-original.png",
+          "filename": "project-demidulator-65bbd3a1-775x642-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-c369ad80-986px-original.png",
+          "filename": "project-demidulator-c5396ae0-1199x821-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         },
         {
-          "filename": "project-demidulator-eeb5f55f-1373px-original.png",
+          "filename": "project-demidulator-d56f0a5f-2598x1762-original.png",
           "name": "deMIDulator",
           "description": "A picture of the deMIDulator"
         }
@@ -1256,67 +1249,67 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-beginner-s-box-a772d6fc-3264px-original.jpg",
+          "filename": "project-beginner-s-box-a772d6fc-3264x2448-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-316f6beb-2736px-original.jpg",
+          "filename": "project-beginner-s-box-a2226298-3648x2736-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-db874177-2736px-original.jpg",
+          "filename": "project-beginner-s-box-316f6beb-2736x3648-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-eb789b66-2736px-original.jpg",
+          "filename": "project-beginner-s-box-2eb146f3-3648x2736-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-6ac3453e-3264px-original.jpg",
+          "filename": "project-beginner-s-box-db874177-2736x3648-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-b0c15099-3264px-original.jpg",
+          "filename": "project-beginner-s-box-956898af-3648x2736-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-956898af-3648px-original.jpg",
+          "filename": "project-beginner-s-box-aac8bf6a-3648x2736-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-a2226298-3648px-original.jpg",
+          "filename": "project-beginner-s-box-b0c15099-3264x2448-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-2eb146f3-3648px-original.jpg",
+          "filename": "project-beginner-s-box-6ac3453e-3264x2448-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-2d062b6e-3648px-original.jpg",
+          "filename": "project-beginner-s-box-e99b184a-3648x2736-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-d1ebc8d1-3264px-original.jpg",
+          "filename": "project-beginner-s-box-eb789b66-2736x3648-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-aac8bf6a-3648px-original.jpg",
+          "filename": "project-beginner-s-box-d1ebc8d1-3264x2448-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         },
         {
-          "filename": "project-beginner-s-box-e99b184a-3648px-original.jpg",
+          "filename": "project-beginner-s-box-2d062b6e-3648x2736-original.jpg",
           "name": "Beginner's Box",
           "description": "A picture of the Beginner's Box"
         }
@@ -1341,7 +1334,7 @@
       "type": "CreativeWork",
       "images": [
         {
-          "filename": "project-video-feedback-instrument-01b04ed7-1920px-original.png",
+          "filename": "project-video-feedback-instrument-01b04ed7-1920x1080-original.png",
           "name": "Video Feedback Instrument",
           "description": "A picture of the Video Feedback Instrument"
         }
@@ -1374,12 +1367,12 @@
       ],
       "images": [
         {
-          "filename": "project-physical-interface-prototype-2b27ac07-2431px-original.jpg",
+          "filename": "project-physical-interface-prototype-2b27ac07-2431x2096-original.jpg",
           "name": "Physical Interface Prototype",
           "description": "A picture of the Physical Interface Prototype"
         },
         {
-          "filename": "project-physical-interface-prototype-f265d507-1015px-original.png",
+          "filename": "project-physical-interface-prototype-f265d507-1015x844-original.png",
           "name": "Physical Interface Prototype",
           "description": "A picture of the Physical Interface Prototype"
         }
