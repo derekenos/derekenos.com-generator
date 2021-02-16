@@ -856,6 +856,13 @@
           "name": "Babygate",
           "description": "A picture of the Babygate"
         }
+      ],
+      "videos": [
+        {
+          "filename": "project-iome-43a5b6ea-original.mp4",
+          "name": "Babygate",
+          "description": "gameplay from the Babygate video game"
+        }
       ]
     },
     {
