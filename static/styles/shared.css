@@ -137,9 +137,14 @@ main > section > .collection > .item .picture-wrapper {
 }
 
 main > section .picture-wrapper > picture {
-  /* Uncomment to show nice image loading placeholder that looks bad if images contain transparency. */
-  /* background-color: rgba(0, 0, 0, 0.25); */
-  /* border-radius: 8px; */
+  border-radius: 8px;
+  animation-name: fade-picture-placeholder;
+  animation-duration: 2s;
+}
+
+@keyframes fade-picture-placeholder {
+  0% { background-color: rgba(0, 0, 0, 0.25); }
+  100% { background-color: rgba(0, 0, 0, 0); }
 }
 
 main > section .picture-wrapper > picture > img {
