@@ -57,6 +57,7 @@ def write_page(context, filename, head=NotDefined, body=NotDefined):
 
 def write_sitemap(context, filenames):
     with context.open(context.SITEMAP_FILENAME) as fh:
+        fh.write(f'{context.base_url}/\n')
         for filename in filenames:
             fh.write(f'{context.base_url}/{filename}\n')
 
