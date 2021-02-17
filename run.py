@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 import shutil
+from hashlib import md5
 from itertools import chain
 
 from lib.htmlephant import Document
@@ -29,40 +30,50 @@ import includes.redirect
 def write_page(context, filename, head=NotDefined, body=NotDefined):
     """Write a single HTML site page.
     """
-    # Open the HTML output file.
-    with context.open(filename) as fh:
-        # Combine global includes with the module Head and Body to create
-        # the final element tuples.
-        head_els = chain(includes.head.Head(context), head(context))
-        # Invoke the page body function and, if non-empty, assert that it
-        # returns a single <main> element.
-        page_body_els = body(context)
-        if page_body_els and (len(page_body_els) != 1
-                              or not isinstance(page_body_els[0], Main)):
-            raise AssertionError(
-                'Expected page_mod.Body() to return a single <main> element '
-                f'but got {page_body_els} instead when attempting to write '
-                f'file: {filename}'
-            )
-        body_els = chain(
-            includes.header.Body(context),
-            page_body_els,
-            includes.footer.Body(context),
+    # Combine global includes with the module Head and Body to create
+    # the final element tuples.
+    head_els = chain(includes.head.Head(context), head(context))
+    # Invoke the page body function and, if non-empty, assert that it
+    # returns a single <main> element.
+    page_body_els = body(context)
+    if page_body_els and (len(page_body_els) != 1
+                          or not isinstance(page_body_els[0], Main)):
+        raise AssertionError(
+            'Expected page_mod.Body() to return a single <main> element '
+            f'but got {page_body_els} instead when attempting to write '
+            f'file: {filename}'
         )
-        # Create the Document object.
-        doc = Document(body_els, head_els)
-        # Write the document to the file.
-        for c in doc:
-            fh.write(c)
+    body_els = chain(
+        includes.header.Body(context),
+        page_body_els,
+        includes.footer.Body(context),
+    )
+    # Create the Document object and get the rendered HTML.
+    html = ''.join(Document(body_els, head_els)).encode('utf-8')
+
+    # If the specified page file already exists and the hash of its contents
+    # up to "<footer " is the same as the currently HTML, return.
+    if os.path.exists(os.path.join(context.SITE_DIR, filename)):
+        # Open the existing file, hash its contents up to "<footer ", do the
+        # same for the new HTML, and compare them.
+        contents = context.open(filename, 'rb', encoding=None).read()
+        existing_hash = md5(contents[:contents.rindex(b'<footer ')]).digest()
+        new_hash = md5(html[:html.rindex(b'<footer ')]).digest()
+        if new_hash == existing_hash:
+            return
+
+    # Open the HTML output file.
+    with context.open(filename, 'wb', encoding=None) as fh:
+        fh.write(html)
 
 def write_sitemap(context, filenames):
-    with context.open(context.SITEMAP_FILENAME) as fh:
+    with context.open(context.SITEMAP_FILENAME, 'w') as fh:
         fh.write(f'{context.base_url}/\n')
         for filename in filenames:
             fh.write(f'{context.base_url}/{filename}\n')
 
 def write_robots(context):
-    with context.open('robots.txt') as fh:
+    with context.open('robots.txt', 'w') as fh:
         fh.write(
 f"""User-agent: *
 Allow: /

@@ -177,11 +177,11 @@ class Context:
             return path
         return self.url(path)
 
-    def open(self, path):
+    def open(self, path, mode, encoding='utf-8'):
         """Return a writable UTF-8 file handle for a self.SITE_DIR sub-path.
         """
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
-        return open(path, 'w', encoding='utf-8')
+        return open(path, mode, encoding=encoding)
 
 ###############################################################################
 # Normalize Project Videos
