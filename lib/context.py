@@ -177,7 +177,12 @@ class Context:
             return path
         return self.url(path)
 
-    def open(self, path, mode, encoding='utf-8'):
+    def site_exists(self, filename):
+        """Return a bool indicating whether filename exists in self.SITE_DIR.
+        """
+        return os.path.exists(os.path.join(self.SITE_DIR, filename))
+
+    def site_open(self, path, mode, encoding='utf-8'):
         """Return a writable UTF-8 file handle for a self.SITE_DIR sub-path.
         """
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))

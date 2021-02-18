@@ -24,11 +24,39 @@ import includes.header
 import includes.redirect
 
 ###############################################################################
+# Site manifest helpers
+#
+# The site manifest is a JSON file comprising a
+# <filename> -> <html-up-to-footer-md5> map for all existing files in
+# context.SITE_DIR and is used and updated by write_page() in determining
+# whether to actually write the page to disk. The hash is taken up to the start
+# of the footer tag because the footer includes a timestamp that should be
+# ignored for the sake of diffing.
+###############################################################################
+
+SITE_MANIFEST_FILENAME = '.site_manifest.json'
+
+load_site_manifest = lambda: (
+    json.load(open(SITE_MANIFEST_FILENAME, 'r', encoding='utf-8'))
+    if os.path.exists(SITE_MANIFEST_FILENAME)
+    else {}
+)
+
+save_site_manifest = lambda site_manifest: json.dump(
+    site_manifest,
+    open(SITE_MANIFEST_FILENAME, 'w', encoding='utf-8')
+)
+
+hash_page = lambda html: md5(html[:html.rindex(b'<footer ')]).hexdigest()
+
+###############################################################################
 # Site file writer helpers
 ###############################################################################
 
-def write_page(context, filename, head=NotDefined, body=NotDefined):
-    """Write a single HTML site page.
+def write_page(context, filename, site_manifest, head=NotDefined,
+               body=NotDefined):
+    """Write a single HTML site page if it differs from a corresponding on-disk
+    file and return a bool indicating whether or not the file was written.
     """
     # Combine global includes with the module Head and Body to create
     # the final element tuples.
@@ -50,30 +78,38 @@ def write_page(context, filename, head=NotDefined, body=NotDefined):
     )
     # Create the Document object and get the rendered HTML.
     html = ''.join(Document(body_els, head_els)).encode('utf-8')
+    html_hash = hash_page(html)
 
-    # If the specified page file already exists and the hash of its contents
-    # up to "<footer " is the same as the currently HTML, return.
-    if os.path.exists(os.path.join(context.SITE_DIR, filename)):
-        # Open the existing file, hash its contents up to "<footer ", do the
-        # same for the new HTML, and compare them.
-        contents = context.open(filename, 'rb', encoding=None).read()
-        existing_hash = md5(contents[:contents.rindex(b'<footer ')]).digest()
-        new_hash = md5(html[:html.rindex(b'<footer ')]).digest()
-        if new_hash == existing_hash:
-            return
+    # Attempt to get an existing hash from the site manifest.
+    existing_page_hash = site_manifest.get(filename)
+    if existing_page_hash is None:
+        # Page is not specified in the manifest. If the page exists on disk,
+        # init its entry in the manifest with the hash from that, otherwise use
+        # the current page hash.
+        if context.site_exists(filename):
+            site_manifest[filename] = hash_page(
+                context.site_open(filename, 'rb', encoding=None).read()
+            )
+        else:
+            site_manifest[filename] = html_hash
+    elif existing_page_hash == html_hash:
+        # The page exists in the manifest and has an identical hash to page we
+        # were about to write so ignore this write.
+        return False
 
     # Open the HTML output file.
-    with context.open(filename, 'wb', encoding=None) as fh:
+    with context.site_open(filename, 'wb', encoding=None) as fh:
         fh.write(html)
+    return True
 
 def write_sitemap(context, filenames):
-    with context.open(context.SITEMAP_FILENAME, 'w') as fh:
+    with context.site_open(context.SITEMAP_FILENAME, 'w') as fh:
         fh.write(f'{context.base_url}/\n')
         for filename in filenames:
             fh.write(f'{context.base_url}/{filename}\n')
 
 def write_robots(context):
-    with context.open('robots.txt', 'w') as fh:
+    with context.site_open('robots.txt', 'w') as fh:
         fh.write(
 f"""User-agent: *
 Allow: /
@@ -123,12 +159,19 @@ def copy_static(context):
 ###############################################################################
 
 def run(context):
+    """Copy the static assets and write any updated page files to the
+    context.SITE_DIR and return the number of written pages.
+    """
     # Copy static files to output, creating dirs as necessary.
     copy_static(context)
+
+    # Load any existing site manifest.
+    site_manifest = load_site_manifest()
 
     # Iterate through the pages, writing each to the site dir and collecting
     # the filenames for later sitemap creation.
     filenames = []
+    num_written = 0
     for page_name in context.page_names:
         # Update the context object with the name of the current page.
         context.current_page = page_name
@@ -146,7 +189,14 @@ def run(context):
             # Clear any previous generator item.
             context.generator_item = None
             filename = f'{page_name}.html'
-            write_page(context, filename, page_mod.Head, page_mod.Body)
+            if write_page(
+                    context,
+                    filename,
+                    site_manifest,
+                    page_mod.Head,
+                    page_mod.Body
+                ):
+                num_written += 1
             filenames.append(filename)
         else:
             # Use the page generator to write 1 or more pages.
@@ -158,11 +208,15 @@ def run(context):
             filename = f'{collection_name}s.html'
             item = next(iter(items))
             context.generator_item = item
-            write_page(
-                context,
-                filename,
-                lambda context: includes.redirect.Head(context, item['slug'])
-            )
+            if write_page(
+                    context,
+                    filename,
+                    site_manifest,
+                    lambda context: includes.redirect.Head(
+                        context, item['slug']
+                    ),
+                ):
+                num_written += 1
             filenames.append(filename)
 
             # Write the individual item pages.
@@ -170,12 +224,22 @@ def run(context):
                 # Update the context object with the current item.
                 context.generator_item = item
                 filename = page_mod.FILENAME_GENERATOR(item)
-                write_page(context, filename, page_mod.Head, page_mod.Body)
+                if write_page(
+                        context,
+                        filename,
+                        site_manifest,
+                        page_mod.Head,
+                        page_mod.Body
+                    ):
+                    num_written += 1
                 filenames.append(filename)
 
-    # Write the sitemap and robots files.
+    # Write the sitemap and robots files, save the site manifest and return
+    # the number of written files.
     write_sitemap(context, filenames)
     write_robots(context)
+    save_site_manifest(site_manifest)
+    return num_written
 
 ###############################################################################
 # CLI
@@ -203,8 +267,8 @@ if __name__ == '__main__':
     normalize_context(context)
 
     # Generate the site files.
-    run(context)
-    print(f'Wrote new files to: {context.SITE_DIR}/')
+    num_written = run(context)
+    print(f'Wrote {num_written} pages to: {context.SITE_DIR}/')
 
     # Save store.exists_response_headers_cache
     if context.lss is not None:
