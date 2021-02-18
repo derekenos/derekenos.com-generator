@@ -1,8 +1,7 @@
 
-from lib import assert_ctx
 from lib.htmlephant import Script
 
-Head = lambda context: assert_ctx(context, 'google_analytics_id') and (
+Head = lambda context: (
     Script(
         _async='',
         src=f'https://www.googletagmanager.com/gtag/js?id={context.google_analytics_id}'

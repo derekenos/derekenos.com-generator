@@ -1,8 +1,5 @@
 
-from lib import (
-    NotDefined,
-    assert_ctx,
-)
+from lib import NotDefined
 
 from lib.htmlephant import (
     Anchor,
@@ -23,7 +20,6 @@ def _Li(context, name, label):
 Head = NotDefined
 
 def Body(context):
-    assert_ctx(context, 'navbar_page_name_label_pairs')
     nav = Nav(
         id="main-nav",
         _aria_label='primary',

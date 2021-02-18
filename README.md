@@ -45,6 +45,26 @@ Clone the [generic](https://github.com/derekenos/derekenos.com-generator/tree/ge
 git clone --recurse-submodules -b generic https://github.com/derekenos/derekenos.com-generator
 ```
 
+### 1.1 Test Drive the Demo
+The generic branch includes some space-themed content which you can view by launching the dev server:
+```
+cd derekenos.com-generator
+./dev.sh
+```
+you should see:
+```
+Wrote 17 pages to: site/
+Serving at: http://0.0.0.0:5000
+```
+Surfing over to http://localhost:5000 should look something like:
+
+![Screenshot from 2021-02-18 11-29-20](https://user-images.githubusercontent.com/585182/108388672-db3ec580-71dc-11eb-8d7c-676c7d2f0ecc.jpg)
+
+or
+
+![Screenshot from 2021-02-18 11-35-59](https://user-images.githubusercontent.com/585182/108389377-9a937c00-71dd-11eb-8054-8ab4a7bc7753.jpg)
+
+
 ### 2. Configure
 Edit [context.json](https://github.com/derekenos/derekenos.com-generator/blob/generic/context.json) and [static/shared.css](https://github.com/derekenos/derekenos.com-generator/blob/generic/static/shared.css) to your liking.
 
