@@ -28,10 +28,8 @@ import includes.redirect
 #
 # The site manifest is a JSON file comprising a
 # <filename> -> <html-up-to-footer-md5> map for all existing files in
-# context.SITE_DIR and is used and updated by write_page() in determining
-# whether to actually write the page to disk. The hash is taken up to the start
-# of the footer tag because the footer includes a timestamp that should be
-# ignored for the sake of diffing.
+# context.SITE_DIR and is used to determine whether newly-generated page
+# content is consequentially different than what already exists on disk.
 ###############################################################################
 
 SITE_MANIFEST_FILENAME = '.site_manifest.json'
@@ -47,7 +45,34 @@ save_site_manifest = lambda site_manifest: json.dump(
     open(SITE_MANIFEST_FILENAME, 'w', encoding='utf-8')
 )
 
+# Only hash up to the footer tag because the footer contains an inconsequential
+# generation-time timestamp.
 hash_page = lambda html: md5(html[:html.rindex(b'<footer ')]).hexdigest()
+
+def page_updated(filename, html, site_manifest):
+    """Return a bool indicating whether the page HTML should be considered
+    as having been updated by checking whether the target output file exists,
+    and if so, whether its HTML is consequentially different.
+    """
+    # Hash the consequential content.
+    html_hash = hash_page(html)
+    # Attempt to get an existing hash from the site manifest.
+    existing_page_hash = site_manifest.get(filename)
+    if existing_page_hash is None:
+        # Page is not specified in the manifest. If the page exists on disk,
+        # init its entry in the manifest with the hash from that, otherwise use
+        # the current page hash.
+        if context.site_exists(filename):
+            site_manifest[filename] = hash_page(
+                context.site_open(filename, 'rb').read()
+            )
+        else:
+            site_manifest[filename] = html_hash
+    elif existing_page_hash == html_hash:
+        # The page exists in the manifest and has an identical hash to page we
+        # were about to write so ignore this write.
+        return False
+    return True
 
 ###############################################################################
 # Site file writer helpers
@@ -78,23 +103,9 @@ def write_page(context, filename, site_manifest, head=NotDefined,
     )
     # Create the Document object and get the rendered HTML.
     html = ''.join(Document(body_els, head_els)).encode('utf-8')
-    html_hash = hash_page(html)
 
-    # Attempt to get an existing hash from the site manifest.
-    existing_page_hash = site_manifest.get(filename)
-    if existing_page_hash is None:
-        # Page is not specified in the manifest. If the page exists on disk,
-        # init its entry in the manifest with the hash from that, otherwise use
-        # the current page hash.
-        if context.site_exists(filename):
-            site_manifest[filename] = hash_page(
-                context.site_open(filename, 'rb').read()
-            )
-        else:
-            site_manifest[filename] = html_hash
-    elif existing_page_hash == html_hash:
-        # The page exists in the manifest and has an identical hash to page we
-        # were about to write so ignore this write.
+    # Check whether this page contains consequential changes.
+    if not page_updated(filename, html, site_manifest):
         return False
 
     # Open the HTML output file.
@@ -190,15 +201,16 @@ def run(context):
             # Clear any previous generator item.
             context.generator_item = None
             filename = f'{page_name}.html'
-            if write_page(
-                    context,
-                    filename,
-                    site_manifest,
-                    page_mod.Head,
-                    page_mod.Body
-                ):
-                num_written += 1
             filenames.append(filename)
+            page_written = write_page(
+                context,
+                filename,
+                site_manifest,
+                page_mod.Head,
+                page_mod.Body
+            )
+            if page_written:
+                num_written += 1
         else:
             # Use the page generator to write 1 or more pages.
             items = page_mod.CONTEXT_ITEMS_GETTER(context)
@@ -207,33 +219,33 @@ def run(context):
             # collection item.
             collection_name = page_mod.__name__.rsplit('.', 1)[1].split('_')[0]
             filename = f'{collection_name}s.html'
+            filenames.append(filename)
             item = next(iter(items))
             context.generator_item = item
-            if write_page(
-                    context,
-                    filename,
-                    site_manifest,
-                    lambda context: includes.redirect.Head(
-                        context, item['slug']
-                    ),
-                ):
+            page_written = write_page(
+                context,
+                filename,
+                site_manifest,
+                lambda context: includes.redirect.Head(context, item['slug'])
+            )
+            if page_written:
                 num_written += 1
-            filenames.append(filename)
 
             # Write the individual item pages.
             for item in items:
                 # Update the context object with the current item.
                 context.generator_item = item
                 filename = page_mod.FILENAME_GENERATOR(item)
-                if write_page(
-                        context,
-                        filename,
-                        site_manifest,
-                        page_mod.Head,
-                        page_mod.Body
-                    ):
-                    num_written += 1
                 filenames.append(filename)
+                page_written = write_page(
+                    context,
+                    filename,
+                    site_manifest,
+                    page_mod.Head,
+                    page_mod.Body
+                )
+                if page_written:
+                    num_written += 1
 
     # Write the sitemap and robots files, save the site manifest and return
     # the number of written files.
