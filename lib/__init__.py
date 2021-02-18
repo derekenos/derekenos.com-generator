@@ -17,15 +17,6 @@ flatten = lambda iterable: chain(*iterable)
 # Replace non-alpha chars with a hyphen and lowercase.
 slugify = lambda s: SLUGIFY_REGEX.sub('-', s).lower()
 
-def assert_ctx(context, k):
-    if not hasattr(context, k):
-        raise AssertionError('context has no attribute "{}"'.format(k))
-    if not getattr(context, k):
-        raise AssertionError(
-            'context.{} is not defined, or otherwise falsy'.format(k)
-        )
-    return True
-
 # Define am empty include/macro Head/Body placeholder function.
 NotDefined = lambda context: ()
 

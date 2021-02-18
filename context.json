@@ -78,7 +78,7 @@
       "https://www.patreon.com/derekenos"
     ]
   ],
-  "google_analytics_id": "UA-19335494-1",
+  "google_analytics_id": null,
   "normalized_image_filename_template": "{item_name}-{asset_id}-{width}x{height}-original{extension}",
   "normalized_video_filename_template": "{item_name}-{asset_id}-original{extension}",
   "normalized_image_filename_regex": "^(?P<item_name>.*)\\-(?P<asset_id>[a-z0-9]+)\\-(?P<width>\\d+)x(?P<height>\\d+)\\-original(?P<extension>.+)$",
