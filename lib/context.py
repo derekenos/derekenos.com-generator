@@ -182,8 +182,8 @@ class Context:
         """
         return os.path.exists(os.path.join(self.SITE_DIR, filename))
 
-    def site_open(self, path, mode, encoding='utf-8'):
-        """Return a writable UTF-8 file handle for a self.SITE_DIR sub-path.
+    def site_open(self, path, mode, encoding=None):
+        """Return a file handle for a path in self.SITE_DIR.
         """
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
         return open(path, mode, encoding=encoding)

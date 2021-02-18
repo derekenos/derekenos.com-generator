@@ -88,7 +88,7 @@ def write_page(context, filename, site_manifest, head=NotDefined,
         # the current page hash.
         if context.site_exists(filename):
             site_manifest[filename] = hash_page(
-                context.site_open(filename, 'rb', encoding=None).read()
+                context.site_open(filename, 'rb').read()
             )
         else:
             site_manifest[filename] = html_hash
@@ -98,18 +98,19 @@ def write_page(context, filename, site_manifest, head=NotDefined,
         return False
 
     # Open the HTML output file.
-    with context.site_open(filename, 'wb', encoding=None) as fh:
+    with context.site_open(filename, 'wb') as fh:
         fh.write(html)
     return True
 
 def write_sitemap(context, filenames):
-    with context.site_open(context.SITEMAP_FILENAME, 'w') as fh:
+    with context.site_open(context.SITEMAP_FILENAME, 'w',
+                           encoding='utf-8') as fh:
         fh.write(f'{context.base_url}/\n')
         for filename in filenames:
             fh.write(f'{context.base_url}/{filename}\n')
 
 def write_robots(context):
-    with context.site_open('robots.txt', 'w') as fh:
+    with context.site_open('robots.txt', 'w', encoding='utf-8') as fh:
         fh.write(
 f"""User-agent: *
 Allow: /
