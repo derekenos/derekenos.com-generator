@@ -127,9 +127,28 @@ main > section > * {
   padding: 0 1rem;
 }
 
-main > section img {
-  border-radius: 8px;
+main > section .picture-wrapper {
   width: calc(100% - 2rem);
+  border-radius: 8px;
+}
+
+main > section > .collection > .item .picture-wrapper {
+  width: 100%;
+}
+
+main > section .picture-wrapper > picture {
+  border-radius: 8px;
+  animation-name: fade-picture-placeholder;
+  animation-duration: 2s;
+}
+
+@keyframes fade-picture-placeholder {
+  0% { background-color: rgba(0, 0, 0, 0.25); }
+  100% { background-color: rgba(0, 0, 0, 0); }
+}
+
+main > section .picture-wrapper > picture > img {
+  border-radius: 8px;
 }
 
 main > section > h3 {
@@ -185,7 +204,6 @@ main.ideas > section > .collection > .item > h4 {
   padding: .5rem 0;
 }
 
-main > section > .collection > .item img,
 main > section > .collection > .item > video {
   border-radius: 8px;
   width: 100%;
@@ -258,7 +276,7 @@ ol.links > li > a {
     padding-top: 0;
   }
 
-  main > section img {
+  main > section .picture-wrapper {
     max-width: 1024px;
   }
 
