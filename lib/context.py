@@ -177,11 +177,16 @@ class Context:
             return path
         return self.url(path)
 
-    def open(self, path):
-        """Return a writable UTF-8 file handle for a self.SITE_DIR sub-path.
+    def site_exists(self, filename):
+        """Return a bool indicating whether filename exists in self.SITE_DIR.
+        """
+        return os.path.exists(os.path.join(self.SITE_DIR, filename))
+
+    def site_open(self, path, mode, encoding=None):
+        """Return a file handle for a path in self.SITE_DIR.
         """
         path = os.path.join(self.SITE_DIR, path.lstrip('/'))
-        return open(path, 'w', encoding='utf-8')
+        return open(path, mode, encoding=encoding)
 
 ###############################################################################
 # Normalize Project Videos

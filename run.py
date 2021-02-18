@@ -2,7 +2,9 @@
 import argparse
 import json
 import os
+import re
 import shutil
+from hashlib import md5
 from itertools import chain
 
 from lib.htmlephant import Document
@@ -23,46 +25,107 @@ import includes.header
 import includes.redirect
 
 ###############################################################################
+# Site manifest helpers
+#
+# The site manifest is a JSON file comprising a
+# <filename> -> <html-up-to-footer-md5> map for all existing files in
+# context.SITE_DIR and is used to determine whether newly-generated page
+# content is consequentially different than what already exists on disk.
+###############################################################################
+
+SITE_MANIFEST_FILENAME = '.site_manifest.json'
+
+FOOTER_TIMESTAMP_EXCLUSION_REGEX = re.compile(
+    b'(<footer[^>]+>\s*Generated\son\s)\d\d\d\d-\d\d-\d\d'
+)
+
+load_site_manifest = lambda: (
+    json.load(open(SITE_MANIFEST_FILENAME, 'r', encoding='utf-8'))
+    if os.path.exists(SITE_MANIFEST_FILENAME)
+    else {}
+)
+
+save_site_manifest = lambda site_manifest: json.dump(
+    site_manifest,
+    open(SITE_MANIFEST_FILENAME, 'w', encoding='utf-8')
+)
+
+strip_footer_timestamp = \
+    lambda html: FOOTER_TIMESTAMP_EXCLUSION_REGEX.sub(r'\1', html)
+
+# Return a hash of consequential page content.
+hash_page = lambda html: md5(strip_footer_timestamp(html)).hexdigest()
+
+def page_updated(filename, html, site_manifest):
+    """Return a bool indicating whether the page HTML should be considered
+    as having been updated by checking whether the target output file exists,
+    and if so, whether its HTML is consequentially different.
+    """
+    # If no existing entry exists in the manifest for this file but the file
+    # exists on disk, hash the file and add it to the manifest.
+    if filename not in site_manifest and context.site_exists(filename):
+        site_manifest[filename] = hash_page(
+            context.site_open(filename, 'rb').read()
+        )
+    # Get any existing page hash.
+    existing_page_hash = site_manifest.get(filename)
+    # Hash the current page.
+    html_hash = hash_page(html)
+    # If page exists and hash is identical, return False.
+    if existing_page_hash is not None and existing_page_hash == html_hash:
+        return False
+    # Page is different. Update the manifest and return True.
+    site_manifest[filename] = html_hash
+    return True
+
+###############################################################################
 # Site file writer helpers
 ###############################################################################
 
-def write_page(context, filename, head=NotDefined, body=NotDefined):
-    """Write a single HTML site page.
+def write_page(context, filename, site_manifest, head=NotDefined,
+               body=NotDefined):
+    """Write a single HTML site page if it differs from a corresponding on-disk
+    file and return a bool indicating whether or not the file was written.
     """
-    # Open the HTML output file.
-    with context.open(filename) as fh:
-        # Combine global includes with the module Head and Body to create
-        # the final element tuples.
-        head_els = chain(includes.head.Head(context), head(context))
-        # Invoke the page body function and, if non-empty, assert that it
-        # returns a single <main> element.
-        page_body_els = body(context)
-        if page_body_els and (len(page_body_els) != 1
-                              or not isinstance(page_body_els[0], Main)):
-            raise AssertionError(
-                'Expected page_mod.Body() to return a single <main> element '
-                f'but got {page_body_els} instead when attempting to write '
-                f'file: {filename}'
-            )
-        body_els = chain(
-            includes.header.Body(context),
-            page_body_els,
-            includes.footer.Body(context),
+    # Combine global includes with the module Head and Body to create
+    # the final element tuples.
+    head_els = chain(includes.head.Head(context), head(context))
+    # Invoke the page body function and, if non-empty, assert that it
+    # returns a single <main> element.
+    page_body_els = body(context)
+    if page_body_els and (len(page_body_els) != 1
+                          or not isinstance(page_body_els[0], Main)):
+        raise AssertionError(
+            'Expected page_mod.Body() to return a single <main> element '
+            f'but got {page_body_els} instead when attempting to write '
+            f'file: {filename}'
         )
-        # Create the Document object.
-        doc = Document(body_els, head_els)
-        # Write the document to the file.
-        for c in doc:
-            fh.write(c)
+    body_els = chain(
+        includes.header.Body(context),
+        page_body_els,
+        includes.footer.Body(context),
+    )
+    # Create the Document object and get the rendered HTML.
+    html = ''.join(Document(body_els, head_els)).encode('utf-8')
+
+    # Check whether this page contains consequential changes.
+    if not page_updated(filename, html, site_manifest):
+        return False
+
+    # Open the HTML output file.
+    with context.site_open(filename, 'wb') as fh:
+        fh.write(html)
+    return True
 
 def write_sitemap(context, filenames):
-    with context.open(context.SITEMAP_FILENAME) as fh:
+    with context.site_open(context.SITEMAP_FILENAME, 'w',
+                           encoding='utf-8') as fh:
         fh.write(f'{context.base_url}/\n')
         for filename in filenames:
             fh.write(f'{context.base_url}/{filename}\n')
 
 def write_robots(context):
-    with context.open('robots.txt') as fh:
+    with context.site_open('robots.txt', 'w', encoding='utf-8') as fh:
         fh.write(
 f"""User-agent: *
 Allow: /
@@ -112,12 +175,19 @@ def copy_static(context):
 ###############################################################################
 
 def run(context):
+    """Copy the static assets and write any updated page files to the
+    context.SITE_DIR and return the number of written pages.
+    """
     # Copy static files to output, creating dirs as necessary.
     copy_static(context)
+
+    # Load any existing site manifest.
+    site_manifest = load_site_manifest()
 
     # Iterate through the pages, writing each to the site dir and collecting
     # the filenames for later sitemap creation.
     filenames = []
+    num_written = 0
     for page_name in context.page_names:
         # Update the context object with the name of the current page.
         context.current_page = page_name
@@ -135,8 +205,16 @@ def run(context):
             # Clear any previous generator item.
             context.generator_item = None
             filename = f'{page_name}.html'
-            write_page(context, filename, page_mod.Head, page_mod.Body)
             filenames.append(filename)
+            page_written = write_page(
+                context,
+                filename,
+                site_manifest,
+                page_mod.Head,
+                page_mod.Body
+            )
+            if page_written:
+                num_written += 1
         else:
             # Use the page generator to write 1 or more pages.
             items = page_mod.CONTEXT_ITEMS_GETTER(context)
@@ -145,26 +223,40 @@ def run(context):
             # collection item.
             collection_name = page_mod.__name__.rsplit('.', 1)[1].split('_')[0]
             filename = f'{collection_name}s.html'
+            filenames.append(filename)
             item = next(iter(items))
             context.generator_item = item
-            write_page(
+            page_written = write_page(
                 context,
                 filename,
+                site_manifest,
                 lambda context: includes.redirect.Head(context, item['slug'])
             )
-            filenames.append(filename)
+            if page_written:
+                num_written += 1
 
             # Write the individual item pages.
             for item in items:
                 # Update the context object with the current item.
                 context.generator_item = item
                 filename = page_mod.FILENAME_GENERATOR(item)
-                write_page(context, filename, page_mod.Head, page_mod.Body)
                 filenames.append(filename)
+                page_written = write_page(
+                    context,
+                    filename,
+                    site_manifest,
+                    page_mod.Head,
+                    page_mod.Body
+                )
+                if page_written:
+                    num_written += 1
 
-    # Write the sitemap and robots files.
+    # Write the sitemap and robots files, save the site manifest and return
+    # the number of written files.
     write_sitemap(context, filenames)
     write_robots(context)
+    save_site_manifest(site_manifest)
+    return num_written
 
 ###############################################################################
 # CLI
@@ -192,8 +284,8 @@ if __name__ == '__main__':
     normalize_context(context)
 
     # Generate the site files.
-    run(context)
-    print(f'Wrote new files to: {context.SITE_DIR}/')
+    num_written = run(context)
+    print(f'Wrote {num_written} pages to: {context.SITE_DIR}/')
 
     # Save store.exists_response_headers_cache
     if context.lss is not None:
