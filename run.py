@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import re
 import shutil
 from hashlib import md5
 from itertools import chain
@@ -34,6 +35,10 @@ import includes.redirect
 
 SITE_MANIFEST_FILENAME = '.site_manifest.json'
 
+FOOTER_TIMESTAMP_EXCLUSION_REGEX = re.compile(
+    b'(<footer[^>]+>\s*Generated\son\s)\d\d\d\d-\d\d-\d\d'
+)
+
 load_site_manifest = lambda: (
     json.load(open(SITE_MANIFEST_FILENAME, 'r', encoding='utf-8'))
     if os.path.exists(SITE_MANIFEST_FILENAME)
@@ -45,33 +50,33 @@ save_site_manifest = lambda site_manifest: json.dump(
     open(SITE_MANIFEST_FILENAME, 'w', encoding='utf-8')
 )
 
+strip_footer_timestamp = \
+    lambda html: FOOTER_TIMESTAMP_EXCLUSION_REGEX.sub(r'\1', html)
+
 # Only hash up to the footer tag because the footer contains an inconsequential
 # generation-time timestamp.
-hash_page = lambda html: md5(html[:html.rindex(b'<footer ')]).hexdigest()
+hash_page = lambda html: md5(strip_footer_timestamp(html)).hexdigest()
 
 def page_updated(filename, html, site_manifest):
     """Return a bool indicating whether the page HTML should be considered
     as having been updated by checking whether the target output file exists,
     and if so, whether its HTML is consequentially different.
     """
-    # Hash the consequential content.
-    html_hash = hash_page(html)
-    # Attempt to get an existing hash from the site manifest.
+    # If no existing entry exists in the manifest for this file but the file
+    # exists on disk, hash the file and add it to the manifest.
+    if filename not in site_manifest and context.site_exists(filename):
+        site_manifest[filename] = hash_page(
+            context.site_open(filename, 'rb').read()
+        )
+    # Get any existing page hash.
     existing_page_hash = site_manifest.get(filename)
-    if existing_page_hash is None:
-        # Page is not specified in the manifest. If the page exists on disk,
-        # init its entry in the manifest with the hash from that, otherwise use
-        # the current page hash.
-        if context.site_exists(filename):
-            site_manifest[filename] = hash_page(
-                context.site_open(filename, 'rb').read()
-            )
-        else:
-            site_manifest[filename] = html_hash
-    elif existing_page_hash == html_hash:
-        # The page exists in the manifest and has an identical hash to page we
-        # were about to write so ignore this write.
+    # Hash the current page.
+    html_hash = hash_page(html)
+    # If page exists and hash is identical, return False.
+    if existing_page_hash is not None and existing_page_hash == html_hash:
         return False
+    # Page is different. Update the manifest and return True.
+    site_manifest[filename] = html_hash
     return True
 
 ###############################################################################
