@@ -53,8 +53,7 @@ save_site_manifest = lambda site_manifest: json.dump(
 strip_footer_timestamp = \
     lambda html: FOOTER_TIMESTAMP_EXCLUSION_REGEX.sub(r'\1', html)
 
-# Only hash up to the footer tag because the footer contains an inconsequential
-# generation-time timestamp.
+# Return a hash of consequential page content.
 hash_page = lambda html: md5(strip_footer_timestamp(html)).hexdigest()
 
 def page_updated(filename, html, site_manifest):
