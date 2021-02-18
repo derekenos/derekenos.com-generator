@@ -1,14 +1,14 @@
 {
   "base_url": "https://<your-host>",
   "all_tags": [
-    "done",
-    "never-again",
-    "difficult",
-    "glad-its-done",
     "challenging",
-    "gratifying",
+    "difficult",
+    "done",
     "fun",
+    "glad-its-done",
+    "gratifying",
     "life-affirming",
+    "never-again",
     "rocket"
   ],
   "large_static_store": {
@@ -43,14 +43,14 @@
     ]
   ],
   "google_analytics_id": "<google-analytics-id>",
-  "normalized_image_filename_template": "{item_name}-{asset_id}-{width}px-original{extension}",
+  "normalized_image_filename_template": "{item_name}-{asset_id}-{width}x{height}-original{extension}",
   "normalized_video_filename_template": "{item_name}-{asset_id}-original{extension}",
-  "normalized_image_filename_regex": "^(?P<item_name>.*)\\-(?P<asset_id>[a-z0-9]+)\\-(?P<width>\\d+)px\\-original(?P<extension>.+)$",
+  "normalized_image_filename_regex": "^(?P<item_name>.*)\\-(?P<asset_id>[a-z0-9]+)\\-(?P<width>\\d+)x(?P<height>\\d+)\\-original(?P<extension>.+)$",
   "derivative_image_filename_template": "{item_name}-{asset_id}-{width}px{extension}",
-  "derivative_video_poster_filename_template": "{base_filename}-poster.png",
+  "derivative_video_poster_filename_template": "{base_filename}-poster.jpg",
   "prioritized_derivative_image_mimetypes": [
     "image/webp",
-    "image/png"
+    "image/jpeg"
   ],
   "derivative_image_widths": [
     2500,
@@ -99,7 +99,7 @@
       ],
       "images": [
         {
-          "filename": "project-project-4-163ada13-1245px-original.jpg",
+          "filename": "project-project-4-163ada13-1245x1536-original.jpg",
           "name": "Project 4",
           "description": "A picture of the Project 4"
         }
@@ -121,7 +121,7 @@
       ],
       "images": [
         {
-          "filename": "project-project-3-b0107fa0-1536px-original.jpg",
+          "filename": "project-project-3-b0107fa0-1536x1176-original.jpg",
           "name": "Project 3",
           "description": "A picture of the Project 3"
         }
@@ -140,7 +140,7 @@
       ],
       "images": [
         {
-          "filename": "project-project-2-cd2ea0e2-1536px-original.jpg",
+          "filename": "project-project-2-cd2ea0e2-1536x1155-original.jpg",
           "name": "Project 2",
           "description": "A picture of the Project 2"
         }
@@ -159,7 +159,7 @@
       ],
       "images": [
         {
-          "filename": "project-project-1-7053064d-1536px-original.jpg",
+          "filename": "project-project-1-7053064d-1536x1208-original.jpg",
           "name": "Project 1",
           "description": "A picture of the Project 1"
         }
