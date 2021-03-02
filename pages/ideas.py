@@ -1,11 +1,9 @@
 
 from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
-    NOEL,
     Anchor,
     H1,
     OGMeta,
-    Script,
     StdMeta,
     Title,
 )
@@ -204,10 +202,6 @@ Head = lambda context: (
     StdMeta('description', DESCRIPTION),
     OGMeta('description', DESCRIPTION),
     Title(f'{context.name} | Ideas'),
-    Script(
-        _async='',
-        src='https://c6.patreon.com/becomePatronButton.bundle.js'
-    ) if context.production else NOEL
 )
 
 Body = lambda context: (
@@ -262,9 +256,9 @@ Body = lambda context: (
             ),
 
             Anchor(
-                'Support Me',
-                href='https://www.patreon.com/bePatron?u=124133',
-                _data_patreon_widget_type='become-patron-button'
+                'Support me on Patreon',
+                id='patreon',
+                href='https://www.patreon.com/bePatron?u=124133'
             )
         )
     ),
