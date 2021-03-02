@@ -42,8 +42,8 @@ VARIATIONS = (
 
 REALIZED_BY_OTHERS = (
     (
-        '<a href="http://tangible.media.mit.edu/project/inform/">inFORM</a>',
-        """I called this a deformable (or column) table and imagined using it as a game surface for maniuplating the position of a ball, almost exactly like they do <a href="https://vimeo.com/79179138#t=190s">in the video</a>. I also considered rounding the column heads and skinning the surface with a sheet of latex to create a more organic form. Prototyping this was beyond my capabilities at the time."""
+        'Column Table',
+        """Realized as <a href="http://tangible.media.mit.edu/project/inform/">inFORM</a>. I imagined using it as a game surface for maniuplating the position of a ball, almost exactly like they do <a href="https://vimeo.com/79179138#t=190s">in the video</a>. I also considered rounding the column heads and skinning the surface with a sheet of latex to create a more organic form. Prototyping this was beyond my capabilities at the time."""
     ),
 )
 
