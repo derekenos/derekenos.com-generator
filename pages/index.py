@@ -6,6 +6,7 @@ from lib import (
 )
 from lib.htmlephant import (
     H1,
+    Link,
     OGMeta,
     StdMeta,
     Title,
@@ -26,6 +27,8 @@ Head = lambda context: (
         sorted(set(flatten(pluck('tags', context.projects))))
     )),
     Title(f'{context.name} | Home'),
+    # Support http://microformats.org/wiki/RelMeAuth
+    *[Link(rel='me', href=url) for _, url in context.social_name_url_pairs]
 )
 
 Body = lambda context: (
