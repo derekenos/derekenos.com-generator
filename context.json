@@ -148,6 +148,7 @@
       "hide_card": true,
       "slug": "/project-htmlephant",
       "short_description": "A small and lazy HTML generator.",
+      "description": "HTMLephant is a lazy, class-based, Python HTML generator that I made because it seemed fun and is now used extensively by my <a href=\"/project-derekenos-com-generator\">static website generator</a>. The generated output is well-formed and pleasantly human-readable - just take a look (<a href=\"https://developer.mozilla.org/en-US/docs/Tools/View_source\" target=\"_blank\">right-click &rArr; View Page Source</a>) at this page's source!",
       "tags": [
         "generator",
         "html",
@@ -173,6 +174,7 @@
       "hide_card": true,
       "slug": "/project-femtoweb",
       "short_description": "An asynchronous HTTP server and web application framework.",
+      "description": "I made femtoweb because I needed a small HTTP server and web application framework for my various Micropython / ESP32-based IOT projects. At the time there was <a href=\"https://github.com/pfalcon/picoweb\">picoweb</a>, but this required use of the <a href=\"https://github.com/pfalcon/pycopy\">pycopy</a> Micropython fork, and I wanted to use stock, mainline Micropython. After asyncio made its way into Micropython, I refactored this library to use it. It does exactly what I need it to and nothing more. &#x1f44d;",
       "tags": [
         "framework",
         "http",
