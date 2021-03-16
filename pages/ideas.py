@@ -1,7 +1,6 @@
 
 from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
-    Anchor,
     H1,
     OGMeta,
     StdMeta,
@@ -254,12 +253,6 @@ Body = lambda context: (
                     items=SMALL_BITES
                 )
             ),
-
-            Anchor(
-                'Support me on Patreon',
-                id='patreon',
-                href='https://www.patreon.com/bePatron?u=124133'
-            )
         )
     ),
 )

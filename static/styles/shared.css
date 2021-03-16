@@ -235,15 +235,6 @@ main > section a.tag:hover {
   text-align: center;
 }
 
-#patreon {
-  margin-left: 1rem;
-  padding: 1rem;
-  background-color: rgb(255, 66, 77);
-  color: #fff;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
 /* Mobile fix: tap targets are not sized appropriately */
 ol.links > li > a {
   display: inline-block;
