@@ -123,6 +123,72 @@
   ],
   "projects": [
     {
+      "name": "X-ray Painter",
+      "slug": "/project-x-ray-painter",
+      "short_description": "Experimental video paintings using a camera, projector, and custom video effects.",
+      "tags": [
+        "art",
+        "effects",
+        "gpu",
+        "javascript",
+        "video"
+      ],
+      "type": "CreativeWork",
+      "description": "I created these video paintings in the course of setting up various components for a different, future interactive video project. When the video filter detects motion via the camera input, it changes the output pixels from black to white in the region where motion was detected. Since the detection area of the camera and projection area of the projector are not calibrated, the change in output resulting from an initial motion event causes a cascade of synthetic motion events that result in interesting generative forms. The video filter also implements a horizontal mirror effect for pleasing symmetry.",
+      "depends_on": [
+        "Gritty Viddy"
+      ],
+      "images": [
+        {
+          "filename": "project-x-ray-painter-615a3f3f-607x1080-original.png",
+          "name": "X-ray Painter",
+          "description": "A picture of the X-ray Painter"
+        }
+      ],
+      "videos": [
+        {
+          "filename": "project-x-ray-painter-3a1b5886-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        },
+        {
+          "filename": "project-x-ray-painter-e04d459d-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        },
+        {
+          "filename": "project-x-ray-painter-84e96d92-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        },
+        {
+          "filename": "project-x-ray-painter-c4aca606-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        },
+        {
+          "filename": "project-x-ray-painter-d8c28884-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        },
+        {
+          "filename": "project-x-ray-painter-cdc04f40-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        },
+        {
+          "filename": "project-x-ray-painter-1dbe8a0d-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        },
+        {
+          "filename": "project-x-ray-painter-ba8165b3-original.mp4",
+          "name": "X-ray Painter",
+          "description": "A movie of the X-ray Painter"
+        }
+      ]
+    },
+    {
       "name": "Static Site Generator",
       "slug": "/project-derekenos-com-generator",
       "short_description": "The application that builds derekenos.com.",
