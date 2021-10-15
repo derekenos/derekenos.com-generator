@@ -9,7 +9,7 @@ A custom static website generator for https://derekenos.com.
 - Optionally redirect large static files to a cloud object store
 - Implements [responsive images](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)
 - Supports [RelMeAuth](http://microformats.org/wiki/RelMeAuth)
-- Intergrates [Microdata](https://schema.org/docs/gs.html) markup to provide structured data for search engines ([example](https://search.google.com/structured-data/testing-tool/u/0/#url=https%3A%2F%2Fderekenos.com%2Fproject-weather-station))
+- Intergrates [Microdata](https://schema.org/docs/gs.html) markup to provide structured data for search engines ([example](https://validator.schema.org/#url=derekenos.com%2Fproject-weather-station))
 - Intergrates [OpenGraph](https://ogp.me/) tags for rich embeds, e.g.:
 
   ![Screenshot from 2021-01-17 16-16-28](https://user-images.githubusercontent.com/585182/104856230-6c213900-58df-11eb-8476-927c2f9d9ad3.png)
