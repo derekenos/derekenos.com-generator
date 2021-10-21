@@ -48,15 +48,6 @@ Body = lambda context: (
                             ),
                         ),
                     ),
-                    Br(),
-                    Br(),
-                    Div(
-                        children=(
-                            Em(
-                                "If I don't respond, please try again or through another channel; AWS SES has got some issues."
-                            ),
-                        )
-                    )
                 )
             ),
             *section.Body(
