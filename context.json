@@ -1460,5 +1460,17 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "slug": "dIndex",
+      "destination": "/",
+      "description": "Redirect old website dIndex to /"
+    },
+    {
+      "slug": "deMIDulator_overview",
+      "destination": "/project-demidulator",
+      "description": "Redirect old website deMIDulator_overview to /project-demidulator"
+    }
   ]
 }
