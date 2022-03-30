@@ -44,6 +44,11 @@ REALIZED_BY_OTHERS = (
         'Column Table',
         """Realized as <a href="http://tangible.media.mit.edu/project/inform/">inFORM</a>. I imagined using it as a game surface for maniuplating the position of a ball, almost exactly like they do <a href="https://vimeo.com/79179138#t=190s">in the video</a>. I also considered rounding the column heads and skinning the surface with a sheet of latex to create a more organic form. Prototyping this was beyond my capabilities at the time."""
     ),
+
+    (
+        'Teeny Turner',
+        """Realized as <a href="https://github.com/scottbez1/smartknob">SmartKnob</a>. A chainable digital rotary encoder knob with integrated POV (or LCD if you're fancy) display and configurable haptics / physical limits that can be programmed to output a variety of control signals (e.g. SPI, I2C, analog voltage, MIDI, resistance, oscillations)."""
+    )
 )
 
 SMALL_BITES = (
@@ -181,11 +186,6 @@ SMALL_BITES = (
     (
         'Wind Watcher',
         """A courtyard roof comprising a grid of small DC fans with a ring of LEDs attached to each. A ring glows when the wind drives the fan, with the color dictated by the direction, thus producing a visualization of wind currents withing a controlled space."""
-    ),
-
-    (
-        'Teeny Turner',
-        """A chainable digital rotary encoder knob with integrated POV (or LCD if you're fancy) display and configurable haptics / physical limits that can be programmed to output a variety of control signals (e.g. SPI, I2C, analog voltage, MIDI, resistance, oscillations)."""
     ),
 
     (
