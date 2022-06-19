@@ -123,6 +123,29 @@
   ],
   "projects": [
     {
+      "name": "Interface Research Lab",
+      "slug": "/interface-research-lab",
+      "short_description": "A technology education and digital fabrication lab in Beacon, NY",
+      "tags": [],
+      "type": "Organization",
+      "description": "",
+      "github_url": "https://github.com/beaconny-net/interface-research-lab",
+      "images": [
+        {
+          "filename": "project-interface-research-lab-d54a27b6-256x256-original.png",
+          "name": "Interface Research Lab logo",
+          "description": "A picture of the Interface Research Lab logo"
+        }
+      ],
+      "external_link_prop_name_url_tuples": [
+        [
+          "mainEntityOfPage",
+          "More info at irl.beaconny.net",
+          "https://irl.beaconny.net/"
+        ]
+      ]
+    },
+    {
       "name": "X-ray Painter",
       "slug": "/project-x-ray-painter",
       "short_description": "Experimental video paintings using a camera, projector, and custom video effects.",

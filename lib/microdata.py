@@ -12,6 +12,7 @@ Types = SimpleNamespace(**{
             'ImageObject',
             'Intangible',
             'MediaObject',
+            'Organization',
             'Person',
             'SoftwareApplication',
             'SoftwareSourceCode',
