@@ -124,7 +124,7 @@
   "projects": [
     {
       "name": "Interface Research Lab",
-      "slug": "/interface-research-lab",
+      "slug": "/project-interface-research-lab",
       "short_description": "A technology education and digital fabrication lab in Beacon, NY",
       "tags": [],
       "type": "Organization",
