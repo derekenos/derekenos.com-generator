@@ -128,7 +128,7 @@
       "short_description": "A technology education and digital fabrication lab in Beacon, NY",
       "tags": [],
       "type": "Organization",
-      "description": "",
+      "description": "<h3>Motivation</h3><p>This effort is motivated by a desire to help prepare the Beacon, NY community for the future of work and industry through education in the concepts and tools of modern technology and participation in an exploratory process of new, local industry creation.</p><h3>Mission</h3><div>The Interface Research Lab will exist to:<ol style=\"list-style: disc;\"><li>Nurture the creative, productive, and economic potential of the local community through technology education and access to tools, with a focus on invention and innovation, product design, open-source ethos, collaborative economics, and ecological sustainability</li><li>Provide public access to digital resources and community information</li><li>Research and develop products, processes, and services, as well as applying existing research, in support of our educational and community access directives</li></ol></div><p>More info at: <a href=\"https://irl.beaconny.net\">irl.beaconny.net</a></p>",
       "github_url": "https://github.com/beaconny-net/interface-research-lab",
       "images": [
         {
