@@ -64,11 +64,15 @@ Head = lambda context: (
 
 def Nav(context):
     current_tag = context.generator_item
-    name_url_pairs = [
-        (f'#{tag_name}', slugify(tag_name))
+    name_url_image_tuples = [
+        (f'#{tag_name}', slugify(tag_name), None)
         for tag_name in context.all_tags
     ]
-    return subnav.Body(context, name_url_pairs, f'#{current_tag["name"]}')
+    return subnav.Body(
+        context,
+        name_url_image_tuples,
+        f'#{current_tag["name"]}'
+    )
 
 def Body(context):
     tag_name = context.generator_item["name"]

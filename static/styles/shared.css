@@ -81,18 +81,26 @@ a:active {
 #sub-nav > ol > li.active {
   background-color: transparent;
   border: none;
-  cursor: default;
-  padding: 1.2rem 1rem;
+  font-weight: bold;
 }
 
+#sub-nav > ol > li.active,
 #sub-nav > ol > li > a {
   display: inline-block;
   text-decoration: none;
   padding: 1.2rem 1rem;
+  text-align: center;
 }
 
 #sub-nav > ol > li > a:hover {
   text-decoration: underline;
+}
+
+#sub-nav > ol > li > img,
+#sub-nav > ol > li > a > img {
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+  height: 75px;
 }
 
 main > * {
