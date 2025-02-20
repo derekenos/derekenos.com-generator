@@ -65,6 +65,22 @@ Body = lambda context: (
                         for name, url in context.social_name_url_pairs
                     ]
                 )
+            ),
+            *section.Body(
+                context,
+                'Old Websites',
+                children=scope_links_list.Body(
+                    context,
+                    prop_type_name_url_tuples=[
+                        (
+                            md.Props.url,
+                            md.Types.CreativeWork,
+                            name,
+                            url
+                        )
+                        for name, url in context.old_website_name_url_pairs
+                    ]
+                )
             )
         )
     ),

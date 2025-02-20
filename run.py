@@ -36,7 +36,7 @@ import includes.redirect
 SITE_MANIFEST_FILENAME = '.site_manifest.json'
 
 FOOTER_TIMESTAMP_EXCLUSION_REGEX = re.compile(
-    b'(<footer[^>]+>\s*Generated\son\s)\d\d\d\d-\d\d-\d\d'
+    rb'(<footer[^>]+>\s*Generated\son\s)\d\d\d\d-\d\d-\d\d'
 )
 
 load_site_manifest = lambda: (
@@ -51,7 +51,7 @@ save_site_manifest = lambda site_manifest: json.dump(
 )
 
 strip_footer_timestamp = \
-    lambda html: FOOTER_TIMESTAMP_EXCLUSION_REGEX.sub(r'\1', html)
+    lambda html: FOOTER_TIMESTAMP_EXCLUSION_REGEX.sub(rb'\1', html)
 
 # Return a hash of consequential page content.
 hash_page = lambda html: md5(strip_footer_timestamp(html)).hexdigest()

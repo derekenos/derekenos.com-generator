@@ -78,6 +78,16 @@
       "https://www.patreon.com/derekenos"
     ]
   ],
+  "old_website_name_url_pairs": [
+    [
+      "Original derekenos.com",
+      "http://old.derekenos.com"
+    ],
+    [
+      "Weird old electronics blog site (via Wayback Machine)",
+      "https://web.archive.org/web/20060703124819id_/http://www.squarel.net/"
+    ]
+  ],
   "google_analytics_id": null,
   "normalized_image_filename_template": "{item_name}-{asset_id}-{width}x{height}-original{extension}",
   "normalized_video_filename_template": "{item_name}-{asset_id}-original{extension}",
