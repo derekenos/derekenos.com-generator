@@ -136,10 +136,8 @@ class Context:
                 path = f'{self.large_static_store["endpoint"]}/{filename}'
             else:
                 # Warn if the file exists both locally and in the lss manifest.
-                # TODO - this makes development super-slow with all of the new
-                #        auto-generated assets. Figure out what to do.
-                # if self.lss and self.lss.exists(filename):
-                #     print(f'Large, local file "{filename}" exists in the LSS.')
+                if self.lss and self.lss.exists(filename):
+                    print(f'Large, local file "{filename}" exists in the LSS.')
                 path = os.path.join(
                     self.SITE_RELATIVE_LARGE_STATIC_DIR,
                     filename

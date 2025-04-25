@@ -273,6 +273,7 @@ ol.links > li > a {
   }
 
   main > section .picture-wrapper {
+    width: min(33vw, 1024px);
     max-width: 1024px;
   }
 

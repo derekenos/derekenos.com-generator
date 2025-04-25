@@ -31,6 +31,7 @@
     "productivity",
     "python3",
     "realtime",
+    "robot",
     "sampler",
     "server",
     "servo",
@@ -133,25 +134,92 @@
   ],
   "projects": [
     {
-      "name": "Interface Research Lab",
-      "slug": "/project-interface-research-lab",
-      "short_description": "A technology education and digital fabrication lab in Beacon, NY",
-      "tags": [],
-      "type": "Organization",
-      "description": "<h3>Motivation</h3><p>This effort is motivated by a desire to help prepare the Beacon, NY community for the future of work and industry through education in the concepts and tools of modern technology and participation in an exploratory process of new, local industry creation.</p><h3>Mission</h3><div>The Interface Research Lab will exist to:<ol style=\"list-style: disc;\"><li>Nurture the creative, productive, and economic potential of the local community through technology education and access to tools, with a focus on invention and innovation, product design, open-source ethos, collaborative economics, and ecological sustainability</li><li>Provide public access to digital resources and community information</li><li>Research and develop products, processes, and services, as well as applying existing research, in support of our educational and community access directives</li></ol></div><p>More info at: <a href=\"https://irl.beaconny.net\">irl.beaconny.net</a></p>",
-      "github_url": "https://github.com/beaconny-net/interface-research-lab",
+      "name": "Mecanum Robot",
+      "slug": "/mecanum-robot",
+      "short_description": "A bluetooth gamepad-controlled robot with Mecanum wheels.",
+      "tags": [
+        "art",
+        "lasercut",
+        "microcontroller",
+        "motor",
+        "robot",
+        "stepper",
+        "wood"
+      ],
+      "type": "CreativeWork",
+      "description": "",
       "images": [
         {
-          "filename": "project-interface-research-lab-d54a27b6-256x256-original.png",
-          "name": "Interface Research Lab logo",
-          "description": "A picture of the Interface Research Lab logo"
+          "filename": "project-mecanum-robot-b9754175-1108x871-original.jpg",
+          "name": "Mecanum robot",
+          "description": "A photograph of a robot with a laser-cut wood frame and Mecanum wheels"
+        },
+        {
+          "filename": "project-mecanum-robot-b1109c50-2592x1944-original.jpg",
+          "name": "Mecanum robots",
+          "description": "A photograph of two robots with laser-cut wood frames, Mecanum wheels, and two wireless gamepads on the table top in front of them"
         }
       ],
+      "videos": [
+        {
+          "filename": "project-mecanum-robot-aac460ad-original.mp4",
+          "name": "Mecanum robot driving test",
+          "description": "A movie of the Mecanum robot driving around"
+        }
+      ]
+    },
+    {
+      "name": "Pill Box",
+      "slug": "/pill-box",
+      "short_description": "A laser-cut solid hardwood pill box with sliding lid.",
+      "tags": [
+        "art",
+        "lasercut",
+        "wood"
+      ],
+      "type": "CreativeWork",
+      "description": "This pill box is an attempt at a useful, approachable community technology product. It's made from solid Black Walnut, which is native to where I live in New York State. It's a beautiful functional object that is a joy to use, and which I hope to reproduce for others in my community, perhaps with personalized engraving and/or custom dimensions. Materials cost is < $5, and laser + assembly time is < 10 minutes.",
+      "images": [
+        {
+          "filename": "project-pill-box-87015070-2838x2992-original.jpg",
+          "name": "Pill Box",
+          "description": "A photograph of a wooden pill box being held in a hand with the sliding lid removed and laying on the table"
+        },
+        {
+          "filename": "project-pill-box-13e8bac7-3912x1304-original.jpg",
+          "name": "Pill Box",
+          "description": "A photograph of a wooden pill box with the sliding lid half-way open"
+        },
+        {
+          "filename": "project-pill-box-64272066-2600x3283-original.jpg",
+          "name": "Pill Box",
+          "description": "A photograph of a wooden pill box with the sliding lid half-way open"
+        }
+      ]
+    },
+    {
+      "name": "Beacon Community Network",
+      "slug": "/beacon-community-network",
+      "short_description": "A community-run digital services platform in Beacon, New York.",
+      "tags": [
+        "html",
+        "staticsite"
+      ],
+      "type": "CreativeWork",
+      "description": "<a href=\"https://beaconny.net\">beaconny.net</a> provides a growing number of locally-hosted web-based services for the Beacon, New York community, such as file hosting, discussion forums (powered by <a href=\"https://www.discourse.org\">Discourse</a>), blogs (powered by <a href=\"https://ghost.org\">Ghost</a>), and <a href=\"https://about.gitlab.com\">Gitlab</a>.",
+      "images": [
+        {
+          "filename": "project-beacon-community-network-fdac227b-788x1062-original.png",
+          "name": "Beacon Community Network website screenshot",
+          "description": "Screenshot of the Beacon Community Network website"
+        }
+      ],
+      "github_url": "https://github.com/beaconny-net",
       "external_link_prop_name_url_tuples": [
         [
           "mainEntityOfPage",
-          "More info at irl.beaconny.net",
-          "https://irl.beaconny.net/"
+          "Visit beaconny.net",
+          "https://beaconny.net"
         ]
       ]
     },

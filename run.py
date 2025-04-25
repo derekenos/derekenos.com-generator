@@ -270,6 +270,7 @@ if __name__ == '__main__':
     parser.add_argument('--host', default='0.0.0.0')
     parser.add_argument('--port', type=int, default=5000)
     parser.add_argument('--sync-large-static', action='store_true')
+    parser.add_argument('--sync-large-static-dryrun', action='store_true')
     args = parser.parse_args()
 
     # Instantiate the Context object.
@@ -292,10 +293,10 @@ if __name__ == '__main__':
         context.lss.save_manifest()
 
     # Maybe sync large static files to a remote store.
-    if args.sync_large_static:
+    if args.sync_large_static or args.sync_large_static_dryrun:
         if context.lss is None:
             raise Exception('Large static store is not configured. Please see: https://github.com/derekenos/derekenos.com-generator/blob/main/README.md#2-configure-the-store')
-        context.lss.sync(context.SITE_LARGE_STATIC_DIR)
+        context.lss.sync(context.SITE_LARGE_STATIC_DIR, dryrun=args.sync_large_static_dryrun)
 
     # Maybe start the webserver.
     if args.serve:
