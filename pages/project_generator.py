@@ -101,11 +101,11 @@ def Head(context):
 
 def Nav(context):
     current_project = context.generator_item
-    name_url_pairs = [
-        (project['name'], project['slug'])
+    name_url_image_tuples = [
+        (project['name'], project['slug'], project['images'][0])
         for project in context.projects
     ]
-    return subnav.Body(context, name_url_pairs, current_project['name'])
+    return subnav.Body(context, name_url_image_tuples, current_project['name'])
 
 Body = lambda context: (
     Main(
