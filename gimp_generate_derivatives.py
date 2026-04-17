@@ -18,19 +18,18 @@ LOSSY = QUALITY_FACTOR < 1
 
 to_bytes = lambda s: bytes(s, encoding="utf8")
 
-def save_image(image, path, filename, options=None):
+def save_image(image, out_path, options=None):
     Gimp.file_save(
         run_mode=Gimp.RunMode.NONINTERACTIVE,
         image=image,
-        file=Gio.File.new_for_path(to_bytes(os.path.join(path, filename))),
+        file=Gio.File.new_for_path(to_bytes(out_path)),
         options=options
     )
 
-def save_webp(image, path, filename):
+def save_webp(image, out_path):
     save_image(
         image,
-        path,
-        filename,
+        out_path,
     )
     #     0, # preset=default
     #     0 if LOSSY else 1, # lossless
@@ -47,11 +46,10 @@ def save_webp(image, path, filename):
     #     0, # force delay on all frames
     # )
 
-def save_png(image, path, filename):
+def save_png(image, out_path):
     save_image(
         image,
-        path,
-        filename,
+        out_path,
     )
 
     #     0 if LOSSY else 1, # use adam7 interlacing
@@ -63,12 +61,11 @@ def save_png(image, path, filename):
     #     1, # write tIME chunk
     # )
 
-def save_jpg(image, path, filename):
+def save_jpg(image, out_path):
     # See: https://en.wikibooks.org/wiki/GIMP/Saving_as_JPEG
     save_image(
         image,
-        path,
-        filename,
+        out_path,
     )
     #     QUALITY_FACTOR, # quality
     #     0.10, # smoothing (whatever that is)
@@ -148,6 +145,5 @@ def run(
                 MIMETYPE_SAVE_FUNC_MAP.get(mimetype, save_image)(
                     image,
                     out_path,
-                    out_fn
                 )
                 print('Wrote: {}'.format(out_path))
