@@ -88,8 +88,7 @@ def get_image_dims(input_path):
             'python-fu-eval',
             '-b',
             f"import sys; sys.path = ['.'] + sys.path; import gimp_get_image_dims; gimp_get_image_dims.run('{input_path}', '{fh.name}')",
-            '-b',
-            'pdb.gimp_quit(1)'
+            '--quit',
         )
         call_gimp_subprocess(args, stdout=subprocess.DEVNULL)
         # Load the written data from the file.
@@ -170,8 +169,7 @@ def generate_image_derivatives(
         'python-fu-eval',
         '-b',
         f"import sys; sys.path = ['.'] + sys.path; import gimp_generate_derivatives; gimp_generate_derivatives.run('{input_path}', '{input_filename_regex}', '{output_path}', '{output_filename_template}', {mimetypes}, {widths}, {overwrite}, {show_skipped})",
-        '-b',
-        'pdb.gimp_quit(1)'
+        '--quit',
     ))
 
 def generate_video_poster(path, output_path):

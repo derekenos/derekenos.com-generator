@@ -1,6 +1,8 @@
 
+
 import argparse
 import json
+import logging
 import os
 import re
 import shutil
@@ -23,6 +25,9 @@ import includes.head
 import includes.footer
 import includes.header
 import includes.redirect
+
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
 
 ###############################################################################
 # Site manifest helpers
@@ -141,6 +146,7 @@ def copy_static(context):
     static directory, diverting large objects as appropriate, and
     copying only if the destination file doesn't exist or is out-of-date.
     """
+    log.info(f"Copying {context.STATIC_DIR}/* to {context.SITE_STATIC_DIR}")
     # Ensure that the destination directories exist.
     os.makedirs(context.SITE_STATIC_DIR, exist_ok=True)
     os.makedirs(context.SITE_LARGE_STATIC_DIR, exist_ok=True)
@@ -154,7 +160,7 @@ def copy_static(context):
             # Path is a directory, so copy it as-is.
             dest = os.path.join(context.SITE_STATIC_DIR, filename)
             shutil.copytree(path, dest, dirs_exist_ok=True)
-        elif not context.is_large_static_storable(filename):
+        elif not context.is_large_static_storable(path):
             # This is not a large file, so copy to SITE_STATIC_DIR.
             dest = os.path.join(context.SITE_STATIC_DIR, filename)
             copy_if_newer(path, dest)

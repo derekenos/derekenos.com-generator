@@ -161,6 +161,10 @@ main > section > ol {
   list-style: none;
 }
 
+main > section > p[itemprop=description] {
+  line-height: 1.5rem;
+}
+
 main > section > .collection {
   display: flex;
   flex-flow: column;
@@ -313,5 +317,12 @@ ol.links > li > a {
 
   main.home > section a.tag {
     display: inline-block;
+  }
+
+  /* Wrapper for things that should be presented as a list item in contexts where <ul> is not allowed, e.g. inside <p> */
+  i.list-item:before {
+    display: inline;
+    content: '\000a\00a0\00a0\2022\00a0\00a0';
+    white-space: pre;
   }
 }

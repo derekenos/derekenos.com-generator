@@ -1,8 +1,11 @@
 
+import logging
 import os
 import re
+import shutil
 from collections import namedtuple
 from datetime import datetime
+from functools import lru_cache
 from itertools import count
 
 from lib import (
@@ -15,6 +18,12 @@ from lib import (
 COLLATERAL_CREATIONS = 'collateral_creations'
 DEPENDS_ON = 'depends_on'
 DEPENDENT_OF = 'dependent_of'
+
+###############################################################################
+# Globals
+###############################################################################
+
+log = logging.getLogger(__name__)
 
 ###############################################################################
 # Exceptions
@@ -56,7 +65,8 @@ class Context:
     SITE_DIR = 'site'
     SITE_RELATIVE_STATIC_DIR = 'static'
     SITE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_STATIC_DIR}'
-    STATIC_LARGE_FILE_THRESHOLD_KB = 0
+    STATIC_LARGE_FILE_THRESHOLD_KB = 512
+    STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET = {".css"}
     SITE_RELATIVE_LARGE_STATIC_DIR = f'static/_large'
     SITE_LARGE_STATIC_DIR = f'{SITE_DIR}/{SITE_RELATIVE_LARGE_STATIC_DIR}'
     SITEMAP_FILENAME = 'sitemap.txt'
@@ -96,55 +106,58 @@ class Context:
             msg += ' locally or in large static store'
         raise FileNotFoundError(f'{msg}: {path}')
 
+    @lru_cache
     def static_last_modified(self, filename):
         """Return a datetime object representing the static file's
         last-modified time.
         """
-        path = os.path.join(self.STATIC_DIR, filename)
-        if os.path.exists(path):
-            # The file exists locally, so stat it.
-            last_modified = datetime.fromtimestamp(os.stat(path).st_mtime)
-        elif self.lss and self.lss.exists(filename):
-            # The file does not exist locally, so check the lss.
+        path = self.static(filename)
+        if path.startswith(("http://", "https://")):
             last_modified = self.lss.meta(filename).last_modified
         else:
-            self.raise_static_not_found(filename)
+            last_modified = datetime.fromtimestamp(os.stat(path).st_mtime)
         # Truncate microseconds.
         return last_modified.replace(microsecond=0)
 
+    @lru_cache
     def static(self, filename, raise_on_not_found=True):
         """Format filename as a static asset path, optionally assert that the
         file exists, and return the path. If file does not exist and
         raise_on_not_found=False, return None.
         """
-        fs_path = f'{self.STATIC_DIR}/{filename}'
-        # Check that file exists either locally or in the lss.
-        if not os.path.isfile(fs_path):
-            # If the file exist in the lss, return that URL.
-            if not self.lss or not self.lss.exists(filename):
-                if raise_on_not_found:
-                    self.raise_static_not_found(fs_path)
-                return None
-            # File exists in lss.
-            path = f'{self.large_static_store["endpoint"]}/{filename}'
-        elif not self.is_large_static_storable(filename):
-            # It's a small, local file.
-            path = f'{self.SITE_RELATIVE_STATIC_DIR}/{filename}'
-        else:
-            # It's a large file.
-            if self.production:
-                path = f'{self.large_static_store["endpoint"]}/{filename}'
-            else:
-                # Warn if the file exists both locally and in the lss manifest.
-                if self.lss and self.lss.exists(filename):
-                    print(f'Large, local file "{filename}" exists in the LSS.')
-                path = os.path.join(
-                    self.SITE_RELATIVE_LARGE_STATIC_DIR,
-                    filename
-                )
-        return path
+        local_static_path = os.path.join(self.STATIC_DIR, filename)
+        local_large_static_path = os.path.join(self.SITE_RELATIVE_LARGE_STATIC_DIR, filename)
+        local_static_exists =  os.path.isfile(local_static_path)
+        # Handle the case where the file exists in the local (small) static dir.
+        if local_static_exists:
+            # If the file size in not eligible for inclusion in the LSS, return
+            # the small static path, otherwise move it into the local large static
+            # directory and return that path.
+            if (not self.is_large_static_storable(local_static_path)
+                or os.path.splitext(filename)[1] in STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET):
+                return f'{self.SITE_RELATIVE_STATIC_DIR}/{filename}'
+            # File is large enough to qualify for inclusion in the LSS, so move it
+            # to the local large static path. Presence in large static dir will be
+            # checked next.
+            log.warning(
+                f"Moving LSS-eligible {local_static_path} to {self.SITE_RELATIVE_LARGE_STATIC_DIR}"
+            )
+            shutil.move(local_static_path, self.SITE_RELATIVE_LARGE_STATIC_DIR)
 
-    def is_large_static_storable(self, filename):
+        # Check if the file exists in the local large static dir if not building for production.
+        if os.path.isfile(local_large_static_path) and not self.production:
+            return local_large_static_path
+
+        # File not found in local small or large static dirs. Check any defined LSS.
+        if self.lss and self.lss.exists(filename):
+            return f'{self.large_static_store["endpoint"]}/{filename}'
+
+        # Static file not found
+        if raise_on_not_found:
+            self.raise_static_not_found(filename)
+        return None
+
+    def is_large_static_storable(self, path):
         """Return a bool indicating whether the specified file should be
         considered a large static asset that's subject to large static store
         offloading.
@@ -152,9 +165,6 @@ class Context:
         # Files in static subdirectories are excluded from consideration with
         # regard to large static store offloading, so if this file is in a
         # subdirectory, return False.
-        if os.path.dirname(filename) != '':
-            return False
-        path = f'{self.STATIC_DIR}/{filename}'
         if not os.path.isfile(path):
             raise AssertionError(f'Path is not a regular file: {path}')
         return os.stat(path).st_size / 1024 \
