@@ -62,21 +62,22 @@ def save_png(image, out_path):
     # )
 
 def save_jpg(image, out_path):
-    # See: https://en.wikibooks.org/wiki/GIMP/Saving_as_JPEG
-    save_image(
-        image,
-        out_path,
-    )
-    #     QUALITY_FACTOR, # quality
-    #     0.10, # smoothing (whatever that is)
-    #     1, # optimize
-    #     1, # progressive
-    #     '', # comment
-    #     1, # subsmp
-    #     0, # baseline
-    #     16, # restart (apparent default in Gimp UI)
-    #     0, # DCT
-    # )
+    proc = Gimp.get_pdb().lookup_procedure('file-jpeg-export')
+    conf = proc.create_config()
+    conf.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
+    conf.set_property('image', image)
+    conf.set_property('file', Gio.File.new_for_path(to_bytes(out_path)))
+    conf.set_property('quality', QUALITY_FACTOR)
+    # How to set these?
+    # 0.10, # smoothing (whatever that is)
+    # 1, # optimize
+    # 1, # progressive
+    # '', # comment
+    # 1, # subsmp
+    # 0, # baseline
+    # 16, # restart (apparent default in Gimp UI)
+    # 0, # DCT
+    return proc.run(conf)
 
 MIMETYPE_SAVE_FUNC_MAP = {
     'image/webp': save_webp,
@@ -122,10 +123,12 @@ def run(
         i = next(i for i, width in enumerate(widths) if width < image_width)
         final_widths = [image_width] + widths[i:] if i > 0 else widths
 
+        image_height = image.get_height()
         for width in final_widths:
             if image_width > width:
                 # Scale image down to width.
-                height = int(float(width) / image_width * image.get_height())
+                scale = float(width) / image_width
+                height = int(image_height * scale)
                 image.scale(width, height)
 
             for mimetype in mimetypes:
