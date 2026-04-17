@@ -1,5 +1,6 @@
 
 import json
+import logging
 import os
 from collections import namedtuple
 from datetime import datetime
@@ -16,6 +17,12 @@ import boto3
 ###############################################################################
 
 MANIFEST_FILENAME = '.lss_manifest.json'
+
+###############################################################################
+# Globals
+###############################################################################
+
+log = logging.getLogger(__name__)
 
 ###############################################################################
 # Types
@@ -40,13 +47,16 @@ class Store(ABC):
 
     def load_manifest(self):
         if os.path.exists(MANIFEST_FILENAME):
-            manifest = json.load(open(MANIFEST_FILENAME, 'rb'))
+            manifest = json.load(open(MANIFEST_FILENAME, 'r'))
             if self.endpoint in manifest:
                 self.manifest.update(manifest[self.endpoint])
 
     def save_manifest(self, manifest_data=None):
-        manifest = json.load(open(MANIFEST_FILENAME, 'rb')) \
-            if os.path.exists(MANIFEST_FILENAME) else {}
+        if os.path.exists(MANIFEST_FILENAME):
+            manifest = json.load(open(MANIFEST_FILENAME, 'r'))
+        else:
+            manifest = {}
+
         manifest[self.endpoint] = manifest_data or self.manifest
         with open(MANIFEST_FILENAME, 'w') as fh:
             json.dump(manifest, fh)
@@ -101,7 +111,7 @@ class S3(Store):
         """
         if not os.path.isdir(fs_path):
             raise AssertionError(f'fs_path ({fs_path}) is not a directory')
-        print(f'Syncing large objects from {fs_path} to: {self.s3_url}')
+        log.info(f'Syncing large objects from {fs_path} to: {self.s3_url}')
         call(['aws', 's3', f'--endpoint={self.aws_endpoint}',
               f'--profile={self.aws_profile}', 'sync',
               '--follow-symlinks', '--acl=public-read',
@@ -113,6 +123,7 @@ class S3(Store):
         """Regenerate self.manifest by fetching all object metadata from the
         remote store.
         """
+        log.info("Regenerating LSS manifest by querying remote store...")
         self.manifest = {}
         continuation_token = ""
         while True:

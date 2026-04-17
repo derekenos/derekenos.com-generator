@@ -1,4 +1,5 @@
 
+import logging
 import os
 import re
 from collections import namedtuple
@@ -15,6 +16,12 @@ from lib import (
 COLLATERAL_CREATIONS = 'collateral_creations'
 DEPENDS_ON = 'depends_on'
 DEPENDENT_OF = 'dependent_of'
+
+###############################################################################
+# Globals
+###############################################################################
+
+log = logging.getLogger(__name__)
 
 ###############################################################################
 # Exceptions
@@ -137,7 +144,7 @@ class Context:
             else:
                 # Warn if the file exists both locally and in the lss manifest.
                 if self.lss and self.lss.exists(filename):
-                    print(f'Large, local file "{filename}" exists in the LSS.')
+                    log.info(f'Large, local file "{filename}" exists in the LSS.')
                 path = os.path.join(
                     self.SITE_RELATIVE_LARGE_STATIC_DIR,
                     filename

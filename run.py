@@ -1,6 +1,7 @@
 
 import argparse
 import json
+import logging
 import os
 import re
 import shutil
@@ -23,6 +24,8 @@ import includes.head
 import includes.footer
 import includes.header
 import includes.redirect
+
+logging.basicConfig(level=logging.INFO)
 
 ###############################################################################
 # Site manifest helpers
