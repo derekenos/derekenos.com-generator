@@ -5,6 +5,7 @@ import re
 import shutil
 from collections import namedtuple
 from datetime import datetime
+from functools import lru_cache
 from itertools import count
 
 from lib import (
@@ -105,6 +106,7 @@ class Context:
             msg += ' locally or in large static store'
         raise FileNotFoundError(f'{msg}: {path}')
 
+    @lru_cache
     def static_last_modified(self, filename):
         """Return a datetime object representing the static file's
         last-modified time.
@@ -117,6 +119,7 @@ class Context:
         # Truncate microseconds.
         return last_modified.replace(microsecond=0)
 
+    @lru_cache
     def static(self, filename, raise_on_not_found=True):
         """Format filename as a static asset path, optionally assert that the
         file exists, and return the path. If file does not exist and

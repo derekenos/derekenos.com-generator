@@ -1,4 +1,5 @@
 
+
 import argparse
 import json
 import logging
@@ -26,6 +27,7 @@ import includes.header
 import includes.redirect
 
 logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
 
 ###############################################################################
 # Site manifest helpers
@@ -144,6 +146,7 @@ def copy_static(context):
     static directory, diverting large objects as appropriate, and
     copying only if the destination file doesn't exist or is out-of-date.
     """
+    log.info(f"Copying {context.STATIC_DIR}/* to {context.SITE_STATIC_DIR}")
     # Ensure that the destination directories exist.
     os.makedirs(context.SITE_STATIC_DIR, exist_ok=True)
     os.makedirs(context.SITE_LARGE_STATIC_DIR, exist_ok=True)
