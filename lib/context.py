@@ -144,8 +144,8 @@ class Context:
             )
             shutil.move(local_static_path, self.SITE_RELATIVE_LARGE_STATIC_DIR)
 
-        # Check if the file exists in the local large static dir.
-        if os.path.isfile(local_large_static_path):
+        # Check if the file exists in the local large static dir if not building for production.
+        if os.path.isfile(local_large_static_path) and not self.production:
             return local_large_static_path
 
         # File not found in local small or large static dirs. Check any defined LSS.

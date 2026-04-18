@@ -9,6 +9,7 @@
     "bolts",
     "cloudflare",
     "cnc",
+    "communitytechnology",
     "decoder",
     "effects",
     "framework",
@@ -133,6 +134,66 @@
     ]
   ],
   "projects": [
+    {
+      "name": "Meshtastic Enclosures",
+      "slug": "/meshtastic-enclosures",
+      "short_description": "Custom laser-cut wood Meshtastic radio enclosures.",
+      "tags": [
+        "art",
+        "communitytechnology",
+        "lasercut",
+        "wood"
+      ],
+      "type": "CreativeWork",
+      "description": "<a href=\"https://meshtastic.org/\">Meshtastic</a> is an <q cite=\"https://meshtastic.org/\">open source, off-grid, decentralized mesh network built to run on affordable, low-power devices.</q><br><br>While you can buy these radios as pre-assembled devices, it's more affordable to buy the components (e.g. circuit board, antenna, battery, GPS module, etc.) and assemble it yourself, and though there are plenty of enclosures available for purchase, and an <a href=\"https://www.printables.com/tag/meshtastic\">array of models</a> from which to 3D print your own, I like to laser wood because it's fast and cheap and wood is awesome...so that's what I did. Also, I really wanted to be able to use normal AAs batteries, which are ubiquitous and easy to swap out, instead of lithium battery packs, and most (all?) available devices and enclosures use the latter.<br><br>The cat and dragon engraving art was adapted from:<i class=\"list-item\"><a href=\"https://creativemeadow.com/product/floral-cat/\">https://creativemeadow.com/product/floral-cat/</a></i><i class=\"list-item\"><a class=\"list-item\" href=\"https://commons.wikimedia.org/wiki/File:Imperial_Encyclopaedia_-_Animal_Kingdom_-_pic504.svg\">https://commons.wikimedia.org/wiki/File:Imperial_Encyclopaedia_-_Animal_Kingdom_-_pic504.svg</a></i>",
+      "images": [
+        {
+          "filename": "project-meshtastic-enclosures-60005327-2622x2147-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-c5d4e69d-1735x2918-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-bf29f4aa-2403x2910-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-54b9c91e-2756x3258-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-f9ffecf7-2539x2324-original.jpg",
+          "name": "A pair of Meshtastic radios housed in custom laser-cut wood enclosures",
+          "description": "A photograph of a pair of Meshtastic radios housed in custom laser-cut wood enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-639a36dd-3024x4032-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-bab520be-3024x4032-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-f3af7357-1521x1525-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        },
+        {
+          "filename": "project-meshtastic-enclosures-299ca730-1682x1738-original.jpg",
+          "name": "Meshtastic Enclosures",
+          "description": "A picture of the Meshtastic Enclosures"
+        }
+      ]
+    },
     {
       "name": "Mecanum Robot",
       "slug": "/mecanum-robot",

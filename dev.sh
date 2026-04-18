@@ -38,7 +38,7 @@ exit_if_server_down
 
 # Rebuild on any changes outside of the site/ dir.
 while true; do
-    inotifywait -e modify --recursive --quiet --quiet --exclude site/ *;
+    inotifywait -e modify --recursive --exclude site/ --quiet *
     # Exit if server crashed.
     exit_if_server_down
     venv/bin/python3 run.py --context-file=context.json --development 2>&1 | tee .run.stderr
