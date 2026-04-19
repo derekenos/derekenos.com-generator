@@ -1,13 +1,12 @@
-
 from lib.htmlephant import Script
 
 Head = lambda context: (
     Script(
-        _async='',
-        src=f'https://www.googletagmanager.com/gtag/js?id={context.google_analytics_id}'
+        _async="",
+        src=f"https://www.googletagmanager.com/gtag/js?id={context.google_analytics_id}",
     ),
     Script(
-f"""
+        f"""
 window.dataLayer = window.dataLayer || [];
 function gtag() {{
   dataLayer.push(arguments);
@@ -15,7 +14,7 @@ function gtag() {{
 gtag('js', new Date());
 gtag('config', '{context.google_analytics_id}');
 """
-    )
+    ),
 )
 
 

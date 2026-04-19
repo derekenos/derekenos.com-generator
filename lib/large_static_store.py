@@ -1,4 +1,3 @@
-
 import json
 import logging
 import os
@@ -16,7 +15,7 @@ import boto3
 # Constants
 ###############################################################################
 
-MANIFEST_FILENAME = '.lss_manifest.json'
+MANIFEST_FILENAME = ".lss_manifest.json"
 
 ###############################################################################
 # Globals
@@ -28,16 +27,16 @@ log = logging.getLogger(__name__)
 # Types
 ###############################################################################
 
-Metadata = namedtuple('Metadata', ('size_mb', 'last_modified'))
+Metadata = namedtuple("Metadata", ("size_mb", "last_modified"))
 
 ###############################################################################
 # Classes
 ###############################################################################
 
+
 class Store(ABC):
     def __init__(self, config):
-        """Assign the config items as instance attributes.
-        """
+        """Assign the config items as instance attributes."""
         for k, v in config.items():
             setattr(self, k, v)
         # manifest is a path -> response.headers map that keeps track of
@@ -47,18 +46,18 @@ class Store(ABC):
 
     def load_manifest(self):
         if os.path.exists(MANIFEST_FILENAME):
-            manifest = json.load(open(MANIFEST_FILENAME, 'r'))
+            manifest = json.load(open(MANIFEST_FILENAME, "r"))
             if self.endpoint in manifest:
                 self.manifest.update(manifest[self.endpoint])
 
     def save_manifest(self, manifest_data=None):
         if os.path.exists(MANIFEST_FILENAME):
-            manifest = json.load(open(MANIFEST_FILENAME, 'r'))
+            manifest = json.load(open(MANIFEST_FILENAME, "r"))
         else:
             manifest = {}
 
         manifest[self.endpoint] = manifest_data or self.manifest
-        with open(MANIFEST_FILENAME, 'w') as fh:
+        with open(MANIFEST_FILENAME, "w") as fh:
             json.dump(manifest, fh)
 
     @abstractmethod
@@ -73,15 +72,15 @@ class Store(ABC):
     def meta(self, path):
         pass
 
+
 class S3(Store):
-    LAST_MODIFIED_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    LAST_MODIFIED_FORMAT = "%a, %d %b %Y %H:%M:%S GMT"
 
     def __init__(self, config):
         super().__init__(config)
         self.s3_bucket = self.s3_url[5:].rstrip("/")
-        self.client = (
-            boto3.session.Session(profile_name=self.aws_profile)
-            .client("s3", endpoint_url=self.aws_endpoint)
+        self.client = boto3.session.Session(profile_name=self.aws_profile).client(
+            "s3", endpoint_url=self.aws_endpoint
         )
 
     def load_manifest(self):
@@ -97,27 +96,37 @@ class S3(Store):
 
     def save_manifest(self):
         """Override save_manifest() to serialize LastModified datetime."""
-        super().save_manifest({
-            path: {
-                k: v if not isinstance(v, datetime) else v.isoformat()
-                for k, v in metadata.items()
+        super().save_manifest(
+            {
+                path: {
+                    k: v if not isinstance(v, datetime) else v.isoformat()
+                    for k, v in metadata.items()
+                }
+                for path, metadata in self.manifest.items()
             }
-            for path, metadata in self.manifest.items()
-        })
+        )
 
     def sync(self, fs_path, dryrun=False):
         """Use subprocess.call in conjunction with aws-cli to sync the
         local large objects directory to the remote.
         """
         if not os.path.isdir(fs_path):
-            raise AssertionError(f'fs_path ({fs_path}) is not a directory')
-        log.info(f'Syncing large objects from {fs_path} to: {self.s3_url}')
-        call(['aws', 's3', f'--endpoint={self.aws_endpoint}',
-              f'--profile={self.aws_profile}', 'sync',
-              '--follow-symlinks', '--acl=public-read',
-              *(['--dryrun'] if dryrun else []),
-              fs_path, self.s3_url
-        ])
+            raise AssertionError(f"fs_path ({fs_path}) is not a directory")
+        log.info(f"Syncing large objects from {fs_path} to: {self.s3_url}")
+        call(
+            [
+                "aws",
+                "s3",
+                f"--endpoint={self.aws_endpoint}",
+                f"--profile={self.aws_profile}",
+                "sync",
+                "--follow-symlinks",
+                "--acl=public-read",
+                *(["--dryrun"] if dryrun else []),
+                fs_path,
+                self.s3_url,
+            ]
+        )
 
     def regenerate_manifest(self):
         """Regenerate self.manifest by fetching all object metadata from the
@@ -128,8 +137,7 @@ class S3(Store):
         continuation_token = ""
         while True:
             res = self.client.list_objects_v2(
-                Bucket=self.s3_bucket,
-                ContinuationToken=continuation_token
+                Bucket=self.s3_bucket, ContinuationToken=continuation_token
             )
             for item in res["Contents"]:
                 self.manifest[item.pop("Key")] = item
@@ -154,13 +162,12 @@ class S3(Store):
             return None
         item = self.manifest[path]
         return Metadata(
-            size_mb=item['Size'] / 1024 / 1024,
-            last_modified=item['LastModified']
+            size_mb=item["Size"] / 1024 / 1024, last_modified=item["LastModified"]
         )
 
+
 def get(config):
-    """Instantiate and return a store based on the type specified in config.
-    """
-    if config['type'] != 'S3':
+    """Instantiate and return a store based on the type specified in config."""
+    if config["type"] != "S3":
         raise NotImplementedError(f'type: {config["type"]}')
     return S3(config)

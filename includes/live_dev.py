@@ -1,10 +1,9 @@
-
 from lib import NotDefined
 from lib.htmlephant import Script
 
 Head = lambda context: (
     Script(
-"""
+        """
 document.addEventListener("DOMContentLoaded", () => {
   const eventSource = new EventSource("/_events");
   eventSource.onmessage = event => {

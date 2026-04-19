@@ -1,4 +1,3 @@
-
 from lib import (
     NotDefined,
     microdata as md,
@@ -13,11 +12,10 @@ from lib.htmlephant import (
 
 Head = NotDefined
 
-Body = lambda context, src, mimetype, upload_date, poster_src, name, \
-    description, itemprop=None: (
+Body = lambda context, src, mimetype, upload_date, poster_src, name, description, itemprop=None: (
     Video(
         itemprop=itemprop,
-        itemscope='',
+        itemscope="",
         itemtype=md.Types.VideoObject,
         children=(
             VideoSource(src=src, type=mimetype),
@@ -28,8 +26,8 @@ Body = lambda context, src, mimetype, upload_date, poster_src, name, \
             MDMeta(md.Props.encodingFormat, mimetype),
             MDMeta(md.Props.uploadDate, upload_date),
         ),
-        controls='',
-        preload='none',
-        poster=poster_src
+        controls="",
+        preload="none",
+        poster=poster_src,
     ),
 )

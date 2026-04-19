@@ -10,6 +10,7 @@ from gi.repository import Gimp, Gio
 
 to_bytes = lambda s: bytes(s, encoding="utf8")
 
+
 def run(src_dir, output_file):
     """For all image files in src_dir, create a filename => (width, height) map
     and write it as JSON to the output_file.
@@ -22,7 +23,7 @@ def run(src_dir, output_file):
             continue
 
         # Ignore non-image files.
-        if not guess_mimetype(filename).startswith('image/'):
+        if not guess_mimetype(filename).startswith("image/"):
             continue
 
         # Open the image and read the width.
@@ -30,5 +31,5 @@ def run(src_dir, output_file):
         image = Gimp.file_load(Gimp.RunMode.NONINTERACTIVE, g_file)
         filename_dims_map[filename] = image.get_width(), image.get_height()
 
-    with open(output_file, 'wb') as fh:
+    with open(output_file, "wb") as fh:
         fh.write(to_bytes(json.dumps(filename_dims_map)))

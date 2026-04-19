@@ -1,4 +1,3 @@
-
 from lib import NotDefined
 from lib.htmlephant import (
     H2,
@@ -7,6 +6,7 @@ from lib.htmlephant import (
 )
 
 Head = NotDefined
+
 
 def Body(context, title=None, subtitle=None, children=(), **attrs):
     section = Section(**attrs)

@@ -18,13 +18,15 @@ LOSSY = QUALITY_FACTOR < 1
 
 to_bytes = lambda s: bytes(s, encoding="utf8")
 
+
 def save_image(image, out_path, options=None):
     Gimp.file_save(
         run_mode=Gimp.RunMode.NONINTERACTIVE,
         image=image,
         file=Gio.File.new_for_path(to_bytes(out_path)),
-        options=options
+        options=options,
     )
+
 
 def save_webp(image, out_path):
     save_image(
@@ -46,6 +48,7 @@ def save_webp(image, out_path):
     #     0, # force delay on all frames
     # )
 
+
 def save_png(image, out_path):
     save_image(
         image,
@@ -61,13 +64,14 @@ def save_png(image, out_path):
     #     1, # write tIME chunk
     # )
 
+
 def save_jpg(image, out_path):
-    proc = Gimp.get_pdb().lookup_procedure('file-jpeg-export')
+    proc = Gimp.get_pdb().lookup_procedure("file-jpeg-export")
     conf = proc.create_config()
-    conf.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
-    conf.set_property('image', image)
-    conf.set_property('file', Gio.File.new_for_path(to_bytes(out_path)))
-    conf.set_property('quality', QUALITY_FACTOR)
+    conf.set_property("run-mode", Gimp.RunMode.NONINTERACTIVE)
+    conf.set_property("image", image)
+    conf.set_property("file", Gio.File.new_for_path(to_bytes(out_path)))
+    conf.set_property("quality", QUALITY_FACTOR)
     # How to set these?
     # 0.10, # smoothing (whatever that is)
     # 1, # optimize
@@ -79,22 +83,24 @@ def save_jpg(image, out_path):
     # 0, # DCT
     return proc.run(conf)
 
+
 MIMETYPE_SAVE_FUNC_MAP = {
-    'image/webp': save_webp,
-    'image/png': save_png,
-    'image/jpeg': save_jpg,
+    "image/webp": save_webp,
+    "image/png": save_png,
+    "image/jpeg": save_jpg,
 }
 
+
 def run(
-        src_dir,
-        input_filename_regex,
-        dest_dir,
-        output_filename_template,
-        mimetypes,
-        widths,
-        overwrite,
-        show_skipped
-    ):
+    src_dir,
+    input_filename_regex,
+    dest_dir,
+    output_filename_template,
+    mimetypes,
+    widths,
+    overwrite,
+    show_skipped,
+):
     """Generate derivatives as required by derekenos.com-generator
     github.com/derekenos/derekenos.com-generator
     """
@@ -104,14 +110,14 @@ def run(
     widths = sorted(widths, reverse=True)
     for filename, file_path in listfiles(src_dir):
         # Ignore non-image files.
-        if not guess_mimetype(filename).startswith('image/'):
+        if not guess_mimetype(filename).startswith("image/"):
             continue
 
         # Parse the required fields from the filename.
         match_d = INPUT_FILENAME_REGEX.match(filename).groupdict()
-        item_name = match_d['item_name']
-        asset_id = match_d['asset_id']
-        orig_width = int(match_d['width'])
+        item_name = match_d["item_name"]
+        asset_id = match_d["asset_id"]
+        orig_width = int(match_d["width"])
 
         # Open the image.
         g_file = Gio.File.new_for_path(to_bytes(file_path))
@@ -136,17 +142,17 @@ def run(
                     item_name=item_name,
                     asset_id=asset_id,
                     width=width,
-                    extension=guess_extension(mimetype)
+                    extension=guess_extension(mimetype),
                 )
                 out_path = os.path.join(dest_dir, out_fn)
                 # Skip path if overwrite is False and file already exists.
                 if not overwrite and os.path.exists(out_path):
                     if show_skipped:
-                        print('Skipping: {}'.format(out_path))
+                        print("Skipping: {}".format(out_path))
                     continue
                 # Invoke either a custom or default save function.
                 MIMETYPE_SAVE_FUNC_MAP.get(mimetype, save_image)(
                     image,
                     out_path,
                 )
-                print('Wrote: {}'.format(out_path))
+                print("Wrote: {}".format(out_path))

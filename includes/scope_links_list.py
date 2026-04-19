@@ -15,26 +15,21 @@ Head = NotDefined
 
 Body = lambda context, prop_type_name_url_tuples: (
     Ol(
-        _class='links',
+        _class="links",
         children=[
             Li(
                 itemprop=prop,
-                itemscope='',
+                itemscope="",
                 itemtype=type,
                 children=(
                     Anchor(
                         itemprop=md.Props.url,
                         href=url,
-                        children=(
-                            Span(
-                                name,
-                                itemprop=md.Props.name
-                            ),
-                        )
+                        children=(Span(name, itemprop=md.Props.name),),
                     ),
-                )
+                ),
             )
             for prop, type, name, url in prop_type_name_url_tuples
-        ]
+        ],
     ),
 )

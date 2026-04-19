@@ -1,4 +1,3 @@
-
 from lib import microdata as md
 from lib import (
     NotDefined,
@@ -20,14 +19,11 @@ Body = lambda context, name, items, wide=False: collection.Body(
     name=name,
     items=[
         [
-            UnescapedH4(
-                title,
-                id=(id:=slugify(title)), itemprop=md.Props.name
-            ),
-            MDMeta(md.Props.url, context.url(f'{context.current_page}#{id}')),
-            UnescapedParagraph(text, itemprop=md.Props.description)
+            UnescapedH4(title, id=(id := slugify(title)), itemprop=md.Props.name),
+            MDMeta(md.Props.url, context.url(f"{context.current_page}#{id}")),
+            UnescapedParagraph(text, itemprop=md.Props.description),
         ]
         for title, text in items
     ],
-    wide=wide
+    wide=wide,
 )

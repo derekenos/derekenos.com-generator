@@ -1,4 +1,3 @@
-
 from lib import microdata as md
 from lib.htmlephant_extensions import Main
 from lib.htmlephant import (
@@ -19,28 +18,28 @@ from includes import (
     section,
 )
 
-DESCRIPTION = 'How to contact me'
+DESCRIPTION = "How to contact me"
 
 Head = lambda context: (
-    StdMeta('description', DESCRIPTION),
-    OGMeta('description', DESCRIPTION),
-    Title(f'{context.name} | Contact'),
+    StdMeta("description", DESCRIPTION),
+    OGMeta("description", DESCRIPTION),
+    Title(f"{context.name} | Contact"),
 )
 
 Body = lambda context: (
     Main(
-        _class='contact',
-        itemscope='',
+        _class="contact",
+        itemscope="",
         itemtype=md.Types.Person,
         children=(
             MDMeta(md.Props.name, context.name),
             H1(DESCRIPTION),
             *section.Body(
                 context,
-                'Email',
+                "Email",
                 children=(
                     Anchor(
-                        href=f'mailto:{context.email}',
+                        href=f"mailto:{context.email}",
                         children=(
                             Span(
                                 context.email,
@@ -48,40 +47,30 @@ Body = lambda context: (
                             ),
                         ),
                     ),
-                )
+                ),
             ),
             *section.Body(
                 context,
-                'Other channels',
+                "Other channels",
                 children=scope_links_list.Body(
                     context,
                     prop_type_name_url_tuples=[
-                        (
-                            md.Props.contactPoint,
-                            md.Types.ContactPoint,
-                            name,
-                            url
-                        )
+                        (md.Props.contactPoint, md.Types.ContactPoint, name, url)
                         for name, url in context.social_name_url_pairs
-                    ]
-                )
+                    ],
+                ),
             ),
             *section.Body(
                 context,
-                'Old Websites',
+                "Old Websites",
                 children=scope_links_list.Body(
                     context,
                     prop_type_name_url_tuples=[
-                        (
-                            md.Props.url,
-                            md.Types.CreativeWork,
-                            name,
-                            url
-                        )
+                        (md.Props.url, md.Types.CreativeWork, name, url)
                         for name, url in context.old_website_name_url_pairs
-                    ]
-                )
-            )
-        )
+                    ],
+                ),
+            ),
+        ),
     ),
 )
