@@ -245,6 +245,17 @@ ol.links > li > a {
   padding: 1rem 0;
 }
 
+/* Wrapper for things that should be presented as a list item in contexts where <ul> is not allowed, e.g. inside <p> */
+i.list-item {
+  word-wrap: break-word;
+}
+
+i.list-item:before {
+  display: inline;
+  content: '\000a\00a0\00a0\2022\00a0\00a0';
+  white-space: pre;
+}
+
 @media screen and (min-width: 1024px) {
   header {
     border-bottom: solid #888 1px;
@@ -317,12 +328,5 @@ ol.links > li > a {
 
   main.home > section a.tag {
     display: inline-block;
-  }
-
-  /* Wrapper for things that should be presented as a list item in contexts where <ul> is not allowed, e.g. inside <p> */
-  i.list-item:before {
-    display: inline;
-    content: '\000a\00a0\00a0\2022\00a0\00a0';
-    white-space: pre;
   }
 }
