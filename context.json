@@ -177,6 +177,7 @@
           "name": "Meshtastic Enclosures",
           "description": "A picture of the Meshtastic Enclosures"
         },
+
         {
           "filename": "project-meshtastic-enclosures-bab520be-3024x4032-original.jpg",
           "name": "Meshtastic Enclosures",
@@ -208,7 +209,7 @@
         "wood"
       ],
       "type": "CreativeWork",
-      "description": "",
+      "description": "My son said that he wanted to build a robot, so we grabbed a handful of laser-cut construction set pieces and built this. The most exciting feature is probably the <a href=\"https://en.wikipedia.org/wiki/Mecanum_wheel\">Mecanum wheels</a> whose direction of rotation determines which way the robot moves, without any other method of steering. This image shows how this works, with the blue arrows indicating individual wheel rotation direction and the red arrow indicating the robot's direction of travel: <img src=\"static/Mecanum_wheel_control_principle.png\" style=\"display: block; background-color: #eee; margin: 1rem 0; padding: 1rem;\" /> You'll notice in the accompanying video that I only implemented movements A, B, C, and E.<br>I've built three of these now and have parts for three more, with the plan that my kids and their friends can use them for cooperative robot challenges and battles.<br>It's powered by an <a href=\"https://en.wikipedia.org/wiki/ESP32\">ESP32</a> running a slightly modified <a href=\"https://github.com/ricardoquesada/bluepad32\">bluepath32</a> firmware.",
       "images": [
         {
           "filename": "project-mecanum-robot-b9754175-1108x871-original.jpg",
