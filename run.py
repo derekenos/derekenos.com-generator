@@ -6,6 +6,7 @@ import re
 import shutil
 from hashlib import md5
 from itertools import chain
+from subprocess import call
 
 from lib.htmlephant import Document
 from lib.htmlephant_extensions import Main
@@ -143,20 +144,26 @@ Sitemap: {context.base_url}/{context.SITEMAP_FILENAME}
 
 
 def copy_static(context):
-    """Copy files from the local static directory to the site
-    static directory, diverting large objects as appropriate, and
-    copying only if the destination file doesn't exist or is out-of-date.
-    """
-    log.info(f"Copying {context.STATIC_DIR}/* to {context.SITE_STATIC_DIR}")
-    # Ensure that the destination directories exist.
+    """Sync the local static directory to the site static directory."""
+    log.info(f"Copying {context.RELATIVE_STATIC_DIR}/* to {context.SITE_STATIC_DIR}")
+    # Ensure that the non-large site static directory exists.
     os.makedirs(context.SITE_STATIC_DIR, exist_ok=True)
-    os.makedirs(context.SITE_LARGE_STATIC_DIR, exist_ok=True)
+    # Ensure that the large site static directory exists as a symlink.
+    if not os.path.islink(context.SITE_LARGE_STATIC_DIR):
+        os.symlink(
+            os.path.abspath(context.RELATIVE_LARGE_STATIC_DIR),
+            context.SITE_LARGE_STATIC_DIR,
+            target_is_directory=True
+        )
 
     # Iterate through files in the static directory.
-    static_dir = context.STATIC_DIR
+    static_dir = context.RELATIVE_STATIC_DIR
     static_dir_len = len(static_dir)
     for filename in os.listdir(static_dir):
         path = os.path.join(static_dir, filename)
+        # Ignore large static files.
+        if path == context.RELATIVE_LARGE_STATIC_DIR:
+            continue
         if os.path.isdir(path):
             # Path is a directory, so copy it as-is.
             dest = os.path.join(context.SITE_STATIC_DIR, filename)
@@ -165,14 +172,6 @@ def copy_static(context):
             # This is not a large file, so copy to SITE_STATIC_DIR.
             dest = os.path.join(context.SITE_STATIC_DIR, filename)
             copy_if_newer(path, dest)
-        else:
-            # This is a large file, so create a symlink in
-            # SITE_LARGE_STATIC_DIR instead of actually copying it.
-            dest = os.path.join(context.SITE_LARGE_STATIC_DIR, filename)
-            if not os.path.lexists(dest):
-                # Use the absolute file system path as the symlink src instead
-                # of trying to figure out how many parent dirs to references.
-                os.symlink(os.path.join(os.path.dirname(__file__), path), dest)
 
 
 ###############################################################################

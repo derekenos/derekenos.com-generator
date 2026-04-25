@@ -63,14 +63,13 @@ class Context:
 
     # Define the default static and site directories.
     PAGES_DIR = "pages"
-    STATIC_DIR = "static"
+    RELATIVE_STATIC_DIR = "static"
+    RELATIVE_LARGE_STATIC_DIR = f"{RELATIVE_STATIC_DIR}/_large"
     SITE_DIR = "site"
-    SITE_RELATIVE_STATIC_DIR = "static"
-    SITE_STATIC_DIR = f"{SITE_DIR}/{SITE_RELATIVE_STATIC_DIR}"
+    SITE_STATIC_DIR = f"{SITE_DIR}/{RELATIVE_STATIC_DIR}"
+    SITE_LARGE_STATIC_DIR = f"{SITE_DIR}/{RELATIVE_LARGE_STATIC_DIR}"
     STATIC_LARGE_FILE_THRESHOLD_KB = 512
     STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET = {".css"}
-    SITE_RELATIVE_LARGE_STATIC_DIR = f"static/_large"
-    SITE_LARGE_STATIC_DIR = f"{SITE_DIR}/{SITE_RELATIVE_LARGE_STATIC_DIR}"
     SITEMAP_FILENAME = "sitemap.txt"
 
     def __init__(self, production, **kwargs):
@@ -126,9 +125,9 @@ class Context:
         file exists, and return the path. If file does not exist and
         raise_on_not_found=False, return None.
         """
-        local_static_path = os.path.join(self.STATIC_DIR, filename)
+        local_static_path = os.path.join(self.RELATIVE_STATIC_DIR, filename)
         local_large_static_path = os.path.join(
-            self.SITE_RELATIVE_LARGE_STATIC_DIR, filename
+            self.RELATIVE_LARGE_STATIC_DIR, filename
         )
         local_static_exists = os.path.isfile(local_static_path)
         # Handle the case where the file exists in the local (small) static dir.
@@ -141,14 +140,14 @@ class Context:
                 or os.path.splitext(filename)[1]
                 in STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET
             ):
-                return f"{self.SITE_RELATIVE_STATIC_DIR}/{filename}"
+                return f"{self.RELATIVE_STATIC_DIR}/{filename}"
             # File is large enough to qualify for inclusion in the LSS, so move it
             # to the local large static path. Presence in large static dir will be
             # checked next.
             log.warning(
-                f"Moving LSS-eligible {local_static_path} to {self.SITE_RELATIVE_LARGE_STATIC_DIR}"
+                f"Moving LSS-eligible {local_static_path} to {self.RELATIVE_LARGE_STATIC_DIR}"
             )
-            shutil.move(local_static_path, self.SITE_RELATIVE_LARGE_STATIC_DIR)
+            shutil.move(local_static_path, self.RELATIVE_LARGE_STATIC_DIR)
 
         # Check if the file exists in the local large static dir if not building for production.
         if os.path.isfile(local_large_static_path) and not self.production:
