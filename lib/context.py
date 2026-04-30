@@ -126,9 +126,7 @@ class Context:
         raise_on_not_found=False, return None.
         """
         local_static_path = os.path.join(self.RELATIVE_STATIC_DIR, filename)
-        local_large_static_path = os.path.join(
-            self.RELATIVE_LARGE_STATIC_DIR, filename
-        )
+        local_large_static_path = os.path.join(self.RELATIVE_LARGE_STATIC_DIR, filename)
         local_static_exists = os.path.isfile(local_static_path)
         # Handle the case where the file exists in the local (small) static dir.
         if local_static_exists:

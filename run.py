@@ -153,7 +153,7 @@ def copy_static(context):
         os.symlink(
             os.path.abspath(context.RELATIVE_LARGE_STATIC_DIR),
             context.SITE_LARGE_STATIC_DIR,
-            target_is_directory=True
+            target_is_directory=True,
         )
 
     # Iterate through files in the static directory.

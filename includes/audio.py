@@ -8,13 +8,15 @@ from lib.htmlephant import (
     NOEL,
     Audio,
     Br,
-    Em,
+    Hn,
+    Paragraph,
 )
 
 Head = NotDefined
 
-Body = lambda context, src, name, description, itemprop=None: (
-    Em(name),
+Body = lambda context, src, name, description, h_level, itemprop=None: (
+    Hn[h_level](name),
+    Paragraph(description),
     Br(),
     Audio(
         itemprop=itemprop,
