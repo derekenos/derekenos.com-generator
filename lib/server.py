@@ -47,7 +47,7 @@ def serve(site_dir, host, port):
     # Define a catch-all GET handler for delivering files.
     @route(".*", methods=(GET,))
     async def get(request):
-        req_path = request.path.lstrip("/")
+        req_path = request.path.lstrip("/").replace("%20", " ")
         fs_path = os.path.join(site_dir, req_path)
         if req_path == "":
             # Return index.html as root.

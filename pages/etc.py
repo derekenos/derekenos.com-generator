@@ -6,8 +6,13 @@ from lib.htmlephant import (
     Title,
 )
 
-from includes import section
-from includes import article_collection
+from includes import (
+    audio_collection,
+    article_collection,
+    audio,
+    section,
+)
+
 
 INITIATIVES = (
     (
@@ -161,22 +166,69 @@ SMALL_BITES = (
     ),
 )
 
-DESCRIPTION = "Some things that I have considered making or doing"
+get_audios = lambda context: (
+    (
+        "Track Mobile",
+        "An early acoustic song, circa 2002.",
+        context.static("track_mobile.mp3"),
+    ),
+    ("Mother", "Another early acoustic.", context.static("mother.mp3")),
+    (
+        "Your Face Was Warm",
+        "There should be no 'me' in cooking dinner, but the recording is what it is. I made many mistakes as a young person.",
+        context.static("your_face_was_warm.mp3"),
+    ),
+    (
+        "Further Up Ahead",
+        "Written before to moving to Chicago.",
+        context.static("further_up_ahead.mp3"),
+    ),
+    (
+        "Your Are Here",
+        "Another early one.",
+        context.static("youAreHere_take3_FINAL.mp3"),
+    ),
+    (
+        "Bringing Down the Kite",
+        "I think this one is about Benjamin Franklin??",
+        context.static("bdtk.mp3"),
+    ),
+    (
+        "Early Morning Guitar",
+        "Probably my earliest non-tracker music. Recorded using my IBM-compatible 486DX4-100 😂",
+        context.static("early_morning_guitar.mp3"),
+    ),
+    (
+        "Sad Morning",
+        "Another early morning guitar record, but I guess this one is sad. Seriously, I'm just putting this stuff here so my kids can listen to it if they want to.",
+        context.static("sad_morning.mp3"),
+    ),
+)
+
+DESCRIPTION = "Misc. non-project things"
 
 Head = lambda context: (
     StdMeta("description", DESCRIPTION),
     OGMeta("description", DESCRIPTION),
-    Title(f"{context.name} | Ideas"),
+    Title(f"{context.name} | Etc."),
 )
 
 Body = lambda context: (
     Main(
-        _class="ideas",
+        _class="etc",
         children=(
             H1(DESCRIPTION),
             *section.Body(
                 context,
-                "Initiatives",
+                "Music",
+                name := "Mostly fragments.",
+                children=audio_collection.Body(
+                    context, name=name, items=get_audios(context), h_level=4
+                ),
+            ),
+            *section.Body(
+                context,
+                "Ideas for Initiatives",
                 name := "Ideas for more ambitious efforts",
                 children=article_collection.Body(
                     context,

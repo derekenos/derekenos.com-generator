@@ -101,7 +101,7 @@ main > * {
 
 main.home > h1,
 main.project > h1,
-main.ideas > h1,
+main.etc > h1,
 main.contact > h1 {
   visibility: hidden;
   margin: 0;
@@ -163,6 +163,7 @@ main > section > ol {
 
 main > section > p[itemprop=description] {
   line-height: 1.5rem;
+  max-width: min(48rem, 100%);
 }
 
 main > section > .collection {
@@ -196,11 +197,11 @@ main > section > .collection > .item > h4 {
   opacity: 0.8;
 }
 
-main.ideas > section > .collection {
+main.etc > section > .collection {
   padding: 0;
 }
 
-main.ideas > section > .collection > .item > h4 {
+main.etc > section > .collection > .item > h4 {
   font-size: 1.3rem;
   font-style: normal;
   line-height: 1.5rem;
@@ -298,7 +299,7 @@ i.list-item:before {
     padding: 0 3rem 2rem 3rem;
   }
 
-  main.ideas > section > .collection {
+  main.etc > section > .collection {
     padding: 0 1rem;
   }
 

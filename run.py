@@ -153,7 +153,7 @@ def copy_static(context):
         os.symlink(
             os.path.abspath(context.RELATIVE_LARGE_STATIC_DIR),
             context.SITE_LARGE_STATIC_DIR,
-            target_is_directory=True
+            target_is_directory=True,
         )
 
     # Iterate through files in the static directory.
@@ -280,7 +280,12 @@ if __name__ == "__main__":
     normalize_context(context)
 
     # Generate the site files.
-    num_written = run(context)
+    try:
+        num_written = run(context)
+    except FileNotFoundError as e:
+        raise FileNotFoundError(
+            f"{e.args[0]}\n\nMaybe you haven't sync'd the LSS yet so need to run with --development?\n"
+        ) from e
     print(f"Wrote {num_written} pages to: {context.SITE_DIR}/")
 
     # Save store.exists_response_headers_cache

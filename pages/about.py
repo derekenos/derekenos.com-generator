@@ -18,7 +18,7 @@ from includes import (
     section,
 )
 
-DESCRIPTION = "How to contact me"
+DESCRIPTION = "About me"
 
 Head = lambda context: (
     StdMeta("description", DESCRIPTION),

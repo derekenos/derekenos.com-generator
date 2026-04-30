@@ -126,9 +126,7 @@ class Context:
         raise_on_not_found=False, return None.
         """
         local_static_path = os.path.join(self.RELATIVE_STATIC_DIR, filename)
-        local_large_static_path = os.path.join(
-            self.RELATIVE_LARGE_STATIC_DIR, filename
-        )
+        local_large_static_path = os.path.join(self.RELATIVE_LARGE_STATIC_DIR, filename)
         local_static_exists = os.path.isfile(local_static_path)
         # Handle the case where the file exists in the local (small) static dir.
         if local_static_exists:
@@ -138,7 +136,7 @@ class Context:
             if (
                 not self.is_large_static_storable(local_static_path)
                 or os.path.splitext(filename)[1]
-                in STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET
+                in self.STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET
             ):
                 return f"{self.RELATIVE_STATIC_DIR}/{filename}"
             # File is large enough to qualify for inclusion in the LSS, so move it
