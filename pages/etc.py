@@ -203,6 +203,26 @@ get_audios = lambda context: (
         "Another early morning guitar record, but I guess this one is sad. Seriously, I'm just putting this stuff here so my kids can listen to it if they want to.",
         context.static("sad_morning.mp3"),
     ),
+    (
+        "Dark Westerny",
+        "A rough fragment of a musical concept.",
+        context.static("dark_westerny.mp3"),
+    ),
+    (
+        "Acoustic Guitar'n",
+        "From Feb. 16, 2012",
+        context.static("20120216_203555.mp3"),
+    ),
+    (
+        "Acoustic Guitar'n",
+        "From Dec. 26, 2014",
+        context.static("20141226_003.mp3"),
+    ),
+    (
+        "Acoustic Guitar'n",
+        "From Feb. 20, 2016",
+        context.static("20160220_001.mp3"),
+    ),
 )
 
 DESCRIPTION = "Misc. non-project things"
