@@ -7,6 +7,8 @@ from lib.htmlephant import (
     H1,
     Link,
     OGMeta,
+    Paragraph,
+    Span,
     StdMeta,
     Title,
 )
@@ -37,15 +39,18 @@ Body = lambda context: (
             H1(DESCRIPTION),
             *section.Body(
                 context,
-                children=collection.Body(
-                    context,
-                    name="Selected Projects",
-                    items=[
-                        project_card.Body(context, **prj)
-                        for prj in context.projects
-                        if not prj.get("hide_card", False)
-                    ],
-                ),
+                children=[
+                    Paragraph("These are some things that I've made."),
+                    *collection.Body(
+                        context,
+                        name="Selected Projects",
+                        items=[
+                            project_card.Body(context, **prj)
+                            for prj in context.projects
+                            if not prj.get("hide_card", False)
+                        ],
+                    ),
+                ],
             ),
         ),
     ),

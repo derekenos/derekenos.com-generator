@@ -7,6 +7,7 @@ Types = SimpleNamespace(
     **{
         k: f"https://schema.org/{k}"
         for k in (
+            "AudioObject",
             "Collection",
             "ContactPoint",
             "CreativeWork",

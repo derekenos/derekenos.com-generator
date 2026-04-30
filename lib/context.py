@@ -138,7 +138,7 @@ class Context:
             if (
                 not self.is_large_static_storable(local_static_path)
                 or os.path.splitext(filename)[1]
-                in STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET
+                in self.STATIC_LARGE_FILE_EXTENSION_EXCLUDE_SET
             ):
                 return f"{self.RELATIVE_STATIC_DIR}/{filename}"
             # File is large enough to qualify for inclusion in the LSS, so move it

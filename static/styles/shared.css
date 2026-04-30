@@ -163,6 +163,7 @@ main > section > ol {
 
 main > section > p[itemprop=description] {
   line-height: 1.5rem;
+  max-width: min(48rem, 100%);
 }
 
 main > section > .collection {

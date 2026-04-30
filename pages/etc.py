@@ -6,8 +6,12 @@ from lib.htmlephant import (
     Title,
 )
 
-from includes import section
-from includes import article_collection
+from includes import (
+    article_collection,
+    audio,
+    section,
+)
+
 
 INITIATIVES = (
     (
@@ -161,7 +165,15 @@ SMALL_BITES = (
     ),
 )
 
-DESCRIPTION = "Some things that I have considered making or doing"
+get_audios = lambda context: (
+    {
+        "src": context.static("track mobile.wav"),
+        "name": "Test Name",
+        "description": "Test Description"
+    },
+)
+
+DESCRIPTION = "Misc. non-project things"
 
 Head = lambda context: (
     StdMeta("description", DESCRIPTION),
@@ -176,7 +188,17 @@ Body = lambda context: (
             H1(DESCRIPTION),
             *section.Body(
                 context,
-                "Initiatives",
+                "Music",
+                name := "Mostly fragments.",
+                children=[
+                    el
+                    for item in get_audios(context)
+                    for el in audio.Body(context, **item)
+                ]
+            ),
+            *section.Body(
+                context,
+                "Ideas for Initiatives",
                 name := "Ideas for more ambitious efforts",
                 children=article_collection.Body(
                     context,
