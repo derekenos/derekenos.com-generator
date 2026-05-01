@@ -168,6 +168,26 @@ SMALL_BITES = (
 
 get_audios = lambda context: (
     (
+        "Acoustic Guitar'n",
+        "From Feb. 20, 2016",
+        context.static("20160220_001.mp3"),
+    ),
+    (
+        "Acoustic Guitar'n",
+        "From Dec. 26, 2014",
+        context.static("20141226_003.mp3"),
+    ),
+    (
+        "Acoustic Guitar'n",
+        "From Feb. 16, 2012",
+        context.static("20120216_203555.mp3"),
+    ),
+    (
+        "Dark Westerny",
+        "A rough fragment of a musical concept.",
+        context.static("dark_westerny.mp3"),
+    ),
+    (
         "Track Mobile",
         "An early acoustic song, circa 2002.",
         context.static("track_mobile.mp3"),
@@ -180,7 +200,7 @@ get_audios = lambda context: (
     ),
     (
         "Further Up Ahead",
-        "Written before to moving to Chicago.",
+        "Written before moving to Chicago.",
         context.static("further_up_ahead.mp3"),
     ),
     (
@@ -202,26 +222,6 @@ get_audios = lambda context: (
         "Sad Morning",
         "Another early morning guitar record, but I guess this one is sad. Seriously, I'm just putting this stuff here so my kids can listen to it if they want to.",
         context.static("sad_morning.mp3"),
-    ),
-    (
-        "Dark Westerny",
-        "A rough fragment of a musical concept.",
-        context.static("dark_westerny.mp3"),
-    ),
-    (
-        "Acoustic Guitar'n",
-        "From Feb. 16, 2012",
-        context.static("20120216_203555.mp3"),
-    ),
-    (
-        "Acoustic Guitar'n",
-        "From Dec. 26, 2014",
-        context.static("20141226_003.mp3"),
-    ),
-    (
-        "Acoustic Guitar'n",
-        "From Feb. 20, 2016",
-        context.static("20160220_001.mp3"),
     ),
 )
 
@@ -252,7 +252,7 @@ Body = lambda context: (
             *section.Body(
                 context,
                 "Music",
-                name := "Some music-like things I've made",
+                name := "Some music-like things that I made in the early days when that was a thing that I did.",
                 children=audio_collection.Body(
                     context, name=name, items=get_audios(context), h_level=4
                 ),
