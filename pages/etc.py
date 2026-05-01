@@ -184,7 +184,7 @@ get_audios = lambda context: (
     ),
     (
         "Dark Westerny",
-        "A rough fragment of a musical concept.",
+        "I assume I did multiple takes and this was the best I could manage 😅",
         context.static("dark_westerny.mp3"),
     ),
     (
@@ -209,13 +209,8 @@ get_audios = lambda context: (
         context.static("youAreHere_take3_FINAL.mp3"),
     ),
     (
-        "Bringing Down the Kite",
-        "I think this one is about Benjamin Franklin??",
-        context.static("bdtk.mp3"),
-    ),
-    (
         "Early Morning Guitar",
-        "Probably my earliest non-tracker music. Recorded using my IBM-compatible 486DX4-100 😂",
+        "Probably my earliest non-tracker music. Recorded using my IBM-compatible 486DX4-100 🖳",
         context.static("early_morning_guitar.mp3"),
     ),
     (
