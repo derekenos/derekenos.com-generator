@@ -7,6 +7,7 @@ from lib.htmlephant import (
     NOEL,
     Anchor,
     H1,
+    Link,
     MDMeta,
     OGMeta,
     StdMeta,
@@ -94,6 +95,7 @@ def get_microdata_meta(context):
 def Head(context):
     return (
         Title(f'{context.name} | {context.generator_item["name"]}'),
+        Link(rel="canonical", href=context.url(context.generator_item["slug"])),
         *get_meta_tags(context),
         *subnav.Head(context),
     )
