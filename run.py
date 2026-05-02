@@ -8,7 +8,6 @@ from hashlib import md5
 from itertools import chain
 from subprocess import call
 
-from lib.htmlephant import Document
 from lib.htmlephant_extensions import Main
 from lib.server import serve
 from lib import (
@@ -18,6 +17,10 @@ from lib import (
 from lib.context import (
     Context,
     normalize_context,
+)
+from lib.htmlephant import (
+    Document,
+    Meta,
 )
 
 import includes.head
@@ -85,13 +88,24 @@ def page_updated(filename, html, site_manifest):
 ###############################################################################
 
 
+def is_noindex(head_els):
+    return any(
+        isinstance(el, Meta)
+        and el.attrs.get("name") == "robots"
+        and "noindex" in el.attrs.get("content")
+        for el in head_els
+    )
+
+
 def write_page(context, filename, site_manifest, head=NotDefined, body=NotDefined):
     """Write a single HTML site page if it differs from a corresponding on-disk
-    file and return a bool indicating whether or not the file was written.
+    file and return a (<wasWritten>, <isNoindex>) tuple indicating whether or not
+    the file was written, and whether it includes a noindex meta tag.
     """
     # Combine global includes with the module Head and Body to create
     # the final element tuples.
-    head_els = chain(includes.head.Head(context), head(context))
+    head_els = list(chain(includes.head.Head(context), head(context)))
+    noindex = is_noindex(head_els)
     # Invoke the page body function and, if non-empty, assert that it
     # returns a single <main> element.
     page_body_els = body(context)
@@ -113,12 +127,12 @@ def write_page(context, filename, site_manifest, head=NotDefined, body=NotDefine
 
     # Check whether this page contains consequential changes.
     if not page_updated(filename, html, site_manifest):
-        return False
+        return False, noindex
 
     # Open the HTML output file.
     with context.site_open(filename, "wb") as fh:
         fh.write(html)
-    return True
+    return True, noindex
 
 
 def write_sitemap(context, filenames):
@@ -191,7 +205,7 @@ def run(context):
 
     # Iterate through the pages, writing each to the site dir and collecting
     # the filenames for later sitemap creation.
-    filenames = []
+    sitemap_filenames = []
     num_written = 0
     for page_name in context.page_names:
         # Update the context object with the name of the current page.
@@ -208,12 +222,13 @@ def run(context):
             # Clear any previous generator item.
             context.generator_item = None
             filename = f"{page_name}.html"
-            filenames.append(filename)
-            page_written = write_page(
+            page_written, noindex = write_page(
                 context, filename, site_manifest, page_mod.Head, page_mod.Body
             )
             if page_written:
                 num_written += 1
+            if not noindex:
+                sitemap_filenames.append(filename)
         else:
             # Use the page generator to write 1 or more pages.
             items = page_mod.CONTEXT_ITEMS_GETTER(context)
@@ -222,10 +237,9 @@ def run(context):
             # collection item.
             collection_name = page_mod.__name__.rsplit(".", 1)[1].split("_")[0]
             filename = f"{collection_name}s.html"
-            filenames.append(filename)
             item = next(iter(items))
             context.generator_item = item
-            page_written = write_page(
+            page_written, noindex = write_page(
                 context,
                 filename,
                 site_manifest,
@@ -233,22 +247,25 @@ def run(context):
             )
             if page_written:
                 num_written += 1
+            if not noindex:
+                sitemap_filenames.append(filename)
 
             # Write the individual item pages.
             for item in items:
                 # Update the context object with the current item.
                 context.generator_item = item
                 filename = page_mod.FILENAME_GENERATOR(item)
-                filenames.append(filename)
-                page_written = write_page(
+                page_written, noindex = write_page(
                     context, filename, site_manifest, page_mod.Head, page_mod.Body
                 )
+                if not noindex:
+                    sitemap_filenames.append(filename)
                 if page_written:
                     num_written += 1
 
     # Write the sitemap and robots files, save the site manifest and return
     # the number of written files.
-    write_sitemap(context, filenames)
+    write_sitemap(context, sitemap_filenames)
     write_robots(context)
     save_site_manifest(site_manifest)
     return num_written
