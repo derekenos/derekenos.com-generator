@@ -52,6 +52,7 @@ def get_meta_tags(context):
         OGMeta("title", get_title(context)),
         OGMeta("type", "website"),
         OGMeta("url", context.url(tag["slug"])),
+        StdMeta("robots", "noindex"),
     )
 
 
