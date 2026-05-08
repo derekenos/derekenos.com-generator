@@ -994,9 +994,10 @@
     },
     {
       "name": "Important Message",
+      "hide_card": true,
       "slug": "/project-important-message",
       "short_description": "A configurable website messaging component.",
-      "description": "A banner/modal website component with configurable message, DOM location, style, and dismissal period that I created to test drive the Cloudflare Apps platform.",
+      "description": "A banner/modal website component with configurable message, DOM location, style, and dismissal period that I created to test drive the (<em>now defunct</em>) Cloudflare Apps platform.",
       "tags": [
         "app",
         "cloudflare",
@@ -1014,13 +1015,7 @@
           "description": "A picture of the Important Message"
         }
       ],
-      "external_link_prop_name_url_tuples": [
-        [
-          "installUrl",
-          "Important Message on Cloudflare Apps",
-          "https://cloudflareapps.com/apps/important-message"
-        ]
-      ]
+      "github_url": "https://github.com/derekenos/cf-app-important-message"
     },
     {
       "name": "Sketchy",

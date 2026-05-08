@@ -247,7 +247,7 @@ Body = lambda context: (
             *section.Body(
                 context,
                 "Music",
-                name := "Some music-like things that I made in the early days when that was a thing that I did.",
+                name := "Some music-like things that I made in the early days when that was a thing that I did",
                 children=audio_collection.Body(
                     context, name=name, items=get_audios(context), h_level=4
                 ),

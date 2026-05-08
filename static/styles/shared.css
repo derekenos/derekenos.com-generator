@@ -228,6 +228,11 @@ main.home > section a.tag {
   display: none;
 }
 
+main.home > section > p#topline {
+  margin-bottom: 0;
+  padding-left: 3vw;
+}
+
 main > section a.tag:hover {
   text-decoration: underline;
 }
@@ -329,5 +334,9 @@ i.list-item:before {
 
   main.home > section a.tag {
     display: inline-block;
+  }
+
+  main.home > section > p#topline {
+    padding-left: 4rem;
   }
 }

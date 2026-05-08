@@ -40,7 +40,7 @@ Body = lambda context: (
             *section.Body(
                 context,
                 children=[
-                    Paragraph("These are some things that I've made."),
+                    Paragraph("Here are some things that I've made.", id="topline"),
                     *collection.Body(
                         context,
                         name="Selected Projects",
