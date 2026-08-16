@@ -4,6 +4,7 @@ from lib import (
     pluck,
 )
 from lib.htmlephant import (
+    Anchor,
     H1,
     Link,
     OGMeta,
@@ -40,7 +41,11 @@ Body = lambda context: (
             *section.Body(
                 context,
                 children=[
-                    Paragraph("Here are some things that I've made.", id="topline"),
+                    Paragraph(id="topline", children=[
+                        Span("I'm working to build our local capacity to design and produce more of the things that we want and need, here in Beacon, New York."),
+                        Anchor("Get in touch", href="/about"),
+                        Span("if you're interested in the same."),
+                    ]),
                     *collection.Body(
                         context,
                         name="Selected Projects",
