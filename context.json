@@ -135,6 +135,26 @@
   ],
   "projects": [
     {
+      "name": "AI Projects",
+      "slug": "/project-ai-projects",
+      "short_description": "Browser games, sound toys, and design docs that Claude built.",
+      "live_url": "https://derekenos.github.io/ai-projects-public/",
+      "tags": [
+        "html5",
+        "videogame",
+        "webaudio"
+      ],
+      "type": "CreativeWork",
+      "description": "A collection of projects that <a href=\"https://claude.ai\">Claude</a>, Anthropic's AI model, built at my direction. Everything runs in the browser, and a gamepad is recommended for the games.<br><br><b>Games</b><i class=\"list-item\"><b><a href=\"https://derekenos.github.io/ai-projects-public/main-drag-beacon/\">Main Drag: Beacon</a></b> - Run one errand on Beacon's Main Street. Fall weekends are the worst.</i><i class=\"list-item\"><b><a href=\"https://derekenos.github.io/ai-projects-public/crash-course/\">Crash Course</a></b> - A driving simulator that enforces New York State traffic regulations, with 4 road tests.</i><i class=\"list-item\"><b><a href=\"https://derekenos.github.io/ai-projects-public/newos-arena/\">Newo's Arena</a></b> - Fight off Shrek-like creatures using a variety of weapons.</i><i class=\"list-item\"><b><a href=\"https://derekenos.github.io/ai-projects-public/e-sport-legacy/\">E-Sport Legacy</a></b> - Football, soccer, and ping pong.</i><i class=\"list-item\"><b><a href=\"https://derekenos.github.io/ai-projects-public/legacy-code-barry/\">Legacy Code Barry</a></b> - Software engineer loses job to AI.</i><br><b>Sound Toys</b><i class=\"list-item\"><b><a href=\"https://derekenos.github.io/ai-projects-public/sound-toys/beatbox/\">Beatbox</a></b>, <b><a href=\"https://derekenos.github.io/ai-projects-public/sound-toys/wave-wheel/\">Sequencer</a></b>, and <b><a href=\"https://derekenos.github.io/ai-projects-public/sound-toys/endo/\">ENDO</a></b> - Ideas from my <a href=\"/etc\">/etc</a> page, made real.</i><br><b>Documents</b><i class=\"list-item\"><b><a href=\"https://derekenos.github.io/ai-projects-public/documents/beacon-community-network-hub/\">Beacon Community Network: Hub Design</a></b> - Neighborhood hubs that keep local messaging, websites, and libraries running over LoRa when the internet goes down, for the <a href=\"/beacon-community-network\">Beacon Community Network</a>.</i>",
+      "images": [
+        {
+          "filename": "project-ai-projects-0e4166df-1500x844-original.jpg",
+          "name": "AI Projects",
+          "description": "Screenshots of four of the games: Main Drag: Beacon, Crash Course, Newo's Arena, and Legacy Code Barry"
+        }
+      ]
+    },
+    {
       "name": "Meshtastic Enclosures",
       "slug": "/meshtastic-enclosures",
       "short_description": "Custom laser-cut wood Meshtastic radio enclosures.",
